@@ -80,11 +80,15 @@ configure_target(ui_tests, "com.tuanlm.VietLunar.ui-tests")
 
 app.build_configurations.each do |configuration|
   settings = configuration.build_settings
+  settings["CODE_SIGN_ENTITLEMENTS"] = "App/VietLunar.entitlements"
   settings["ENABLE_APP_SANDBOX"] = "YES"
   settings["ENABLE_HARDENED_RUNTIME"] = "YES"
   settings["INFOPLIST_KEY_LSApplicationCategoryType"] = "public.app-category.utilities"
   settings["INFOPLIST_KEY_LSUIElement"] = "YES"
   settings["PRODUCT_NAME"] = "VietLunar"
+  if configuration.name == "Release"
+    settings["CODE_SIGN_INJECT_BASE_ENTITLEMENTS"] = "NO"
+  end
 end
 
 ui_tests.build_configurations.each do |configuration|

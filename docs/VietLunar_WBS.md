@@ -74,7 +74,7 @@ Trạng thái:
 | M7.4 | Hoàn thiện Dock/accessory behavior | M7.3 | Hoàn thành | commit này | Signed Release launch, accessory policy, persistent status item/UI flow đạt |
 | M8.1 | Chạy full test matrix | M2-M7 | Bị chặn | commit này | 95/95 + exhaustive round-trip đạt; independent/manual gates còn mở |
 | M8.2 | Ghi performance baseline | M8.1 | Bị chặn | commit này | Core/grid/bundle/idle đạt; cold launch/RSS fail, popover timing thiếu |
-| M8.3 | Privacy, attribution và release metadata | M8.1 | Chờ | — | Privacy/range/notarization/reproducible commands |
+| M8.3 | Privacy, attribution và release metadata | M8.1 | Hoàn thành | commit này | Privacy/NOTICE/range/version/build/signing/notarization docs đạt |
 | M8.4 | Acceptance review | M8.2, M8.3 | Chờ | — | Rà toàn bộ checklist spec mục 19 |
 
 ## 4. Release gates đang mở
@@ -374,3 +374,12 @@ Trạng thái:
 - App Launch trace ghi initial frame 951,10 ms, vượt hard threshold 800 ms; transient RSS khoảng 30 giây đạt 63.264 KB, vượt review threshold 60 MB.
 - XCUITest timing có event-synthesis/polling overhead nên không được dùng để tuyên bố popover <=100/50 ms; cần phép đo interaction/signpost riêng.
 - M8.2 giữ `Bị chặn`; profiling tiếp theo tập trung SwiftUI/MenuBarExtra launch/memory, không rewrite Core khi các core metric đã đạt.
+
+### M8.3 — Privacy, attribution và release metadata
+
+- Thêm `PRIVACY.md`: local preferences/login-item ownership, zero analytics/network/account, data deletion và future-scope review.
+- Sửa NOTICE theo trạng thái thật: generated runtime records đã có, không bundle third-party code/prepared datasets, independent validation vẫn chưa được tuyên bố đạt.
+- About hiển thị version + build, UTC+7/range, historical 1800–1975 caveat, privacy và source attribution; UI flow kiểm tra các nội dung chính.
+- Thêm explicit sandbox entitlements; Release tắt base-entitlement injection để không ship `get-task-allow` hoặc outbound network entitlement.
+- `docs/DISTRIBUTION.md` ghi lệnh verify/archive/notarize/staple và installed login-item checklist; mọi credential dùng placeholder, không commit bí mật.
+- README phản ánh đúng implementation hiện tại và liên kết WBS/Privacy/Notice/Distribution, không gọi candidate table là independently verified.

@@ -90,6 +90,13 @@ final class VietLunarUITests: XCTestCase {
         XCTAssertTrue(
             application.descendants(matching: .statusItem).firstMatch.exists
         )
+
+        let aboutTab = application.descendants(matching: .any)["about-tab"]
+        XCTAssertTrue(aboutTab.exists)
+        aboutTab.click()
+        XCTAssertTrue(application.staticTexts["about-version"].exists)
+        XCTAssertTrue(application.staticTexts["historical-caveat"].exists)
+        XCTAssertTrue(application.staticTexts["privacy-summary"].exists)
     }
 
     @MainActor

@@ -4,20 +4,54 @@ import VietLunarCore
 
 struct SettingsView: View {
     @EnvironmentObject private var appState: AppState
+    @State private var selectedPane: SettingsPane = .general
 
     var body: some View {
-        TabView {
-            generalSettings
-                .tabItem {
-                    Label("Chung", systemImage: "gearshape")
-                }
+        VStack(spacing: 0) {
+            HStack(spacing: 8) {
+                paneButton(
+                    title: "Chung",
+                    systemImage: "gearshape",
+                    pane: .general,
+                    identifier: "general-tab"
+                )
+                paneButton(
+                    title: "Giới thiệu",
+                    systemImage: "info.circle",
+                    pane: .about,
+                    identifier: "about-tab"
+                )
+                Spacer()
+            }
+            .padding(.horizontal, 20)
+            .padding(.vertical, 10)
 
-            AboutSettingsView()
-                .tabItem {
-                    Label("Giới thiệu", systemImage: "info.circle")
-                }
+            Divider()
+
+            switch selectedPane {
+            case .general:
+                generalSettings
+            case .about:
+                AboutSettingsView()
+            }
         }
         .frame(width: 540, height: 440)
+    }
+
+    private func paneButton(
+        title: String,
+        systemImage: String,
+        pane: SettingsPane,
+        identifier: String
+    ) -> some View {
+        Button {
+            selectedPane = pane
+        } label: {
+            Label(title, systemImage: systemImage)
+        }
+        .buttonStyle(.bordered)
+        .accessibilityIdentifier(identifier)
+        .accessibilityAddTraits(selectedPane == pane ? .isSelected : [])
     }
 
     private var generalSettings: some View {
@@ -206,23 +240,34 @@ struct SettingsView: View {
     }
 }
 
+private enum SettingsPane {
+    case general
+    case about
+}
+
 private struct AboutSettingsView: View {
     var body: some View {
         ScrollView {
             VStack(alignment: .leading, spacing: 14) {
                 Text("VietLunar")
                     .font(.title.bold())
-                Text("Phiên bản \(version)")
+                Text("Phiên bản \(version) (\(build))")
                     .foregroundStyle(.secondary)
+                    .accessibilityIdentifier("about-version")
 
                 GroupBox("Phạm vi và quy ước") {
-                    Text("Hỗ trợ ngày dương từ 01/01/1800 đến 31/12/2199. Lịch âm Việt Nam và Can–Chi dùng quy ước UTC+7.")
-                        .frame(maxWidth: .infinity, alignment: .leading)
+                    VStack(alignment: .leading, spacing: 8) {
+                        Text("Hỗ trợ ngày dương từ 01/01/1800 đến 31/12/2199. Lịch âm Việt Nam và Can–Chi dùng quy ước UTC+7.")
+                        Text("Kết quả từ 1800 đến 1975 là lịch Việt Nam hiện đại suy rộng, không phải bản phục dựng lịch chính thức của mọi vùng và thời kỳ lịch sử.")
+                            .accessibilityIdentifier("historical-caveat")
+                    }
+                    .frame(maxWidth: .infinity, alignment: .leading)
                 }
 
                 GroupBox("Quyền riêng tư") {
                     Text("Ứng dụng chạy offline, không yêu cầu tài khoản và không gửi dữ liệu cá nhân ra ngoài máy Mac.")
                         .frame(maxWidth: .infinity, alignment: .leading)
+                        .accessibilityIdentifier("privacy-summary")
                 }
 
                 GroupBox("Nguồn đối chiếu") {
@@ -242,5 +287,10 @@ private struct AboutSettingsView: View {
     private var version: String {
         Bundle.main.object(forInfoDictionaryKey: "CFBundleShortVersionString") as? String
             ?? "0.1.0"
+    }
+
+    private var build: String {
+        Bundle.main.object(forInfoDictionaryKey: "CFBundleVersion") as? String
+            ?? "1"
     }
 }

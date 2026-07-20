@@ -4,7 +4,7 @@ VietLunar là ứng dụng macOS native, chạy hoàn toàn offline trên menu b
 
 ## Trạng thái
 
-Project đã có app/core/infrastructure targets, unit/UI test targets và menu-bar shell với nhãn `ÂL`. Calendar engine và giao diện lịch sẽ được triển khai tuần tự theo [WBS](docs/VietLunar_WBS.md).
+Ứng dụng MVP đã có menu-bar calendar, Can–Chi, Settings, preferences, lifecycle scheduler và `SMAppService` adapter. Full automated scheme hiện đạt 95/95 tests, nhưng build chưa release-ready vì các gate independent accuracy, login-item cài thật và performance vẫn được ghi mở trong [WBS](docs/VietLunar_WBS.md).
 
 ## Yêu cầu phát triển
 
@@ -34,6 +34,8 @@ Chạy microbenchmark Core ở cấu hình optimized:
 
 Project generator là công cụ phát triển. Generated `VietLunar.xcodeproj` vẫn được commit để người dùng có thể mở và build ngay bằng Xcode.
 
+Hướng dẫn ký/notarize nằm tại [docs/DISTRIBUTION.md](docs/DISTRIBUTION.md). Không phân phối candidate build khi WBS còn release blocker.
+
 ## Kiến trúc
 
 - `App/`: SwiftUI application shell và giao diện.
@@ -45,9 +47,9 @@ Project generator là công cụ phát triển. Generated `VietLunar.xcodeproj` 
 
 ## Quy ước lịch
 
-- Khoảng ngày production dự kiến: `1800-01-01...2199-12-31`.
+- Khoảng ngày runtime: `1800-01-01...2199-12-31`.
 - Ngày lịch âm hiện tại được tính theo UTC+7.
 - Dữ liệu trước 1976 là proleptic modern astronomical Vietnamese calendar, không được mô tả như lịch chính thức lịch sử.
 - App trả typed error ngoài khoảng được xác minh; không xấp xỉ.
 
-Reference data, provenance và exhaustive accuracy tests sẽ được hoàn thiện ở milestone M2 trước khi phát hành.
+Generated table đã có checksum và exhaustive round-trip, nhưng independent conformance/2033 evidence vẫn chưa đạt. Xem [ReferenceData/README.md](ReferenceData/README.md), [NOTICE.md](NOTICE.md) và [PRIVACY.md](PRIVACY.md).
