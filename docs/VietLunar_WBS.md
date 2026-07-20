@@ -38,6 +38,7 @@ Trạng thái:
 |---|---|---|---|---|---|
 | A0 | Phân tích tài liệu và tạo WBS thực thi | — | Hoàn thành | commit này | Đã đọc đầy đủ spec, plan, prompt, test vectors; knowledge graph hợp lệ |
 | A1 | Ổn định deterministic Xcode project generation | M0.1 | Hoàn thành | commit này | Hai lần generate liên tiếp có checksum byte-identical |
+| A2 | Khóa UUID cho target dependency trùng cấu trúc | A1 | Hoàn thành | commit này | Ba lần generate liên tiếp byte-identical sau khi project mở rộng |
 | B0 | Ghi nhận independent-reference blocker | M2.4 | Hoàn thành | commit này | Không dùng candidate JSON làm oracle hoặc sao chép data chưa rõ license |
 | M0.1 | Tạo Xcode project, app/core/infrastructure/test targets | A0 | Hoàn thành | commit này | 6 targets, shared scheme, Debug build và 3 test bundles đạt |
 | M0.2 | Tạo `MenuBarExtra`, ẩn Dock, Settings và Quit | M0.1 | Hoàn thành | commit này | Build/test đạt; LSUIElement=true; app bundle chạy thật và hiện `ÂL` trên menu bar |
@@ -257,3 +258,10 @@ Trạng thái:
 - Mọi cell có nhãn VoiceOver đầy đủ ngày dương/ngày âm, semantic value `Đã chọn`/`Hôm nay`, selected trait và tooltip; các control điều hướng/footer đều có label/tooltip.
 - Build và toàn scheme đạt 68/68 tests; không phát sinh warning dưới warnings-as-errors.
 - Manual Accessibility Inspector chưa hoàn tất: macOS từ chối Assistive Access cho tiến trình kiểm tra với lỗi `-1719`. Task chỉ chuyển `Hoàn thành` sau khi chạy Inspector hoặc có AX inspection tương đương được chấp nhận.
+
+### A2 — Deterministic target-dependency UUIDs
+
+- Phát hiện `xcodeproj` tạo UUID thay đổi cho nhiều `PBXTargetDependency` cùng trỏ tới một target, làm `project.pbxproj` churn dù source list không đổi.
+- Generator nay cấp chuỗi UUID đầu vào deterministic trước bước path-based predictabilization; không thay đổi target graph hoặc build settings.
+- Ba process generate liên tiếp cho checksum byte-identical của cả `project.pbxproj` và shared scheme.
+- Toàn scheme tiếp tục đạt 68/68 tests.

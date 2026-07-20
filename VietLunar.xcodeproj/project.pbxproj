@@ -74,54 +74,54 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
-		0FF4903F61A1AD31AE6FD05146F69B4D /* PBXContainerItemProxy */ = {
+		34B6B31336D331C0AC10EB484A0B0629 /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
 			containerPortal = A920EB9722CD966EFF4C027F2E50E28C /* Project object */;
 			proxyType = 1;
 			remoteGlobalIDString = 3A2227A782B07460DC6471ACD418DE4C;
 			remoteInfo = VietLunarInfrastructure;
 		};
-		1785C75B31F6DD13A0427B5C16EAC614 /* PBXContainerItemProxy */ = {
+		5FB6926E1D244BC91EC561419F9FE618 /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
 			containerPortal = A920EB9722CD966EFF4C027F2E50E28C /* Project object */;
 			proxyType = 1;
 			remoteGlobalIDString = 64AF664C9FD67ED4CF12699CC86642EE;
 			remoteInfo = VietLunarCore;
 		};
-		245DBC2378B247CBFD44C7CB4F69175E /* PBXContainerItemProxy */ = {
-			isa = PBXContainerItemProxy;
-			containerPortal = A920EB9722CD966EFF4C027F2E50E28C /* Project object */;
-			proxyType = 1;
-			remoteGlobalIDString = 64AF664C9FD67ED4CF12699CC86642EE;
-			remoteInfo = VietLunarCore;
-		};
-		65F57A9090634DA8C878C7C3ABFA963D /* PBXContainerItemProxy */ = {
-			isa = PBXContainerItemProxy;
-			containerPortal = A920EB9722CD966EFF4C027F2E50E28C /* Project object */;
-			proxyType = 1;
-			remoteGlobalIDString = 64AF664C9FD67ED4CF12699CC86642EE;
-			remoteInfo = VietLunarCore;
-		};
-		760C67C45369212DBAE9115EF94D4406 /* PBXContainerItemProxy */ = {
-			isa = PBXContainerItemProxy;
-			containerPortal = A920EB9722CD966EFF4C027F2E50E28C /* Project object */;
-			proxyType = 1;
-			remoteGlobalIDString = 64AF664C9FD67ED4CF12699CC86642EE;
-			remoteInfo = VietLunarCore;
-		};
-		AC4A019BD249547C36A16E95B41CB1A3 /* PBXContainerItemProxy */ = {
-			isa = PBXContainerItemProxy;
-			containerPortal = A920EB9722CD966EFF4C027F2E50E28C /* Project object */;
-			proxyType = 1;
-			remoteGlobalIDString = 3A2227A782B07460DC6471ACD418DE4C;
-			remoteInfo = VietLunarInfrastructure;
-		};
-		D19E21C02F933F5F43FC9AE585B40243 /* PBXContainerItemProxy */ = {
+		7E3CC28C210C2BFDD88119866C413805 /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
 			containerPortal = A920EB9722CD966EFF4C027F2E50E28C /* Project object */;
 			proxyType = 1;
 			remoteGlobalIDString = 53F714F6141E6B8E408CB43E4781A57D;
 			remoteInfo = VietLunar;
+		};
+		AD439C1BF7AE8EBB0A1B9CA6B3F52D6C /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = A920EB9722CD966EFF4C027F2E50E28C /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = 64AF664C9FD67ED4CF12699CC86642EE;
+			remoteInfo = VietLunarCore;
+		};
+		BD11D94C68236FA91E187367FFDDEB66 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = A920EB9722CD966EFF4C027F2E50E28C /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = 64AF664C9FD67ED4CF12699CC86642EE;
+			remoteInfo = VietLunarCore;
+		};
+		C0CEC9652E269972D22D4909A43B03C4 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = A920EB9722CD966EFF4C027F2E50E28C /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = 64AF664C9FD67ED4CF12699CC86642EE;
+			remoteInfo = VietLunarCore;
+		};
+		C76317C75F3DFCD0BE684E8BD1ED9CAC /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = A920EB9722CD966EFF4C027F2E50E28C /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = 3A2227A782B07460DC6471ACD418DE4C;
+			remoteInfo = VietLunarInfrastructure;
 		};
 /* End PBXContainerItemProxy section */
 
@@ -430,7 +430,7 @@
 			buildRules = (
 			);
 			dependencies = (
-				58654B231048EAAE7BC1DDDD36022D11 /* PBXTargetDependency */,
+				8E6ECA4F85A76A670E5DE5569382D463 /* PBXTargetDependency */,
 			);
 			name = VietLunarCoreTests;
 			productName = VietLunarCoreTests;
@@ -449,7 +449,7 @@
 			buildRules = (
 			);
 			dependencies = (
-				9E0A60FAF50D9C17A70A9B8D0D315396 /* PBXTargetDependency */,
+				29A3EBE26DD3108DB3F97941BCBE6574 /* PBXTargetDependency */,
 			);
 			name = VietLunarInfrastructure;
 			productName = VietLunarInfrastructure;
@@ -467,7 +467,7 @@
 			buildRules = (
 			);
 			dependencies = (
-				963A02B92A5E744C9A2D852190D64F97 /* PBXTargetDependency */,
+				9CA620A87E2D68D1BE22DEEEB0A48451 /* PBXTargetDependency */,
 			);
 			name = VietLunarUITests;
 			productName = VietLunarUITests;
@@ -486,8 +486,8 @@
 			buildRules = (
 			);
 			dependencies = (
-				E14E6C79BFD2B169EA12B4A1CEDDD18C /* PBXTargetDependency */,
-				0B6353F4033D83739164C1416BAF8FAD /* PBXTargetDependency */,
+				51D20ACEA8B25322059499FF20A3AEA6 /* PBXTargetDependency */,
+				E91B1DCA569D11DE05FB09EA38973375 /* PBXTargetDependency */,
 			);
 			name = VietLunar;
 			productName = VietLunar;
@@ -523,8 +523,8 @@
 			buildRules = (
 			);
 			dependencies = (
-				49A2D4DD74F2F63653A51E02E930EF3B /* PBXTargetDependency */,
-				4D30944613277A0D69240D2A42C19305 /* PBXTargetDependency */,
+				4630CB344B5F64E7CC9D213D3644B0EE /* PBXTargetDependency */,
+				504FEA894551684634D6AEC6092FF4A9 /* PBXTargetDependency */,
 			);
 			name = VietLunarInfrastructureTests;
 			productName = VietLunarInfrastructureTests;
@@ -706,47 +706,47 @@
 /* End PBXSourcesBuildPhase section */
 
 /* Begin PBXTargetDependency section */
-		0B6353F4033D83739164C1416BAF8FAD /* PBXTargetDependency */ = {
-			isa = PBXTargetDependency;
-			name = VietLunarInfrastructure;
-			target = 3A2227A782B07460DC6471ACD418DE4C /* VietLunarInfrastructure */;
-			targetProxy = 0FF4903F61A1AD31AE6FD05146F69B4D /* PBXContainerItemProxy */;
-		};
-		49A2D4DD74F2F63653A51E02E930EF3B /* PBXTargetDependency */ = {
+		29A3EBE26DD3108DB3F97941BCBE6574 /* PBXTargetDependency */ = {
 			isa = PBXTargetDependency;
 			name = VietLunarCore;
 			target = 64AF664C9FD67ED4CF12699CC86642EE /* VietLunarCore */;
-			targetProxy = 245DBC2378B247CBFD44C7CB4F69175E /* PBXContainerItemProxy */;
+			targetProxy = C0CEC9652E269972D22D4909A43B03C4 /* PBXContainerItemProxy */;
 		};
-		4D30944613277A0D69240D2A42C19305 /* PBXTargetDependency */ = {
-			isa = PBXTargetDependency;
-			name = VietLunarInfrastructure;
-			target = 3A2227A782B07460DC6471ACD418DE4C /* VietLunarInfrastructure */;
-			targetProxy = AC4A019BD249547C36A16E95B41CB1A3 /* PBXContainerItemProxy */;
-		};
-		58654B231048EAAE7BC1DDDD36022D11 /* PBXTargetDependency */ = {
+		4630CB344B5F64E7CC9D213D3644B0EE /* PBXTargetDependency */ = {
 			isa = PBXTargetDependency;
 			name = VietLunarCore;
 			target = 64AF664C9FD67ED4CF12699CC86642EE /* VietLunarCore */;
-			targetProxy = 760C67C45369212DBAE9115EF94D4406 /* PBXContainerItemProxy */;
+			targetProxy = AD439C1BF7AE8EBB0A1B9CA6B3F52D6C /* PBXContainerItemProxy */;
 		};
-		963A02B92A5E744C9A2D852190D64F97 /* PBXTargetDependency */ = {
+		504FEA894551684634D6AEC6092FF4A9 /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			name = VietLunarInfrastructure;
+			target = 3A2227A782B07460DC6471ACD418DE4C /* VietLunarInfrastructure */;
+			targetProxy = C76317C75F3DFCD0BE684E8BD1ED9CAC /* PBXContainerItemProxy */;
+		};
+		51D20ACEA8B25322059499FF20A3AEA6 /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			name = VietLunarCore;
+			target = 64AF664C9FD67ED4CF12699CC86642EE /* VietLunarCore */;
+			targetProxy = BD11D94C68236FA91E187367FFDDEB66 /* PBXContainerItemProxy */;
+		};
+		8E6ECA4F85A76A670E5DE5569382D463 /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			name = VietLunarCore;
+			target = 64AF664C9FD67ED4CF12699CC86642EE /* VietLunarCore */;
+			targetProxy = 5FB6926E1D244BC91EC561419F9FE618 /* PBXContainerItemProxy */;
+		};
+		9CA620A87E2D68D1BE22DEEEB0A48451 /* PBXTargetDependency */ = {
 			isa = PBXTargetDependency;
 			name = VietLunar;
 			target = 53F714F6141E6B8E408CB43E4781A57D /* VietLunar */;
-			targetProxy = D19E21C02F933F5F43FC9AE585B40243 /* PBXContainerItemProxy */;
+			targetProxy = 7E3CC28C210C2BFDD88119866C413805 /* PBXContainerItemProxy */;
 		};
-		9E0A60FAF50D9C17A70A9B8D0D315396 /* PBXTargetDependency */ = {
+		E91B1DCA569D11DE05FB09EA38973375 /* PBXTargetDependency */ = {
 			isa = PBXTargetDependency;
-			name = VietLunarCore;
-			target = 64AF664C9FD67ED4CF12699CC86642EE /* VietLunarCore */;
-			targetProxy = 65F57A9090634DA8C878C7C3ABFA963D /* PBXContainerItemProxy */;
-		};
-		E14E6C79BFD2B169EA12B4A1CEDDD18C /* PBXTargetDependency */ = {
-			isa = PBXTargetDependency;
-			name = VietLunarCore;
-			target = 64AF664C9FD67ED4CF12699CC86642EE /* VietLunarCore */;
-			targetProxy = 1785C75B31F6DD13A0427B5C16EAC614 /* PBXContainerItemProxy */;
+			name = VietLunarInfrastructure;
+			target = 3A2227A782B07460DC6471ACD418DE4C /* VietLunarInfrastructure */;
+			targetProxy = 34B6B31336D331C0AC10EB484A0B0629 /* PBXContainerItemProxy */;
 		};
 /* End PBXTargetDependency section */
 

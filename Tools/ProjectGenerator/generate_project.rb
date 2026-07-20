@@ -1,8 +1,28 @@
 #!/usr/bin/env ruby
 
 require "fileutils"
+require "digest"
 require "pathname"
 require "xcodeproj"
+
+# xcodeproj's UUID predictabilizer cannot distinguish structurally identical
+# target dependencies when their initial proxy UUIDs are random. A stable
+# creation sequence makes those inputs deterministic before final path hashing.
+module DeterministicProjectUUIDs
+  def generate_available_uuid_list(count = 100)
+    @deterministic_uuid_sequence ||= 0
+    candidates = Array.new(count + 1) do
+      seed = "VietLunar-Xcodeproj-#{@deterministic_uuid_sequence}"
+      @deterministic_uuid_sequence += 1
+      Digest::SHA256.hexdigest(seed)[0, 24].upcase
+    end
+    unique_candidates = candidates - (@generated_uuids + uuids)
+    @generated_uuids += unique_candidates
+    @available_uuids += unique_candidates
+  end
+end
+
+Xcodeproj::Project.prepend(DeterministicProjectUUIDs)
 
 ROOT = Pathname.new(__dir__).join("../..").expand_path
 PROJECT_PATH = ROOT.join("VietLunar.xcodeproj")
