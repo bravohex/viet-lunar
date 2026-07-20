@@ -76,12 +76,19 @@ struct SettingsView: View {
             }
 
                 Section("Hệ thống") {
-                Toggle("Mở VietLunar khi đăng nhập", isOn: .constant(false))
-                    .disabled(true)
+                Toggle("Mở VietLunar khi đăng nhập", isOn: loginItemBinding)
+                    .disabled(appState.loginItemStatus == .unavailable)
                     .accessibilityIdentifier("launch-at-login-toggle")
-                Text("Chưa khả dụng trong bản dựng này.")
+                Text(loginItemStatusMessage)
                     .font(.caption)
                     .foregroundStyle(.secondary)
+
+                if appState.loginItemStatus == .requiresUserApproval {
+                    Button("Mở Cài đặt hệ thống") {
+                        appState.openLoginItemsSettings()
+                    }
+                    .accessibilityIdentifier("open-login-items-settings-button")
+                }
             }
 
                 if let errorMessage = appState.errorMessage {
@@ -91,6 +98,9 @@ struct SettingsView: View {
                 }
             }
             .formStyle(.grouped)
+        }
+        .onAppear {
+            appState.settingsAppeared()
         }
     }
 
@@ -152,6 +162,18 @@ struct SettingsView: View {
         )
     }
 
+    private var loginItemBinding: Binding<Bool> {
+        Binding(
+            get: {
+                appState.loginItemStatus == .enabled
+                    || appState.loginItemStatus == .requiresUserApproval
+            },
+            set: { value in
+                appState.setLoginItemEnabled(value)
+            }
+        )
+    }
+
     private var menuTitlePreview: String {
         if appState.preferences.titleFormat.isIconOnly {
             return appState.menuBarPresentation.title.map { "☾  \($0)" } ?? "☾"
@@ -165,6 +187,21 @@ struct SettingsView: View {
             "Đổi ngày lúc 00:00"
         case .startOfZiHour:
             "Đổi ngày lúc 23:00"
+        }
+    }
+
+    private var loginItemStatusMessage: String {
+        switch appState.loginItemStatus {
+        case .disabled:
+            "VietLunar sẽ không tự mở sau khi bạn đăng nhập."
+        case .enabled:
+            "VietLunar sẽ tự mở sau khi bạn đăng nhập."
+        case .requiresUserApproval:
+            "macOS cần bạn cho phép VietLunar trong Cài đặt hệ thống > Mục đăng nhập."
+        case .unavailable:
+            "Chỉ khả dụng khi VietLunar được cài đặt và ký hợp lệ."
+        case let .error(message):
+            message
         }
     }
 }

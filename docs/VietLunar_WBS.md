@@ -69,7 +69,7 @@ Trạng thái:
 | M6.4 | Xác minh idle behavior | M6.3 | Bị chặn | commit này | 5-minute Debug run fail CPU/RSS; cần Instruments Release profile |
 | M7.1 | Typed preferences store | M0.3 | Hoàn thành | commit này | Versioned root, v0 migration/change stream; toàn scheme 88/88 tests |
 | M7.2 | Settings UI | M7.1, M5.1, M6.3 | Hoàn thành | commit này | Live controls, minute-boundary clock, isolated UI flow; 92/92 tests |
-| M7.3 | `SMLoginItemService` | M7.2 | Chờ | — | Status mapping tests; signed install thủ công |
+| M7.3 | `SMLoginItemService` | M7.2 | Bị chặn | commit này | Code/93 tests/Developer ID Release đạt; chưa cài `/Applications` và register thật |
 | M7.4 | Hoàn thiện Dock/accessory behavior | M7.3 | Chờ | — | Installed-app behavior checklist |
 | M8.1 | Chạy full test matrix | M2-M7 | Chờ | — | Unit/exhaustive/UI/Release build/checklists |
 | M8.2 | Ghi performance baseline | M8.1 | Chờ | — | Launch, popover, RSS, idle, conversion, bundle size |
@@ -328,3 +328,12 @@ Trạng thái:
 - Week-start thay đổi cả thứ tự header lẫn 42-cell grid; title flags ánh xạ xác định vào bốn enum format, không tạo thêm key rời rạc.
 - UI test dùng isolated preference suite, mở Settings thật và xác nhận clock preview bật/tắt tức thời; project generation byte-identical, reference checks và toàn scheme đạt 92/92 tests.
 - Launch at Login có control bị vô hiệu hóa rõ ràng cho đến khi adapter `SMAppService` được triển khai ở M7.3.
+
+### M7.3 — `SMLoginItemService` implementation và manual gate
+
+- Thêm typed `LoginItemStatus`/`LoginItemServicing` và adapter `SMAppService.mainApp`; register/unregister idempotent cho trạng thái đã đạt.
+- Ánh xạ đủ bốn trạng thái SDK: `notRegistered`, `enabled`, `requiresApproval`, `notFound`; unknown status fail-safe về `unavailable`.
+- Settings lấy trạng thái trực tiếp từ macOS khi xuất hiện và sau lifecycle activation, không lưu login-item truth vào preferences.
+- Trạng thái cần phê duyệt có hướng dẫn và action mở Login Items trong System Settings; lỗi register/unregister hiển thị không fatal.
+- Mapping test và toàn scheme đạt 93/93; Release universal app build đạt và Developer ID signature được verify local.
+- Chưa cài bundle vào `/Applications` hoặc gọi register thật vì hai thao tác này thay đổi trạng thái hệ thống; task giữ `Bị chặn` cho đến khi manual gate đó được người dùng cho phép và xác nhận.

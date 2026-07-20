@@ -7,6 +7,7 @@ import VietLunarInfrastructure
 final class AppState: ObservableObject {
     @Published private(set) var currentSnapshot: CalendarSnapshot?
     @Published private(set) var preferences: AppPreferences
+    @Published private(set) var loginItemStatus: LoginItemStatus
     @Published private(set) var errorMessage: String?
     @Published private(set) var selectedSolarDate: SolarDate?
     @Published private(set) var visibleMonth: YearMonth?
@@ -19,6 +20,7 @@ final class AppState: ObservableObject {
     private let lunarEngine: any LunarCalendarCalculating
     private let clock: any Clock
     private let preferencesStore: any PreferencesStoring
+    private let loginItemService: any LoginItemServicing
     private let lifecycleSource: any LifecycleEventSourcing
     private let boundaryCalculator: any BoundaryCalculating
     private let boundaryScheduler: any BoundaryScheduling
@@ -31,10 +33,12 @@ final class AppState: ObservableObject {
         lifecycleSource: any LifecycleEventSourcing = SystemLifecycleSource(),
         boundaryCalculator: any BoundaryCalculating = BoundaryCalculator(),
         boundaryScheduler: (any BoundaryScheduling)? = nil,
-        preferencesStore: any PreferencesStoring = UserDefaultsPreferencesStore()
+        preferencesStore: any PreferencesStoring = UserDefaultsPreferencesStore(),
+        loginItemService: any LoginItemServicing = SMLoginItemService()
     ) {
         let initialPreferences = preferencesStore.load()
         preferences = initialPreferences
+        loginItemStatus = loginItemService.status()
         snapshotFactory = CalendarSnapshotFactory(
             lunarEngine: lunarEngine,
             clock: clock,
@@ -44,6 +48,7 @@ final class AppState: ObservableObject {
         self.lunarEngine = lunarEngine
         self.clock = clock
         self.preferencesStore = preferencesStore
+        self.loginItemService = loginItemService
         self.lifecycleSource = lifecycleSource
         self.boundaryCalculator = boundaryCalculator
         self.boundaryScheduler = boundaryScheduler
@@ -54,6 +59,7 @@ final class AppState: ObservableObject {
             source: lifecycleSource
         ) { [weak self] in
             self?.refresh()
+            self?.refreshLoginItemStatus()
         }
         lifecycleCoordinator = coordinator
         coordinator.start()
@@ -95,6 +101,25 @@ final class AppState: ObservableObject {
         } catch {
             errorMessage = "Không thể lưu cài đặt. Vui lòng thử lại."
         }
+    }
+
+    func settingsAppeared() {
+        refreshLoginItemStatus()
+    }
+
+    func setLoginItemEnabled(_ isEnabled: Bool) {
+        do {
+            try loginItemService.setEnabled(isEnabled)
+            refreshLoginItemStatus()
+        } catch {
+            loginItemStatus = .error(
+                "Không thể thay đổi mục mở khi đăng nhập: \(error.localizedDescription)"
+            )
+        }
+    }
+
+    func openLoginItemsSettings() {
+        loginItemService.openSystemSettings()
     }
 
     func refresh() {
@@ -281,6 +306,10 @@ final class AppState: ObservableObject {
                 applyPreferences(preferences)
             }
         }
+    }
+
+    private func refreshLoginItemStatus() {
+        loginItemStatus = loginItemService.status()
     }
 
     private func applyPreferences(_ newPreferences: AppPreferences) {
