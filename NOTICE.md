@@ -14,4 +14,6 @@ Curated URLs in `docs/VietLunar_TEST_VECTORS.json` are validation references; th
 
 The source catalog records material by Hồ Ngọc Đức, Edward M. Reingold and Nachum Dershowitz, and Hermetic Systems as rules or comparison references. Their source code and prepared third-party datasets are not bundled. See `ReferenceData/README.md` and `ReferenceData/source-catalog.json` for exact roles and URLs.
 
+The pinned MIT-licensed `luc-nham/lunar-calendar` revision was executed only as an independent audit candidate. No part of that package is bundled; its full-range result was rejected because it disagreed on 13,028 supported dates.
+
 Independent exhaustive validation and the 2033 evidence gate remain open. The generated candidate table must not be described as independently verified or release-approved until those gates are closed.

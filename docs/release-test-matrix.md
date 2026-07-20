@@ -29,8 +29,8 @@
 
 | Hạng mục bắt buộc | Trạng thái | Điều kiện đóng |
 |---|---|---|
-| Independent exhaustive oracle | Bị chặn | Dataset 1800-2199 độc lập, có license/provenance được duyệt |
-| Independent 2033 evidence | Bị chặn | Hai nguồn độc lập, gồm nguồn xác nhận tháng 11 nhuận Việt Nam |
+| Independent exhaustive oracle | Bị chặn | MIT candidate đã audit nhưng lệch 13.028 ngày; Ho table bị giới hạn non-commercial; cần nguồn 1800-2199 khác được duyệt |
+| Independent 2033 evidence | Bị chặn | MIT candidate khớp và ghi leap month 11; vẫn cần validation thứ hai được chấp thuận và đóng dependency M2.5 |
 | Signed installed login item | Chờ quyền thay đổi hệ thống | Cài vào `/Applications`, test enable/disable/approval rồi dọn trạng thái |
 | Real sleep/wake and clock change | Chờ kiểm tra thủ công | Chạy checklist trên signed installed app |
 | Offline runtime | Chờ kiểm tra thủ công | Chạy app khi network adapter thực sự tắt; runtime zero-traffic đã xác nhận riêng |

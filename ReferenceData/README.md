@@ -15,9 +15,10 @@ This directory holds development/test reference material used to generate and va
 The machine-readable source inventory is `source-catalog.json`.
 
 1. Hồ Ngọc Đức’s Vietnamese calendar rules define the calendar rules, UTC+7/Hanoi convention, documented 1984/2004 examples, the distinction between official and proleptic calendars, and the historical correction of the 2033 leap-month calculation.
-2. The Hồ Ngọc Đức JavaScript calendar is valid for 1800-2199 and may be used as a comparison oracle, but its code/data is not copied into production because an explicit redistribution license was not identified on the retrieved pages.
+2. The Hồ Ngọc Đức JavaScript calendar is valid for 1800-2199, but its header limits permission to personal, non-commercial use. Its code/data is not copied or approved as a release oracle without compatible distribution scope or additional permission.
 3. *Calendrical Calculations* is an independent algorithmic reference. VietLunar must use an original implementation or separately licensed software; it must not copy the accompanying software package without permission.
 4. Hermetic Systems material is a secondary independent cross-check for the Vietnamese reference longitude/time-zone behavior and rare leap-month cases. It is not a production dependency.
+5. The MIT-licensed `luc-nham/lunar-calendar` implementation at the pinned revision is an independent candidate. It matches the required 2033 sequence but has 13,028 full-range mismatches, so it is rejected as the exhaustive oracle. See `../docs/independent-oracle-audit.md`.
 
 ## Licensing decision
 
@@ -51,3 +52,4 @@ The command verifies byte-level SHA-256 checksums from `SHA256SUMS`. Regeneratio
 - Exhaustive valid lunar-date round trips are still required.
 - The accepted 2033 sequence must be validated by at least two independent sources, including one that explicitly identifies the Vietnamese leap month as month 11.
 - A production table must never be its own only test oracle.
+- A permissive license alone is insufficient: an independent candidate must also match or explain every supported-date discrepancy before it can close M2.5.

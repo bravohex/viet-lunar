@@ -43,6 +43,7 @@ Trạng thái:
 | A4 | Xác minh signed Release idle behavior | M6.4 | Hoàn thành | commit này | Time Profiler 300,84s; +0,01s CPU; không app-owned loop |
 | A5 | Chuyển user-visible strings sang catalog | M8.4 | Hoàn thành | commit này | App/Core Vietnamese catalogs, key/resource verification, 97/97 tests |
 | A6 | Xác minh runtime network inactivity | M8.4 | Hoàn thành | commit này | Signed Release, 60 mẫu nettop + lsof không có socket/traffic |
+| A7 | Audit independent oracle candidates | M2.5, M2.6 | Hoàn thành | commit này | MIT candidate pin/audit; 13.028 mismatch nên không dùng làm oracle |
 | B0 | Ghi nhận independent-reference blocker | M2.4 | Hoàn thành | commit này | Không dùng candidate JSON làm oracle hoặc sao chép data chưa rõ license |
 | M0.1 | Tạo Xcode project, app/core/infrastructure/test targets | A0 | Hoàn thành | commit này | 6 targets, shared scheme, Debug build và 3 test bundles đạt |
 | M0.2 | Tạo `MenuBarExtra`, ẩn Dock, Settings và Quit | M0.1 | Hoàn thành | commit này | Build/test đạt; LSUIElement=true; app bundle chạy thật và hiện `ÂL` trên menu bar |
@@ -406,3 +407,10 @@ Trạng thái:
 - `nettop` ghi 60 mẫu cách nhau một giây chỉ có header, không có process/socket row hoặc bytes; `lsof` trước/sau không có Internet socket.
 - Đóng performance acceptance P3; tổng hiện tại 25/32 và còn 7 blocker.
 - Không suy diễn sang functional F12: mạng máy chưa bị tắt, nên offline-disabled checklist vẫn mở và cần quyền hệ thống riêng.
+
+### A7 — Independent oracle candidate audit
+
+- Xác minh Hồ Ngọc Đức JavaScript calendar công bố dải 1800–2199 nhưng license header chỉ cho personal, non-commercial use; không copy code/table hoặc suy đoán quyền phát hành.
+- Pin `luc-nham/lunar-calendar` revision `4385e669613ebea3f9f450d0aa3a6937fde01ae1`, MIT, rồi đối chiếu UTC+7 toàn bộ candidate rows.
+- Candidate MIT khớp chuỗi 2033 và ghi rõ leap month 11, nhưng lệch 13.028/146.097 ngày; riêng 1976–2199 còn 476 mismatch từ 2054-05-07 đến 2186-04-18.
+- M2.5/M2.6 tiếp tục `Bị chặn`; audit không làm yếu test, không đổi production data và không gọi candidate thất bại là oracle.

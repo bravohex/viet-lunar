@@ -25,9 +25,19 @@
     {
       "id": "ho-ngoc-duc-javascript",
       "title": "Vietnamese lunar calendar JavaScript edition",
-      "url": "https://www.xemamlich.uhm.vn/JavaScript/",
+      "url": "https://www.xemamlich.uhm.vn/JavaScript/amlich-hnd.js",
       "role": "1800-2199 comparison oracle",
-      "usePolicy": "Do not copy prepared tables or code into production without license approval."
+      "license": "Personal, non-commercial use only with copyright notice",
+      "usePolicy": "Do not copy or use for a release oracle unless VietLunar distribution scope is confirmed compatible or additional permission is obtained."
+    },
+    {
+      "id": "luc-nham-lunar-calendar",
+      "title": "luc-nham/lunar-calendar",
+      "url": "https://github.com/luc-nham/lunar-calendar",
+      "revision": "4385e669613ebea3f9f450d0aa3a6937fde01ae1",
+      "license": "MIT",
+      "role": "Independent implementation audit and Vietnamese leap-month-11 cross-check for 2033",
+      "usePolicy": "Pinned comparison only; rejected as the exhaustive oracle after 13,028 mismatches across 1800-2199. No third-party runtime code is bundled."
     },
     {
       "id": "calendrical-calculations",
