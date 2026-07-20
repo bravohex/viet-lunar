@@ -48,6 +48,7 @@ Trạng thái:
 | A9 | Chuyển menu-bar shell sang AppKit | M8.2, A8 | Hoàn thành | commit này | RSS median 37.776 KB, hard review đạt; UI flow ổn định; launch gate vẫn fail |
 | A10 | Đo first/subsequent popover bằng signpost | M8.2, A9 | Hoàn thành | commit này | Release first median 114,42 ms; subsequent 40,56 ms; P4 đạt |
 | A11 | Link tĩnh Infrastructure module | M8.2, A10 | Hoàn thành | commit này | RSS median 32.496 KB đạt target; một embedded Core framework; launch vẫn fail |
+| A12 | Xác minh launch bằng Points of Interest | M8.2, A11 | Hoàn thành | commit này | Đo đúng current binary; ready median 857,32 ms; app work median 22,05 ms; P5 vẫn fail |
 | B0 | Ghi nhận independent-reference blocker | M2.4 | Hoàn thành | commit này | Không dùng candidate JSON làm oracle hoặc sao chép data chưa rõ license |
 | M0.1 | Tạo Xcode project, app/core/infrastructure/test targets | A0 | Hoàn thành | commit này | 6 targets, shared scheme, Debug build và 3 test bundles đạt |
 | M0.2 | Tạo `MenuBarExtra`, ẩn Dock, Settings và Quit | M0.1 | Hoàn thành | commit này | Build/test đạt; LSUIElement=true; app bundle chạy thật và hiện `ÂL` trên menu bar |
@@ -433,13 +434,13 @@ Trạng thái:
 - Popover và Settings chỉ tạo hosting controller khi mở lần đầu; menu title/accessibility vẫn cập nhật từ live snapshot và preferences qua callback MainActor.
 - Dựng lazy month grid trước khi AppKit định vị popover; clamp frame vào `NSScreen.visibleFrame` để không tràn màn hình. UI navigation/Settings flow đạt ba lần lặp liên tiếp.
 - Ba signed Release RSS run tại khoảng 30 giây là 42.384, 37.776 và 32.816 KB; median 37.776 KB và cả ba đều dưới hard-review threshold 60 MB.
-- Ba App Launch trace kết thúc initial frame ở 888,14, 829,33 và 718,08 ms; median 829,33 ms vẫn cao hơn hard threshold 800 ms, nên P5/M8.2 chưa đóng.
+- Các số initial-frame từng gắn với A9 bị A12 vô hiệu hóa vì LaunchServices resolve tới bundle cũ cùng identity; không dùng chúng làm bằng chứng gate.
 - Full scheme đạt 97/97; clean universal Release, compiled localization resources, sandbox-only entitlement và deep signature verification đều đạt.
 - Quyết định và trade-off được ghi tại `docs/ADR-001-appkit-shell.md`; không dùng ADR này như performance waiver.
 
 ### A10 — Popover Points of Interest
 
-- Thêm `OSSignposter` category `performance` cho application app work, calendar snapshot, first open và subsequent open; interval popover kết thúc sau khi window đã display pending content.
+- Thêm `OSSignposter` cho application app work, calendar snapshot, first open và subsequent open; interval popover kết thúc sau khi window đã display pending content. A12 chuyển category sang `PointsOfInterest` để khớp Instruments.
 - Thêm UI performance test launch app mới cho từng mẫu, mở/đóng/mở lại status item và thu riêng hai `XCTOSSignpostMetric`; event synthesis/polling nằm ngoài interval đo.
 - Release-optimized run ba mẫu ghi first open 114,08–115,60 ms, median 114,42 ms: qua hard threshold 200 ms nhưng chưa đạt target 100 ms.
 - Subsequent open 28,65–48,72 ms, median 40,56 ms: cả ba đạt target 50 ms.
@@ -452,5 +453,14 @@ Trạng thái:
 - App chỉ embed một `VietLunarCore.framework`; test script fail nếu Infrastructure framework xuất hiện lại trong bundle. Distribution checklist chỉ còn app/Core signature consistency.
 - Clean DerivedData full scheme đạt 98/98; clean universal Release chỉ link runtime với Core framework, deep signature verification và launch ngoài Xcode đạt.
 - Ba RSS run tại khoảng 30 giây là 38.144, 31.744 và 32.496 KB; median 32.496 KB đạt target 35 MB, cả ba tiếp tục dưới hard-review threshold 60 MB.
-- Ba App Launch trace là 977,88, 846,92 và 802,18 ms; median 846,92 ms vẫn fail hard threshold 800 ms và không được che bởi memory improvement.
+- Các số initial-frame từng gắn với A11 bị A12 xác nhận là trace của bundle cũ cùng identity và không còn được dùng; memory improvement vẫn hợp lệ vì RSS được lấy trực tiếp từ đúng process.
 - Popover Release signposts sau relink: first median 112,78 ms (qua hard review), subsequent median 35,41 ms (đạt target). P4 giữ `Đạt`; P5/M8.2 vẫn `Bị chặn` bởi launch.
+
+### A12 — Current-binary launch Points of Interest
+
+- Đổi signpost category sang `PointsOfInterest` để Instruments và XCTest cùng đọc application app work, calendar snapshot và popover intervals.
+- Phát event `Status Item Ready` sau khi menu title/accessibility đã cập nhật và status-bar window đã xử lý pending display; AppKit shell hiện tại không có `Initial Frame Rendering` trong App Launch template.
+- Dùng bundle identifier và wrapper name riêng; trace table of contents cùng Mach-O UUID xác nhận cả ba run mở đúng current AppKit/static-Infrastructure binary, không resolve bundle cũ.
+- Ba mốc ready là 926,539, 803,615 và 857,319 ms; median 857,319 ms vẫn vượt hard threshold 800 ms. Application app work chỉ 21,313–26,219 ms, median 22,047 ms; calendar snapshot median 0,127 ms.
+- Popover metric sau remap: first median 131,38 ms, qua hard 200 ms; subsequent median 44,16 ms, đạt target 50 ms.
+- Full scheme và distribution Release verification được chạy lại trong task; A12 hoàn thành nhưng P5/M8.2 tiếp tục `Bị chặn`, tổng acceptance giữ 26/32.

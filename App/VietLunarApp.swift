@@ -51,6 +51,8 @@ final class VietLunarApplicationDelegate: NSObject, NSApplicationDelegate {
         }
         statusItem = item
         updateStatusItem()
+        item.button?.window?.displayIfNeeded()
+        AppPerformance.signposter.emitEvent("Status Item Ready")
     }
 
     func applicationWillTerminate(_ notification: Notification) {

@@ -24,6 +24,6 @@ Các invariant được giữ:
 ## Hệ quả
 
 - RSS 30 giây giảm xuống 32.816–42.384 KB, qua hard-review threshold 60 MB nhưng chưa ổn định dưới target 35 MB.
-- App Launch initial frame giảm từ 951,10 ms xuống range 718,08–888,14 ms; median 829,33 ms vẫn vượt hard threshold 800 ms.
+- AppKit shell hiện tại không phát `Initial Frame Rendering`; A12 đo đúng current binary bằng `Status Item Ready` ở 803,62–926,54 ms, median 857,32 ms, vẫn vượt hard threshold 800 ms. Các số initial-frame từng gắn với A9 đã bị vô hiệu hóa vì trace resolve nhầm bundle cũ cùng identity.
 - Popover cần clamp vào `NSScreen.visibleFrame` sau khi AppKit tạo window để ổn định trên cấu hình thanh menu/màn hình hiện tại.
 - Functional/UI behavior được bảo vệ bằng full scheme và UI flow lặp; M8.2/P5 vẫn mở. ADR này ghi quyết định kiến trúc, không chấp thuận waiver hiệu năng.

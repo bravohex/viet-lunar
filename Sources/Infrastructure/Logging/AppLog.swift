@@ -12,6 +12,6 @@ public enum AppLog: Sendable {
 public enum AppPerformance: Sendable {
     public static let signposter = OSSignposter(
         subsystem: AppLog.subsystem,
-        category: "performance"
+        category: "PointsOfInterest"
     )
 }

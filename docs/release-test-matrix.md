@@ -24,7 +24,7 @@
 | Network dependency static check | Đạt | Không có network API/runtime package hoặc outbound network entitlement |
 | Runtime network observation | Đạt | Signed Release, 60 mẫu nettop và lsof trước/sau không có socket/traffic |
 | Vietnamese localization resources | Đạt | 96 App/Core keys; catalog coverage và compiled app/framework resources được kiểm tra |
-| Popover performance | Đạt measurement gate | Release signposts: first median 112,78 ms (<200 hard); subsequent 35,41 ms (<50 target) |
+| Popover performance | Đạt measurement gate | Release signposts: first median 131,38 ms (<200 hard); subsequent 44,16 ms (<50 target) |
 
 ## Gate chưa đạt
 
@@ -35,7 +35,7 @@
 | Signed installed login item | Chờ quyền thay đổi hệ thống | Cài vào `/Applications`, test enable/disable/approval rồi dọn trạng thái |
 | Real sleep/wake and clock change | Chờ kiểm tra thủ công | Chạy checklist trên signed installed app |
 | Offline runtime | Chờ kiểm tra thủ công | Chạy app khi network adapter thực sự tắt; runtime zero-traffic đã xác nhận riêng |
-| Launch/RSS performance | Bị chặn | Static Infrastructure đưa RSS median dưới target 35 MB; launch median 846,92 ms vẫn >800 ms |
+| Launch/RSS performance | Bị chặn | Static Infrastructure đưa RSS median dưới target 35 MB; đúng current binary có launch-to-ready median 857,32 ms >800 ms, app work median 22,05 ms |
 
 ## Kết luận
 

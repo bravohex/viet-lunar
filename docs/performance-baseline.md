@@ -47,10 +47,11 @@ Memory gate chuyển sang M8.2: cần Allocations/VM investigation ổn định 
 
 | Metric | Kết quả đo | Target / hard review | Kết luận |
 |---|---:|---:|---|
-| Cold launch đến initial frame | 802,18–977,88 ms; median 846,92 ms | <=400 / <=800 ms | Vẫn fail hard review |
-| AppKit init đến initial frame | 217,74–261,54 ms; median 229,65 ms | Thông tin phân rã | Vẫn thấp hơn 330,43 ms ban đầu |
-| Popover first open | 108,89–129,47 ms; median 112,78 ms | <=100 / <=200 ms | Qua hard review; chưa đạt target |
-| Popover subsequent open | 28,50–43,03 ms; median 35,41 ms | <=50 / <=100 ms | Đạt target |
+| Cold launch đến `Status Item Ready` | 803,62–926,54 ms; median 857,32 ms | <=400 / <=800 ms | Vẫn fail hard review |
+| Application app work | 21,31–26,22 ms; median 22,05 ms | Thông tin phân rã | App-owned launch work nhỏ |
+| Calendar snapshot trên launch path | 0,121–0,128 ms; median 0,127 ms | Thông tin phân rã | Không phải bottleneck |
+| Popover first open | 100,48–137,42 ms; median 131,38 ms | <=100 / <=200 ms | Qua hard review; chưa đạt target |
+| Popover subsequent open | 35,89–46,83 ms; median 44,16 ms | <=50 / <=100 ms | Đạt target |
 | RSS khoảng 30 giây | 31.744–38.144 KB; median 32.496 KB | <=35 MB / review >60 MB | Median đạt target; cả ba qua hard review |
 | RSS cuối idle trace | 31.232 KB | <=35 MB | Đạt sau warm-up |
 | Idle CPU 5 phút | +0,01 s / 300,84 s | <=0,1% | Đạt |
@@ -64,9 +65,9 @@ Memory gate chuyển sang M8.2: cần Allocations/VM investigation ổn định 
 
 Core benchmark được compile optimized whole-module với Swift 6 strict concurrency. Bảng ghi median của ba lần chạy liên tiếp sau khi hoàn thiện script, riêng cold conversion ghi min-max. Checksum `297986322` buộc kết quả được tiêu thụ, tránh compiler loại bỏ workload.
 
-App Launch trace 5,52 giây ghi process creation 512,13 ms, sau đó AppKit initialization bắt đầu tại 620,68 ms và initial frame kết thúc tại 951,10 ms. Instruments có overhead, nhưng full result vẫn vượt hard-review threshold nên không được báo đạt.
+Baseline cũ của SwiftUI `MenuBarExtra` ghi process creation 512,13 ms, sau đó AppKit initialization bắt đầu tại 620,68 ms và initial frame kết thúc tại 951,10 ms. Đây chỉ là số lịch sử trước A9; shell AppKit hiện tại không phát `Initial Frame Rendering` trong App Launch template nên A12 dùng event `Status Item Ready` làm mốc sẵn sàng có thể tái lập.
 
-XCUITest xác minh popover mở đúng nhưng event synthesis/polling khoảng một giây làm số thời gian không dùng được như product performance metric. Cần signpost hoặc Instruments interaction trace để đo first/subsequent open không nhiễu.
+XCUITest xác minh popover mở đúng nhưng event synthesis/polling khoảng một giây không được dùng như product performance metric. `XCTOSSignpostMetric` chỉ tổng hợp interval app-side cho first/subsequent open, tách phần overhead này khỏi kết quả.
 
 ### A8 — Kiểm tra sau khi trì hoãn launch work
 
@@ -88,7 +89,7 @@ Theo fallback của spec, application lifecycle và status item được chuyể
 
 Ba signed Release run với popover chưa từng mở ghi RSS tại khoảng 30 giây là 42.384, 37.776 và 32.816 KB; median 37.776 KB. Cả ba qua hard-review threshold 60 MB, một run qua target 35 MB nhưng median chưa qua target.
 
-Ba App Launch trace trên cùng bundle kết thúc initial frame ở 888,14, 829,33 và 718,08 ms; lần đầu được chạy ngay sau clean build/sign. Median 829,33 ms vẫn cao hơn hard threshold 800 ms. Phần từ AppKit initialization đến initial frame giảm từ 330,43 ms cũ xuống 212,50–249,40 ms, trong khi process creation vẫn biến thiên 366,17–498,18 ms.
+Các số initial-frame từng ghi cho A9 đã bị A12 vô hiệu hóa: LaunchServices mở bundle cũ trong `.build/DerivedData-Release` vì nhiều app có cùng tên/bundle identifier. Trace table of contents và Mach-O UUID xác nhận chúng không thuộc AppKit artifact hiện tại, nên các số đó không còn được dùng làm bằng chứng gate.
 
 Kết quả này đóng vi phạm RSS hard-review nhưng chưa đóng P5 vì launch vẫn fail. ADR kiến trúc không phải waiver cho các ngưỡng còn fail.
 
@@ -109,10 +110,26 @@ Release-optimized measurement dùng ba sample sau một warm-up bị XCTest lo�
 
 Infrastructure không có resource bundle nên được đổi từ dynamic framework sang static library, còn Core tiếp tục là embedded framework để giữ ownership của Vietnamese localization resources. Signed Release app vì vậy chỉ load một internal dylib và chỉ cần ký app/Core nhất quán.
 
-Ba RSS sample khoảng 30 giây là 38.144, 31.744 và 32.496 KB; median 32.496 KB lần đầu đạt target 35 MB, dù một run vẫn cao hơn target. Ba App Launch trace kết thúc initial frame ở 977,88, 846,92 và 802,18 ms; median 846,92 ms không cải thiện gate và vẫn vượt hard threshold 800 ms. Process creation 461,57–503,59 ms cùng phần trước AppKit tiếp tục chiếm phần lớn biến thiên.
+Ba RSS sample khoảng 30 giây là 38.144, 31.744 và 32.496 KB; median 32.496 KB lần đầu đạt target 35 MB, dù một run vẫn cao hơn target. Các App Launch initial-frame trace từng gắn với A11 thực tế vẫn resolve tới bundle cũ có cùng identity; A12 thay chúng bằng phép đo định danh duy nhất trên đúng static-linked binary.
 
 Release popover metric sau static relink vẫn đạt measurement gate: first 108,89–129,47 ms (median 112,78 ms, dưới hard 200 ms), subsequent 28,50–43,03 ms (median 35,41 ms, dưới target 50 ms). Thay đổi được giữ cho memory/bundle/signing simplification, không được dùng để tuyên bố launch đạt.
 
+### A12 — Points of Interest launch verification
+
+Category signpost được đổi thành `PointsOfInterest`, khớp Instruments template và `XCTOSSignpostMetric`. Ngay sau khi `NSStatusItem` nhận title/accessibility state và status-bar window xử lý pending display, app phát event `Status Item Ready`.
+
+Để tránh LaunchServices resolve nhầm app cũ, artifact đo dùng bundle identifier riêng, tên wrapper riêng và được kiểm tra lại bằng trace table of contents cùng Mach-O UUID. Ba cold-launch trace trên đúng current AppKit/static-Infrastructure binary:
+
+| Run | Status item ready | Application app work | Calendar snapshot |
+|---|---:|---:|---:|
+| A12-1 | 926,539 ms | 26,219 ms | 0,127 ms |
+| A12-2 | 803,615 ms | 22,047 ms | 0,121 ms |
+| A12-3 | 857,319 ms | 21,313 ms | 0,128 ms |
+
+Median `Status Item Ready` là 857,319 ms, vẫn vượt hard threshold 800 ms. Median app-owned interval chỉ 22,047 ms và snapshot khoảng 0,127 ms; phần lớn latency xảy ra trước khi application delegate bắt đầu app work. P5 vì vậy vẫn cần xử lý ở process/system launch path hoặc waiver được phê duyệt, không thể đóng bằng cách bỏ correctness-critical snapshot.
+
+Popover measurement sau khi đổi category tiếp tục qua gate: first 100,48–137,42 ms (median 131,38 ms, dưới hard 200 ms), subsequent 35,89–46,83 ms (median 44,16 ms, dưới target 50 ms).
+
 ### M8.2 gate
 
-M8.2 chưa đạt vì cold/median launch vẫn vượt hard-review threshold. Popover đã có signpost metrics và không vi phạm hard threshold; RSS median 30 giây đạt target 35 MB sau AppKit shell + static Infrastructure. Core/grid/bundle/idle CPU đều đạt và calendar core không bị viết lại.
+M8.2 chưa đạt vì cold-launch-to-ready median vẫn vượt hard-review threshold. Popover đã có signpost metrics và không vi phạm hard threshold; RSS median 30 giây đạt target 35 MB sau AppKit shell + static Infrastructure. Core/grid/bundle/idle CPU đều đạt và calendar core không bị viết lại.

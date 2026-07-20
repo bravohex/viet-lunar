@@ -50,8 +50,8 @@ Quy ước trạng thái:
 | P1 | Không repeating timer ở cấu hình mặc định | Đạt | One-shot scheduler, source scan và replacement/cancel tests; không có polling theo giây. |
 | P2 | Không sustained idle CPU work | Đạt | Signed Release Time Profiler 300,84 giây chỉ tăng 0,01 giây CPU, không có app-owned loop. |
 | P3 | Không có network traffic bất ngờ | Đạt | Signed Release: 60 mẫu `nettop` không có process/socket row hoặc bytes; `lsof` trước/sau không có Internet socket. |
-| P4 | Có số đo launch, popover, memory và conversion | Đạt | Release signposts sau static relink: first median 112,78 ms, subsequent median 35,41 ms; launch/RSS/conversion có trace/benchmark riêng. |
-| P5 | Vi phạm hard threshold có profiling note và quyết định được duyệt | Bị chặn | AppKit shell + static Infrastructure đưa RSS median xuống 32.496 KB, nhưng App Launch median 846,92 ms vẫn vượt 800 ms; chưa có fix đạt ngưỡng hoặc waiver được chấp thuận. |
+| P4 | Có số đo launch, popover, memory và conversion | Đạt | Current-binary Points of Interest: ready median 857,32 ms, first popover 131,38 ms, subsequent 44,16 ms; RSS/conversion có trace/benchmark riêng. |
+| P5 | Vi phạm hard threshold có profiling note và quyết định được duyệt | Bị chặn | AppKit shell + static Infrastructure đưa RSS median xuống 32.496 KB; đúng current binary vẫn có launch-to-ready median 857,32 ms >800 ms dù app work chỉ 22,05 ms. Chưa có fix đạt ngưỡng hoặc waiver được chấp thuận. |
 
 ## 19.4 — Nghiệm thu chất lượng code
 
