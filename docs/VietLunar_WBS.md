@@ -40,6 +40,7 @@ Trạng thái:
 | A1 | Ổn định deterministic Xcode project generation | M0.1 | Hoàn thành | commit này | Hai lần generate liên tiếp có checksum byte-identical |
 | A2 | Khóa UUID cho target dependency trùng cấu trúc | A1 | Hoàn thành | commit này | Ba lần generate liên tiếp byte-identical sau khi project mở rộng |
 | A3 | Ổn định lifecycle burst coalescing | M6.3 | Hoàn thành | commit này | Debounce one-shot 10 ms; test lặp 3 lần đạt |
+| A4 | Xác minh signed Release idle behavior | M6.4 | Hoàn thành | commit này | Time Profiler 300,84s; +0,01s CPU; không app-owned loop |
 | B0 | Ghi nhận independent-reference blocker | M2.4 | Hoàn thành | commit này | Không dùng candidate JSON làm oracle hoặc sao chép data chưa rõ license |
 | M0.1 | Tạo Xcode project, app/core/infrastructure/test targets | A0 | Hoàn thành | commit này | 6 targets, shared scheme, Debug build và 3 test bundles đạt |
 | M0.2 | Tạo `MenuBarExtra`, ẩn Dock, Settings và Quit | M0.1 | Hoàn thành | commit này | Build/test đạt; LSUIElement=true; app bundle chạy thật và hiện `ÂL` trên menu bar |
@@ -66,7 +67,7 @@ Trạng thái:
 | M6.1 | Pure next-boundary calculation | M3.3 | Hoàn thành | commit này | Midnight/hour/minute/DST/exact-equality tests đạt |
 | M6.2 | One-shot scheduler | M6.1 | Hoàn thành | commit này | Single task, replacement/cancel/deinit/tolerance tests đạt |
 | M6.3 | Lifecycle source và coalesced refresh | M6.2, M5.1 | Hoàn thành | commit này | 5 system + popover/boundary events; coalescing tests đạt |
-| M6.4 | Xác minh idle behavior | M6.3 | Bị chặn | commit này | 5-minute Debug run fail CPU/RSS; cần Instruments Release profile |
+| M6.4 | Xác minh idle behavior | M6.3 | Hoàn thành | `2c17ca5` + A4 | Signed Release 5-minute idle đạt; transient RSS chuyển M8.2 |
 | M7.1 | Typed preferences store | M0.3 | Hoàn thành | commit này | Versioned root, v0 migration/change stream; toàn scheme 88/88 tests |
 | M7.2 | Settings UI | M7.1, M5.1, M6.3 | Hoàn thành | commit này | Live controls, minute-boundary clock, isolated UI flow; 92/92 tests |
 | M7.3 | `SMLoginItemService` | M7.2 | Bị chặn | commit này | Code/93 tests/Developer ID Release đạt; chưa cài `/Applications` và register thật |
@@ -299,12 +300,13 @@ Trạng thái:
 - `AppState` refresh snapshot rồi thay one-shot UTC+7 midnight; popover không gọi refresh trực tiếp và không tạo timer trùng.
 - Test với NotificationCenter/source giả xác nhận mapping, explicit events, burst coalescing, idempotent start và stop; toàn scheme đạt 83/83 tests.
 
-### M6.4 — Idle behavior blocker
+### M6.4 — Idle behavior verification
 
 - Đã chạy hai cửa sổ 5 phút và một diagnostic window; kết quả đầy đủ nằm trong `docs/performance-baseline.md`.
 - App phần lớn ngủ và không có repeating log/timer, nhưng low-impact run tăng 12,64 giây CPU time/300 giây và RSS đạt 124.752 KB, vượt gate spec.
-- Diagnostic run 91 giây sạch không đủ để phủ nhận failure 5 phút; không đánh dấu task hoàn thành bằng kết quả chọn lọc.
-- Cần Instruments Energy Log/Time Profiler trên signed Release build để bắt đúng transient stack và phân tách Debug/SwiftUI overhead.
+- Diagnostic run 91 giây sạch khi đó chưa đủ để phủ nhận failure 5 phút, nên task đã được giữ blocker cho đến khi có Release profile.
+- Follow-up A4 chạy Developer ID signed Release trong Time Profiler 300,84 giây: CPU +0,01 giây, 17 running samples hệ thống, không có app-owned loop; M6.4 được đóng bằng evidence mới này.
+- RSS cold tại khoảng 30 giây vẫn có lần đạt 63.264 KB; memory review không bị bỏ qua mà chuyển sang M8.2.
 
 ### A3 — Stable lifecycle burst coalescing
 
@@ -354,4 +356,12 @@ Trạng thái:
 - `docs/release-test-matrix.md` ghi môi trường, các gate tự động đã đạt và điều kiện đóng từng checklist còn thiếu.
 - Unit/property/lifecycle/preferences/UI, clean Release build, static offline boundary và accessory runtime đều đã có bằng chứng.
 - Full Debug scheme đạt 95/95 tests; Release executable là universal `x86_64 arm64`, `LSUIElement=true` và không có outbound network entitlement.
-- Task giữ `Bị chặn` vì independent oracle/2033, Instruments idle, installed login item, real sleep/wake và offline runtime vẫn là gates bắt buộc.
+- Task giữ `Bị chặn` vì independent oracle/2033, installed login item, real sleep/wake và offline runtime vẫn là gates bắt buộc.
+
+### A4 — Signed Release idle verification
+
+- Clean Release bundle được ký cùng Developer ID cho app và hai embedded frameworks trước khi launch, tránh Team ID mismatch của ad-hoc hardened runtime.
+- Time Profiler chạy đủ 300,84 giây với popover đóng/default preferences; CPU time tăng 0,01 giây, thấp hơn nhiều target 0,1%.
+- 17 running samples đều nằm trong system callbacks/run loop; không có repeating timer, polling hoặc VietLunar-owned hot stack.
+- RSS giảm 50.816 KB → 31.232 KB trong profiler window; transient cold RSS >60 MB vẫn là blocker riêng của M8.2.
+- Power Profiler không hỗ trợ macOS host; Allocations CLI attach lỗi và gây nhiễu nên không được dùng làm bằng chứng đạt.
