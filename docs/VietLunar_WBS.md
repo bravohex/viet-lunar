@@ -64,7 +64,7 @@ Trạng thái:
 | M5.4 | UI smoke tests | M5.3 | Hoàn thành | commit này | Launch/open/navigate/today/settings end-to-end đạt |
 | M6.1 | Pure next-boundary calculation | M3.3 | Hoàn thành | commit này | Midnight/hour/minute/DST/exact-equality tests đạt |
 | M6.2 | One-shot scheduler | M6.1 | Hoàn thành | commit này | Single task, replacement/cancel/deinit/tolerance tests đạt |
-| M6.3 | Lifecycle source và coalesced refresh | M6.2, M5.1 | Chờ | — | Synthetic lifecycle tests |
+| M6.3 | Lifecycle source và coalesced refresh | M6.2, M5.1 | Hoàn thành | commit này | 5 system + popover/boundary events; coalescing tests đạt |
 | M6.4 | Xác minh idle behavior | M6.3 | Chờ | — | `docs/performance-baseline.md` + Instruments thủ công |
 | M7.1 | Typed preferences store | M0.3 | Chờ | — | Defaults, isolated suite, migration/change stream tests |
 | M7.2 | Settings UI | M7.1, M5.1, M6.3 | Chờ | — | Build + preference integration tests |
@@ -289,3 +289,11 @@ Trạng thái:
 - `BoundarySleeping` cho phép production dùng continuous clock với tolerance, còn test dùng manual sleeper không chờ thời gian thật.
 - Test exact delay/tolerance, replacement chỉ fire action mới, explicit cancellation, past boundary clamp về 0 và deinit cancellation.
 - Reference checks đạt; toàn scheme đạt 80/80 tests.
+
+### M6.3 — Lifecycle source và coalesced refresh
+
+- `SystemLifecycleSource` ánh xạ day changed, clock changed, time-zone changed, app active và wake từ sleep sang typed `AppLifecycleEvent`.
+- Popover open và scheduled boundary đi qua cùng event stream, giúp mọi refresh có một đường điều phối thống nhất.
+- `LifecycleEventCoordinator` chỉ có một consumer, gom burst cùng lượt MainActor thành một refresh và dừng/cancel sạch.
+- `AppState` refresh snapshot rồi thay one-shot UTC+7 midnight; popover không gọi refresh trực tiếp và không tạo timer trùng.
+- Test với NotificationCenter/source giả xác nhận mapping, explicit events, burst coalescing, idempotent start và stop; toàn scheme đạt 83/83 tests.

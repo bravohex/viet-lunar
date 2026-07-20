@@ -11,7 +11,7 @@ struct VietLunarApp: App {
             MenuPopoverView()
                 .environmentObject(appState)
                 .onAppear {
-                    appState.refresh()
+                    appState.popoverOpened()
                 }
         } label: {
             if let title = appState.menuBarPresentation.title {

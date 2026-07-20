@@ -1,6 +1,7 @@
 import Combine
 import Foundation
 import VietLunarCore
+import VietLunarInfrastructure
 
 @MainActor
 final class AppState: ObservableObject {
@@ -15,17 +16,36 @@ final class AppState: ObservableObject {
 
     private let snapshotFactory: CalendarSnapshotFactory
     private let monthGridBuilder: MonthGridBuilder
+    private let lifecycleSource: any LifecycleEventSourcing
+    private let boundaryCalculator: any BoundaryCalculating
+    private let boundaryScheduler: any BoundaryScheduling
+    private var lifecycleCoordinator: LifecycleEventCoordinator?
 
     init(
         lunarEngine: any LunarCalendarCalculating = LunarCalendarEngine(),
-        clock: any Clock = SystemClock()
+        clock: any Clock = SystemClock(),
+        lifecycleSource: any LifecycleEventSourcing = SystemLifecycleSource(),
+        boundaryCalculator: any BoundaryCalculating = BoundaryCalculator(),
+        boundaryScheduler: (any BoundaryScheduling)? = nil
     ) {
         snapshotFactory = CalendarSnapshotFactory(
             lunarEngine: lunarEngine,
             clock: clock
         )
         monthGridBuilder = MonthGridBuilder(lunarEngine: lunarEngine)
+        self.lifecycleSource = lifecycleSource
+        self.boundaryCalculator = boundaryCalculator
+        self.boundaryScheduler = boundaryScheduler
+            ?? OneShotBoundaryScheduler(clock: clock)
         refresh()
+
+        let coordinator = LifecycleEventCoordinator(
+            source: lifecycleSource
+        ) { [weak self] in
+            self?.refresh()
+        }
+        lifecycleCoordinator = coordinator
+        coordinator.start()
     }
 
     var menuBarPresentation: MenuBarTitlePresentation {
@@ -57,9 +77,14 @@ final class AppState: ObservableObject {
             }
             try rebuildVisibleMonth()
             errorMessage = nil
+            scheduleNextBoundary(after: snapshot.instant)
         } catch {
             errorMessage = "Không thể cập nhật lịch âm trong dải ngày được hỗ trợ."
         }
+    }
+
+    func popoverOpened() {
+        lifecycleSource.emit(.popoverOpened)
     }
 
     var selectedCell: MonthGridCell? {
@@ -192,5 +217,20 @@ final class AppState: ObservableObject {
             weekStart: .defaultValue,
             today: snapshot.solarDate
         )) != nil
+    }
+
+    private func scheduleNextBoundary(after instant: Date) {
+        do {
+            let boundary = try boundaryCalculator.nextBoundary(
+                after: instant,
+                requirements: .lunarDateOnly
+            )
+            boundaryScheduler.schedule(at: boundary, tolerance: 1) { [weak self] in
+                self?.lifecycleSource.emit(.scheduledBoundary)
+            }
+        } catch {
+            boundaryScheduler.cancel()
+            errorMessage = "Không thể lên lịch cập nhật ngày tiếp theo."
+        }
     }
 }
