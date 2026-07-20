@@ -75,6 +75,19 @@ final class VietnameseCalendarFormatterTests: XCTestCase {
             ),
             "Ngày 25 tháng 6 nhuận âm lịch, năm Ất Tỵ"
         )
+        XCTAssertEqual(
+            VietnameseCalendarFormatter.popoverLunarDate(
+                normal,
+                yearCanChi: calculator.year(forLunarYear: normal.year)
+            ),
+            "07 tháng 6 năm Bính Ngọ"
+        )
+        XCTAssertEqual(
+            VietnameseCalendarFormatter.monthTitle(
+                try YearMonth(validatingYear: 2026, month: 7)
+            ),
+            "Tháng 7 năm 2026"
+        )
     }
 
     func testCanChiAndMonthGridLabelsPreserveVietnameseText() throws {

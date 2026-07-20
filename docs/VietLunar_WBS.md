@@ -58,7 +58,7 @@ Trạng thái:
 | M4.1 | `MonthGridBuilder` 42 ô | M2.4 | Hoàn thành | commit này | 42 ngày liên tiếp; week starts/leap/boundary tests đạt |
 | M4.2 | Vietnamese formatters | M3.4, M4.1 | Hoàn thành | commit này | Exact strings, leap marker, weekday và VoiceOver tests đạt |
 | M5.1 | Menu title từ live snapshot | M3.4, M4.2 | Hoàn thành | commit này | Live snapshot title, 5 formats, full accessibility label; app chạy thật |
-| M5.2 | Calendar popover và month navigation | M4.1, M5.1 | Chờ | — | Build + view/domain tests |
+| M5.2 | Calendar popover và month navigation | M4.1, M5.1 | Hoàn thành | commit này | Header, grid 6×7, detail/footer/range navigation; app chạy thật |
 | M5.3 | Keyboard và accessibility | M5.2 | Chờ | — | Keyboard semantics tests; Accessibility Inspector thủ công |
 | M5.4 | UI smoke tests | M5.3 | Chờ | — | Launch/open/navigate/today/settings UI tests |
 | M6.1 | Pure next-boundary calculation | M3.3 | Chờ | — | Midnight/minute/hour/time-zone tests |
@@ -242,3 +242,11 @@ Trạng thái:
 - Accessibility label luôn là tiếng Việt đầy đủ cho ngày dương, ngày âm, Can–Chi ngày/giờ, kể cả khi menu bar chỉ hiện icon.
 - App chỉ refresh rõ ràng khi khởi tạo/mở popover; task này không thêm repeating timer.
 - Debug app bundle khởi chạy thật thành công; reference checks và toàn scheme đạt 67/67 tests.
+
+### M5.2 — Calendar popover và month navigation
+
+- Thay popover placeholder bằng header live, lưới 6×7, chi tiết ngày chọn và footer Hôm nay/Cài đặt/Thoát.
+- UI dùng semantic colors/material nên hỗ trợ light/dark mode; mỗi cell là value view, không tạo observable object riêng.
+- Điều hướng tháng giữ ngày chọn khi có thể, clamp ngày cuối tháng, và tự vô hiệu hóa nút khi grid kế tiếp chạm ngoài dải dữ liệu.
+- Thêm phép cộng tháng có kiểm tra biên cho `YearMonth`; domain grid/leap/range tests tiếp tục bảo vệ state UI.
+- Debug app bundle khởi chạy thật thành công; reference checks và toàn scheme đạt 68/68 tests.

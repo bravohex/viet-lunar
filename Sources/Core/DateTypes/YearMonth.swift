@@ -21,6 +21,18 @@ public struct YearMonth: Hashable, Codable, Sendable, Comparable {
         (lhs.year, lhs.month) < (rhs.year, rhs.month)
     }
 
+    public func adding(months offset: Int) throws -> Self {
+        let currentIndex = ((year - 1) * 12) + (month - 1)
+        let (targetIndex, overflow) = currentIndex.addingReportingOverflow(offset)
+        guard !overflow, targetIndex >= 0 else {
+            throw DateValidationError.invalidYearMonth(year: 0, month: month)
+        }
+
+        let targetYear = (targetIndex / 12) + 1
+        let targetMonth = (targetIndex % 12) + 1
+        return try Self(validatingYear: targetYear, month: targetMonth)
+    }
+
     public init(from decoder: any Decoder) throws {
         let container = try decoder.container(keyedBy: CodingKeys.self)
         try self.init(

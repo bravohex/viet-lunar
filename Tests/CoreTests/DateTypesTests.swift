@@ -28,6 +28,21 @@ final class DateTypesTests: XCTestCase {
         XCTAssertLessThan(december, january)
     }
 
+    func testYearMonthNavigationCrossesYearAndClampsToValidRange() throws {
+        let january = try YearMonth(validatingYear: 2026, month: 1)
+        let december = try january.adding(months: -1)
+        XCTAssertEqual(december, try YearMonth(validatingYear: 2025, month: 12))
+        XCTAssertEqual(
+            try december.adding(months: 14),
+            try YearMonth(validatingYear: 2027, month: 2)
+        )
+
+        let firstMonth = try YearMonth(validatingYear: 1, month: 1)
+        XCTAssertThrowsError(try firstMonth.adding(months: -1))
+        let finalMonth = try YearMonth(validatingYear: 9_999, month: 12)
+        XCTAssertThrowsError(try finalMonth.adding(months: 1))
+    }
+
     func testValueTypesRoundTripThroughCodable() throws {
         try assertRoundTrip(SolarDate(validatingYear: 2026, month: 7, day: 20))
         try assertRoundTrip(

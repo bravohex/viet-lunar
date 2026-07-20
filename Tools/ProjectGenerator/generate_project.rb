@@ -113,7 +113,21 @@ add_sources(
   "Sources/Infrastructure",
   ["VietLunarInfrastructure.swift", "Logging/AppLog.swift"]
 )
-add_sources(project, app, "App", "App", ["VietLunarApp.swift", "AppState.swift"])
+add_sources(
+  project,
+  app,
+  "App",
+  "App",
+  [
+    "VietLunarApp.swift",
+    "AppState.swift",
+    "Views/MenuPopoverView.swift",
+    "Views/CalendarHeaderView.swift",
+    "Views/MonthGridView.swift",
+    "Views/SelectedDayDetailView.swift",
+    "Views/PopoverFooterView.swift"
+  ]
+)
 add_sources(
   project,
   core_tests,

@@ -45,6 +45,18 @@ public enum VietnameseCalendarFormatter: Sendable {
         "Ngày \(lunarDateFragment(lunarDate)), năm \(canChi(yearCanChi))"
     }
 
+    public static func popoverLunarDate(
+        _ lunarDate: LunarDate,
+        yearCanChi: StemBranch
+    ) -> String {
+        let leapMarker = lunarDate.isLeapMonth ? " nhuận" : ""
+        return "\(twoDigits(lunarDate.day)) tháng \(lunarDate.month)\(leapMarker) năm \(canChi(yearCanChi))"
+    }
+
+    public static func monthTitle(_ yearMonth: YearMonth) -> String {
+        "Tháng \(yearMonth.month) năm \(yearMonth.year)"
+    }
+
     public static func canChi(_ value: StemBranch) -> String {
         value.description
     }
