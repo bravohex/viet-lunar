@@ -37,7 +37,7 @@ Trạng thái:
 | Task | Nội dung | Dependency chính | Trạng thái | Commit | Bằng chứng |
 |---|---|---|---|---|---|
 | A0 | Phân tích tài liệu và tạo WBS thực thi | — | Hoàn thành | commit này | Đã đọc đầy đủ spec, plan, prompt, test vectors; knowledge graph hợp lệ |
-| M0.1 | Tạo Xcode project, app/core/infrastructure/test targets | A0 | Chờ | — | `xcodebuild -list`, build tối thiểu, test discovery |
+| M0.1 | Tạo Xcode project, app/core/infrastructure/test targets | A0 | Hoàn thành | commit này | 6 targets, shared scheme, Debug build và 3 test bundles đạt |
 | M0.2 | Tạo `MenuBarExtra`, ẩn Dock, Settings và Quit | M0.1 | Chờ | — | Build + test cấu hình; kiểm tra chạy app |
 | M0.3 | Bổ sung chuẩn repo, logging, README/NOTICE, test script | M0.2 | Chờ | — | Một lệnh build/test được tài liệu hóa |
 | M1.1 | Value types được validate | M0.3 | Chờ | — | Leap-year, invalid input, Comparable, Codable tests |
@@ -91,3 +91,11 @@ Trạng thái:
 - Đã xác nhận repo chưa có implementation.
 - Đã tách MVP M0-M8 khỏi future event E0-E5.
 - Đã ghi rõ các gate không được suy đoán, đặc biệt provenance và 2033.
+
+### M0.1 — Tạo project và targets
+
+- Tạo native Xcode project bằng generator phát triển có tính deterministic; không thêm runtime dependency.
+- Tạo app, core framework, infrastructure framework, hai unit-test bundles và một UI-test bundle.
+- Dùng deployment target macOS 13.0, Swift 6 và strict concurrency.
+- Giữ tên thư mục vật lý ngắn theo trách nhiệm: `Sources/Core`, `Sources/Infrastructure`, `Tests/CoreTests`, `Tests/InfrastructureTests`, `Tests/UITests`.
+- `xcodebuild -list`, Debug build và test scheme đều đạt trên Xcode 26.0.1.
