@@ -63,6 +63,7 @@ app.build_configurations.each do |configuration|
   settings["ENABLE_APP_SANDBOX"] = "YES"
   settings["ENABLE_HARDENED_RUNTIME"] = "YES"
   settings["INFOPLIST_KEY_LSApplicationCategoryType"] = "public.app-category.utilities"
+  settings["INFOPLIST_KEY_LSUIElement"] = "YES"
   settings["PRODUCT_NAME"] = "VietLunar"
 end
 
@@ -84,6 +85,15 @@ link_target(core_tests, core)
 link_target(infrastructure_tests, core)
 link_target(infrastructure_tests, infrastructure)
 ui_tests.add_dependency(app)
+
+embed_frameworks = app.new_copy_files_build_phase("Embed Frameworks")
+embed_frameworks.dst_subfolder_spec = "10"
+[core, infrastructure].each do |framework_target|
+  build_file = embed_frameworks.add_file_reference(framework_target.product_reference, true)
+  build_file.settings = {
+    "ATTRIBUTES" => ["CodeSignOnCopy", "RemoveHeadersOnCopy"]
+  }
+end
 
 project.build_configurations.each do |configuration|
   settings = configuration.build_settings

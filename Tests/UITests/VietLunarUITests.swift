@@ -5,7 +5,7 @@ final class VietLunarUITests: XCTestCase {
     func testApplicationLaunches() {
         let application = XCUIApplication()
         application.launch()
-        XCTAssertTrue(application.wait(for: .runningForeground, timeout: 5))
+        XCTAssertTrue(application.wait(for: .runningBackground, timeout: 5))
         application.terminate()
     }
 }

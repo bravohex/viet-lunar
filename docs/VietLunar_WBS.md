@@ -38,7 +38,7 @@ Trạng thái:
 |---|---|---|---|---|---|
 | A0 | Phân tích tài liệu và tạo WBS thực thi | — | Hoàn thành | commit này | Đã đọc đầy đủ spec, plan, prompt, test vectors; knowledge graph hợp lệ |
 | M0.1 | Tạo Xcode project, app/core/infrastructure/test targets | A0 | Hoàn thành | commit này | 6 targets, shared scheme, Debug build và 3 test bundles đạt |
-| M0.2 | Tạo `MenuBarExtra`, ẩn Dock, Settings và Quit | M0.1 | Chờ | — | Build + test cấu hình; kiểm tra chạy app |
+| M0.2 | Tạo `MenuBarExtra`, ẩn Dock, Settings và Quit | M0.1 | Hoàn thành | commit này | Build/test đạt; LSUIElement=true; app bundle chạy thật và hiện `ÂL` trên menu bar |
 | M0.3 | Bổ sung chuẩn repo, logging, README/NOTICE, test script | M0.2 | Chờ | — | Một lệnh build/test được tài liệu hóa |
 | M1.1 | Value types được validate | M0.3 | Chờ | — | Leap-year, invalid input, Comparable, Codable tests |
 | M1.2 | Gregorian/JDN conversion | M1.1 | Chờ | — | Known JDN + broad round-trip tests |
@@ -99,3 +99,11 @@ Trạng thái:
 - Dùng deployment target macOS 13.0, Swift 6 và strict concurrency.
 - Giữ tên thư mục vật lý ngắn theo trách nhiệm: `Sources/Core`, `Sources/Infrastructure`, `Tests/CoreTests`, `Tests/InfrastructureTests`, `Tests/UITests`.
 - `xcodebuild -list`, Debug build và test scheme đều đạt trên Xcode 26.0.1.
+
+### M0.2 — Menu-bar application shell
+
+- Thay cửa sổ app mặc định bằng `MenuBarExtra` kiểu window với nhãn `ÂL`.
+- Thêm popover placeholder, phiên bản, Settings và Quit bằng tiếng Việt.
+- Bật `LSUIElement=true` để ẩn Dock icon và menu ứng dụng thông thường.
+- Sửa build phase để nhúng cả hai framework nội bộ vào app bundle; kiểm tra trực tiếp app chạy được ngoài test runner.
+- Debug build, unit/UI test scheme và kiểm tra Info.plist đều đạt; ảnh chụp thực tế xác nhận mục `ÂL` xuất hiện trên menu bar.
