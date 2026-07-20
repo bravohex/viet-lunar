@@ -57,7 +57,7 @@ Trạng thái:
 | M3.4 | `CalendarSnapshotFactory` | M2.4, M3.3, M1.3 | Hoàn thành | commit này | Một instant tạo solar/lunar và 4 Can-Chi; midnight tests đạt |
 | M4.1 | `MonthGridBuilder` 42 ô | M2.4 | Hoàn thành | commit này | 42 ngày liên tiếp; week starts/leap/boundary tests đạt |
 | M4.2 | Vietnamese formatters | M3.4, M4.1 | Hoàn thành | commit này | Exact strings, leap marker, weekday và VoiceOver tests đạt |
-| M5.1 | Menu title từ live snapshot | M3.4, M4.2 | Chờ | — | State/preference update tests + build |
+| M5.1 | Menu title từ live snapshot | M3.4, M4.2 | Hoàn thành | commit này | Live snapshot title, 5 formats, full accessibility label; app chạy thật |
 | M5.2 | Calendar popover và month navigation | M4.1, M5.1 | Chờ | — | Build + view/domain tests |
 | M5.3 | Keyboard và accessibility | M5.2 | Chờ | — | Keyboard semantics tests; Accessibility Inspector thủ công |
 | M5.4 | UI smoke tests | M5.3 | Chờ | — | Launch/open/navigate/today/settings UI tests |
@@ -234,3 +234,11 @@ Trạng thái:
 - Compact leap month dùng hậu tố `N`; mô tả đầy đủ dùng `nhuận`; chuỗi `Tỵ`, `ÂL`, `Bính Ngọ` được test chính xác dấu.
 - VoiceOver label khớp product copy trong spec, gồm trạng thái `hôm nay` khi phù hợp.
 - Reference checks đạt; toàn scheme đạt 64/64 tests.
+
+### M5.1 — Menu title từ live snapshot
+
+- Thay title `ÂL` placeholder bằng presentation dẫn xuất trực tiếp từ `CalendarSnapshot`; mặc định là `dd/MM ÂL`.
+- Thêm năm format ổn định, gồm icon-only; `AppState.titleFormat` là published state nên thay đổi format làm SwiftUI cập nhật ngay, không lưu chuỗi dẫn xuất.
+- Accessibility label luôn là tiếng Việt đầy đủ cho ngày dương, ngày âm, Can–Chi ngày/giờ, kể cả khi menu bar chỉ hiện icon.
+- App chỉ refresh rõ ràng khi khởi tạo/mở popover; task này không thêm repeating timer.
+- Debug app bundle khởi chạy thật thành công; reference checks và toàn scheme đạt 67/67 tests.

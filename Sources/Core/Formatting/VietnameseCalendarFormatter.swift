@@ -1,7 +1,33 @@
 public enum VietnameseCalendarFormatter: Sendable {
+    public static func menuBarPresentation(
+        for snapshot: CalendarSnapshot,
+        format: MenuBarTitleFormat
+    ) -> MenuBarTitlePresentation {
+        let lunar = compactLunarDate(snapshot.lunarDate, includesSuffix: false)
+        let solar = compactSolarDate(snapshot.solarDate)
+        let title: String?
+
+        switch format {
+        case .lunarDate:
+            title = compactMenuTitle(for: snapshot.lunarDate)
+        case .solarAndLunar:
+            title = "\(solar) · \(compactMenuTitle(for: snapshot.lunarDate))"
+        case .lunarAndDayCanChi:
+            title = "\(lunar) · \(canChi(snapshot.dayCanChi))"
+        case .solarLunarAndDayCanChi:
+            title = "\(solar) · \(lunar) · \(canChi(snapshot.dayCanChi))"
+        case .iconOnly:
+            title = nil
+        }
+
+        return MenuBarTitlePresentation(
+            title: title,
+            accessibilityLabel: menuBarAccessibilityLabel(for: snapshot)
+        )
+    }
+
     public static func compactMenuTitle(for lunarDate: LunarDate) -> String {
-        let leapMarker = lunarDate.isLeapMonth ? "N" : ""
-        return "\(twoDigits(lunarDate.day))/\(twoDigits(lunarDate.month))\(leapMarker) ÂL"
+        compactLunarDate(lunarDate, includesSuffix: true)
     }
 
     public static func compactSolarDate(_ solarDate: SolarDate) -> String {
@@ -42,6 +68,12 @@ public enum VietnameseCalendarFormatter: Sendable {
         return "\(gregorian); \(lunar)\(today)."
     }
 
+    public static func menuBarAccessibilityLabel(for snapshot: CalendarSnapshot) -> String {
+        let gregorian = "\(weekdayName(for: snapshot.solarDate)), ngày \(snapshot.solarDate.day) tháng \(snapshot.solarDate.month) năm \(snapshot.solarDate.year)"
+        let lunar = "ngày \(lunarDateFragment(snapshot.lunarDate)), năm \(canChi(snapshot.yearCanChi))"
+        return "VietLunar; \(gregorian); \(lunar); Can–Chi ngày \(canChi(snapshot.dayCanChi)); Can–Chi giờ \(canChi(snapshot.hourCanChi))."
+    }
+
     public static func weekdayName(for solarDate: SolarDate) -> String {
         switch floorMod(GregorianJDN.jdn(for: solarDate), 7) {
         case 0: "Thứ Hai"
@@ -58,6 +90,15 @@ public enum VietnameseCalendarFormatter: Sendable {
     private static func lunarDateFragment(_ lunarDate: LunarDate) -> String {
         let leapMarker = lunarDate.isLeapMonth ? " nhuận" : ""
         return "\(lunarDate.day) tháng \(lunarDate.month)\(leapMarker) âm lịch"
+    }
+
+    private static func compactLunarDate(
+        _ lunarDate: LunarDate,
+        includesSuffix: Bool
+    ) -> String {
+        let leapMarker = lunarDate.isLeapMonth ? "N" : ""
+        let suffix = includesSuffix ? " ÂL" : ""
+        return "\(twoDigits(lunarDate.day))/\(twoDigits(lunarDate.month))\(leapMarker)\(suffix)"
     }
 
     private static func twoDigits(_ value: Int) -> String {

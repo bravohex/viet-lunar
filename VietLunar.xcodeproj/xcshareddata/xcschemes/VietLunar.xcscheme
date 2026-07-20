@@ -14,7 +14,7 @@
             buildForAnalyzing = "YES">
             <BuildableReference
                BuildableIdentifier = "primary"
-               BlueprintIdentifier = "5CB9BFB851C4AE77CA256672D312EEA7"
+               BlueprintIdentifier = "DEE16BEFAE8CEF9837F7439929CBE3F3"
                BuildableName = "VietLunar.app"
                BlueprintName = "VietLunar"
                ReferencedContainer = "container:VietLunar.xcodeproj">
@@ -28,7 +28,7 @@
             buildForAnalyzing = "YES">
             <BuildableReference
                BuildableIdentifier = "primary"
-               BlueprintIdentifier = "20C68A49E2DDD919CFDC198B458A9C86"
+               BlueprintIdentifier = "64AF664C9FD67ED4CF12699CC86642EE"
                BuildableName = "VietLunarCore.framework"
                BlueprintName = "VietLunarCore"
                ReferencedContainer = "container:VietLunar.xcodeproj">
@@ -58,7 +58,7 @@
       <MacroExpansion>
          <BuildableReference
             BuildableIdentifier = "primary"
-            BlueprintIdentifier = "5CB9BFB851C4AE77CA256672D312EEA7"
+            BlueprintIdentifier = "DEE16BEFAE8CEF9837F7439929CBE3F3"
             BuildableName = "VietLunar.app"
             BlueprintName = "VietLunar"
             ReferencedContainer = "container:VietLunar.xcodeproj">
@@ -111,7 +111,7 @@
          runnableDebuggingMode = "0">
          <BuildableReference
             BuildableIdentifier = "primary"
-            BlueprintIdentifier = "5CB9BFB851C4AE77CA256672D312EEA7"
+            BlueprintIdentifier = "DEE16BEFAE8CEF9837F7439929CBE3F3"
             BuildableName = "VietLunar.app"
             BlueprintName = "VietLunar"
             ReferencedContainer = "container:VietLunar.xcodeproj">
@@ -128,7 +128,7 @@
          runnableDebuggingMode = "0">
          <BuildableReference
             BuildableIdentifier = "primary"
-            BlueprintIdentifier = "5CB9BFB851C4AE77CA256672D312EEA7"
+            BlueprintIdentifier = "DEE16BEFAE8CEF9837F7439929CBE3F3"
             BuildableName = "VietLunar.app"
             BlueprintName = "VietLunar"
             ReferencedContainer = "container:VietLunar.xcodeproj">

@@ -124,4 +124,54 @@ final class VietnameseCalendarFormatterTests: XCTestCase {
             "Thứ Hai, ngày 20 tháng 7 năm 2026; ngày 7 tháng 6 âm lịch, năm Bính Ngọ; hôm nay."
         )
     }
+
+    func testEveryMenuBarTitleFormatUsesLiveSnapshotValues() throws {
+        let snapshot = try snapshot(at: "2026-07-20T05:00:00Z") // 12:00 UTC+7
+        let cases: [(MenuBarTitleFormat, String?)] = [
+            (.lunarDate, "07/06 ÂL"),
+            (.solarAndLunar, "20/07 · 07/06 ÂL"),
+            (.lunarAndDayCanChi, "07/06 · Ất Mùi"),
+            (.solarLunarAndDayCanChi, "20/07 · 07/06 · Ất Mùi"),
+            (.iconOnly, nil)
+        ]
+
+        for (format, expectedTitle) in cases {
+            XCTAssertEqual(
+                VietnameseCalendarFormatter.menuBarPresentation(
+                    for: snapshot,
+                    format: format
+                ).title,
+                expectedTitle
+            )
+        }
+    }
+
+    func testMenuBarAccessibilityLabelIsFullyExpandedVietnameseText() throws {
+        let snapshot = try snapshot(at: "2026-07-20T05:00:00Z")
+
+        XCTAssertEqual(
+            VietnameseCalendarFormatter.menuBarAccessibilityLabel(for: snapshot),
+            "VietLunar; Thứ Hai, ngày 20 tháng 7 năm 2026; ngày 7 tháng 6 âm lịch, năm Bính Ngọ; Can–Chi ngày Ất Mùi; Can–Chi giờ Nhâm Ngọ."
+        )
+    }
+
+    func testMenuBarTitleFormatDefaultAndCodableValuesAreStable() throws {
+        XCTAssertEqual(MenuBarTitleFormat.defaultValue, .lunarDate)
+
+        for format in MenuBarTitleFormat.allCases {
+            let encoded = try JSONEncoder().encode(format)
+            XCTAssertEqual(
+                try JSONDecoder().decode(MenuBarTitleFormat.self, from: encoded),
+                format
+            )
+        }
+    }
+
+    private func snapshot(at value: String) throws -> CalendarSnapshot {
+        let instant = try XCTUnwrap(ISO8601DateFormatter().date(from: value))
+        return try CalendarSnapshotFactory(
+            lunarEngine: LunarCalendarEngine(),
+            clock: FixedClock(instant: instant)
+        ).makeSnapshot()
+    }
 }

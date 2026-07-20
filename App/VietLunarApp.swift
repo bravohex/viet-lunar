@@ -1,14 +1,26 @@
 import AppKit
 import SwiftUI
+import VietLunarCore
 
 @main
 struct VietLunarApp: App {
+    @StateObject private var appState = AppState()
+
     var body: some Scene {
         MenuBarExtra {
             MenuPopoverPlaceholderView()
+                .environmentObject(appState)
+                .onAppear {
+                    appState.refresh()
+                }
         } label: {
-            Text("ÂL")
-                .accessibilityLabel("VietLunar — lịch âm Việt Nam")
+            if let title = appState.menuBarPresentation.title {
+                Text(title)
+                    .accessibilityLabel(appState.menuBarPresentation.accessibilityLabel)
+            } else {
+                Image(systemName: "moon.circle.fill")
+                    .accessibilityLabel(appState.menuBarPresentation.accessibilityLabel)
+            }
         }
         .menuBarExtraStyle(.window)
 
@@ -19,6 +31,8 @@ struct VietLunarApp: App {
 }
 
 private struct MenuPopoverPlaceholderView: View {
+    @EnvironmentObject private var appState: AppState
+
     var body: some View {
         VStack(alignment: .leading, spacing: 14) {
             VStack(alignment: .leading, spacing: 4) {
@@ -26,6 +40,23 @@ private struct MenuPopoverPlaceholderView: View {
                     .font(.headline)
                 Text("Lịch âm Việt Nam trên thanh menu")
                     .foregroundStyle(.secondary)
+            }
+
+            Divider()
+
+            if let snapshot = appState.currentSnapshot {
+                Text(VietnameseCalendarFormatter.fullGregorianDate(snapshot.solarDate))
+                    .accessibilityIdentifier("today-header")
+                Text(
+                    VietnameseCalendarFormatter.fullLunarDate(
+                        snapshot.lunarDate,
+                        yearCanChi: snapshot.yearCanChi
+                    )
+                )
+                .foregroundStyle(.secondary)
+            } else if let errorMessage = appState.errorMessage {
+                Text(errorMessage)
+                    .foregroundStyle(.red)
             }
 
             Divider()

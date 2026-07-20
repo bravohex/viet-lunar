@@ -97,6 +97,8 @@ add_sources(
     "MonthGrid/WeekStart.swift",
     "MonthGrid/MonthGridCell.swift",
     "MonthGrid/MonthGridBuilder.swift",
+    "Formatting/MenuBarTitleFormat.swift",
+    "Formatting/MenuBarTitlePresentation.swift",
     "Formatting/VietnameseCalendarFormatter.swift",
     "Lunar/EncodedLunarYearRecord.swift",
     "Lunar/LunarCalendarCalculating.swift",
@@ -111,7 +113,7 @@ add_sources(
   "Sources/Infrastructure",
   ["VietLunarInfrastructure.swift", "Logging/AppLog.swift"]
 )
-add_sources(project, app, "App", "App", ["VietLunarApp.swift"])
+add_sources(project, app, "App", "App", ["VietLunarApp.swift", "AppState.swift"])
 add_sources(
   project,
   core_tests,
