@@ -44,7 +44,7 @@ Trạng thái:
 | M1.1 | Value types được validate | M0.3 | Hoàn thành | commit này | 4 immutable types; validation/Comparable/Codable tests đạt |
 | M1.2 | Gregorian/JDN conversion | M1.1 | Hoàn thành | commit này | Known JDN, adjacent dates và 146.097-day round trip đạt |
 | M1.3 | Trích xuất ngày theo UTC+7 | M1.1 | Hoàn thành | commit này | Fixed UTC+7; before/after midnight và year-boundary tests đạt |
-| M2.1 | Thiết lập provenance cho reference data | M1 | Chờ | — | README nguồn dữ liệu, checksum, license note |
+| M2.1 | Thiết lập provenance cho reference data | M1 | Hoàn thành | commit này | Source catalog, license policy và checksum verification đạt |
 | M2.2 | Generator và generated/reference outputs | M2.1 | Chờ | — | Output deterministic + invariant validation |
 | M2.3 | Lunar year record decoder | M2.2 | Chờ | — | Common/leap year decoder tests |
 | M2.4 | `LunarCalendarEngine` hai chiều | M2.3 | Chờ | — | Golden, boundary, leap/error tests |
@@ -145,3 +145,11 @@ Trạng thái:
 - Dùng Gregorian `Calendar` được khởi tạo explicit; không dùng `Calendar.current` hoặc user-selected calendar.
 - Test ngay trước và đúng nửa đêm UTC+7, cùng boundary đổi năm.
 - Toàn scheme đạt 18/18 tests sau task.
+
+### M2.1 — Reference-data provenance
+
+- Tạo `ReferenceData/README.md` và source catalog machine-readable với ngày truy xuất, UTC+7/105°E convention, range và vai trò từng nguồn.
+- Ghi rõ Hồ Ngọc Đức JavaScript/prepared data chỉ là comparison oracle cho đến khi xác minh được license; không sao chép code/data vào production.
+- Ghi nhận *Calendrical Calculations* và Hermetic Systems ở vai trò independent algorithmic/secondary cross-check.
+- Cập nhật NOTICE và thêm SHA-256 manifest.
+- `scripts/verify_reference_data.sh` xác minh `source-catalog.json: OK`; toàn Xcode scheme vẫn đạt 18/18 tests.

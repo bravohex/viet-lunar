@@ -1,0 +1,47 @@
+{
+  "schemaVersion": 1,
+  "retrievedAt": "2026-07-20",
+  "calendarConvention": {
+    "name": "Vietnamese modern astronomical lunisolar calendar",
+    "timeZone": "+07:00",
+    "referenceMeridian": "105 degrees East",
+    "supportedGregorianRange": "1800-01-01...2199-12-31"
+  },
+  "sources": [
+    {
+      "id": "ho-ngoc-duc-rules",
+      "title": "How to compute the Vietnamese lunar calendar",
+      "url": "https://www.xemamlich.uhm.vn/calrules_en.html",
+      "role": "Calendar rules and documented boundary examples",
+      "usePolicy": "Rules and outputs may be reviewed and compared; no source code is copied."
+    },
+    {
+      "id": "ho-ngoc-duc-vncal",
+      "title": "Ho Ngoc Duc's Vietnamese lunar calendar",
+      "url": "https://www.xemamlich.uhm.vn/vncal_en.html",
+      "role": "UTC+7/proleptic semantics, change history, and 2033 correction evidence",
+      "usePolicy": "Comparison only until an explicit redistribution license is verified."
+    },
+    {
+      "id": "ho-ngoc-duc-javascript",
+      "title": "Vietnamese lunar calendar JavaScript edition",
+      "url": "https://www.xemamlich.uhm.vn/JavaScript/",
+      "role": "1800-2199 comparison oracle",
+      "usePolicy": "Do not copy prepared tables or code into production without license approval."
+    },
+    {
+      "id": "calendrical-calculations",
+      "title": "Calendrical Calculations by Edward M. Reingold and Nachum Dershowitz",
+      "url": "https://www.cambridge.org/core/books/calendrical-calculations/",
+      "role": "Independent algorithmic reference",
+      "usePolicy": "Use published rules or separately licensed software; do not copy the software package without permission."
+    },
+    {
+      "id": "hermetic-vietnam-time",
+      "title": "Chinese Calendrics: Times",
+      "url": "https://www.hermetic.ch/chcal/gmt.htm",
+      "role": "Independent confirmation of Vietnamese ICT as GMT+7 and longitude sensitivity",
+      "usePolicy": "Secondary output comparison only."
+    }
+  ]
+}
