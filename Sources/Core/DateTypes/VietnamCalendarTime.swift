@@ -16,19 +16,29 @@ public enum VietnamCalendarTime: Sendable {
     }()
 
     public static func solarDate(containing instant: Date) -> SolarDate {
+        localDateTime(containing: instant).solarDate
+    }
+
+    public static func localDateTime(containing instant: Date) -> LocalDateTime {
         var calendar = Calendar(identifier: .gregorian)
         calendar.timeZone = timeZone
         calendar.locale = Locale(identifier: "vi_VN")
 
-        let components = calendar.dateComponents([.year, .month, .day], from: instant)
+        let components = calendar.dateComponents(
+            [.year, .month, .day, .hour, .minute],
+            from: instant
+        )
         guard let year = components.year,
               let month = components.month,
               let day = components.day,
-              let solarDate = SolarDate.valid(year: year, month: month, day: day)
+              let hour = components.hour,
+              let minute = components.minute,
+              let solarDate = SolarDate.valid(year: year, month: month, day: day),
+              let localTime = LocalTime.valid(hour: hour, minute: minute)
         else {
             preconditionFailure("Foundation produced invalid Gregorian components")
         }
 
-        return solarDate
+        return LocalDateTime(solarDate: solarDate, localTime: localTime)
     }
 }

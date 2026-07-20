@@ -54,7 +54,7 @@ Trạng thái:
 | M3.1 | Typed Heavenly Stem/Earthly Branch | M1 | Hoàn thành | commit này | Raw values ổn định; đúng thứ tự/tên tiếng Việt; Codable tests đạt |
 | M3.2 | Can-Chi năm/tháng/ngày | M3.1, M1.2 | Hoàn thành | commit này | Golden vectors và exhaustive 146.097 ngày/chu kỳ 60 đạt |
 | M3.3 | Can-Chi giờ và boundary policy | M3.2 | Hoàn thành | commit này | 12 khoảng giờ, 1.440 phút và hai boundary policies đạt |
-| M3.4 | `CalendarSnapshotFactory` | M2.4, M3.3, M1.3 | Chờ | — | FixedClock midnight/hour tests |
+| M3.4 | `CalendarSnapshotFactory` | M2.4, M3.3, M1.3 | Hoàn thành | commit này | Một instant tạo solar/lunar và 4 Can-Chi; midnight tests đạt |
 | M4.1 | `MonthGridBuilder` 42 ô | M2.4 | Chờ | — | Week starts, leap February, boundary tests |
 | M4.2 | Vietnamese formatters | M3.4, M4.1 | Chờ | — | Exact string/diacritics/accessibility tests |
 | M5.1 | Menu title từ live snapshot | M3.4, M4.2 | Chờ | — | State/preference update tests + build |
@@ -211,3 +211,10 @@ Trạng thái:
 - Test toàn bộ boundary được nêu trong spec, đủ 12 chi và exhaustive cả 1.440 phút trong ngày.
 - Test xác nhận giờ Tý bị tách can tại nửa đêm theo mặc định; với `startOfZiHour`, 23:00 dùng can của ngày kế tiếp.
 - Reference checks đạt; toàn scheme đạt 45/45 tests.
+
+### M3.4 — CalendarSnapshotFactory
+
+- Thêm `Clock`, `SystemClock`, `FixedClock` và `LocalDateTime` để tách absolute instant khỏi civil components UTC+7.
+- `CalendarSnapshotFactory` chỉ gọi `clock.now()` một lần rồi tạo đồng bộ solar date, lunar date và Can-Chi năm/tháng/ngày/giờ.
+- Test bằng `FixedClock` ngay trước/sau nửa đêm Việt Nam, test `startOfZiHour`, và spy clock xác nhận chính xác một lần đọc.
+- Reference checks đạt; toàn scheme đạt 50/50 tests.

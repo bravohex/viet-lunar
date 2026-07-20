@@ -83,6 +83,7 @@ add_sources(
     "DateTypes/LunarDate.swift",
     "DateTypes/YearMonth.swift",
     "DateTypes/LocalTime.swift",
+    "DateTypes/LocalDateTime.swift",
     "DateTypes/GregorianJDN.swift",
     "DateTypes/VietnamCalendarTime.swift",
     "CanChi/HeavenlyStem.swift",
@@ -90,6 +91,9 @@ add_sources(
     "CanChi/StemBranch.swift",
     "CanChi/CanChiDayBoundaryPolicy.swift",
     "CanChi/CanChiCalculator.swift",
+    "Time/Clock.swift",
+    "Snapshot/CalendarSnapshot.swift",
+    "Snapshot/CalendarSnapshotFactory.swift",
     "Lunar/EncodedLunarYearRecord.swift",
     "Lunar/LunarCalendarCalculating.swift",
     "Lunar/LunarCalendarEngine.swift",
@@ -118,7 +122,8 @@ add_sources(
     "LunarCalendarEngineTests.swift",
     "CanChiTypesTests.swift",
     "CanChiCalculatorTests.swift",
-    "CanChiHourTests.swift"
+    "CanChiHourTests.swift",
+    "CalendarSnapshotFactoryTests.swift"
   ]
 )
 add_sources(project, infrastructure_tests, "InfrastructureTests", "Tests/InfrastructureTests", ["VietLunarInfrastructureTests.swift"])

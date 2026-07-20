@@ -39,4 +39,20 @@ final class VietnamCalendarTimeTests: XCTestCase {
             try SolarDate(validatingYear: 2026, month: 1, day: 1)
         )
     }
+
+    func testLocalDateTimeExtractionUsesCanonicalCivilComponents() throws {
+        let instant = try XCTUnwrap(
+            ISO8601DateFormatter().date(from: "2026-07-19T16:59:00Z")
+        )
+        let localDateTime = VietnamCalendarTime.localDateTime(containing: instant)
+
+        XCTAssertEqual(
+            localDateTime.solarDate,
+            try SolarDate(validatingYear: 2026, month: 7, day: 19)
+        )
+        XCTAssertEqual(
+            localDateTime.localTime,
+            try LocalTime(validatingHour: 23, minute: 59)
+        )
+    }
 }
