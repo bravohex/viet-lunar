@@ -84,7 +84,8 @@ add_sources(
     "DateTypes/YearMonth.swift",
     "DateTypes/LocalTime.swift",
     "DateTypes/GregorianJDN.swift",
-    "DateTypes/VietnamCalendarTime.swift"
+    "DateTypes/VietnamCalendarTime.swift",
+    "Generated/LunarYearTable.generated.swift"
   ]
 )
 add_sources(

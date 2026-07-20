@@ -1,1 +1,3 @@
 224c379fccee0e6e5c5ba5ec3886a1e25cfaa47e6a5b5f580f3a908d2978c8ec  source-catalog.json
+d685e772e92fad0ccf71123beb04f353a97d0bcefed2359ae7fab0e51f0389eb  vietnam-lunar-1800-2199.reference.json
+38fcb6b99b3f1d52308e1a164c5afeacd23f8612694a65d85c5375e8cb3b509d  ../Sources/Core/Generated/LunarYearTable.generated.swift

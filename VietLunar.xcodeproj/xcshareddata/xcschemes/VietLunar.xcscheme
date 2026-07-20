@@ -28,7 +28,7 @@
             buildForAnalyzing = "YES">
             <BuildableReference
                BuildableIdentifier = "primary"
-               BlueprintIdentifier = "6D0D732C34BBB579507489251142C05D"
+               BlueprintIdentifier = "817B323FBFED87A63C5EAE6FD21224C2"
                BuildableName = "VietLunarCore.framework"
                BlueprintName = "VietLunarCore"
                ReferencedContainer = "container:VietLunar.xcodeproj">

@@ -45,7 +45,7 @@ Trạng thái:
 | M1.2 | Gregorian/JDN conversion | M1.1 | Hoàn thành | commit này | Known JDN, adjacent dates và 146.097-day round trip đạt |
 | M1.3 | Trích xuất ngày theo UTC+7 | M1.1 | Hoàn thành | commit này | Fixed UTC+7; before/after midnight và year-boundary tests đạt |
 | M2.1 | Thiết lập provenance cho reference data | M1 | Hoàn thành | commit này | Source catalog, license policy và checksum verification đạt |
-| M2.2 | Generator và generated/reference outputs | M2.1 | Chờ | — | Output deterministic + invariant validation |
+| M2.2 | Generator và generated/reference outputs | M2.1 | Hoàn thành | commit này | 402 records, 146.097 rows, deterministic checksums và invariants đạt |
 | M2.3 | Lunar year record decoder | M2.2 | Chờ | — | Common/leap year decoder tests |
 | M2.4 | `LunarCalendarEngine` hai chiều | M2.3 | Chờ | — | Golden, boundary, leap/error tests |
 | M2.5 | Exhaustive conformance suite | M2.4 | Chờ | — | Toàn bộ solar/lunar round trip và independent reference |
@@ -153,3 +153,12 @@ Trạng thái:
 - Ghi nhận *Calendrical Calculations* và Hermetic Systems ở vai trò independent algorithmic/secondary cross-check.
 - Cập nhật NOTICE và thêm SHA-256 manifest.
 - `scripts/verify_reference_data.sh` xác minh `source-catalog.json: OK`; toàn Xcode scheme vẫn đạt 18/18 tests.
+
+### M2.2 — Lunar table generator
+
+- Thêm original Swift astronomical generator, fixed UTC+7, không có third-party dependency.
+- Generator kiểm tra month length chỉ 29/30 ngày, 12/13 tháng, đúng số leap month, Tết tăng nghiêm ngặt, year-length sum và sentinel coverage.
+- Sinh 402 lunar-year records 1799-2200 và 146.097 reference rows cho 1800-2199.
+- Curated sentinels 1984, 2004, 2025 và 2033 được kiểm tra trong generator.
+- Hai lần generate liên tiếp cho checksum byte-identical; checksum verification và toàn Xcode scheme đều đạt.
+- Reference JSON cùng production table đến từ cùng generator nên M2.5 vẫn chưa được xem là independent conformance.

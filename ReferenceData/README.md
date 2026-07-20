@@ -25,13 +25,15 @@ No third-party calendar source code or prepared table is currently redistributed
 
 The planned production generator will contain an original Swift implementation of published calendrical rules. Generated output will include its input metadata and checksum. Independent comparison data must remain test-only.
 
-## Expected generated artifacts
+## Generated artifacts
 
-Task M2.2 will add:
+Task M2.2 adds:
 
-- `vietnam-lunar-1800-2199.reference.json`;
-- generated runtime table under `Sources/Core/Generated/`;
+- `vietnam-lunar-1800-2199.reference.json` with 146,097 compact rows;
+- 402 generated runtime records for sentinel lunar years 1799-2200 under `Sources/Core/Generated/`;
 - updated `SHA256SUMS` containing every committed machine-readable reference artifact.
+
+Both artifacts are emitted by the same original Swift astronomical generator. They are deterministic candidate inputs, but they are not independent of one another. The JSON must not be used as the sole conformance oracle for the generated production table; M2.5 remains open until an independent dataset has been compared exhaustively.
 
 ## Checksum verification
 
