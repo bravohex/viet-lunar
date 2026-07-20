@@ -132,7 +132,11 @@ add_sources(
   infrastructure,
   "Infrastructure",
   "Sources/Infrastructure",
-  ["VietLunarInfrastructure.swift", "Logging/AppLog.swift"]
+  [
+    "VietLunarInfrastructure.swift",
+    "Logging/AppLog.swift",
+    "Time/OneShotBoundaryScheduler.swift"
+  ]
 )
 add_sources(
   project,
@@ -170,7 +174,16 @@ add_sources(
     "BoundaryCalculatorTests.swift"
   ]
 )
-add_sources(project, infrastructure_tests, "InfrastructureTests", "Tests/InfrastructureTests", ["VietLunarInfrastructureTests.swift"])
+add_sources(
+  project,
+  infrastructure_tests,
+  "InfrastructureTests",
+  "Tests/InfrastructureTests",
+  [
+    "VietLunarInfrastructureTests.swift",
+    "OneShotBoundarySchedulerTests.swift"
+  ]
+)
 add_sources(project, ui_tests, "UITests", "Tests/UITests", ["VietLunarUITests.swift"])
 
 link_target(infrastructure, core)

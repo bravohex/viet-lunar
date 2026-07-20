@@ -63,7 +63,7 @@ Trạng thái:
 | M5.3 | Keyboard và accessibility | M5.2 | Hoàn thành | `d7d6113` + commit này | AX tree xác nhận label/value/selected state trong flow thật |
 | M5.4 | UI smoke tests | M5.3 | Hoàn thành | commit này | Launch/open/navigate/today/settings end-to-end đạt |
 | M6.1 | Pure next-boundary calculation | M3.3 | Hoàn thành | commit này | Midnight/hour/minute/DST/exact-equality tests đạt |
-| M6.2 | One-shot scheduler | M6.1 | Chờ | — | Cancellation/single-task/fake scheduler tests |
+| M6.2 | One-shot scheduler | M6.1 | Hoàn thành | commit này | Single task, replacement/cancel/deinit/tolerance tests đạt |
 | M6.3 | Lifecycle source và coalesced refresh | M6.2, M5.1 | Chờ | — | Synthetic lifecycle tests |
 | M6.4 | Xác minh idle behavior | M6.3 | Chờ | — | `docs/performance-baseline.md` + Instruments thủ công |
 | M7.1 | Typed preferences store | M0.3 | Chờ | — | Defaults, isolated suite, migration/change stream tests |
@@ -281,3 +281,11 @@ Trạng thái:
 - `after` có ngữ nghĩa strictly-after: đúng tại 00:00/01:00/phút tròn luôn tiến tới boundary kế tiếp, không trả lại instant hiện tại.
 - Test UTC+7 midnight, mọi boundary quan trọng, minute display time zone, DST spring-forward và nhiều requirements chọn thời điểm sớm nhất.
 - Project regeneration vẫn byte-identical; reference checks và toàn scheme đạt 76/76 tests.
+
+### M6.2 — One-shot scheduler
+
+- Thêm `BoundaryScheduling` trên `@MainActor` và `OneShotBoundaryScheduler` dùng đúng một Swift concurrency task, không có repeating timer/publisher.
+- Schedule mới cancel task cũ trước khi tạo task thay thế; `cancel()` và `deinit` đều hủy pending sleep; callback chỉ chạy trên MainActor.
+- `BoundarySleeping` cho phép production dùng continuous clock với tolerance, còn test dùng manual sleeper không chờ thời gian thật.
+- Test exact delay/tolerance, replacement chỉ fire action mới, explicit cancellation, past boundary clamp về 0 và deinit cancellation.
+- Reference checks đạt; toàn scheme đạt 80/80 tests.
