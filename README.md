@@ -26,6 +26,12 @@ Tái tạo Xcode project sau khi thêm/xóa source file:
 ruby Tools/ProjectGenerator/generate_project.rb
 ```
 
+Chạy microbenchmark Core ở cấu hình optimized:
+
+```bash
+./scripts/benchmark.sh
+```
+
 Project generator là công cụ phát triển. Generated `VietLunar.xcodeproj` vẫn được commit để người dùng có thể mở và build ngay bằng Xcode.
 
 ## Kiến trúc

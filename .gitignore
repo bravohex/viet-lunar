@@ -13,6 +13,7 @@ DerivedData/
 *.dSYM
 *.dSYM.zip
 *.xcarchive
+*.trace/
 *.xccheckout
 *.xcscmblueprint
 *.xcuserstate

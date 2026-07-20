@@ -40,3 +40,33 @@ RSS trong run D giảm từ 50.816 KB xuống 31.232 KB. Một phép đo cold Re
 M6.4 đạt theo signed Release evidence: không repeating timer/log và idle CPU thấp hơn target 0,1%. Debug run B được giữ lại để tránh che giấu lịch sử failure, nhưng Release trace giải thích rằng đó không phải sustained application loop.
 
 Memory gate chuyển sang M8.2: cần Allocations/VM investigation ổn định cho transient RSS ở mốc 30 giây. Xcode Power Profiler không hỗ trợ host macOS trong toolchain này; Allocations CLI attach đã báo lỗi nên chưa đủ bằng chứng để đóng memory review.
+
+## M8.2 — Release/component baseline
+
+### Kết quả
+
+| Metric | Kết quả đo | Target / hard review | Kết luận |
+|---|---:|---:|---|
+| Cold launch đến initial frame | 951,10 ms | <=400 / <=800 ms | Fail hard review |
+| AppKit init đến initial frame | 330,43 ms | Thông tin phân rã | Phần app-side thấp hơn full launch |
+| Popover first/subsequent open | Chưa có phép đo không nhiễu | <=100/50 ms | Blocker |
+| RSS khoảng 30 giây | 63.264 KB | <=35 MB / review >60 MB | Fail hard review |
+| RSS cuối idle trace | 31.232 KB | <=35 MB | Đạt sau warm-up |
+| Idle CPU 5 phút | +0,01 s / 300,84 s | <=0,1% | Đạt |
+| Release app bundle | 2.284 KB (2,2 MB) | <=10 / <=20 MB | Đạt |
+| Cold first conversion | 0,023417-0,102542 ms | Thông tin warm-up | Ghi range |
+| Conversion p95 | 0,000084 ms | <=0,05 / <=0,5 ms | Đạt |
+| 146.097 conversions | 11,999958 ms | Không có hard gate tổng | Median 3 runs |
+| 146.097 round trips | 11,595458 ms | Không có hard gate tổng | Median 3 runs |
+| 1.000 month grids p95 | 0,003041 ms/grid | <=2 / <=10 ms | Đạt |
+| 10.000 menu formats | 25,032667 ms | Không có hard gate | Median 3 runs |
+
+Core benchmark được compile optimized whole-module với Swift 6 strict concurrency. Bảng ghi median của ba lần chạy liên tiếp sau khi hoàn thiện script, riêng cold conversion ghi min-max. Checksum `297986322` buộc kết quả được tiêu thụ, tránh compiler loại bỏ workload.
+
+App Launch trace 5,52 giây ghi process creation 512,13 ms, sau đó AppKit initialization bắt đầu tại 620,68 ms và initial frame kết thúc tại 951,10 ms. Instruments có overhead, nhưng full result vẫn vượt hard-review threshold nên không được báo đạt.
+
+XCUITest xác minh popover mở đúng nhưng event synthesis/polling khoảng một giây làm số thời gian không dùng được như product performance metric. Cần signpost hoặc Instruments interaction trace để đo first/subsequent open không nhiễu.
+
+### M8.2 gate
+
+M8.2 chưa đạt vì cold launch và transient RSS vượt hard-review threshold, popover timing chưa được đo tin cậy, và Allocations CLI attach thất bại. Core/grid/bundle/idle CPU đều đạt, nên không có bằng chứng cần viết lại calendar core; điều tra tiếp tập trung vào SwiftUI/MenuBarExtra launch và resident memory.

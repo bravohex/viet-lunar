@@ -73,7 +73,7 @@ Trạng thái:
 | M7.3 | `SMLoginItemService` | M7.2 | Bị chặn | commit này | Code/93 tests/Developer ID Release đạt; chưa cài `/Applications` và register thật |
 | M7.4 | Hoàn thiện Dock/accessory behavior | M7.3 | Hoàn thành | commit này | Signed Release launch, accessory policy, persistent status item/UI flow đạt |
 | M8.1 | Chạy full test matrix | M2-M7 | Bị chặn | commit này | 95/95 + exhaustive round-trip đạt; independent/manual gates còn mở |
-| M8.2 | Ghi performance baseline | M8.1 | Chờ | — | Launch, popover, RSS, idle, conversion, bundle size |
+| M8.2 | Ghi performance baseline | M8.1 | Bị chặn | commit này | Core/grid/bundle/idle đạt; cold launch/RSS fail, popover timing thiếu |
 | M8.3 | Privacy, attribution và release metadata | M8.1 | Chờ | — | Privacy/range/notarization/reproducible commands |
 | M8.4 | Acceptance review | M8.2, M8.3 | Chờ | — | Rà toàn bộ checklist spec mục 19 |
 
@@ -365,3 +365,12 @@ Trạng thái:
 - 17 running samples đều nằm trong system callbacks/run loop; không có repeating timer, polling hoặc VietLunar-owned hot stack.
 - RSS giảm 50.816 KB → 31.232 KB trong profiler window; transient cold RSS >60 MB vẫn là blocker riêng của M8.2.
 - Power Profiler không hỗ trợ macOS host; Allocations CLI attach lỗi và gây nhiễu nên không được dùng làm bằng chứng đạt.
+
+### M8.2 — Performance baseline và blockers
+
+- Thêm `scripts/benchmark.sh` và optimized Swift benchmark cho cold/full-range conversion, round-trip, 1.000 month grids và 10.000 menu formats.
+- Conversion p95 0,000084 ms, month-grid p95 0,003041 ms và bundle 2,2 MB đều thấp hơn nhiều target; median 146.097 conversions là 11,999958 ms trên reference Mac.
+- Signed Release Time Profiler idle đã đạt ở A4: +0,01 giây CPU/300,84 giây và RSS cuối 31.232 KB.
+- App Launch trace ghi initial frame 951,10 ms, vượt hard threshold 800 ms; transient RSS khoảng 30 giây đạt 63.264 KB, vượt review threshold 60 MB.
+- XCUITest timing có event-synthesis/polling overhead nên không được dùng để tuyên bố popover <=100/50 ms; cần phép đo interaction/signpost riêng.
+- M8.2 giữ `Bị chặn`; profiling tiếp theo tập trung SwiftUI/MenuBarExtra launch/memory, không rewrite Core khi các core metric đã đạt.
