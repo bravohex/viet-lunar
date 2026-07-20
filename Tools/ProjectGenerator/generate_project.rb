@@ -85,6 +85,8 @@ add_sources(
     "DateTypes/LocalTime.swift",
     "DateTypes/GregorianJDN.swift",
     "DateTypes/VietnamCalendarTime.swift",
+    "CanChi/HeavenlyStem.swift",
+    "CanChi/EarthlyBranch.swift",
     "Lunar/EncodedLunarYearRecord.swift",
     "Lunar/LunarCalendarCalculating.swift",
     "Lunar/LunarCalendarEngine.swift",
@@ -110,7 +112,8 @@ add_sources(
     "GregorianJDNTests.swift",
     "VietnamCalendarTimeTests.swift",
     "EncodedLunarYearRecordTests.swift",
-    "LunarCalendarEngineTests.swift"
+    "LunarCalendarEngineTests.swift",
+    "CanChiTypesTests.swift"
   ]
 )
 add_sources(project, infrastructure_tests, "InfrastructureTests", "Tests/InfrastructureTests", ["VietLunarInfrastructureTests.swift"])

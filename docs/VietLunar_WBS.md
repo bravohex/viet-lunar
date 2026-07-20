@@ -51,7 +51,7 @@ Trạng thái:
 | M2.4 | `LunarCalendarEngine` hai chiều | M2.3 | Hoàn thành | commit này | Binary-search engine; golden/all-month boundary/error tests đạt |
 | M2.5 | Exhaustive conformance suite | M2.4 | Bị chặn | — | Candidate JSON không độc lập; cần approved independent dataset |
 | M2.6 | Release gate năm 2033 | M2.5 | Bị chặn | — | Chờ M2.5 và bằng chứng nguồn độc lập được lưu trong repo |
-| M3.1 | Typed Heavenly Stem/Earthly Branch | M1 | Chờ | — | Order, Vietnamese names, Codable tests |
+| M3.1 | Typed Heavenly Stem/Earthly Branch | M1 | Hoàn thành | commit này | Raw values ổn định; đúng thứ tự/tên tiếng Việt; Codable tests đạt |
 | M3.2 | Can-Chi năm/tháng/ngày | M3.1, M1.2 | Chờ | — | Golden vectors + chu kỳ 60 ngày |
 | M3.3 | Can-Chi giờ và boundary policy | M3.2 | Chờ | — | Toàn bộ mốc giờ nhánh địa chi |
 | M3.4 | `CalendarSnapshotFactory` | M2.4, M3.3, M1.3 | Chờ | — | FixedClock midnight/hour tests |
@@ -188,3 +188,10 @@ Trạng thái:
 - M2.5 chỉ được mở lại khi có approved independent dataset hoặc original independent implementation đã được review và có provenance riêng.
 - M2.6 chờ M2.5, đồng thời cần lưu bằng chứng của ít nhất hai nguồn độc lập cho chuỗi leap month 11 năm 2033.
 - Theo stop conditions, các task M3/M4/M6/M7 không phụ thuộc independent data vẫn tiếp tục; release acceptance M8 chưa thể đóng.
+
+### M3.1 — Typed Heavenly Stem/Earthly Branch
+
+- Thêm `HeavenlyStem` gồm 10 can và `EarthlyBranch` gồm 12 chi với `Int` raw value tường minh, `CaseIterable`, `Codable`, `Sendable`.
+- Tên hiển thị tiếng Việt được tách khỏi raw value, giữ nguyên thứ tự chuẩn và chuẩn hóa `Tỵ` theo spec.
+- Test khóa thứ tự, đầy đủ dấu tiếng Việt, JSON raw value ổn định và từ chối giá trị ngoài enum.
+- Reference checks đạt; toàn scheme đạt 35/35 tests.
