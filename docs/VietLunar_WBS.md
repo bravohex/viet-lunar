@@ -49,6 +49,7 @@ Trạng thái:
 | A10 | Đo first/subsequent popover bằng signpost | M8.2, A9 | Hoàn thành | commit này | Release first median 114,42 ms; subsequent 40,56 ms; P4 đạt |
 | A11 | Link tĩnh Infrastructure module | M8.2, A10 | Hoàn thành | commit này | RSS median 32.496 KB đạt target; một embedded Core framework; launch vẫn fail |
 | A12 | Xác minh launch bằng Points of Interest | M8.2, A11 | Hoàn thành | commit này | Đo đúng current binary; ready median 857,32 ms; app work median 22,05 ms; P5 vẫn fail |
+| A13 | Audit và tích hợp icon kit | M5.4, M8.3 | Hoàn thành | commit này | 785-file audit; 8 compiled assets; 98/98 tests; signed universal Release đạt |
 | B0 | Ghi nhận independent-reference blocker | M2.4 | Hoàn thành | commit này | Không dùng candidate JSON làm oracle hoặc sao chép data chưa rõ license |
 | M0.1 | Tạo Xcode project, app/core/infrastructure/test targets | A0 | Hoàn thành | commit này | 6 targets, shared scheme, Debug build và 3 test bundles đạt |
 | M0.2 | Tạo `MenuBarExtra`, ẩn Dock, Settings và Quit | M0.1 | Hoàn thành | commit này | Build/test đạt; LSUIElement=true; app bundle chạy thật và hiện `ÂL` trên menu bar |
@@ -464,3 +465,12 @@ Trạng thái:
 - Ba mốc ready là 926,539, 803,615 và 857,319 ms; median 857,319 ms vẫn vượt hard threshold 800 ms. Application app work chỉ 21,313–26,219 ms, median 22,047 ms; calendar snapshot median 0,127 ms.
 - Popover metric sau remap: first median 131,38 ms, qua hard 200 ms; subsequent median 44,16 ms, đạt target 50 ms.
 - Full scheme và distribution Release verification được chạy lại trong task; A12 hoàn thành nhưng P5/M8.2 tiếp tục `Bị chặn`, tổng acceptance giữ 26/32.
+
+### A13 — Icon kit integration
+
+- Audit toàn bộ VietLunar Icon Kit 1.0.0: checksum, JSON/SVG validity, manifest uniqueness, PNG dimensions, PDF/Xcode parity và template/vector flags đều đạt.
+- Chỉ copy app icon, menu-bar lunar và sáu feature icon có consumer trong MVP; không bundle icon của event/reminder/import/backup chưa được triển khai.
+- Thay SF Symbols tương ứng trong month navigation, popover footer, Settings tabs và chế độ menu-bar icon-only; giữ nguyên text, tooltip và accessibility labels.
+- Thêm asset catalog/app-icon build setting, resource assertions, artwork notice và báo cáo `docs/icon-kit-review.md`.
+- Project generation byte-identical; full scheme đạt 98/98. Signed universal Release có `AppIcon.icns`, đủ tám compiled asset, deep signature hợp lệ và launch ngoài Xcode thành công.
+- Release bundle là 2.516 KB, tăng 232 KB so với baseline trước icon và vẫn thấp hơn nhiều target 10 MB.

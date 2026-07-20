@@ -95,6 +95,8 @@ app.build_configurations.each do |configuration|
   settings["INFOPLIST_KEY_LSApplicationCategoryType"] = "public.app-category.utilities"
   settings["INFOPLIST_KEY_LSUIElement"] = "YES"
   settings["PRODUCT_NAME"] = "VietLunar"
+  settings["ASSETCATALOG_COMPILER_APPICON_NAME"] = "AppIcon"
+  settings["ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME"] = ""
   if configuration.name == "Release"
     settings["CODE_SIGN_INJECT_BASE_ENTITLEMENTS"] = "NO"
   end
@@ -165,6 +167,7 @@ add_sources(
   "App",
   [
     "VietLunarApp.swift",
+    "IconAsset.swift",
     "AppState.swift",
     "Localization/AppLocalization.swift",
     "Views/MenuPopoverView.swift",
@@ -187,7 +190,7 @@ add_resources(
   app,
   "AppResources",
   "App/Resources",
-  ["Localizable.xcstrings"]
+  ["Localizable.xcstrings", "Assets.xcassets"]
 )
 add_sources(
   project,

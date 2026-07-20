@@ -24,7 +24,7 @@ struct MonthGridView: View {
                 Button {
                     appState.navigateMonth(by: -1)
                 } label: {
-                    Image(systemName: "chevron.left")
+                    AssetIconView(.previous, size: 16)
                 }
                 .buttonStyle(.plain)
                 .keyboardShortcut(.leftArrow, modifiers: .command)
@@ -56,7 +56,7 @@ struct MonthGridView: View {
                 Button {
                     appState.navigateMonth(by: 1)
                 } label: {
-                    Image(systemName: "chevron.right")
+                    AssetIconView(.next, size: 16)
                 }
                 .buttonStyle(.plain)
                 .keyboardShortcut(.rightArrow, modifiers: .command)

@@ -17,3 +17,7 @@ The source catalog records material by Hồ Ngọc Đức, Edward M. Reingold an
 The pinned MIT-licensed `luc-nham/lunar-calendar` revision was executed only as an independent audit candidate. No part of that package is bundled; its full-range result was rejected because it disagreed on 13,028 supported dates.
 
 Independent exhaustive validation and the 2033 evidence gate remain open. The generated candidate table must not be described as independently verified or release-approved until those gates are closed.
+
+## VietLunar artwork
+
+The app icon and custom interface icons are original artwork from VietLunar Icon Kit 1.0.0, created specifically for this project. The project may use, modify, copy and distribute this artwork with the application or its documentation. No third-party logo, font or artwork is included in the selected assets.

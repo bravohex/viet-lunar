@@ -19,7 +19,7 @@
 | Lifecycle/scheduler | Đạt | Synthetic day/clock/time-zone/wake/active events; one-shot/coalescing tests |
 | Preferences/login mapping | Đạt | Migration/change stream và bốn `SMAppService.Status` mappings |
 | UI smoke | Đạt | Launch background, popover, month nav, Today, Settings, relaunch persistence, live clock, Quit |
-| Release build | Đạt | Clean universal Release; một embedded Core framework, static Infrastructure và deep signature verify |
+| Release build | Đạt | Clean universal Release; AppIcon + 7 template assets, một embedded Core framework, static Infrastructure và deep signature verify |
 | Accessory behavior | Đạt | Signed Release launch thật; activation policy là `accessory` |
 | Network dependency static check | Đạt | Không có network API/runtime package hoặc outbound network entitlement |
 | Runtime network observation | Đạt | Signed Release, 60 mẫu nettop và lsof trước/sau không có socket/traffic |

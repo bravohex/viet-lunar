@@ -6,8 +6,19 @@ struct PopoverFooterView: View {
 
     var body: some View {
         HStack(spacing: 12) {
-            Button(AppLocalization.text("footer.today", fallback: "Hôm nay")) {
+            Button {
                 appState.returnToToday()
+            } label: {
+                Label {
+                    Text(
+                        AppLocalization.text(
+                            "footer.today",
+                            fallback: "Hôm nay"
+                        )
+                    )
+                } icon: {
+                    AssetIconView(.today, size: 16)
+                }
             }
             .accessibilityIdentifier("today-button")
             .help(
@@ -17,10 +28,19 @@ struct PopoverFooterView: View {
                 )
             )
 
-            Button(
-                AppLocalization.text("footer.settings", fallback: "Cài đặt")
-            ) {
+            Button {
                 VietLunarApplicationDelegate.shared.showSettings()
+            } label: {
+                Label {
+                    Text(
+                        AppLocalization.text(
+                            "footer.settings",
+                            fallback: "Cài đặt"
+                        )
+                    )
+                } icon: {
+                    AssetIconView(.settings, size: 16)
+                }
             }
             .accessibilityIdentifier("settings-button")
             .help(
@@ -32,10 +52,19 @@ struct PopoverFooterView: View {
 
             Spacer()
 
-            Button(
-                AppLocalization.text("footer.quit", fallback: "Thoát VietLunar")
-            ) {
+            Button {
                 NSApplication.shared.terminate(nil)
+            } label: {
+                Label {
+                    Text(
+                        AppLocalization.text(
+                            "footer.quit",
+                            fallback: "Thoát VietLunar"
+                        )
+                    )
+                } icon: {
+                    AssetIconView(.quit, size: 16)
+                }
             }
             .keyboardShortcut("q")
             .accessibilityIdentifier("quit-button")

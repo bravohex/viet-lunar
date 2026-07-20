@@ -21,6 +21,18 @@ xcodebuild \
   build
 
 test -f "$DERIVED_DATA_PATH/Build/Products/Debug/VietLunar.app/Contents/Resources/vi.lproj/Localizable.strings"
+test -f "$DERIVED_DATA_PATH/Build/Products/Debug/VietLunar.app/Contents/Resources/Assets.car"
+test "$(plutil -extract CFBundleIconName raw "$DERIVED_DATA_PATH/Build/Products/Debug/VietLunar.app/Contents/Info.plist")" = "AppIcon"
+xcrun assetutil --info \
+  "$DERIVED_DATA_PATH/Build/Products/Debug/VietLunar.app/Contents/Resources/Assets.car" | \
+  ruby -rjson -e '
+    expected = %w[
+      AppIcon VLInfo VLMenuBarLunar VLNext VLPrevious VLQuit VLSettings VLToday
+    ]
+    names = JSON.parse(STDIN.read).filter_map { |entry| entry["Name"] }
+    missing = expected - names
+    abort "Missing compiled icon assets: #{missing.join(", ")}" unless missing.empty?
+  '
 test -f "$DERIVED_DATA_PATH/Build/Products/Debug/VietLunar.app/Contents/Frameworks/VietLunarCore.framework/Versions/A/Resources/vi.lproj/Localizable.strings"
 test ! -e "$DERIVED_DATA_PATH/Build/Products/Debug/VietLunar.app/Contents/Frameworks/VietLunarInfrastructure.framework"
 

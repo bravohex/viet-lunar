@@ -173,13 +173,15 @@ final class VietLunarApplicationDelegate: NSObject, NSApplicationDelegate {
 
         let presentation = appState.menuBarPresentation
         if appState.preferences.titleFormat.isIconOnly {
-            let image = NSImage(
-                systemSymbolName: "moon.circle.fill",
-                accessibilityDescription: presentation.accessibilityLabel
-            )
+            let image = IconAsset.menuBarLunar.nsImage
+                ?? NSImage(
+                    systemSymbolName: "moon.circle.fill",
+                    accessibilityDescription: presentation.accessibilityLabel
+                )
             image?.isTemplate = true
             button.image = image
             button.imagePosition = .imageOnly
+            button.imageScaling = .scaleProportionallyDown
             button.title = ""
         } else {
             button.image = nil

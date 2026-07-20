@@ -55,7 +55,7 @@ Memory gate chuyển sang M8.2: cần Allocations/VM investigation ổn định 
 | RSS khoảng 30 giây | 31.744–38.144 KB; median 32.496 KB | <=35 MB / review >60 MB | Median đạt target; cả ba qua hard review |
 | RSS cuối idle trace | 31.232 KB | <=35 MB | Đạt sau warm-up |
 | Idle CPU 5 phút | +0,01 s / 300,84 s | <=0,1% | Đạt |
-| Release app bundle | 2.284 KB (2,2 MB) | <=10 / <=20 MB | Đạt |
+| Release app bundle | 2.516 KB (2,5 MB) | <=10 / <=20 MB | Đạt; gồm app icon và 7 template assets |
 | Cold first conversion | 0,023417-0,102542 ms | Thông tin warm-up | Ghi range |
 | Conversion p95 | 0,000084 ms | <=0,05 / <=0,5 ms | Đạt |
 | 146.097 conversions | 11,999958 ms | Không có hard gate tổng | Median 3 runs |

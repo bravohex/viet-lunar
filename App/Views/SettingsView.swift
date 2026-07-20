@@ -14,7 +14,7 @@ struct SettingsView: View {
                         "settings.tab.general",
                         fallback: "Chung"
                     ),
-                    systemImage: "gearshape",
+                    icon: .settings,
                     pane: .general,
                     identifier: "general-tab"
                 )
@@ -23,7 +23,7 @@ struct SettingsView: View {
                         "settings.tab.about",
                         fallback: "Giới thiệu"
                     ),
-                    systemImage: "info.circle",
+                    icon: .info,
                     pane: .about,
                     identifier: "about-tab"
                 )
@@ -46,14 +46,18 @@ struct SettingsView: View {
 
     private func paneButton(
         title: String,
-        systemImage: String,
+        icon: IconAsset,
         pane: SettingsPane,
         identifier: String
     ) -> some View {
         Button {
             selectedPane = pane
         } label: {
-            Label(title, systemImage: systemImage)
+            Label {
+                Text(title)
+            } icon: {
+                AssetIconView(icon, size: 16)
+            }
         }
         .buttonStyle(.bordered)
         .accessibilityIdentifier(identifier)
