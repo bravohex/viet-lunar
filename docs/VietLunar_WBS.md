@@ -71,7 +71,7 @@ Trạng thái:
 | M7.2 | Settings UI | M7.1, M5.1, M6.3 | Hoàn thành | commit này | Live controls, minute-boundary clock, isolated UI flow; 92/92 tests |
 | M7.3 | `SMLoginItemService` | M7.2 | Bị chặn | commit này | Code/93 tests/Developer ID Release đạt; chưa cài `/Applications` và register thật |
 | M7.4 | Hoàn thiện Dock/accessory behavior | M7.3 | Hoàn thành | commit này | Signed Release launch, accessory policy, persistent status item/UI flow đạt |
-| M8.1 | Chạy full test matrix | M2-M7 | Chờ | — | Unit/exhaustive/UI/Release build/checklists |
+| M8.1 | Chạy full test matrix | M2-M7 | Bị chặn | commit này | 95/95 + exhaustive round-trip đạt; independent/manual gates còn mở |
 | M8.2 | Ghi performance baseline | M8.1 | Chờ | — | Launch, popover, RSS, idle, conversion, bundle size |
 | M8.3 | Privacy, attribution và release metadata | M8.1 | Chờ | — | Privacy/range/notarization/reproducible commands |
 | M8.4 | Acceptance review | M8.2, M8.3 | Chờ | — | Rà toàn bộ checklist spec mục 19 |
@@ -346,3 +346,12 @@ Trạng thái:
 - Clean Release bundle được ký cùng Developer ID cho app và hai framework, verify chữ ký rồi launch thật; `NSRunningApplication.activationPolicy` trả `accessory`, không tạo Dock app kiểu regular.
 - Process kiểm tra đã được terminate sau khi đo; không cài vào `/Applications` và không thay đổi login-item state.
 - Reference checks, Debug build và toàn scheme đạt 93/93 tests; Release build đạt.
+
+### M8.1 — Full test matrix partial completion
+
+- Thêm exhaustive self-consistency cho toàn bộ 146.097 ngày theo cả hai chiều solar → lunar → solar và lunar → solar → lunar.
+- Tách rõ round-trip với independent conformance: test mới có thể bắt lỗi ánh xạ/bijection nhưng không dùng production-derived JSON làm oracle.
+- `docs/release-test-matrix.md` ghi môi trường, các gate tự động đã đạt và điều kiện đóng từng checklist còn thiếu.
+- Unit/property/lifecycle/preferences/UI, clean Release build, static offline boundary và accessory runtime đều đã có bằng chứng.
+- Full Debug scheme đạt 95/95 tests; Release executable là universal `x86_64 arm64`, `LSUIElement=true` và không có outbound network entitlement.
+- Task giữ `Bị chặn` vì independent oracle/2033, Instruments idle, installed login item, real sleep/wake và offline runtime vẫn là gates bắt buộc.

@@ -179,7 +179,8 @@ add_sources(
     "MonthGridBuilderTests.swift",
     "VietnameseCalendarFormatterTests.swift",
     "BoundaryCalculatorTests.swift",
-    "AppPreferencesTests.swift"
+    "AppPreferencesTests.swift",
+    "LunarExhaustiveRoundTripTests.swift"
   ]
 )
 add_sources(
