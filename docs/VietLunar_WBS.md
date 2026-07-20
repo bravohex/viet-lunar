@@ -39,6 +39,7 @@ Trạng thái:
 | A0 | Phân tích tài liệu và tạo WBS thực thi | — | Hoàn thành | commit này | Đã đọc đầy đủ spec, plan, prompt, test vectors; knowledge graph hợp lệ |
 | A1 | Ổn định deterministic Xcode project generation | M0.1 | Hoàn thành | commit này | Hai lần generate liên tiếp có checksum byte-identical |
 | A2 | Khóa UUID cho target dependency trùng cấu trúc | A1 | Hoàn thành | commit này | Ba lần generate liên tiếp byte-identical sau khi project mở rộng |
+| A3 | Ổn định lifecycle burst coalescing | M6.3 | Hoàn thành | commit này | Debounce one-shot 10 ms; test lặp 3 lần đạt |
 | B0 | Ghi nhận independent-reference blocker | M2.4 | Hoàn thành | commit này | Không dùng candidate JSON làm oracle hoặc sao chép data chưa rõ license |
 | M0.1 | Tạo Xcode project, app/core/infrastructure/test targets | A0 | Hoàn thành | commit này | 6 targets, shared scheme, Debug build và 3 test bundles đạt |
 | M0.2 | Tạo `MenuBarExtra`, ẩn Dock, Settings và Quit | M0.1 | Hoàn thành | commit này | Build/test đạt; LSUIElement=true; app bundle chạy thật và hiện `ÂL` trên menu bar |
@@ -304,3 +305,9 @@ Trạng thái:
 - App phần lớn ngủ và không có repeating log/timer, nhưng low-impact run tăng 12,64 giây CPU time/300 giây và RSS đạt 124.752 KB, vượt gate spec.
 - Diagnostic run 91 giây sạch không đủ để phủ nhận failure 5 phút; không đánh dấu task hoàn thành bằng kết quả chọn lọc.
 - Cần Instruments Energy Log/Time Profiler trên signed Release build để bắt đúng transient stack và phân tách Debug/SwiftUI overhead.
+
+### A3 — Stable lifecycle burst coalescing
+
+- `Task.yield()` cho phép refresh task xen giữa các event đã buffer, làm burst ba notification đôi khi tạo hai refresh.
+- Thay bằng debounce task one-shot 10 ms; event mới trong cửa sổ này dùng chung pending refresh, không tạo polling/repeating timer.
+- Test coordinator dùng cửa sổ 30 ms xác định và đạt ba lần chạy riêng liên tiếp.

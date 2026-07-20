@@ -49,7 +49,7 @@ public final class LifecycleEventCoordinator {
         }
 
         coalescedRefreshTask = Task { [weak self] in
-            await Task.yield()
+            try? await Task<Never, Never>.sleep(for: .milliseconds(10))
             guard !Task.isCancelled, let self else {
                 return
             }

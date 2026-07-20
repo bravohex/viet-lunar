@@ -77,9 +77,7 @@ final class LifecycleSourceTests: XCTestCase {
 
     @MainActor
     private func drainTasks() async {
-        for _ in 0..<10 {
-            await Task.yield()
-        }
+        try? await Task<Never, Never>.sleep(for: .milliseconds(30))
     }
 }
 
