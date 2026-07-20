@@ -7,91 +7,94 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		02EB07E452E7EF566F6AEF9A2D541860 /* SolarDate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 48BE3A8AC5041CA1D488A6B858336C70 /* SolarDate.swift */; };
+		0CB08287CA1175DFB4DEBDD9328A5D9A /* VietnamCalendarTimeTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = D5608AC7730B569A4749D26B689D7A6D /* VietnamCalendarTimeTests.swift */; };
+		158CA050FE5190FA76B651707AAE0C10 /* Cocoa.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 62BA69F8ABF32DD2C3B29215235F1F3B /* Cocoa.framework */; };
+		19E08B0D6F5FCF2EA8E05AB1854977F0 /* VietnamCalendarTime.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3E49C729D3A9533FC9418CDB60330CAB /* VietnamCalendarTime.swift */; };
 		25A11ECD7E8AC68820876F67D11DEFAC /* VietLunarCore.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 63B0760DF598F5502BAFEE2ABC57F108 /* VietLunarCore.framework */; };
 		264CD3ADED70A0426DCA8609ED9D1838 /* VietLunarInfrastructure.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 97E58603D319054DD3AC4EDA889F5E42 /* VietLunarInfrastructure.framework */; };
-		299D577B837013E8D55BC728C9B7CD3B /* GregorianJDN.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7C88D5E79AD24F871EB5C20C4AB35E63 /* GregorianJDN.swift */; };
+		354FD2F39A74BFFE048D0724214CFA86 /* DateTypesTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 36C042976929F245150F0B9FFF3A4A91 /* DateTypesTests.swift */; };
 		38FACAB4D7486F7125E83B6BDC218C2C /* Cocoa.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 62BA69F8ABF32DD2C3B29215235F1F3B /* Cocoa.framework */; };
+		3ADE7CF5EAFFE56B88DB40668C75F511 /* EncodedLunarYearRecord.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8A6E155A8AA20F8A27C6C46A02CAB0F6 /* EncodedLunarYearRecord.swift */; };
+		3C43E15154384754971FE1D744828DEE /* LunarYearTable.generated.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5B3F3E0B7A8B3B00CF731F62D2E45AB7 /* LunarYearTable.generated.swift */; };
 		3E17C8346C83FE5CFC78B02CFCCB72DC /* VietLunarCore.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 63B0760DF598F5502BAFEE2ABC57F108 /* VietLunarCore.framework */; };
-		48185C7BA36D9AFF3AF2563B07B7A43F /* VietLunarCore.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 63B0760DF598F5502BAFEE2ABC57F108 /* VietLunarCore.framework */; };
-		4AC4C0E6A439635A331F42E002837525 /* SolarDate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4986E8F4729B2BAB6C99F768A269C5C0 /* SolarDate.swift */; };
+		42CCBB8D4EF501DBD9742F1604A289E9 /* DateValidationError.swift in Sources */ = {isa = PBXBuildFile; fileRef = FC4A6172B6E89B1D222EBD274F36E8C0 /* DateValidationError.swift */; };
 		4D097D817A31F0BB81091A01D66356B3 /* Cocoa.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 62BA69F8ABF32DD2C3B29215235F1F3B /* Cocoa.framework */; };
-		5057244903B379E1D5A0E95992F66919 /* EncodedLunarYearRecord.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2BDC998FFB2F293CC10E58FA5D56722F /* EncodedLunarYearRecord.swift */; };
-		5BA258D50225CD10A4CE3CA0B76406F8 /* YearMonth.swift in Sources */ = {isa = PBXBuildFile; fileRef = 11F78985A114E6E48D3FF58F1E7CACC3 /* YearMonth.swift */; };
-		7346A43A7AC2A85C3868C9C22EE5E884 /* VietnamCalendarTimeTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = A09461641CD8331BB81B417B089A4996 /* VietnamCalendarTimeTests.swift */; };
-		76B0E70F8EA39E6B1DD4063B7746B0FE /* VietLunarCore.swift in Sources */ = {isa = PBXBuildFile; fileRef = D7CB4C11CB7E69552994F3127E06486A /* VietLunarCore.swift */; };
-		7B97132246D3EDEEF45A65DD0C4DF432 /* LunarYearTable.generated.swift in Sources */ = {isa = PBXBuildFile; fileRef = 862BF2C4E55C058D382EF82110842AA9 /* LunarYearTable.generated.swift */; };
-		803C42B1F287171B67096C99B22B9D27 /* LunarDate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 73661CD76D0F0B358944CAF329113189 /* LunarDate.swift */; };
-		8161A5ECA0E48241300CE93BE8B4E761 /* DateValidationError.swift in Sources */ = {isa = PBXBuildFile; fileRef = B00BF689AEDE468B0BE01FCD18A0B68E /* DateValidationError.swift */; };
-		817AA7F7195A82638C7E314C604D13D4 /* VietnamCalendarTime.swift in Sources */ = {isa = PBXBuildFile; fileRef = 19D22F2777C142E0B7068060396EA330 /* VietnamCalendarTime.swift */; };
+		76C73304313EB285F640007DBA63DC06 /* YearMonth.swift in Sources */ = {isa = PBXBuildFile; fileRef = E66D257506011FACCECA175BACD5F7CB /* YearMonth.swift */; };
+		83241E97F092EBC956F7893242416523 /* VietLunarCoreTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = E13F4D4B767809826C111B41C8CA1DFF /* VietLunarCoreTests.swift */; };
 		88798332F224D980677598A9A7812CFE /* VietLunarInfrastructure.swift in Sources */ = {isa = PBXBuildFile; fileRef = C1F4D124B426E06C6B2E71072E560902 /* VietLunarInfrastructure.swift */; };
 		89AD9E5D60613A07065968F525CD67B6 /* VietLunarInfrastructureTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 011140330AF4DC9A792C8A0221254270 /* VietLunarInfrastructureTests.swift */; };
-		89BD11E9A816E8F0D0988933261069A5 /* VietLunarCoreTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 29D7FC5BA119DB5EFA9FAEC06E893B09 /* VietLunarCoreTests.swift */; };
 		8BBDF8109338DDB292CCC9770FFDFDC9 /* VietLunarInfrastructure.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 97E58603D319054DD3AC4EDA889F5E42 /* VietLunarInfrastructure.framework */; };
 		91EDAB1447CE8ED37D1D5A6C4CD30195 /* VietLunarApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = 59A690A1B709D274AEA444CEF4853781 /* VietLunarApp.swift */; };
-		923C7FE8DA4175805C4EB98118C99142 /* Cocoa.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 62BA69F8ABF32DD2C3B29215235F1F3B /* Cocoa.framework */; };
-		966608C9DC665DD6779F57021D2D0CF7 /* DateTypesTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0F13FD7FF43EBCE085F12130A2E6396C /* DateTypesTests.swift */; };
+		92D3A6D278AD3BD7860152A7B0E454C2 /* Cocoa.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 62BA69F8ABF32DD2C3B29215235F1F3B /* Cocoa.framework */; };
+		96A714440858DA2E22C908B4D331B681 /* GregorianJDN.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1CEE18983E03DDC40E2C51C1DCDE9730 /* GregorianJDN.swift */; };
 		9DAECE2F11C044DA6C2FBC012D38CE4B /* VietLunarUITests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 24C11BA14A7CFC34AB9E5F47E386988E /* VietLunarUITests.swift */; };
+		9FA201054E10B429E31F6C030AF0F5A4 /* LunarDate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 123C47240B2721995F08118239BB26E5 /* LunarDate.swift */; };
 		A148ED5B93FEEC613D7A8C18218DA1D4 /* Cocoa.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 62BA69F8ABF32DD2C3B29215235F1F3B /* Cocoa.framework */; };
-		B61AAAE370C899D315730A46B5CE1C53 /* LocalTime.swift in Sources */ = {isa = PBXBuildFile; fileRef = ABDA10DB1EC1AF2408671A62DAA48A82 /* LocalTime.swift */; };
+		A4BFDDBCDB95D2E9D71BF6DA653E2539 /* LunarCalendarEngine.swift in Sources */ = {isa = PBXBuildFile; fileRef = D53980229096B6D9D2498D128FAF095D /* LunarCalendarEngine.swift */; };
+		B0143FE5E9CA7EC72F38842890BD0C03 /* LocalTime.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5005FC0129168CEBE1223BA5E507E430 /* LocalTime.swift */; };
 		BA408BA0FD707EBD1B0A0669D716EB36 /* VietLunarCore.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = 63B0760DF598F5502BAFEE2ABC57F108 /* VietLunarCore.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
-		C5275990BD7E11290693D377F993DCD7 /* Cocoa.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 62BA69F8ABF32DD2C3B29215235F1F3B /* Cocoa.framework */; };
+		C2773E0FDA55101EECC03BB7D59088BF /* EncodedLunarYearRecordTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = FEACF478BDD1196809AC1F6E302F9D63 /* EncodedLunarYearRecordTests.swift */; };
 		C9A57AF82C99C4A14756821F69DDFB66 /* VietLunarCore.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 63B0760DF598F5502BAFEE2ABC57F108 /* VietLunarCore.framework */; };
+		D0473D0AAFF7DE5A74971717827D6E34 /* VietLunarCore.swift in Sources */ = {isa = PBXBuildFile; fileRef = E3A6022C6A3FF26E3DEE19329BACED20 /* VietLunarCore.swift */; };
 		D2AEAFD2968D145884F6B28AA80319DC /* Cocoa.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 62BA69F8ABF32DD2C3B29215235F1F3B /* Cocoa.framework */; };
-		D6DD6B6AB54CC85D7A1EE4D66FFF9DE6 /* EncodedLunarYearRecordTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = D7FFE9F5A8B8A02B24559194AC141822 /* EncodedLunarYearRecordTests.swift */; };
 		D7221C3F704D8C96C3B9055508066CAB /* VietLunarInfrastructure.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = 97E58603D319054DD3AC4EDA889F5E42 /* VietLunarInfrastructure.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
 		DAB9DD644E49003141880063B11A5626 /* AppLog.swift in Sources */ = {isa = PBXBuildFile; fileRef = C9A48753E55F523FCE7E6D8D4BD94D81 /* AppLog.swift */; };
-		F5C522EEF9668C7BA2C865D1E90C78A2 /* GregorianJDNTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0AAA52813168470FBB3447DD5CA44FEE /* GregorianJDNTests.swift */; };
+		DDC474B5B08CD0C76A4B22C96581221B /* LunarCalendarCalculating.swift in Sources */ = {isa = PBXBuildFile; fileRef = DACA9E9A0ABB07AE5EE0DF91E3BE668D /* LunarCalendarCalculating.swift */; };
+		F0928E4551C4782E5DD1D5B9059123BD /* GregorianJDNTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = ED8585F5D11178280F42EE806EA9D1A5 /* GregorianJDNTests.swift */; };
+		F6E528D977DFE897746AD127AF379679 /* VietLunarCore.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 63B0760DF598F5502BAFEE2ABC57F108 /* VietLunarCore.framework */; };
+		FDC245022D1E10DEBA82BD07DF8E3757 /* LunarCalendarEngineTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = DCDB7701E49F78F84A196F44928DD92C /* LunarCalendarEngineTests.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
-		2027978E6BC5D309CB74A07B1074CBC7 /* PBXContainerItemProxy */ = {
+		0B53DA34302354428998FFF3FE0A87AF /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
 			containerPortal = A920EB9722CD966EFF4C027F2E50E28C /* Project object */;
 			proxyType = 1;
-			remoteGlobalIDString = A6F5A9DFABCBB6DE00F0B428599BAA14;
+			remoteGlobalIDString = 9F840A7F7D9F5C35209BDB61053EDC75;
 			remoteInfo = VietLunarCore;
 		};
-		26B6307C0B00D6DE55433715AE1D7BB3 /* PBXContainerItemProxy */ = {
+		2FC5219634235EE078F26AF8BC29E781 /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
 			containerPortal = A920EB9722CD966EFF4C027F2E50E28C /* Project object */;
 			proxyType = 1;
-			remoteGlobalIDString = A6F5A9DFABCBB6DE00F0B428599BAA14;
+			remoteGlobalIDString = 9F840A7F7D9F5C35209BDB61053EDC75;
 			remoteInfo = VietLunarCore;
 		};
-		37FA65329771827DD6D2C352906554EE /* PBXContainerItemProxy */ = {
-			isa = PBXContainerItemProxy;
-			containerPortal = A920EB9722CD966EFF4C027F2E50E28C /* Project object */;
-			proxyType = 1;
-			remoteGlobalIDString = A6F5A9DFABCBB6DE00F0B428599BAA14;
-			remoteInfo = VietLunarCore;
-		};
-		5FC65ADF5D22A77373193850810A1284 /* PBXContainerItemProxy */ = {
+		36CF1AC93E9F363B6B05C0B5EF15C348 /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
 			containerPortal = A920EB9722CD966EFF4C027F2E50E28C /* Project object */;
 			proxyType = 1;
 			remoteGlobalIDString = 3A2227A782B07460DC6471ACD418DE4C;
 			remoteInfo = VietLunarInfrastructure;
 		};
-		8AECA54CAADC87A135F3522F0F761B42 /* PBXContainerItemProxy */ = {
+		86AE7AD40D817EBFB7C9B3D7FD1C972C /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
 			containerPortal = A920EB9722CD966EFF4C027F2E50E28C /* Project object */;
 			proxyType = 1;
-			remoteGlobalIDString = 3A2227A782B07460DC6471ACD418DE4C;
-			remoteInfo = VietLunarInfrastructure;
-		};
-		90BF1747179038C0F0A371C3EF0C1A83 /* PBXContainerItemProxy */ = {
-			isa = PBXContainerItemProxy;
-			containerPortal = A920EB9722CD966EFF4C027F2E50E28C /* Project object */;
-			proxyType = 1;
-			remoteGlobalIDString = A6F5A9DFABCBB6DE00F0B428599BAA14;
+			remoteGlobalIDString = 9F840A7F7D9F5C35209BDB61053EDC75;
 			remoteInfo = VietLunarCore;
 		};
-		CEF705F28956A20090944692A7D8B28B /* PBXContainerItemProxy */ = {
+		937EBDDF9B4F7690B3C891F821BC1792 /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
 			containerPortal = A920EB9722CD966EFF4C027F2E50E28C /* Project object */;
 			proxyType = 1;
 			remoteGlobalIDString = 5CB9BFB851C4AE77CA256672D312EEA7;
 			remoteInfo = VietLunar;
+		};
+		C8AFF4B78907D4346C826DA5E0A6C219 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = A920EB9722CD966EFF4C027F2E50E28C /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = 3A2227A782B07460DC6471ACD418DE4C;
+			remoteInfo = VietLunarInfrastructure;
+		};
+		D4F600EC60BD5311581BF9BD74CC15BA /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = A920EB9722CD966EFF4C027F2E50E28C /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = 9F840A7F7D9F5C35209BDB61053EDC75;
+			remoteInfo = VietLunarCore;
 		};
 /* End PBXContainerItemProxy section */
 
@@ -112,40 +115,52 @@
 
 /* Begin PBXFileReference section */
 		011140330AF4DC9A792C8A0221254270 /* VietLunarInfrastructureTests.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = VietLunarInfrastructureTests.swift; sourceTree = "<group>"; };
-		0AAA52813168470FBB3447DD5CA44FEE /* GregorianJDNTests.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = GregorianJDNTests.swift; sourceTree = "<group>"; };
-		0F13FD7FF43EBCE085F12130A2E6396C /* DateTypesTests.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = DateTypesTests.swift; sourceTree = "<group>"; };
-		11F78985A114E6E48D3FF58F1E7CACC3 /* YearMonth.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = YearMonth.swift; path = DateTypes/YearMonth.swift; sourceTree = "<group>"; };
-		19D22F2777C142E0B7068060396EA330 /* VietnamCalendarTime.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = VietnamCalendarTime.swift; path = DateTypes/VietnamCalendarTime.swift; sourceTree = "<group>"; };
+		123C47240B2721995F08118239BB26E5 /* LunarDate.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = LunarDate.swift; path = DateTypes/LunarDate.swift; sourceTree = "<group>"; };
+		1CEE18983E03DDC40E2C51C1DCDE9730 /* GregorianJDN.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = GregorianJDN.swift; path = DateTypes/GregorianJDN.swift; sourceTree = "<group>"; };
 		24C11BA14A7CFC34AB9E5F47E386988E /* VietLunarUITests.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = VietLunarUITests.swift; sourceTree = "<group>"; };
-		29D7FC5BA119DB5EFA9FAEC06E893B09 /* VietLunarCoreTests.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = VietLunarCoreTests.swift; sourceTree = "<group>"; };
-		2BDC998FFB2F293CC10E58FA5D56722F /* EncodedLunarYearRecord.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = EncodedLunarYearRecord.swift; path = Lunar/EncodedLunarYearRecord.swift; sourceTree = "<group>"; };
-		4986E8F4729B2BAB6C99F768A269C5C0 /* SolarDate.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = SolarDate.swift; path = DateTypes/SolarDate.swift; sourceTree = "<group>"; };
+		36C042976929F245150F0B9FFF3A4A91 /* DateTypesTests.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = DateTypesTests.swift; sourceTree = "<group>"; };
+		3E49C729D3A9533FC9418CDB60330CAB /* VietnamCalendarTime.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = VietnamCalendarTime.swift; path = DateTypes/VietnamCalendarTime.swift; sourceTree = "<group>"; };
+		48BE3A8AC5041CA1D488A6B858336C70 /* SolarDate.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = SolarDate.swift; path = DateTypes/SolarDate.swift; sourceTree = "<group>"; };
+		5005FC0129168CEBE1223BA5E507E430 /* LocalTime.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = LocalTime.swift; path = DateTypes/LocalTime.swift; sourceTree = "<group>"; };
 		5355FCDCE5E89F0A401B6C491988A4AF /* VietLunarUITests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = VietLunarUITests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		59A690A1B709D274AEA444CEF4853781 /* VietLunarApp.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = VietLunarApp.swift; sourceTree = "<group>"; };
+		5B3F3E0B7A8B3B00CF731F62D2E45AB7 /* LunarYearTable.generated.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = LunarYearTable.generated.swift; path = Generated/LunarYearTable.generated.swift; sourceTree = "<group>"; };
 		62BA69F8ABF32DD2C3B29215235F1F3B /* Cocoa.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Cocoa.framework; path = Platforms/MacOSX.platform/Developer/SDKs/MacOSX15.0.sdk/System/Library/Frameworks/Cocoa.framework; sourceTree = DEVELOPER_DIR; };
 		63B0760DF598F5502BAFEE2ABC57F108 /* VietLunarCore.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = VietLunarCore.framework; sourceTree = BUILT_PRODUCTS_DIR; };
-		73661CD76D0F0B358944CAF329113189 /* LunarDate.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = LunarDate.swift; path = DateTypes/LunarDate.swift; sourceTree = "<group>"; };
-		7C88D5E79AD24F871EB5C20C4AB35E63 /* GregorianJDN.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = GregorianJDN.swift; path = DateTypes/GregorianJDN.swift; sourceTree = "<group>"; };
-		862BF2C4E55C058D382EF82110842AA9 /* LunarYearTable.generated.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = LunarYearTable.generated.swift; path = Generated/LunarYearTable.generated.swift; sourceTree = "<group>"; };
+		8A6E155A8AA20F8A27C6C46A02CAB0F6 /* EncodedLunarYearRecord.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = EncodedLunarYearRecord.swift; path = Lunar/EncodedLunarYearRecord.swift; sourceTree = "<group>"; };
 		97E58603D319054DD3AC4EDA889F5E42 /* VietLunarInfrastructure.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = VietLunarInfrastructure.framework; sourceTree = BUILT_PRODUCTS_DIR; };
-		A09461641CD8331BB81B417B089A4996 /* VietnamCalendarTimeTests.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = VietnamCalendarTimeTests.swift; sourceTree = "<group>"; };
 		A246C665652E427FBD58F9C38DF95AB1 /* VietLunar.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = VietLunar.app; sourceTree = BUILT_PRODUCTS_DIR; };
-		ABDA10DB1EC1AF2408671A62DAA48A82 /* LocalTime.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = LocalTime.swift; path = DateTypes/LocalTime.swift; sourceTree = "<group>"; };
-		B00BF689AEDE468B0BE01FCD18A0B68E /* DateValidationError.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = DateValidationError.swift; path = DateTypes/DateValidationError.swift; sourceTree = "<group>"; };
 		B3F024EF02BFBC9AE1C2ECA9157C8D9C /* VietLunarInfrastructureTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = VietLunarInfrastructureTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		BBD09CCED77B68602AD26142415C32B0 /* VietLunarCoreTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = VietLunarCoreTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		C1F4D124B426E06C6B2E71072E560902 /* VietLunarInfrastructure.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = VietLunarInfrastructure.swift; sourceTree = "<group>"; };
 		C9A48753E55F523FCE7E6D8D4BD94D81 /* AppLog.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = AppLog.swift; path = Logging/AppLog.swift; sourceTree = "<group>"; };
-		D7CB4C11CB7E69552994F3127E06486A /* VietLunarCore.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = VietLunarCore.swift; sourceTree = "<group>"; };
-		D7FFE9F5A8B8A02B24559194AC141822 /* EncodedLunarYearRecordTests.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = EncodedLunarYearRecordTests.swift; sourceTree = "<group>"; };
+		D53980229096B6D9D2498D128FAF095D /* LunarCalendarEngine.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = LunarCalendarEngine.swift; path = Lunar/LunarCalendarEngine.swift; sourceTree = "<group>"; };
+		D5608AC7730B569A4749D26B689D7A6D /* VietnamCalendarTimeTests.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = VietnamCalendarTimeTests.swift; sourceTree = "<group>"; };
+		DACA9E9A0ABB07AE5EE0DF91E3BE668D /* LunarCalendarCalculating.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = LunarCalendarCalculating.swift; path = Lunar/LunarCalendarCalculating.swift; sourceTree = "<group>"; };
+		DCDB7701E49F78F84A196F44928DD92C /* LunarCalendarEngineTests.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = LunarCalendarEngineTests.swift; sourceTree = "<group>"; };
+		E13F4D4B767809826C111B41C8CA1DFF /* VietLunarCoreTests.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = VietLunarCoreTests.swift; sourceTree = "<group>"; };
+		E3A6022C6A3FF26E3DEE19329BACED20 /* VietLunarCore.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = VietLunarCore.swift; sourceTree = "<group>"; };
+		E66D257506011FACCECA175BACD5F7CB /* YearMonth.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = YearMonth.swift; path = DateTypes/YearMonth.swift; sourceTree = "<group>"; };
+		ED8585F5D11178280F42EE806EA9D1A5 /* GregorianJDNTests.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = GregorianJDNTests.swift; sourceTree = "<group>"; };
+		FC4A6172B6E89B1D222EBD274F36E8C0 /* DateValidationError.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = DateValidationError.swift; path = DateTypes/DateValidationError.swift; sourceTree = "<group>"; };
+		FEACF478BDD1196809AC1F6E302F9D63 /* EncodedLunarYearRecordTests.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = EncodedLunarYearRecordTests.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
-		4EF349D65064F840AC47916780B32D40 /* Frameworks */ = {
+		06DFEA4D45885DF52064F882B0DC2F42 /* Frameworks */ = {
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				C5275990BD7E11290693D377F993DCD7 /* Cocoa.framework in Frameworks */,
+				92D3A6D278AD3BD7860152A7B0E454C2 /* Cocoa.framework in Frameworks */,
+				F6E528D977DFE897746AD127AF379679 /* VietLunarCore.framework in Frameworks */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		2E67AA98EFD3D834531E5FD237744F16 /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				158CA050FE5190FA76B651707AAE0C10 /* Cocoa.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -164,15 +179,6 @@
 			buildActionMask = 2147483647;
 			files = (
 				A148ED5B93FEEC613D7A8C18218DA1D4 /* Cocoa.framework in Frameworks */,
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-		};
-		B6BE3E406C96CD4FFD441E0EDB8C5678 /* Frameworks */ = {
-			isa = PBXFrameworksBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-				923C7FE8DA4175805C4EB98118C99142 /* Cocoa.framework in Frameworks */,
-				48185C7BA36D9AFF3AF2563B07B7A43F /* VietLunarCore.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -214,15 +220,29 @@
 			name = "OS X";
 			sourceTree = "<group>";
 		};
+		4B6E908283CEB1C848524CDDE6449EC9 /* CoreTests */ = {
+			isa = PBXGroup;
+			children = (
+				E13F4D4B767809826C111B41C8CA1DFF /* VietLunarCoreTests.swift */,
+				36C042976929F245150F0B9FFF3A4A91 /* DateTypesTests.swift */,
+				ED8585F5D11178280F42EE806EA9D1A5 /* GregorianJDNTests.swift */,
+				D5608AC7730B569A4749D26B689D7A6D /* VietnamCalendarTimeTests.swift */,
+				FEACF478BDD1196809AC1F6E302F9D63 /* EncodedLunarYearRecordTests.swift */,
+				DCDB7701E49F78F84A196F44928DD92C /* LunarCalendarEngineTests.swift */,
+			);
+			name = CoreTests;
+			path = Tests/CoreTests;
+			sourceTree = "<group>";
+		};
 		890CAF9118E1D55CDBBF2CC456F94DC3 = {
 			isa = PBXGroup;
 			children = (
 				C6E7222B75D49C2F308666FD3F7BE5EB /* Products */,
 				0FC80583D7142CB0AAE7875738DF954B /* Frameworks */,
-				A6DB896157C35AA21EE66CC41D1E34E7 /* Core */,
+				EA2F625E4272993BD28FF267F2AAC441 /* Core */,
 				A16C9212E1F7DA9A9A962D9015BABA60 /* Infrastructure */,
 				DCD76CABD2C1F27C6DE34714121E19FB /* App */,
-				EFC4F89E2909F00CCA52C7E3C8505D55 /* CoreTests */,
+				4B6E908283CEB1C848524CDDE6449EC9 /* CoreTests */,
 				E0EAC230CE3F965FC19B4D79518A65F8 /* InfrastructureTests */,
 				985D373D6BCA9B008A3C9B48A2C2692A /* UITests */,
 			);
@@ -245,24 +265,6 @@
 			);
 			name = Infrastructure;
 			path = Sources/Infrastructure;
-			sourceTree = "<group>";
-		};
-		A6DB896157C35AA21EE66CC41D1E34E7 /* Core */ = {
-			isa = PBXGroup;
-			children = (
-				D7CB4C11CB7E69552994F3127E06486A /* VietLunarCore.swift */,
-				B00BF689AEDE468B0BE01FCD18A0B68E /* DateValidationError.swift */,
-				4986E8F4729B2BAB6C99F768A269C5C0 /* SolarDate.swift */,
-				73661CD76D0F0B358944CAF329113189 /* LunarDate.swift */,
-				11F78985A114E6E48D3FF58F1E7CACC3 /* YearMonth.swift */,
-				ABDA10DB1EC1AF2408671A62DAA48A82 /* LocalTime.swift */,
-				7C88D5E79AD24F871EB5C20C4AB35E63 /* GregorianJDN.swift */,
-				19D22F2777C142E0B7068060396EA330 /* VietnamCalendarTime.swift */,
-				2BDC998FFB2F293CC10E58FA5D56722F /* EncodedLunarYearRecord.swift */,
-				862BF2C4E55C058D382EF82110842AA9 /* LunarYearTable.generated.swift */,
-			);
-			name = Core;
-			path = Sources/Core;
 			sourceTree = "<group>";
 		};
 		C6E7222B75D49C2F308666FD3F7BE5EB /* Products */ = {
@@ -296,17 +298,24 @@
 			path = Tests/InfrastructureTests;
 			sourceTree = "<group>";
 		};
-		EFC4F89E2909F00CCA52C7E3C8505D55 /* CoreTests */ = {
+		EA2F625E4272993BD28FF267F2AAC441 /* Core */ = {
 			isa = PBXGroup;
 			children = (
-				29D7FC5BA119DB5EFA9FAEC06E893B09 /* VietLunarCoreTests.swift */,
-				0F13FD7FF43EBCE085F12130A2E6396C /* DateTypesTests.swift */,
-				0AAA52813168470FBB3447DD5CA44FEE /* GregorianJDNTests.swift */,
-				A09461641CD8331BB81B417B089A4996 /* VietnamCalendarTimeTests.swift */,
-				D7FFE9F5A8B8A02B24559194AC141822 /* EncodedLunarYearRecordTests.swift */,
+				E3A6022C6A3FF26E3DEE19329BACED20 /* VietLunarCore.swift */,
+				FC4A6172B6E89B1D222EBD274F36E8C0 /* DateValidationError.swift */,
+				48BE3A8AC5041CA1D488A6B858336C70 /* SolarDate.swift */,
+				123C47240B2721995F08118239BB26E5 /* LunarDate.swift */,
+				E66D257506011FACCECA175BACD5F7CB /* YearMonth.swift */,
+				5005FC0129168CEBE1223BA5E507E430 /* LocalTime.swift */,
+				1CEE18983E03DDC40E2C51C1DCDE9730 /* GregorianJDN.swift */,
+				3E49C729D3A9533FC9418CDB60330CAB /* VietnamCalendarTime.swift */,
+				8A6E155A8AA20F8A27C6C46A02CAB0F6 /* EncodedLunarYearRecord.swift */,
+				DACA9E9A0ABB07AE5EE0DF91E3BE668D /* LunarCalendarCalculating.swift */,
+				D53980229096B6D9D2498D128FAF095D /* LunarCalendarEngine.swift */,
+				5B3F3E0B7A8B3B00CF731F62D2E45AB7 /* LunarYearTable.generated.swift */,
 			);
-			name = CoreTests;
-			path = Tests/CoreTests;
+			name = Core;
+			path = Sources/Core;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -319,7 +328,7 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
-		4E95933FCD4017A036B863EC64875C00 /* Headers */ = {
+		368E3A6DC77815F096EF7F97939CDBA1 /* Headers */ = {
 			isa = PBXHeadersBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
@@ -329,6 +338,24 @@
 /* End PBXHeadersBuildPhase section */
 
 /* Begin PBXNativeTarget section */
+		1881B1C594F9ADC8E1079017B2483DC2 /* VietLunarCoreTests */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = 6D65D0DC7C93CC33F54B4220EC723C4D /* Build configuration list for PBXNativeTarget "VietLunarCoreTests" */;
+			buildPhases = (
+				71C1BC1A0BD218C0EE4E46D3EA5AED7B /* Sources */,
+				06DFEA4D45885DF52064F882B0DC2F42 /* Frameworks */,
+				6286E15906A29FA456ABD90B72D031A1 /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+				706A562D345028AD7E4643FD991F761C /* PBXTargetDependency */,
+			);
+			name = VietLunarCoreTests;
+			productName = VietLunarCoreTests;
+			productReference = BBD09CCED77B68602AD26142415C32B0 /* VietLunarCoreTests.xctest */;
+			productType = "com.apple.product-type.bundle.unit-test";
+		};
 		3A2227A782B07460DC6471ACD418DE4C /* VietLunarInfrastructure */ = {
 			isa = PBXNativeTarget;
 			buildConfigurationList = 2996591F9B6C07EA921B43EBF2B1D18C /* Build configuration list for PBXNativeTarget "VietLunarInfrastructure" */;
@@ -341,7 +368,7 @@
 			buildRules = (
 			);
 			dependencies = (
-				F7BD94360B7109B1C7F05CA77346C520 /* PBXTargetDependency */,
+				8018E2AADC74D2EF45AF3E51EA44C1DD /* PBXTargetDependency */,
 			);
 			name = VietLunarInfrastructure;
 			productName = VietLunarInfrastructure;
@@ -359,7 +386,7 @@
 			buildRules = (
 			);
 			dependencies = (
-				37214B06361C5F39571D487AE02FEBEC /* PBXTargetDependency */,
+				366524D74791751A4DB7ADAC50F4BC9C /* PBXTargetDependency */,
 			);
 			name = VietLunarUITests;
 			productName = VietLunarUITests;
@@ -378,40 +405,22 @@
 			buildRules = (
 			);
 			dependencies = (
-				FC25BB2540A1AC1EFD2F822D9D3457EF /* PBXTargetDependency */,
-				03D51FA287BDE873D2F4BCC72F2489B4 /* PBXTargetDependency */,
+				2A144B0D805F5683EA37CFF889DA0E18 /* PBXTargetDependency */,
+				738EFF11C65DD585D700A5F321F3C6FF /* PBXTargetDependency */,
 			);
 			name = VietLunar;
 			productName = VietLunar;
 			productReference = A246C665652E427FBD58F9C38DF95AB1 /* VietLunar.app */;
 			productType = "com.apple.product-type.application";
 		};
-		65E6E644F3BAD9086F4936FBE218D032 /* VietLunarCoreTests */ = {
+		9F840A7F7D9F5C35209BDB61053EDC75 /* VietLunarCore */ = {
 			isa = PBXNativeTarget;
-			buildConfigurationList = A13F0C5D633714E0600F132FEF1E17CE /* Build configuration list for PBXNativeTarget "VietLunarCoreTests" */;
+			buildConfigurationList = 1395C1A0FAC57F5AF3882DA3160052D5 /* Build configuration list for PBXNativeTarget "VietLunarCore" */;
 			buildPhases = (
-				D2A040997F799D2ED9675F6835B76EFB /* Sources */,
-				B6BE3E406C96CD4FFD441E0EDB8C5678 /* Frameworks */,
-				56F12B0A73FF63222F3CC1FBF00719CD /* Resources */,
-			);
-			buildRules = (
-			);
-			dependencies = (
-				AA5889F10C89A71966C4831E73580BE8 /* PBXTargetDependency */,
-			);
-			name = VietLunarCoreTests;
-			productName = VietLunarCoreTests;
-			productReference = BBD09CCED77B68602AD26142415C32B0 /* VietLunarCoreTests.xctest */;
-			productType = "com.apple.product-type.bundle.unit-test";
-		};
-		A6F5A9DFABCBB6DE00F0B428599BAA14 /* VietLunarCore */ = {
-			isa = PBXNativeTarget;
-			buildConfigurationList = DE6A7B995E1497751453E4CBD8A44D09 /* Build configuration list for PBXNativeTarget "VietLunarCore" */;
-			buildPhases = (
-				4E95933FCD4017A036B863EC64875C00 /* Headers */,
-				FB04A7146408C3A443D837D7EDD5BCA6 /* Sources */,
-				4EF349D65064F840AC47916780B32D40 /* Frameworks */,
-				254997B51E440F44D12C55A8B3F1A0D4 /* Resources */,
+				368E3A6DC77815F096EF7F97939CDBA1 /* Headers */,
+				62EEEE590ABBC99FD4F824BBAB9BC9D8 /* Sources */,
+				2E67AA98EFD3D834531E5FD237744F16 /* Frameworks */,
+				51ACC615662DF7DE6E37D4FBBF9EDC30 /* Resources */,
 			);
 			buildRules = (
 			);
@@ -433,8 +442,8 @@
 			buildRules = (
 			);
 			dependencies = (
-				B6F8742212DE0946CC71727E19EEF0E3 /* PBXTargetDependency */,
-				A5D1C03E413E94DB359FAD97B914FC2B /* PBXTargetDependency */,
+				CBE7C8DAE5E2C20A3BC29E8064F49AB5 /* PBXTargetDependency */,
+				504CC2281D59B945B6E96BA4C0A91187 /* PBXTargetDependency */,
 			);
 			name = VietLunarInfrastructureTests;
 			productName = VietLunarInfrastructureTests;
@@ -465,10 +474,10 @@
 			projectDirPath = "";
 			projectRoot = "";
 			targets = (
-				A6F5A9DFABCBB6DE00F0B428599BAA14 /* VietLunarCore */,
+				9F840A7F7D9F5C35209BDB61053EDC75 /* VietLunarCore */,
 				3A2227A782B07460DC6471ACD418DE4C /* VietLunarInfrastructure */,
 				5CB9BFB851C4AE77CA256672D312EEA7 /* VietLunar */,
-				65E6E644F3BAD9086F4936FBE218D032 /* VietLunarCoreTests */,
+				1881B1C594F9ADC8E1079017B2483DC2 /* VietLunarCoreTests */,
 				CEC242E2F01A0CC1397DCB39E00C9657 /* VietLunarInfrastructureTests */,
 				4A011862F5D9B59B8E3A5EF83B7C4EBF /* VietLunarUITests */,
 			);
@@ -476,13 +485,6 @@
 /* End PBXProject section */
 
 /* Begin PBXResourcesBuildPhase section */
-		254997B51E440F44D12C55A8B3F1A0D4 /* Resources */ = {
-			isa = PBXResourcesBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-		};
 		2D07B4F69303F22398A0D75CC5D041C1 /* Resources */ = {
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
@@ -490,7 +492,14 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
-		56F12B0A73FF63222F3CC1FBF00719CD /* Resources */ = {
+		51ACC615662DF7DE6E37D4FBBF9EDC30 /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		6286E15906A29FA456ABD90B72D031A1 /* Resources */ = {
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
@@ -530,6 +539,38 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
+		62EEEE590ABBC99FD4F824BBAB9BC9D8 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				D0473D0AAFF7DE5A74971717827D6E34 /* VietLunarCore.swift in Sources */,
+				42CCBB8D4EF501DBD9742F1604A289E9 /* DateValidationError.swift in Sources */,
+				02EB07E452E7EF566F6AEF9A2D541860 /* SolarDate.swift in Sources */,
+				9FA201054E10B429E31F6C030AF0F5A4 /* LunarDate.swift in Sources */,
+				76C73304313EB285F640007DBA63DC06 /* YearMonth.swift in Sources */,
+				B0143FE5E9CA7EC72F38842890BD0C03 /* LocalTime.swift in Sources */,
+				96A714440858DA2E22C908B4D331B681 /* GregorianJDN.swift in Sources */,
+				19E08B0D6F5FCF2EA8E05AB1854977F0 /* VietnamCalendarTime.swift in Sources */,
+				3ADE7CF5EAFFE56B88DB40668C75F511 /* EncodedLunarYearRecord.swift in Sources */,
+				DDC474B5B08CD0C76A4B22C96581221B /* LunarCalendarCalculating.swift in Sources */,
+				A4BFDDBCDB95D2E9D71BF6DA653E2539 /* LunarCalendarEngine.swift in Sources */,
+				3C43E15154384754971FE1D744828DEE /* LunarYearTable.generated.swift in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		71C1BC1A0BD218C0EE4E46D3EA5AED7B /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				83241E97F092EBC956F7893242416523 /* VietLunarCoreTests.swift in Sources */,
+				354FD2F39A74BFFE048D0724214CFA86 /* DateTypesTests.swift in Sources */,
+				F0928E4551C4782E5DD1D5B9059123BD /* GregorianJDNTests.swift in Sources */,
+				0CB08287CA1175DFB4DEBDD9328A5D9A /* VietnamCalendarTimeTests.swift in Sources */,
+				C2773E0FDA55101EECC03BB7D59088BF /* EncodedLunarYearRecordTests.swift in Sources */,
+				FDC245022D1E10DEBA82BD07DF8E3757 /* LunarCalendarEngineTests.swift in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 		920C96EF1167CC2F1B3CF4CCC7650F7B /* Sources */ = {
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
@@ -546,18 +587,6 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
-		D2A040997F799D2ED9675F6835B76EFB /* Sources */ = {
-			isa = PBXSourcesBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-				89BD11E9A816E8F0D0988933261069A5 /* VietLunarCoreTests.swift in Sources */,
-				966608C9DC665DD6779F57021D2D0CF7 /* DateTypesTests.swift in Sources */,
-				F5C522EEF9668C7BA2C865D1E90C78A2 /* GregorianJDNTests.swift in Sources */,
-				7346A43A7AC2A85C3868C9C22EE5E884 /* VietnamCalendarTimeTests.swift in Sources */,
-				D6DD6B6AB54CC85D7A1EE4D66FFF9DE6 /* EncodedLunarYearRecordTests.swift in Sources */,
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-		};
 		E4403E9AE0989B3AD43C52F88AED8387 /* Sources */ = {
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
@@ -566,67 +595,50 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
-		FB04A7146408C3A443D837D7EDD5BCA6 /* Sources */ = {
-			isa = PBXSourcesBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-				76B0E70F8EA39E6B1DD4063B7746B0FE /* VietLunarCore.swift in Sources */,
-				8161A5ECA0E48241300CE93BE8B4E761 /* DateValidationError.swift in Sources */,
-				4AC4C0E6A439635A331F42E002837525 /* SolarDate.swift in Sources */,
-				803C42B1F287171B67096C99B22B9D27 /* LunarDate.swift in Sources */,
-				5BA258D50225CD10A4CE3CA0B76406F8 /* YearMonth.swift in Sources */,
-				B61AAAE370C899D315730A46B5CE1C53 /* LocalTime.swift in Sources */,
-				299D577B837013E8D55BC728C9B7CD3B /* GregorianJDN.swift in Sources */,
-				817AA7F7195A82638C7E314C604D13D4 /* VietnamCalendarTime.swift in Sources */,
-				5057244903B379E1D5A0E95992F66919 /* EncodedLunarYearRecord.swift in Sources */,
-				7B97132246D3EDEEF45A65DD0C4DF432 /* LunarYearTable.generated.swift in Sources */,
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-		};
 /* End PBXSourcesBuildPhase section */
 
 /* Begin PBXTargetDependency section */
-		03D51FA287BDE873D2F4BCC72F2489B4 /* PBXTargetDependency */ = {
+		2A144B0D805F5683EA37CFF889DA0E18 /* PBXTargetDependency */ = {
 			isa = PBXTargetDependency;
-			name = VietLunarInfrastructure;
-			target = 3A2227A782B07460DC6471ACD418DE4C /* VietLunarInfrastructure */;
-			targetProxy = 5FC65ADF5D22A77373193850810A1284 /* PBXContainerItemProxy */;
+			name = VietLunarCore;
+			target = 9F840A7F7D9F5C35209BDB61053EDC75 /* VietLunarCore */;
+			targetProxy = 0B53DA34302354428998FFF3FE0A87AF /* PBXContainerItemProxy */;
 		};
-		37214B06361C5F39571D487AE02FEBEC /* PBXTargetDependency */ = {
+		366524D74791751A4DB7ADAC50F4BC9C /* PBXTargetDependency */ = {
 			isa = PBXTargetDependency;
 			name = VietLunar;
 			target = 5CB9BFB851C4AE77CA256672D312EEA7 /* VietLunar */;
-			targetProxy = CEF705F28956A20090944692A7D8B28B /* PBXContainerItemProxy */;
+			targetProxy = 937EBDDF9B4F7690B3C891F821BC1792 /* PBXContainerItemProxy */;
 		};
-		A5D1C03E413E94DB359FAD97B914FC2B /* PBXTargetDependency */ = {
+		504CC2281D59B945B6E96BA4C0A91187 /* PBXTargetDependency */ = {
 			isa = PBXTargetDependency;
 			name = VietLunarInfrastructure;
 			target = 3A2227A782B07460DC6471ACD418DE4C /* VietLunarInfrastructure */;
-			targetProxy = 8AECA54CAADC87A135F3522F0F761B42 /* PBXContainerItemProxy */;
+			targetProxy = C8AFF4B78907D4346C826DA5E0A6C219 /* PBXContainerItemProxy */;
 		};
-		AA5889F10C89A71966C4831E73580BE8 /* PBXTargetDependency */ = {
+		706A562D345028AD7E4643FD991F761C /* PBXTargetDependency */ = {
 			isa = PBXTargetDependency;
 			name = VietLunarCore;
-			target = A6F5A9DFABCBB6DE00F0B428599BAA14 /* VietLunarCore */;
-			targetProxy = 37FA65329771827DD6D2C352906554EE /* PBXContainerItemProxy */;
+			target = 9F840A7F7D9F5C35209BDB61053EDC75 /* VietLunarCore */;
+			targetProxy = 86AE7AD40D817EBFB7C9B3D7FD1C972C /* PBXContainerItemProxy */;
 		};
-		B6F8742212DE0946CC71727E19EEF0E3 /* PBXTargetDependency */ = {
+		738EFF11C65DD585D700A5F321F3C6FF /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			name = VietLunarInfrastructure;
+			target = 3A2227A782B07460DC6471ACD418DE4C /* VietLunarInfrastructure */;
+			targetProxy = 36CF1AC93E9F363B6B05C0B5EF15C348 /* PBXContainerItemProxy */;
+		};
+		8018E2AADC74D2EF45AF3E51EA44C1DD /* PBXTargetDependency */ = {
 			isa = PBXTargetDependency;
 			name = VietLunarCore;
-			target = A6F5A9DFABCBB6DE00F0B428599BAA14 /* VietLunarCore */;
-			targetProxy = 90BF1747179038C0F0A371C3EF0C1A83 /* PBXContainerItemProxy */;
+			target = 9F840A7F7D9F5C35209BDB61053EDC75 /* VietLunarCore */;
+			targetProxy = D4F600EC60BD5311581BF9BD74CC15BA /* PBXContainerItemProxy */;
 		};
-		F7BD94360B7109B1C7F05CA77346C520 /* PBXTargetDependency */ = {
+		CBE7C8DAE5E2C20A3BC29E8064F49AB5 /* PBXTargetDependency */ = {
 			isa = PBXTargetDependency;
 			name = VietLunarCore;
-			target = A6F5A9DFABCBB6DE00F0B428599BAA14 /* VietLunarCore */;
-			targetProxy = 26B6307C0B00D6DE55433715AE1D7BB3 /* PBXContainerItemProxy */;
-		};
-		FC25BB2540A1AC1EFD2F822D9D3457EF /* PBXTargetDependency */ = {
-			isa = PBXTargetDependency;
-			name = VietLunarCore;
-			target = A6F5A9DFABCBB6DE00F0B428599BAA14 /* VietLunarCore */;
-			targetProxy = 2027978E6BC5D309CB74A07B1074CBC7 /* PBXContainerItemProxy */;
+			target = 9F840A7F7D9F5C35209BDB61053EDC75 /* VietLunarCore */;
+			targetProxy = 2FC5219634235EE078F26AF8BC29E781 /* PBXContainerItemProxy */;
 		};
 /* End PBXTargetDependency section */
 
@@ -687,7 +699,7 @@
 			};
 			name = Release;
 		};
-		383194F1769F3427155A74C74A6E3346 /* Debug */ = {
+		135E7A11D81797E311273C7BF5D8ACE5 /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				CLANG_WARN_DOCUMENTATION_COMMENTS = YES;
@@ -704,6 +716,35 @@
 				SWIFT_VERSION = 6.0;
 			};
 			name = Debug;
+		};
+		176AC574EB6DA58F3B8000964F5CD06D /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				CLANG_WARN_DOCUMENTATION_COMMENTS = YES;
+				CLANG_WARN_QUOTED_INCLUDE_IN_FRAMEWORK_HEADER = YES;
+				COMBINE_HIDPI_IMAGES = YES;
+				CURRENT_PROJECT_VERSION = 1;
+				DEFINES_MODULE = YES;
+				DYLIB_COMPATIBILITY_VERSION = 1;
+				DYLIB_CURRENT_VERSION = 1;
+				DYLIB_INSTALL_NAME_BASE = "@rpath";
+				ENABLE_USER_SCRIPT_SANDBOXING = YES;
+				GENERATE_INFOPLIST_FILE = YES;
+				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Frameworks";
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/../Frameworks @loader_path/Frameworks";
+				MACOSX_DEPLOYMENT_TARGET = 13.0;
+				MARKETING_VERSION = 0.1.0;
+				PRODUCT_BUNDLE_IDENTIFIER = com.tuanlm.VietLunar.core;
+				PRODUCT_NAME = "$(TARGET_NAME:c99extidentifier)";
+				SDKROOT = macosx;
+				SKIP_INSTALL = YES;
+				SWIFT_STRICT_CONCURRENCY = complete;
+				SWIFT_TREAT_WARNINGS_AS_ERRORS = YES;
+				SWIFT_VERSION = 6.0;
+				VERSIONING_SYSTEM = "apple-generic";
+				VERSION_INFO_PREFIX = "";
+			};
+			name = Release;
 		};
 		572C467F2191A53F164430B0413E568C /* Release */ = {
 			isa = XCBuildConfiguration;
@@ -732,53 +773,6 @@
 			};
 			name = Release;
 		};
-		5974737EECECE242204C3C8E2C03E612 /* Debug */ = {
-			isa = XCBuildConfiguration;
-			buildSettings = {
-				CLANG_WARN_DOCUMENTATION_COMMENTS = YES;
-				CLANG_WARN_QUOTED_INCLUDE_IN_FRAMEWORK_HEADER = YES;
-				COMBINE_HIDPI_IMAGES = YES;
-				CURRENT_PROJECT_VERSION = 1;
-				DEFINES_MODULE = YES;
-				DYLIB_COMPATIBILITY_VERSION = 1;
-				DYLIB_CURRENT_VERSION = 1;
-				DYLIB_INSTALL_NAME_BASE = "@rpath";
-				ENABLE_USER_SCRIPT_SANDBOXING = YES;
-				GENERATE_INFOPLIST_FILE = YES;
-				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Frameworks";
-				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/../Frameworks @loader_path/Frameworks";
-				MACOSX_DEPLOYMENT_TARGET = 13.0;
-				MARKETING_VERSION = 0.1.0;
-				PRODUCT_BUNDLE_IDENTIFIER = com.tuanlm.VietLunar.core;
-				PRODUCT_NAME = "$(TARGET_NAME:c99extidentifier)";
-				SDKROOT = macosx;
-				SKIP_INSTALL = YES;
-				SWIFT_STRICT_CONCURRENCY = complete;
-				SWIFT_TREAT_WARNINGS_AS_ERRORS = YES;
-				SWIFT_VERSION = 6.0;
-				VERSIONING_SYSTEM = "apple-generic";
-				VERSION_INFO_PREFIX = "";
-			};
-			name = Debug;
-		};
-		623043EA680B380A4BA23C293B5D1A9A /* Release */ = {
-			isa = XCBuildConfiguration;
-			buildSettings = {
-				CLANG_WARN_DOCUMENTATION_COMMENTS = YES;
-				CLANG_WARN_QUOTED_INCLUDE_IN_FRAMEWORK_HEADER = YES;
-				CURRENT_PROJECT_VERSION = 1;
-				ENABLE_USER_SCRIPT_SANDBOXING = YES;
-				GENERATE_INFOPLIST_FILE = YES;
-				MACOSX_DEPLOYMENT_TARGET = 13.0;
-				MARKETING_VERSION = 0.1.0;
-				PRODUCT_BUNDLE_IDENTIFIER = "com.tuanlm.VietLunar.core-tests";
-				SDKROOT = macosx;
-				SWIFT_STRICT_CONCURRENCY = complete;
-				SWIFT_TREAT_WARNINGS_AS_ERRORS = YES;
-				SWIFT_VERSION = 6.0;
-			};
-			name = Release;
-		};
 		645B88C88AD0CCD2872554D86335966E /* Release */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
@@ -795,6 +789,24 @@
 				SWIFT_TREAT_WARNINGS_AS_ERRORS = YES;
 				SWIFT_VERSION = 6.0;
 				TEST_TARGET_NAME = VietLunar;
+			};
+			name = Release;
+		};
+		73E0FE9FDD5C146956EC5C3E17DD072F /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				CLANG_WARN_DOCUMENTATION_COMMENTS = YES;
+				CLANG_WARN_QUOTED_INCLUDE_IN_FRAMEWORK_HEADER = YES;
+				CURRENT_PROJECT_VERSION = 1;
+				ENABLE_USER_SCRIPT_SANDBOXING = YES;
+				GENERATE_INFOPLIST_FILE = YES;
+				MACOSX_DEPLOYMENT_TARGET = 13.0;
+				MARKETING_VERSION = 0.1.0;
+				PRODUCT_BUNDLE_IDENTIFIER = "com.tuanlm.VietLunar.core-tests";
+				SDKROOT = macosx;
+				SWIFT_STRICT_CONCURRENCY = complete;
+				SWIFT_TREAT_WARNINGS_AS_ERRORS = YES;
+				SWIFT_VERSION = 6.0;
 			};
 			name = Release;
 		};
@@ -919,7 +931,26 @@
 			};
 			name = Debug;
 		};
-		A0A3BAC7773078755171537A1975C7F0 /* Release */ = {
+		A11309EAC95EC47EFB9FDB3DC1EB4C1F /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				CLANG_WARN_DOCUMENTATION_COMMENTS = YES;
+				CLANG_WARN_QUOTED_INCLUDE_IN_FRAMEWORK_HEADER = YES;
+				CURRENT_PROJECT_VERSION = 1;
+				ENABLE_USER_SCRIPT_SANDBOXING = YES;
+				GENERATE_INFOPLIST_FILE = YES;
+				MACOSX_DEPLOYMENT_TARGET = 13.0;
+				MARKETING_VERSION = 0.1.0;
+				PRODUCT_BUNDLE_IDENTIFIER = "com.tuanlm.VietLunar.ui-tests";
+				SDKROOT = macosx;
+				SWIFT_STRICT_CONCURRENCY = complete;
+				SWIFT_TREAT_WARNINGS_AS_ERRORS = YES;
+				SWIFT_VERSION = 6.0;
+				TEST_TARGET_NAME = VietLunar;
+			};
+			name = Debug;
+		};
+		A2062F74F361EED4310A2A4437C85E7E /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				CLANG_WARN_DOCUMENTATION_COMMENTS = YES;
@@ -945,25 +976,6 @@
 				SWIFT_VERSION = 6.0;
 				VERSIONING_SYSTEM = "apple-generic";
 				VERSION_INFO_PREFIX = "";
-			};
-			name = Release;
-		};
-		A11309EAC95EC47EFB9FDB3DC1EB4C1F /* Debug */ = {
-			isa = XCBuildConfiguration;
-			buildSettings = {
-				CLANG_WARN_DOCUMENTATION_COMMENTS = YES;
-				CLANG_WARN_QUOTED_INCLUDE_IN_FRAMEWORK_HEADER = YES;
-				CURRENT_PROJECT_VERSION = 1;
-				ENABLE_USER_SCRIPT_SANDBOXING = YES;
-				GENERATE_INFOPLIST_FILE = YES;
-				MACOSX_DEPLOYMENT_TARGET = 13.0;
-				MARKETING_VERSION = 0.1.0;
-				PRODUCT_BUNDLE_IDENTIFIER = "com.tuanlm.VietLunar.ui-tests";
-				SDKROOT = macosx;
-				SWIFT_STRICT_CONCURRENCY = complete;
-				SWIFT_TREAT_WARNINGS_AS_ERRORS = YES;
-				SWIFT_VERSION = 6.0;
-				TEST_TARGET_NAME = VietLunar;
 			};
 			name = Debug;
 		};
@@ -1051,11 +1063,29 @@
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;
 		};
+		1395C1A0FAC57F5AF3882DA3160052D5 /* Build configuration list for PBXNativeTarget "VietLunarCore" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				176AC574EB6DA58F3B8000964F5CD06D /* Release */,
+				A2062F74F361EED4310A2A4437C85E7E /* Debug */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
 		2996591F9B6C07EA921B43EBF2B1D18C /* Build configuration list for PBXNativeTarget "VietLunarInfrastructure" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
 				98CC6AA47ECBD182C98EE58EFA6AE2E0 /* Release */,
 				7F61B5217CEF5B47AF367C782D75E6DA /* Debug */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		6D65D0DC7C93CC33F54B4220EC723C4D /* Build configuration list for PBXNativeTarget "VietLunarCoreTests" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				73E0FE9FDD5C146956EC5C3E17DD072F /* Release */,
+				135E7A11D81797E311273C7BF5D8ACE5 /* Debug */,
 			);
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;
@@ -1069,29 +1099,11 @@
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;
 		};
-		A13F0C5D633714E0600F132FEF1E17CE /* Build configuration list for PBXNativeTarget "VietLunarCoreTests" */ = {
-			isa = XCConfigurationList;
-			buildConfigurations = (
-				623043EA680B380A4BA23C293B5D1A9A /* Release */,
-				383194F1769F3427155A74C74A6E3346 /* Debug */,
-			);
-			defaultConfigurationIsVisible = 0;
-			defaultConfigurationName = Release;
-		};
 		D84B4AB30A3E5CAE8814716AFAC3A04A /* Build configuration list for PBXProject "VietLunar" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
 				9BCC667D9EA5B76B7D679D0518C940B8 /* Debug */,
 				0BA6E691B342E7343B1123A8B69EC10D /* Release */,
-			);
-			defaultConfigurationIsVisible = 0;
-			defaultConfigurationName = Release;
-		};
-		DE6A7B995E1497751453E4CBD8A44D09 /* Build configuration list for PBXNativeTarget "VietLunarCore" */ = {
-			isa = XCConfigurationList;
-			buildConfigurations = (
-				A0A3BAC7773078755171537A1975C7F0 /* Release */,
-				5974737EECECE242204C3C8E2C03E612 /* Debug */,
 			);
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;

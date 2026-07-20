@@ -47,7 +47,7 @@ Trạng thái:
 | M2.1 | Thiết lập provenance cho reference data | M1 | Hoàn thành | commit này | Source catalog, license policy và checksum verification đạt |
 | M2.2 | Generator và generated/reference outputs | M2.1 | Hoàn thành | commit này | 402 records, 146.097 rows, deterministic checksums và invariants đạt |
 | M2.3 | Lunar year record decoder | M2.2 | Hoàn thành | commit này | Compact bitset decoder; 2004/2025 leap mapping tests đạt |
-| M2.4 | `LunarCalendarEngine` hai chiều | M2.3 | Chờ | — | Golden, boundary, leap/error tests |
+| M2.4 | `LunarCalendarEngine` hai chiều | M2.3 | Hoàn thành | commit này | Binary-search engine; golden/all-month boundary/error tests đạt |
 | M2.5 | Exhaustive conformance suite | M2.4 | Chờ | — | Toàn bộ solar/lunar round trip và independent reference |
 | M2.6 | Release gate năm 2033 | M2.5 | Chờ | — | Named regression suite + hai nguồn độc lập |
 | M3.1 | Typed Heavenly Stem/Earthly Branch | M1 | Chờ | — | Order, Vietnamese names, Codable tests |
@@ -170,3 +170,12 @@ Trạng thái:
 - Generated table dùng trực tiếp typed records và debug invariants.
 - Test common year, nhuận tháng 2/2004, nhuận tháng 6/2025, invalid leap flag/index và invalid bit mask.
 - Checksum verification đạt; toàn scheme đạt 23/23 tests.
+
+### M2.4 — Table-based lunar engine
+
+- Thêm public `LunarCalendarCalculating`, typed error model và immutable `LunarCalendarEngine`.
+- Solar-to-lunar dùng binary search theo Tết JDN và tối đa 13 month-length steps; lunar-to-solar dùng exact sequential mapping.
+- Production path chỉ dùng integer/JDN/generated table, không dùng astronomical floating point, locale hoặc time-zone state.
+- Test toàn bộ curated vectors, Tết boundary, month length/leap metadata, invalid day/leap/range và hai đầu supported range.
+- Test ngày đầu/cuối của mọi generated lunar month round-trip khi nằm trong production range.
+- Checksum verification đạt; toàn scheme đạt 31/31 tests.
