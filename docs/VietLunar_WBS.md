@@ -65,7 +65,7 @@ Trạng thái:
 | M6.1 | Pure next-boundary calculation | M3.3 | Hoàn thành | commit này | Midnight/hour/minute/DST/exact-equality tests đạt |
 | M6.2 | One-shot scheduler | M6.1 | Hoàn thành | commit này | Single task, replacement/cancel/deinit/tolerance tests đạt |
 | M6.3 | Lifecycle source và coalesced refresh | M6.2, M5.1 | Hoàn thành | commit này | 5 system + popover/boundary events; coalescing tests đạt |
-| M6.4 | Xác minh idle behavior | M6.3 | Chờ | — | `docs/performance-baseline.md` + Instruments thủ công |
+| M6.4 | Xác minh idle behavior | M6.3 | Bị chặn | commit này | 5-minute Debug run fail CPU/RSS; cần Instruments Release profile |
 | M7.1 | Typed preferences store | M0.3 | Chờ | — | Defaults, isolated suite, migration/change stream tests |
 | M7.2 | Settings UI | M7.1, M5.1, M6.3 | Chờ | — | Build + preference integration tests |
 | M7.3 | `SMLoginItemService` | M7.2 | Chờ | — | Status mapping tests; signed install thủ công |
@@ -297,3 +297,10 @@ Trạng thái:
 - `LifecycleEventCoordinator` chỉ có một consumer, gom burst cùng lượt MainActor thành một refresh và dừng/cancel sạch.
 - `AppState` refresh snapshot rồi thay one-shot UTC+7 midnight; popover không gọi refresh trực tiếp và không tạo timer trùng.
 - Test với NotificationCenter/source giả xác nhận mapping, explicit events, burst coalescing, idempotent start và stop; toàn scheme đạt 83/83 tests.
+
+### M6.4 — Idle behavior blocker
+
+- Đã chạy hai cửa sổ 5 phút và một diagnostic window; kết quả đầy đủ nằm trong `docs/performance-baseline.md`.
+- App phần lớn ngủ và không có repeating log/timer, nhưng low-impact run tăng 12,64 giây CPU time/300 giây và RSS đạt 124.752 KB, vượt gate spec.
+- Diagnostic run 91 giây sạch không đủ để phủ nhận failure 5 phút; không đánh dấu task hoàn thành bằng kết quả chọn lọc.
+- Cần Instruments Energy Log/Time Profiler trên signed Release build để bắt đúng transient stack và phân tách Debug/SwiftUI overhead.
