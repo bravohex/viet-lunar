@@ -13,7 +13,6 @@ struct VietLunarApp: App {
 #if DEBUG
         if let suiteName = ProcessInfo.processInfo.environment["VIETLUNAR_TEST_PREFERENCES_SUITE"],
            let defaults = UserDefaults(suiteName: suiteName) {
-            defaults.removePersistentDomain(forName: suiteName)
             store = UserDefaultsPreferencesStore(userDefaults: defaults)
         } else {
             store = UserDefaultsPreferencesStore()

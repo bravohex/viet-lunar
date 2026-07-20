@@ -4,7 +4,7 @@ VietLunar là ứng dụng macOS native, chạy hoàn toàn offline trên menu b
 
 ## Trạng thái
 
-Ứng dụng MVP đã có menu-bar calendar, Can–Chi, Settings, preferences, lifecycle scheduler và `SMAppService` adapter. Full automated scheme hiện đạt 95/95 tests, nhưng build chưa release-ready vì các gate independent accuracy, login-item cài thật và performance vẫn được ghi mở trong [WBS](docs/VietLunar_WBS.md).
+Ứng dụng MVP đã có menu-bar calendar, Can–Chi, Settings, preferences, lifecycle scheduler và `SMAppService` adapter. Full automated scheme hiện đạt 96/96 tests, nhưng build chưa release-ready vì các gate trong [acceptance review](docs/acceptance-review.md) và [WBS](docs/VietLunar_WBS.md) vẫn còn mở.
 
 ## Yêu cầu phát triển
 

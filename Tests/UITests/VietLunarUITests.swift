@@ -100,6 +100,40 @@ final class VietLunarUITests: XCTestCase {
     }
 
     @MainActor
+    func testSettingsPersistAfterRelaunch() throws {
+        let application = makeApplication()
+        application.launch()
+        defer { application.terminate() }
+
+        try openSettings(for: application)
+        let clockToggle = application.descendants(matching: .any)["show-clock-toggle"]
+        let titlePreview = application.staticTexts["menu-title-preview"]
+        XCTAssertTrue(clockToggle.exists)
+        XCTAssertTrue(titlePreview.exists)
+        XCTAssertFalse(textValue(of: titlePreview)?.contains(":") ?? true)
+
+        clockToggle.click()
+        XCTAssertTrue(
+            waitUntil(timeout: 3) {
+                textValue(of: titlePreview)?.contains(":") == true
+            }
+        )
+        RunLoop.current.run(until: Date().addingTimeInterval(0.5))
+
+        application.terminate()
+        application.launch()
+        try openSettings(for: application)
+
+        let relaunchedPreview = application.staticTexts["menu-title-preview"]
+        XCTAssertTrue(
+            waitUntil(timeout: 3) {
+                textValue(of: relaunchedPreview)?.contains(":") == true
+            },
+            "Cài đặt đồng hồ phải được giữ sau khi khởi động lại ứng dụng"
+        )
+    }
+
+    @MainActor
     private func makeApplication() -> XCUIApplication {
         let application = XCUIApplication()
         application.launchEnvironment["VIETLUNAR_TEST_PREFERENCES_SUITE"] =
@@ -123,6 +157,17 @@ final class VietLunarUITests: XCTestCase {
             "Không tìm thấy VietLunar status item trong accessibility tree"
         )
         systemStatusItem.click()
+    }
+
+    @MainActor
+    private func openSettings(for application: XCUIApplication) throws {
+        try openPopover(for: application)
+        let settingsButton = application.buttons["settings-button"]
+        XCTAssertTrue(settingsButton.waitForExistence(timeout: 3))
+        settingsButton.click()
+        XCTAssertTrue(
+            application.staticTexts["settings-title"].waitForExistence(timeout: 3)
+        )
     }
 
     @MainActor

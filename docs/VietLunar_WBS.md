@@ -72,10 +72,10 @@ Trạng thái:
 | M7.2 | Settings UI | M7.1, M5.1, M6.3 | Hoàn thành | commit này | Live controls, minute-boundary clock, isolated UI flow; 92/92 tests |
 | M7.3 | `SMLoginItemService` | M7.2 | Bị chặn | commit này | Code/93 tests/Developer ID Release đạt; chưa cài `/Applications` và register thật |
 | M7.4 | Hoàn thiện Dock/accessory behavior | M7.3 | Hoàn thành | commit này | Signed Release launch, accessory policy, persistent status item/UI flow đạt |
-| M8.1 | Chạy full test matrix | M2-M7 | Bị chặn | commit này | 95/95 + exhaustive round-trip đạt; independent/manual gates còn mở |
+| M8.1 | Chạy full test matrix | M2-M7 | Bị chặn | commit này | 96/96 hiện tại + exhaustive round-trip đạt; independent/manual gates còn mở |
 | M8.2 | Ghi performance baseline | M8.1 | Bị chặn | commit này | Core/grid/bundle/idle đạt; cold launch/RSS fail, popover timing thiếu |
 | M8.3 | Privacy, attribution và release metadata | M8.1 | Hoàn thành | commit này | Privacy/NOTICE/range/version/build/signing/notarization docs đạt |
-| M8.4 | Acceptance review | M8.2, M8.3 | Chờ | — | Rà toàn bộ checklist spec mục 19 |
+| M8.4 | Acceptance review | M8.2, M8.3 | Bị chặn | commit này | 23/32 đạt; 9 accuracy/manual/performance/localization gates còn mở |
 
 ## 4. Release gates đang mở
 
@@ -383,3 +383,10 @@ Trạng thái:
 - Thêm explicit sandbox entitlements; Release tắt base-entitlement injection để không ship `get-task-allow` hoặc outbound network entitlement.
 - `docs/DISTRIBUTION.md` ghi lệnh verify/archive/notarize/staple và installed login-item checklist; mọi credential dùng placeholder, không commit bí mật.
 - README phản ánh đúng implementation hiện tại và liên kết WBS/Privacy/Notice/Distribution, không gọi candidate table là independently verified.
+
+### M8.4 — Acceptance review
+
+- Đối chiếu đủ 32 tiêu chí mục 19 với source, full tests, Release build, test matrix và performance baseline; kết quả 23 đạt, 9 bị chặn.
+- Bổ sung UI test relaunch thật cho Settings; sửa test-only preferences suite để không xóa dữ liệu ở mỗi lần launch.
+- Không chấp nhận waiver ngầm: independent oracle/2033, installed-system checklist, runtime network proof, popover timing, launch/RSS decision và string catalog vẫn mở.
+- Ghi quyết định `KHÔNG PHÁT HÀNH` cùng bằng chứng và điều kiện đóng tại `docs/acceptance-review.md`.

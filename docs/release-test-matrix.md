@@ -12,13 +12,13 @@
 | Hạng mục | Kết quả | Bằng chứng |
 |---|---|---|
 | Reference artifact integrity | Đạt | Catalog, candidate JSON và generated Swift checksum hợp lệ |
-| Unit/property tests | Đạt | Full Debug scheme 95/95 tests; warnings-as-errors |
+| Full automated scheme | Đạt | 96/96 unit, property và UI tests; warnings-as-errors |
 | Solar → lunar → solar | Đạt | Toàn bộ 146.097 ngày dương trong 1800-2199 |
 | Lunar → solar → lunar | Đạt | Toàn bộ 146.097 ngày âm ánh xạ vào production range |
 | Can–Chi/JDN/boundary | Đạt | Full-range day cycle, 1.440 phút, UTC+7, minute và DST tests |
 | Lifecycle/scheduler | Đạt | Synthetic day/clock/time-zone/wake/active events; one-shot/coalescing tests |
 | Preferences/login mapping | Đạt | Migration/change stream và bốn `SMAppService.Status` mappings |
-| UI smoke | Đạt | Launch background, popover, month nav, Today, Settings, live clock, Quit |
+| UI smoke | Đạt | Launch background, popover, month nav, Today, Settings, relaunch persistence, live clock, Quit |
 | Release build | Đạt | Clean universal Release build; embedded frameworks và signature verify |
 | Accessory behavior | Đạt | Signed Release launch thật; activation policy là `accessory` |
 | Network dependency static check | Đạt | Không có network API/runtime package hoặc outbound network entitlement |
