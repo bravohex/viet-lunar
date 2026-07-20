@@ -12,7 +12,7 @@
 | Hạng mục | Kết quả | Bằng chứng |
 |---|---|---|
 | Reference artifact integrity | Đạt | Catalog, candidate JSON và generated Swift checksum hợp lệ |
-| Full automated scheme | Đạt | 97/97 unit, property và UI tests; warnings-as-errors |
+| Full automated scheme | Đạt | 98/98 unit, property, UI và signpost metric tests; warnings-as-errors |
 | Solar → lunar → solar | Đạt | Toàn bộ 146.097 ngày dương trong 1800-2199 |
 | Lunar → solar → lunar | Đạt | Toàn bộ 146.097 ngày âm ánh xạ vào production range |
 | Can–Chi/JDN/boundary | Đạt | Full-range day cycle, 1.440 phút, UTC+7, minute và DST tests |
@@ -24,6 +24,7 @@
 | Network dependency static check | Đạt | Không có network API/runtime package hoặc outbound network entitlement |
 | Runtime network observation | Đạt | Signed Release, 60 mẫu nettop và lsof trước/sau không có socket/traffic |
 | Vietnamese localization resources | Đạt | 96 App/Core keys; catalog coverage và compiled app/framework resources được kiểm tra |
+| Popover performance | Đạt measurement gate | Release signposts: first median 114,42 ms (<200 hard); subsequent 40,56 ms (<50 target) |
 
 ## Gate chưa đạt
 
@@ -34,7 +35,7 @@
 | Signed installed login item | Chờ quyền thay đổi hệ thống | Cài vào `/Applications`, test enable/disable/approval rồi dọn trạng thái |
 | Real sleep/wake and clock change | Chờ kiểm tra thủ công | Chạy checklist trên signed installed app |
 | Offline runtime | Chờ kiểm tra thủ công | Chạy app khi network adapter thực sự tắt; runtime zero-traffic đã xác nhận riêng |
-| Launch/RSS/popover performance | Bị chặn | AppKit shell đưa RSS dưới hard review; launch median vẫn >800 ms và popover timing chưa tin cậy |
+| Launch/RSS performance | Bị chặn | AppKit shell đưa RSS dưới hard review; launch median vẫn >800 ms; popover đã có signpost metrics |
 
 ## Kết luận
 

@@ -6,7 +6,7 @@
 
 **Kết luận phát hành:** **KHÔNG PHÁT HÀNH**
 
-Kết quả hiện tại: **25/32 tiêu chí đạt**, **7/32 tiêu chí bị chặn**. Không có ADR hoặc waiver nào được chấp thuận để bỏ qua tiêu chí chưa đạt.
+Kết quả hiện tại: **26/32 tiêu chí đạt**, **6/32 tiêu chí bị chặn**. Không có ADR hoặc waiver nào được chấp thuận để bỏ qua tiêu chí chưa đạt.
 
 Quy ước trạng thái:
 
@@ -50,7 +50,7 @@ Quy ước trạng thái:
 | P1 | Không repeating timer ở cấu hình mặc định | Đạt | One-shot scheduler, source scan và replacement/cancel tests; không có polling theo giây. |
 | P2 | Không sustained idle CPU work | Đạt | Signed Release Time Profiler 300,84 giây chỉ tăng 0,01 giây CPU, không có app-owned loop. |
 | P3 | Không có network traffic bất ngờ | Đạt | Signed Release: 60 mẫu `nettop` không có process/socket row hoặc bytes; `lsof` trước/sau không có Internet socket. |
-| P4 | Có số đo launch, popover, memory và conversion | Bị chặn | Launch/memory/conversion đã ghi; chưa có số first/subsequent popover không nhiễu. |
+| P4 | Có số đo launch, popover, memory và conversion | Đạt | Release signposts: first median 114,42 ms, subsequent median 40,56 ms; launch/RSS/conversion đã có trace/benchmark riêng. |
 | P5 | Vi phạm hard threshold có profiling note và quyết định được duyệt | Bị chặn | A9 AppKit shell đưa RSS xuống 32.816–42.384 KB, nhưng App Launch median 829,33 ms vẫn vượt 800 ms; ADR không phải waiver và chưa có quyết định chấp thuận vi phạm còn lại. |
 
 ## 19.4 — Nghiệm thu chất lượng code
@@ -68,7 +68,7 @@ Quy ước trạng thái:
 ## Release blockers cần đóng
 
 1. Cung cấp independent oracle có quyền sử dụng và hai bằng chứng độc lập cho chuỗi 2033.
-2. Đo first/subsequent popover bằng signpost/Instruments; xử lý launch/RSS hoặc phê duyệt ADR/waiver có chủ sở hữu.
+2. Xử lý launch hard threshold hoặc có ADR/waiver được người có thẩm quyền phê duyệt.
 3. Với quyền thay đổi hệ thống, cài signed app và chạy login-item, sleep/wake, clock-change, offline/network checklist.
 
 M8.4 chỉ được chuyển sang `Hoàn thành` khi tất cả mục `Bị chặn` đã được sửa hoặc có ADR/waiver được người có thẩm quyền chấp thuận.

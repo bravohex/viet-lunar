@@ -134,6 +134,46 @@ final class VietLunarUITests: XCTestCase {
     }
 
     @MainActor
+    func testPopoverPerformanceSignposts() {
+        let firstOpenMetric = XCTOSSignpostMetric(
+            subsystem: "com.tuanlm.VietLunar",
+            category: "performance",
+            name: "Popover First Open"
+        )
+        let subsequentOpenMetric = XCTOSSignpostMetric(
+            subsystem: "com.tuanlm.VietLunar",
+            category: "performance",
+            name: "Popover Subsequent Open"
+        )
+        let options = XCTMeasureOptions()
+        options.iterationCount = 3
+
+        measure(
+            metrics: [firstOpenMetric, subsequentOpenMetric],
+            options: options
+        ) {
+            let application = makeApplication()
+            application.launch()
+            defer { application.terminate() }
+
+            let statusItem = application.descendants(
+                matching: .statusItem
+            ).firstMatch
+            XCTAssertTrue(statusItem.waitForExistence(timeout: 3))
+
+            statusItem.click()
+            let todayHeader = application.staticTexts["today-header"]
+            XCTAssertTrue(todayHeader.waitForExistence(timeout: 3))
+
+            statusItem.click()
+            XCTAssertTrue(todayHeader.waitForNonExistence(timeout: 3))
+
+            statusItem.click()
+            XCTAssertTrue(todayHeader.waitForExistence(timeout: 3))
+        }
+    }
+
+    @MainActor
     private func makeApplication() -> XCUIApplication {
         let application = XCUIApplication()
         application.launchEnvironment["VIETLUNAR_TEST_PREFERENCES_SUITE"] =

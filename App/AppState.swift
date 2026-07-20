@@ -148,7 +148,7 @@ final class AppState: ObservableObject {
 
     func refresh() {
         do {
-            let snapshot = try snapshotFactory.makeSnapshot()
+            let snapshot = try makeInstrumentedSnapshot()
             currentSnapshot = snapshot
             if selectedSolarDate == nil {
                 selectedSolarDate = snapshot.solarDate
@@ -308,6 +308,19 @@ final class AppState: ObservableObject {
             today: snapshot.solarDate
         )
         updateNavigationAvailability()
+    }
+
+    private func makeInstrumentedSnapshot() throws -> CalendarSnapshot {
+        let interval = AppPerformance.signposter.beginInterval(
+            "Calendar Snapshot"
+        )
+        defer {
+            AppPerformance.signposter.endInterval(
+                "Calendar Snapshot",
+                interval
+            )
+        }
+        return try snapshotFactory.makeSnapshot()
     }
 
     private func updateNavigationAvailability() {

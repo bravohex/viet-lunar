@@ -21,6 +21,16 @@ final class VietLunarApplicationDelegate: NSObject, NSApplicationDelegate {
     }
 
     func applicationDidFinishLaunching(_ notification: Notification) {
+        let launchInterval = AppPerformance.signposter.beginInterval(
+            "Application App Work"
+        )
+        defer {
+            AppPerformance.signposter.endInterval(
+                "Application App Work",
+                launchInterval
+            )
+        }
+
         let state = AppState(preferencesStore: makePreferencesStore())
         state.menuBarPresentationDidChange = { [weak self] in
             self?.updateStatusItem()
@@ -99,6 +109,13 @@ final class VietLunarApplicationDelegate: NSObject, NSApplicationDelegate {
         guard let appState else {
             return
         }
+        let intervalName: StaticString = popover == nil
+            ? "Popover First Open"
+            : "Popover Subsequent Open"
+        let interval = AppPerformance.signposter.beginInterval(intervalName)
+        defer {
+            AppPerformance.signposter.endInterval(intervalName, interval)
+        }
         appState.popoverOpened()
 
         let activePopover: NSPopover
@@ -121,6 +138,7 @@ final class VietLunarApplicationDelegate: NSObject, NSApplicationDelegate {
             preferredEdge: .maxY
         )
         keepPopoverOnScreen(activePopover, relativeTo: button)
+        activePopover.contentViewController?.view.window?.displayIfNeeded()
     }
 
     private func keepPopoverOnScreen(

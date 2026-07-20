@@ -8,3 +8,10 @@ public enum AppLog: Sendable {
     public static let loginItem = Logger(subsystem: subsystem, category: "login-item")
     public static let preferences = Logger(subsystem: subsystem, category: "preferences")
 }
+
+public enum AppPerformance: Sendable {
+    public static let signposter = OSSignposter(
+        subsystem: AppLog.subsystem,
+        category: "performance"
+    )
+}

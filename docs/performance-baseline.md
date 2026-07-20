@@ -49,7 +49,8 @@ Memory gate chuyển sang M8.2: cần Allocations/VM investigation ổn định 
 |---|---:|---:|---|
 | Cold launch đến initial frame | 718,08–888,14 ms; median 829,33 ms | <=400 / <=800 ms | Cải thiện nhưng vẫn fail hard review |
 | AppKit init đến initial frame | 212,50–249,40 ms; median 224,06 ms | Thông tin phân rã | Cải thiện so với 330,43 ms cũ |
-| Popover first/subsequent open | Chưa có phép đo không nhiễu | <=100/50 ms | Blocker |
+| Popover first open | 114,08–115,60 ms; median 114,42 ms | <=100 / <=200 ms | Qua hard review; chưa đạt target |
+| Popover subsequent open | 28,65–48,72 ms; median 40,56 ms | <=50 / <=100 ms | Đạt target |
 | RSS khoảng 30 giây | 32.816–42.384 KB; median 37.776 KB | <=35 MB / review >60 MB | Qua hard review; target chưa ổn định |
 | RSS cuối idle trace | 31.232 KB | <=35 MB | Đạt sau warm-up |
 | Idle CPU 5 phút | +0,01 s / 300,84 s | <=0,1% | Đạt |
@@ -89,8 +90,21 @@ Ba signed Release run với popover chưa từng mở ghi RSS tại khoảng 30 
 
 Ba App Launch trace trên cùng bundle kết thúc initial frame ở 888,14, 829,33 và 718,08 ms; lần đầu được chạy ngay sau clean build/sign. Median 829,33 ms vẫn cao hơn hard threshold 800 ms. Phần từ AppKit initialization đến initial frame giảm từ 330,43 ms cũ xuống 212,50–249,40 ms, trong khi process creation vẫn biến thiên 366,17–498,18 ms.
 
-Kết quả này đóng vi phạm RSS hard-review nhưng không đóng P5: launch vẫn fail và first/subsequent popover chưa có phép đo không nhiễu. ADR kiến trúc không phải waiver cho các ngưỡng còn fail.
+Kết quả này đóng vi phạm RSS hard-review nhưng chưa đóng P5 vì launch vẫn fail. ADR kiến trúc không phải waiver cho các ngưỡng còn fail.
+
+### A10 — Popover signpost metrics
+
+App phát Points of Interest interval ngay tại `NSStatusBarButton` action: first open bao gồm lazy month-grid/hosting-controller creation, `NSPopover.show`, visible-frame clamp và pending window display; subsequent open đi qua cùng đường nhưng tái sử dụng hosting controller. XCTest chỉ tổng hợp interval app-side nên thời gian event synthesis và element polling không nằm trong số đo.
+
+Release-optimized measurement dùng ba sample sau một warm-up bị XCTest loại tự động:
+
+| Metric | Samples | Median | Target / hard review | Kết luận |
+|---|---|---:|---:|---|
+| First open | 114,42; 114,08; 115,60 ms | 114,42 ms | <=100 / <=200 ms | Qua hard review, chưa đạt target |
+| Subsequent open | 28,65; 48,72; 40,56 ms | 40,56 ms | <=50 / <=100 ms | Đạt target |
+
+`scripts/measure_popover.sh` tái lập measurement bằng Release optimization và ad-hoc/no-hardened signing chỉ để XCUITest điều khiển app. Signed distribution build vẫn được build/ký/verify riêng; script đo không tạo release artifact. P4 được đóng vì launch, popover, RSS và conversion đều đã có số; P5 vẫn mở bởi launch hard threshold.
 
 ### M8.2 gate
 
-M8.2 chưa đạt vì cold/median launch vẫn vượt hard-review threshold và popover timing chưa được đo tin cậy. RSS 30 giây đã xuống dưới mức hard review nhờ AppKit shell nhưng target 35 MB chưa ổn định; Allocations CLI attach vẫn chưa tạo được trace tin cậy. Core/grid/bundle/idle CPU đều đạt và calendar core không bị viết lại.
+M8.2 chưa đạt vì cold/median launch vẫn vượt hard-review threshold. Popover đã có signpost metrics và không vi phạm hard threshold; RSS 30 giây đã xuống dưới mức hard review nhờ AppKit shell nhưng target 35 MB chưa ổn định. Core/grid/bundle/idle CPU đều đạt và calendar core không bị viết lại.
