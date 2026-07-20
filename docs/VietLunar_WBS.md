@@ -37,6 +37,7 @@ Trạng thái:
 | Task | Nội dung | Dependency chính | Trạng thái | Commit | Bằng chứng |
 |---|---|---|---|---|---|
 | A0 | Phân tích tài liệu và tạo WBS thực thi | — | Hoàn thành | commit này | Đã đọc đầy đủ spec, plan, prompt, test vectors; knowledge graph hợp lệ |
+| A1 | Ổn định deterministic Xcode project generation | M0.1 | Hoàn thành | commit này | Hai lần generate liên tiếp có checksum byte-identical |
 | M0.1 | Tạo Xcode project, app/core/infrastructure/test targets | A0 | Hoàn thành | commit này | 6 targets, shared scheme, Debug build và 3 test bundles đạt |
 | M0.2 | Tạo `MenuBarExtra`, ẩn Dock, Settings và Quit | M0.1 | Hoàn thành | commit này | Build/test đạt; LSUIElement=true; app bundle chạy thật và hiện `ÂL` trên menu bar |
 | M0.3 | Bổ sung chuẩn repo, logging, README/NOTICE, test script | M0.2 | Hoàn thành | commit này | `.gitignore` đầy đủ; `./scripts/test.sh` build và test đạt |
@@ -123,3 +124,9 @@ Trạng thái:
 - Public factories/throwing initializers validate component; custom Codable decoding không thể tạo trạng thái ngày sai.
 - Test leap-year bao gồm quy tắc thế kỷ, input lỗi, boundary comparison và Codable round trip.
 - Toàn scheme đạt 10/10 tests sau task.
+
+### A1 — Deterministic Xcode project generation
+
+- Phát hiện UUID của `.pbxproj` thay đổi sau mỗi lần chạy generator dù input không đổi.
+- Chuẩn hóa UUID trước khi lưu project.
+- Chạy generator hai lần liên tiếp và xác nhận checksum của `project.pbxproj` cùng shared scheme không thay đổi.

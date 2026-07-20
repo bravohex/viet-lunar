@@ -127,6 +127,7 @@ project.build_configurations.each do |configuration|
   settings["SWIFT_STRICT_CONCURRENCY"] = "complete"
 end
 
+project.predictabilize_uuids
 project.save
 
 scheme = Xcodeproj::XCScheme.new
