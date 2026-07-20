@@ -17,7 +17,18 @@ struct PopoverFooterView: View {
                 )
             )
 
-            settingsControl
+            Button(
+                AppLocalization.text("footer.settings", fallback: "Cài đặt")
+            ) {
+                VietLunarApplicationDelegate.shared.showSettings()
+            }
+            .accessibilityIdentifier("settings-button")
+            .help(
+                AppLocalization.text(
+                    "footer.settings.help",
+                    fallback: "Mở cài đặt VietLunar"
+                )
+            )
 
             Spacer()
 
@@ -36,39 +47,5 @@ struct PopoverFooterView: View {
             )
         }
         .controlSize(.small)
-    }
-
-    @ViewBuilder
-    private var settingsControl: some View {
-        if #available(macOS 14.0, *) {
-            SettingsLink {
-                Text(AppLocalization.text("footer.settings", fallback: "Cài đặt"))
-            }
-            .accessibilityIdentifier("settings-button")
-            .help(
-                AppLocalization.text(
-                    "footer.settings.help",
-                    fallback: "Mở cài đặt VietLunar"
-                )
-            )
-        } else {
-            Button(
-                AppLocalization.text("footer.settings", fallback: "Cài đặt")
-            ) {
-                NSApplication.shared.activate(ignoringOtherApps: true)
-                NSApplication.shared.sendAction(
-                    Selector(("showPreferencesWindow:")),
-                    to: nil,
-                    from: nil
-                )
-            }
-            .accessibilityIdentifier("settings-button")
-            .help(
-                AppLocalization.text(
-                    "footer.settings.help",
-                    fallback: "Mở cài đặt VietLunar"
-                )
-            )
-        }
     }
 }

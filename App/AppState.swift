@@ -29,6 +29,8 @@ final class AppState: ObservableObject {
     private var isCalendarPrepared = false
     private var isSettingsVisible = false
 
+    var menuBarPresentationDidChange: (() -> Void)?
+
     init(
         lunarEngine: any LunarCalendarCalculating = LunarCalendarEngine(),
         clock: any Clock = SystemClock(),
@@ -162,6 +164,7 @@ final class AppState: ObservableObject {
             }
             errorMessage = nil
             scheduleNextBoundary(after: snapshot.instant)
+            menuBarPresentationDidChange?()
         } catch {
             errorMessage = AppLocalization.text(
                 "error.calendar_refresh",

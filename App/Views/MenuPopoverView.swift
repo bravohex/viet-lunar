@@ -2,7 +2,6 @@ import SwiftUI
 
 struct MenuPopoverView: View {
     @EnvironmentObject private var appState: AppState
-    @Environment(\.dismiss) private var dismiss
 
     var body: some View {
         VStack(alignment: .leading, spacing: 10) {
@@ -37,7 +36,7 @@ struct MenuPopoverView: View {
         .frame(width: 380)
         .background(.regularMaterial)
         .onExitCommand {
-            dismiss()
+            VietLunarApplicationDelegate.shared.closePopover()
         }
     }
 }

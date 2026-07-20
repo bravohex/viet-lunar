@@ -47,10 +47,10 @@ Memory gate chuyển sang M8.2: cần Allocations/VM investigation ổn định 
 
 | Metric | Kết quả đo | Target / hard review | Kết luận |
 |---|---:|---:|---|
-| Cold launch đến initial frame | 951,10 ms | <=400 / <=800 ms | Fail hard review |
-| AppKit init đến initial frame | 330,43 ms | Thông tin phân rã | Phần app-side thấp hơn full launch |
+| Cold launch đến initial frame | 718,08–888,14 ms; median 829,33 ms | <=400 / <=800 ms | Cải thiện nhưng vẫn fail hard review |
+| AppKit init đến initial frame | 212,50–249,40 ms; median 224,06 ms | Thông tin phân rã | Cải thiện so với 330,43 ms cũ |
 | Popover first/subsequent open | Chưa có phép đo không nhiễu | <=100/50 ms | Blocker |
-| RSS khoảng 30 giây | 63.264 KB | <=35 MB / review >60 MB | Fail hard review |
+| RSS khoảng 30 giây | 32.816–42.384 KB; median 37.776 KB | <=35 MB / review >60 MB | Qua hard review; target chưa ổn định |
 | RSS cuối idle trace | 31.232 KB | <=35 MB | Đạt sau warm-up |
 | Idle CPU 5 phút | +0,01 s / 300,84 s | <=0,1% | Đạt |
 | Release app bundle | 2.284 KB (2,2 MB) | <=10 / <=20 MB | Đạt |
@@ -81,6 +81,16 @@ Clean universal Release bundle được ký nhất quán rồi launch trực ti�
 
 Median RSS là 67.648 KB, vẫn cao hơn hard-review threshold 60 MB. Thay đổi loại bỏ công việc không cần thiết khỏi launch path nhưng không đủ để đóng memory gate; cold launch 951,10 ms cũ cũng chưa được thay bằng trace mới. P5/M8.2 tiếp tục `Bị chặn`.
 
+### A9 — AppKit shell fallback
+
+Theo fallback của spec, application lifecycle và status item được chuyển sang AppKit `NSApplicationDelegate` + `NSStatusItem` + `NSPopover`. SwiftUI chỉ tạo hosting controller cho popover/Settings khi người dùng mở; AppState, core và correctness-critical live snapshot/one-shot boundary vẫn khởi tạo khi launch.
+
+Ba signed Release run với popover chưa từng mở ghi RSS tại khoảng 30 giây là 42.384, 37.776 và 32.816 KB; median 37.776 KB. Cả ba qua hard-review threshold 60 MB, một run qua target 35 MB nhưng median chưa qua target.
+
+Ba App Launch trace trên cùng bundle kết thúc initial frame ở 888,14, 829,33 và 718,08 ms; lần đầu được chạy ngay sau clean build/sign. Median 829,33 ms vẫn cao hơn hard threshold 800 ms. Phần từ AppKit initialization đến initial frame giảm từ 330,43 ms cũ xuống 212,50–249,40 ms, trong khi process creation vẫn biến thiên 366,17–498,18 ms.
+
+Kết quả này đóng vi phạm RSS hard-review nhưng không đóng P5: launch vẫn fail và first/subsequent popover chưa có phép đo không nhiễu. ADR kiến trúc không phải waiver cho các ngưỡng còn fail.
+
 ### M8.2 gate
 
-M8.2 chưa đạt vì cold launch và transient RSS vượt hard-review threshold, popover timing chưa được đo tin cậy, và Allocations CLI attach thất bại. Core/grid/bundle/idle CPU đều đạt, nên không có bằng chứng cần viết lại calendar core; điều tra tiếp tập trung vào SwiftUI/MenuBarExtra launch và resident memory.
+M8.2 chưa đạt vì cold/median launch vẫn vượt hard-review threshold và popover timing chưa được đo tin cậy. RSS 30 giây đã xuống dưới mức hard review nhờ AppKit shell nhưng target 35 MB chưa ổn định; Allocations CLI attach vẫn chưa tạo được trace tin cậy. Core/grid/bundle/idle CPU đều đạt và calendar core không bị viết lại.

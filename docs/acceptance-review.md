@@ -51,7 +51,7 @@ Quy ước trạng thái:
 | P2 | Không sustained idle CPU work | Đạt | Signed Release Time Profiler 300,84 giây chỉ tăng 0,01 giây CPU, không có app-owned loop. |
 | P3 | Không có network traffic bất ngờ | Đạt | Signed Release: 60 mẫu `nettop` không có process/socket row hoặc bytes; `lsof` trước/sau không có Internet socket. |
 | P4 | Có số đo launch, popover, memory và conversion | Bị chặn | Launch/memory/conversion đã ghi; chưa có số first/subsequent popover không nhiễu. |
-| P5 | Vi phạm hard threshold có profiling note và quyết định được duyệt | Bị chặn | A8 đã trì hoãn grid/login-item work nhưng ba lần RSS mới vẫn 66.976–70.000 KB; cold launch 951,10 ms chưa được đo lại, chưa có fix đạt ngưỡng hoặc ADR/waiver được chấp thuận. |
+| P5 | Vi phạm hard threshold có profiling note và quyết định được duyệt | Bị chặn | A9 AppKit shell đưa RSS xuống 32.816–42.384 KB, nhưng App Launch median 829,33 ms vẫn vượt 800 ms; ADR không phải waiver và chưa có quyết định chấp thuận vi phạm còn lại. |
 
 ## 19.4 — Nghiệm thu chất lượng code
 

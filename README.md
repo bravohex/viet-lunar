@@ -1,6 +1,6 @@
 # VietLunar
 
-VietLunar là ứng dụng macOS native, chạy hoàn toàn offline trên menu bar để hiển thị lịch âm Việt Nam. MVP dùng Swift 6, SwiftUI `MenuBarExtra`, calculation convention UTC+7 và không có runtime dependency ngoài Apple frameworks.
+VietLunar là ứng dụng macOS native, chạy hoàn toàn offline trên menu bar để hiển thị lịch âm Việt Nam. MVP dùng Swift 6, lớp vỏ AppKit nhẹ với nội dung SwiftUI, calculation convention UTC+7 và không có runtime dependency ngoài Apple frameworks.
 
 ## Trạng thái
 
@@ -38,12 +38,14 @@ Hướng dẫn ký/notarize nằm tại [docs/DISTRIBUTION.md](docs/DISTRIBUTION
 
 ## Kiến trúc
 
-- `App/`: SwiftUI application shell và giao diện.
+- `App/`: `NSStatusItem`/`NSPopover` shell và giao diện SwiftUI được tạo lười.
 - `Sources/Core/`: date/lunar/Can-Chi domain thuần Swift, không phụ thuộc UI.
 - `Sources/Infrastructure/`: clock, lifecycle, preferences, login item và logging adapters.
 - `Tests/`: unit tests và UI smoke tests.
 - `Tools/`: development-only generators.
 - `docs/`: product spec, implementation plan, WBS và curated regression vectors.
+
+Quyết định chuyển lớp vỏ từ `MenuBarExtra` sang AppKit để giảm resident memory được ghi tại [ADR-001](docs/ADR-001-appkit-shell.md); calendar core và các SwiftUI content views không thay đổi.
 
 ## Quy ước lịch
 

@@ -45,6 +45,7 @@ Trạng thái:
 | A6 | Xác minh runtime network inactivity | M8.4 | Hoàn thành | commit này | Signed Release, 60 mẫu nettop + lsof không có socket/traffic |
 | A7 | Audit independent oracle candidates | M2.5, M2.6 | Hoàn thành | commit này | MIT candidate pin/audit; 13.028 mismatch nên không dùng làm oracle |
 | A8 | Trì hoãn launch work không cần thiết | M8.2 | Hoàn thành | commit này | Grid/login-item chỉ chuẩn bị khi UI tương ứng mở; 97/97 tests; RSS gate vẫn fail |
+| A9 | Chuyển menu-bar shell sang AppKit | M8.2, A8 | Hoàn thành | commit này | RSS median 37.776 KB, hard review đạt; UI flow ổn định; launch gate vẫn fail |
 | B0 | Ghi nhận independent-reference blocker | M2.4 | Hoàn thành | commit này | Không dùng candidate JSON làm oracle hoặc sao chép data chưa rõ license |
 | M0.1 | Tạo Xcode project, app/core/infrastructure/test targets | A0 | Hoàn thành | commit này | 6 targets, shared scheme, Debug build và 3 test bundles đạt |
 | M0.2 | Tạo `MenuBarExtra`, ẩn Dock, Settings và Quit | M0.1 | Hoàn thành | commit này | Build/test đạt; LSUIElement=true; app bundle chạy thật và hiện `ÂL` trên menu bar |
@@ -77,7 +78,7 @@ Trạng thái:
 | M7.3 | `SMLoginItemService` | M7.2 | Bị chặn | commit này | Code/93 tests/Developer ID Release đạt; chưa cài `/Applications` và register thật |
 | M7.4 | Hoàn thiện Dock/accessory behavior | M7.3 | Hoàn thành | commit này | Signed Release launch, accessory policy, persistent status item/UI flow đạt |
 | M8.1 | Chạy full test matrix | M2-M7 | Bị chặn | commit này | 97/97 hiện tại + exhaustive round-trip đạt; independent/manual gates còn mở |
-| M8.2 | Ghi performance baseline | M8.1 | Bị chặn | commit này | Core/grid/bundle/idle đạt; A8 đã giảm launch work nhưng cold launch/RSS vẫn fail, popover timing thiếu |
+| M8.2 | Ghi performance baseline | M8.1 | Bị chặn | commit này | Core/grid/bundle/idle/RSS hard review đạt; cold launch median vẫn fail và popover timing thiếu |
 | M8.3 | Privacy, attribution và release metadata | M8.1 | Hoàn thành | commit này | Privacy/NOTICE/range/version/build/signing/notarization docs đạt |
 | M8.4 | Acceptance review | M8.2, M8.3 | Bị chặn | commit này | 25/32 đạt; 7 accuracy/manual/performance gates còn mở |
 
@@ -423,3 +424,13 @@ Trạng thái:
 - Trì hoãn truy vấn `SMAppService` tới khi trang Settings chung xuất hiện và chỉ refresh trạng thái theo lifecycle khi trang đó còn hiển thị.
 - Full scheme đạt 97/97; clean universal Release build và bundle signature verification đạt.
 - Ba lần đo signed Release tại khoảng 30 giây là 70.000, 67.648 và 66.976 KB; P5/M8.2 vẫn bị chặn vì chưa qua hard-review threshold 60 MB và chưa đo lại cold launch bằng App Launch trace.
+
+### A9 — AppKit menu-bar shell fallback
+
+- Thực thi fallback đã định nghĩa trong spec: thay SwiftUI application lifecycle/`MenuBarExtra` bằng `NSApplicationDelegate`, `NSStatusItem` và `NSPopover`; giữ nguyên AppState, calendar core và toàn bộ SwiftUI content views.
+- Popover và Settings chỉ tạo hosting controller khi mở lần đầu; menu title/accessibility vẫn cập nhật từ live snapshot và preferences qua callback MainActor.
+- Dựng lazy month grid trước khi AppKit định vị popover; clamp frame vào `NSScreen.visibleFrame` để không tràn màn hình. UI navigation/Settings flow đạt ba lần lặp liên tiếp.
+- Ba signed Release RSS run tại khoảng 30 giây là 42.384, 37.776 và 32.816 KB; median 37.776 KB và cả ba đều dưới hard-review threshold 60 MB.
+- Ba App Launch trace kết thúc initial frame ở 888,14, 829,33 và 718,08 ms; median 829,33 ms vẫn cao hơn hard threshold 800 ms, nên P5/M8.2 chưa đóng.
+- Full scheme đạt 97/97; clean universal Release, compiled localization resources, sandbox-only entitlement và deep signature verification đều đạt.
+- Quyết định và trade-off được ghi tại `docs/ADR-001-appkit-shell.md`; không dùng ADR này như performance waiver.
