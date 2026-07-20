@@ -42,7 +42,7 @@ Trạng thái:
 | M0.2 | Tạo `MenuBarExtra`, ẩn Dock, Settings và Quit | M0.1 | Hoàn thành | commit này | Build/test đạt; LSUIElement=true; app bundle chạy thật và hiện `ÂL` trên menu bar |
 | M0.3 | Bổ sung chuẩn repo, logging, README/NOTICE, test script | M0.2 | Hoàn thành | commit này | `.gitignore` đầy đủ; `./scripts/test.sh` build và test đạt |
 | M1.1 | Value types được validate | M0.3 | Hoàn thành | commit này | 4 immutable types; validation/Comparable/Codable tests đạt |
-| M1.2 | Gregorian/JDN conversion | M1.1 | Chờ | — | Known JDN + broad round-trip tests |
+| M1.2 | Gregorian/JDN conversion | M1.1 | Hoàn thành | commit này | Known JDN, adjacent dates và 146.097-day round trip đạt |
 | M1.3 | Trích xuất ngày theo UTC+7 | M1.1 | Chờ | — | Test trước/sau nửa đêm UTC+7 |
 | M2.1 | Thiết lập provenance cho reference data | M1 | Chờ | — | README nguồn dữ liệu, checksum, license note |
 | M2.2 | Generator và generated/reference outputs | M2.1 | Chờ | — | Output deterministic + invariant validation |
@@ -130,3 +130,11 @@ Trạng thái:
 - Phát hiện UUID của `.pbxproj` thay đổi sau mỗi lần chạy generator dù input không đổi.
 - Chuẩn hóa UUID trước khi lưu project.
 - Chạy generator hai lần liên tiếp và xác nhận checksum của `project.pbxproj` cùng shared scheme không thay đổi.
+
+### M1.2 — Gregorian/JDN conversion
+
+- Thêm chuyển đổi hai chiều proleptic Gregorian ↔ Julian Day Number bằng số nguyên.
+- Ghi rõ convention `2000-01-01 = JDN 2.451.545` để tránh nhầm noon/midnight numbering.
+- Kiểm tra known vectors 1970, 2000, 2004; các boundary liền ngày; typed error cho JDN ngoài miền value type.
+- Round-trip toàn bộ 146.097 ngày trong khoảng production 1800-2199.
+- Toàn scheme đạt 14/14 tests sau task.

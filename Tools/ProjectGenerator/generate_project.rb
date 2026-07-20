@@ -82,7 +82,8 @@ add_sources(
     "DateTypes/SolarDate.swift",
     "DateTypes/LunarDate.swift",
     "DateTypes/YearMonth.swift",
-    "DateTypes/LocalTime.swift"
+    "DateTypes/LocalTime.swift",
+    "DateTypes/GregorianJDN.swift"
   ]
 )
 add_sources(
@@ -98,7 +99,7 @@ add_sources(
   core_tests,
   "CoreTests",
   "Tests/CoreTests",
-  ["VietLunarCoreTests.swift", "DateTypesTests.swift"]
+  ["VietLunarCoreTests.swift", "DateTypesTests.swift", "GregorianJDNTests.swift"]
 )
 add_sources(project, infrastructure_tests, "InfrastructureTests", "Tests/InfrastructureTests", ["VietLunarInfrastructureTests.swift"])
 add_sources(project, ui_tests, "UITests", "Tests/UITests", ["VietLunarUITests.swift"])
