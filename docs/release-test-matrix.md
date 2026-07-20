@@ -34,7 +34,7 @@
 | Signed installed login item | Chờ quyền thay đổi hệ thống | Cài vào `/Applications`, test enable/disable/approval rồi dọn trạng thái |
 | Real sleep/wake and clock change | Chờ kiểm tra thủ công | Chạy checklist trên signed installed app |
 | Offline runtime | Chờ kiểm tra thủ công | Chạy app khi network adapter thực sự tắt; runtime zero-traffic đã xác nhận riêng |
-| Launch/RSS/popover performance | Bị chặn | Idle CPU Release đạt; cold launch/RSS fail hard threshold và popover timing chưa tin cậy |
+| Launch/RSS/popover performance | Bị chặn | Idle CPU Release đạt; A8 đã giảm launch work nhưng RSS 30 giây vẫn fail, cold launch chưa đo lại và popover timing chưa tin cậy |
 
 ## Kết luận
 

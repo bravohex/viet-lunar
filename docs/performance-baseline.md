@@ -67,6 +67,20 @@ App Launch trace 5,52 giây ghi process creation 512,13 ms, sau đó AppKit init
 
 XCUITest xác minh popover mở đúng nhưng event synthesis/polling khoảng một giây làm số thời gian không dùng được như product performance metric. Cần signpost hoặc Instruments interaction trace để đo first/subsequent open không nhiễu.
 
+### A8 — Kiểm tra sau khi trì hoãn launch work
+
+`AppState` vẫn tạo live snapshot và lịch one-shot ngay khi launch, nhưng không còn dựng month grid hoặc gọi `SMAppService.status()` trước khi giao diện tương ứng được mở. UI smoke tests tiếp tục xác nhận popover, grid và Settings hoạt động sau khi chuyển thời điểm thực thi.
+
+Clean universal Release bundle được ký nhất quán rồi launch trực tiếp ngoài Xcode, popover đóng và preferences mặc định. Ba lần đọc resident RSS tại khoảng 30 giây:
+
+| Run | RSS | CPU time tích lũy |
+|---|---:|---:|
+| A8-1 | 70.000 KB | 0,08 giây |
+| A8-2 | 67.648 KB | 0,07 giây |
+| A8-3 | 66.976 KB | 0,07 giây |
+
+Median RSS là 67.648 KB, vẫn cao hơn hard-review threshold 60 MB. Thay đổi loại bỏ công việc không cần thiết khỏi launch path nhưng không đủ để đóng memory gate; cold launch 951,10 ms cũ cũng chưa được thay bằng trace mới. P5/M8.2 tiếp tục `Bị chặn`.
+
 ### M8.2 gate
 
 M8.2 chưa đạt vì cold launch và transient RSS vượt hard-review threshold, popover timing chưa được đo tin cậy, và Allocations CLI attach thất bại. Core/grid/bundle/idle CPU đều đạt, nên không có bằng chứng cần viết lại calendar core; điều tra tiếp tập trung vào SwiftUI/MenuBarExtra launch và resident memory.

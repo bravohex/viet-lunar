@@ -44,6 +44,7 @@ Trạng thái:
 | A5 | Chuyển user-visible strings sang catalog | M8.4 | Hoàn thành | commit này | App/Core Vietnamese catalogs, key/resource verification, 97/97 tests |
 | A6 | Xác minh runtime network inactivity | M8.4 | Hoàn thành | commit này | Signed Release, 60 mẫu nettop + lsof không có socket/traffic |
 | A7 | Audit independent oracle candidates | M2.5, M2.6 | Hoàn thành | commit này | MIT candidate pin/audit; 13.028 mismatch nên không dùng làm oracle |
+| A8 | Trì hoãn launch work không cần thiết | M8.2 | Hoàn thành | commit này | Grid/login-item chỉ chuẩn bị khi UI tương ứng mở; 97/97 tests; RSS gate vẫn fail |
 | B0 | Ghi nhận independent-reference blocker | M2.4 | Hoàn thành | commit này | Không dùng candidate JSON làm oracle hoặc sao chép data chưa rõ license |
 | M0.1 | Tạo Xcode project, app/core/infrastructure/test targets | A0 | Hoàn thành | commit này | 6 targets, shared scheme, Debug build và 3 test bundles đạt |
 | M0.2 | Tạo `MenuBarExtra`, ẩn Dock, Settings và Quit | M0.1 | Hoàn thành | commit này | Build/test đạt; LSUIElement=true; app bundle chạy thật và hiện `ÂL` trên menu bar |
@@ -76,7 +77,7 @@ Trạng thái:
 | M7.3 | `SMLoginItemService` | M7.2 | Bị chặn | commit này | Code/93 tests/Developer ID Release đạt; chưa cài `/Applications` và register thật |
 | M7.4 | Hoàn thiện Dock/accessory behavior | M7.3 | Hoàn thành | commit này | Signed Release launch, accessory policy, persistent status item/UI flow đạt |
 | M8.1 | Chạy full test matrix | M2-M7 | Bị chặn | commit này | 97/97 hiện tại + exhaustive round-trip đạt; independent/manual gates còn mở |
-| M8.2 | Ghi performance baseline | M8.1 | Bị chặn | commit này | Core/grid/bundle/idle đạt; cold launch/RSS fail, popover timing thiếu |
+| M8.2 | Ghi performance baseline | M8.1 | Bị chặn | commit này | Core/grid/bundle/idle đạt; A8 đã giảm launch work nhưng cold launch/RSS vẫn fail, popover timing thiếu |
 | M8.3 | Privacy, attribution và release metadata | M8.1 | Hoàn thành | commit này | Privacy/NOTICE/range/version/build/signing/notarization docs đạt |
 | M8.4 | Acceptance review | M8.2, M8.3 | Bị chặn | commit này | 25/32 đạt; 7 accuracy/manual/performance gates còn mở |
 
@@ -414,3 +415,11 @@ Trạng thái:
 - Pin `luc-nham/lunar-calendar` revision `4385e669613ebea3f9f450d0aa3a6937fde01ae1`, MIT, rồi đối chiếu UTC+7 toàn bộ candidate rows.
 - Candidate MIT khớp chuỗi 2033 và ghi rõ leap month 11, nhưng lệch 13.028/146.097 ngày; riêng 1976–2199 còn 476 mismatch từ 2054-05-07 đến 2186-04-18.
 - M2.5/M2.6 tiếp tục `Bị chặn`; audit không làm yếu test, không đổi production data và không gọi candidate thất bại là oracle.
+
+### A8 — Defer noncritical launch work
+
+- Giữ snapshot hiện tại, menu title và one-shot boundary scheduler trên đường launch để ngày hiển thị vẫn đúng ngay khi app xuất hiện.
+- Trì hoãn dựng 42 ô lịch cùng hai phép kiểm tra navigation tới lần đầu mở popover; UI smoke flow xác nhận grid được dựng đồng bộ khi popover xuất hiện.
+- Trì hoãn truy vấn `SMAppService` tới khi trang Settings chung xuất hiện và chỉ refresh trạng thái theo lifecycle khi trang đó còn hiển thị.
+- Full scheme đạt 97/97; clean universal Release build và bundle signature verification đạt.
+- Ba lần đo signed Release tại khoảng 30 giây là 70.000, 67.648 và 66.976 KB; P5/M8.2 vẫn bị chặn vì chưa qua hard-review threshold 60 MB và chưa đo lại cold launch bằng App Launch trace.

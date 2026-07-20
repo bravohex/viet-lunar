@@ -26,6 +26,8 @@ final class AppState: ObservableObject {
     private let boundaryScheduler: any BoundaryScheduling
     private var lifecycleCoordinator: LifecycleEventCoordinator?
     private var preferencesTask: Task<Void, Never>?
+    private var isCalendarPrepared = false
+    private var isSettingsVisible = false
 
     init(
         lunarEngine: any LunarCalendarCalculating = LunarCalendarEngine(),
@@ -38,7 +40,7 @@ final class AppState: ObservableObject {
     ) {
         let initialPreferences = preferencesStore.load()
         preferences = initialPreferences
-        loginItemStatus = loginItemService.status()
+        loginItemStatus = .unavailable
         snapshotFactory = CalendarSnapshotFactory(
             lunarEngine: lunarEngine,
             clock: clock,
@@ -59,7 +61,9 @@ final class AppState: ObservableObject {
             source: lifecycleSource
         ) { [weak self] in
             self?.refresh()
-            self?.refreshLoginItemStatus()
+            if self?.isSettingsVisible == true {
+                self?.refreshLoginItemStatus()
+            }
         }
         lifecycleCoordinator = coordinator
         coordinator.start()
@@ -113,7 +117,12 @@ final class AppState: ObservableObject {
     }
 
     func settingsAppeared() {
+        isSettingsVisible = true
         refreshLoginItemStatus()
+    }
+
+    func settingsDisappeared() {
+        isSettingsVisible = false
     }
 
     func setLoginItemEnabled(_ isEnabled: Bool) {
@@ -148,7 +157,9 @@ final class AppState: ObservableObject {
                     month: snapshot.solarDate.month
                 )
             }
-            try rebuildVisibleMonth()
+            if isCalendarPrepared {
+                try rebuildVisibleMonth()
+            }
             errorMessage = nil
             scheduleNextBoundary(after: snapshot.instant)
         } catch {
@@ -160,6 +171,18 @@ final class AppState: ObservableObject {
     }
 
     func popoverOpened() {
+        if !isCalendarPrepared {
+            isCalendarPrepared = true
+            do {
+                try rebuildVisibleMonth()
+                errorMessage = nil
+            } catch {
+                errorMessage = AppLocalization.text(
+                    "error.calendar_refresh",
+                    fallback: "Không thể cập nhật lịch âm trong dải ngày được hỗ trợ."
+                )
+            }
+        }
         lifecycleSource.emit(.popoverOpened)
     }
 

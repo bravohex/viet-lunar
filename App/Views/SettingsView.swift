@@ -224,6 +224,9 @@ struct SettingsView: View {
         .onAppear {
             appState.settingsAppeared()
         }
+        .onDisappear {
+            appState.settingsDisappeared()
+        }
     }
 
     private var titleFormatBinding: Binding<MenuBarTitleFormat> {
