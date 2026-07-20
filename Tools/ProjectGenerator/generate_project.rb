@@ -94,6 +94,8 @@ app.build_configurations.each do |configuration|
   settings["ENABLE_HARDENED_RUNTIME"] = "YES"
   settings["INFOPLIST_KEY_LSApplicationCategoryType"] = "public.app-category.utilities"
   settings["INFOPLIST_KEY_LSUIElement"] = "YES"
+  settings["INFOPLIST_KEY_NSHumanReadableCopyright"] =
+    "Copyright © 2026 bravohex"
   settings["PRODUCT_NAME"] = "VietLunar"
   settings["ASSETCATALOG_COMPILER_APPICON_NAME"] = "AppIcon"
   settings["ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME"] = ""

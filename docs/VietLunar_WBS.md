@@ -50,6 +50,7 @@ Trạng thái:
 | A11 | Link tĩnh Infrastructure module | M8.2, A10 | Hoàn thành | commit này | RSS median 32.496 KB đạt target; một embedded Core framework; launch vẫn fail |
 | A12 | Xác minh launch bằng Points of Interest | M8.2, A11 | Hoàn thành | commit này | Đo đúng current binary; ready median 857,32 ms; app work median 22,05 ms; P5 vẫn fail |
 | A13 | Audit và tích hợp icon kit | M5.4, M8.3 | Hoàn thành | commit này | 785-file audit; 8 compiled assets; 98/98 tests; signed universal Release đạt |
+| A15 | Bổ sung tác giả, copyright và MIT License | M8.3 | Hoàn thành | commit này | 69 localization keys; MIT/Info.plist assertions; deterministic project; 94/94 non-UI tests |
 | B0 | Ghi nhận independent-reference blocker | M2.4 | Hoàn thành | commit này | Không dùng candidate JSON làm oracle hoặc sao chép data chưa rõ license |
 | M0.1 | Tạo Xcode project, app/core/infrastructure/test targets | A0 | Hoàn thành | commit này | 6 targets, shared scheme, Debug build và 3 test bundles đạt |
 | M0.2 | Tạo `MenuBarExtra`, ẩn Dock, Settings và Quit | M0.1 | Hoàn thành | commit này | Build/test đạt; LSUIElement=true; app bundle chạy thật và hiện `ÂL` trên menu bar |
@@ -474,3 +475,11 @@ Trạng thái:
 - Thêm asset catalog/app-icon build setting, resource assertions, artwork notice và báo cáo `docs/icon-kit-review.md`.
 - Project generation byte-identical; full scheme đạt 98/98. Signed universal Release có `AppIcon.icns`, đủ tám compiled asset, deep signature hợp lệ và launch ngoài Xcode thành công.
 - Release bundle là 2.516 KB, tăng 232 KB so với baseline trước icon và vẫn thấp hơn nhiều target 10 MB.
+
+### A15 — Author, copyright and MIT License
+
+- Ghi tác giả `bravohex`, copyright năm 2026 và `Giấy phép MIT` trong trang Giới thiệu bằng localized resources.
+- Thêm `NSHumanReadableCopyright` vào generated Info.plist để metadata bundle khớp giao diện.
+- Thêm toàn văn giấy phép MIT tại `LICENSE`; cập nhật NOTICE và README với cùng copyright holder/năm.
+- Thêm build assertions cho license header, copyright holder và bundle metadata.
+- Localization catalog đạt 69/69 khóa App; project generation byte-identical, 94/94 non-UI tests đạt và built Info.plist có đúng `Copyright © 2026 bravohex`.

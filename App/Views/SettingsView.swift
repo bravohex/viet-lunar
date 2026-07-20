@@ -379,6 +379,35 @@ private struct AboutSettingsView: View {
                     .foregroundStyle(.secondary)
                     .accessibilityIdentifier("about-version")
 
+                VStack(alignment: .leading, spacing: 3) {
+                    Text(
+                        AppLocalization.format(
+                            "about.author",
+                            fallback: "Tác giả: %@",
+                            author
+                        )
+                    )
+                        .accessibilityIdentifier("about-author")
+                    Text(
+                        AppLocalization.format(
+                            "about.copyright",
+                            fallback: "Copyright © %1$@ %2$@",
+                            copyrightYear,
+                            author
+                        )
+                    )
+                        .accessibilityIdentifier("about-copyright")
+                    Text(
+                        AppLocalization.text(
+                            "about.license",
+                            fallback: "Giấy phép MIT"
+                        )
+                    )
+                        .accessibilityIdentifier("about-license")
+                }
+                .font(.caption)
+                .foregroundStyle(.secondary)
+
                 GroupBox(
                     AppLocalization.text(
                         "about.section.scope",
@@ -457,4 +486,8 @@ private struct AboutSettingsView: View {
         Bundle.main.object(forInfoDictionaryKey: "CFBundleVersion") as? String
             ?? "1"
     }
+
+    private var author: String { "bravohex" }
+
+    private var copyrightYear: String { "2026" }
 }

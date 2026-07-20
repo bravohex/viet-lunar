@@ -62,3 +62,7 @@ Quyết định chuyển lớp vỏ từ `MenuBarExtra` sang AppKit để giảm
 - App trả typed error ngoài khoảng được xác minh; không xấp xỉ.
 
 Generated table đã có checksum và exhaustive round-trip, nhưng independent conformance/2033 evidence vẫn chưa đạt. Xem [ReferenceData/README.md](ReferenceData/README.md), [NOTICE.md](NOTICE.md) và [PRIVACY.md](PRIVACY.md).
+
+## Tác giả và giấy phép
+
+Copyright © 2026 bravohex. VietLunar được phát hành theo [giấy phép MIT](LICENSE).

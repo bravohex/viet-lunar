@@ -1,7 +1,10 @@
 {
   "sourceLanguage" : "vi",
   "strings" : {
+    "about.author" : { "extractionState" : "manual", "localizations" : { "vi" : { "stringUnit" : { "state" : "translated", "value" : "Tác giả: %@" } } } },
+    "about.copyright" : { "extractionState" : "manual", "localizations" : { "vi" : { "stringUnit" : { "state" : "translated", "value" : "Copyright © %1$@ %2$@" } } } },
     "about.historical_caveat" : { "extractionState" : "manual", "localizations" : { "vi" : { "stringUnit" : { "state" : "translated", "value" : "Kết quả từ 1800 đến 1975 là lịch Việt Nam hiện đại suy rộng, không phải bản phục dựng lịch chính thức của mọi vùng và thời kỳ lịch sử." } } } },
+    "about.license" : { "extractionState" : "manual", "localizations" : { "vi" : { "stringUnit" : { "state" : "translated", "value" : "Giấy phép MIT" } } } },
     "about.privacy_summary" : { "extractionState" : "manual", "localizations" : { "vi" : { "stringUnit" : { "state" : "translated", "value" : "Ứng dụng chạy offline, không yêu cầu tài khoản và không gửi dữ liệu cá nhân ra ngoài máy Mac." } } } },
     "about.runtime_summary" : { "extractionState" : "manual", "localizations" : { "vi" : { "stringUnit" : { "state" : "translated", "value" : "Chỉ sử dụng Apple platform frameworks ở runtime." } } } },
     "about.section.privacy" : { "extractionState" : "manual", "localizations" : { "vi" : { "stringUnit" : { "state" : "translated", "value" : "Quyền riêng tư" } } } },

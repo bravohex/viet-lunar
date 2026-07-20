@@ -2,7 +2,7 @@
 
 ## VietLunar
 
-Copyright © 2026 VietLunar contributors.
+Copyright © 2026 bravohex.
 
 The application currently uses Apple platform frameworks only. No third-party runtime library is bundled.
 
@@ -21,3 +21,7 @@ Independent exhaustive validation and the 2033 evidence gate remain open. The ge
 ## VietLunar artwork
 
 The app icon and custom interface icons are original artwork from VietLunar Icon Kit 1.0.0, created specifically for this project. The project may use, modify, copy and distribute this artwork with the application or its documentation. No third-party logo, font or artwork is included in the selected assets.
+
+## License
+
+VietLunar is distributed under the MIT License. See `LICENSE` for the complete license text.
