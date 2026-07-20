@@ -42,6 +42,7 @@ Trạng thái:
 | A3 | Ổn định lifecycle burst coalescing | M6.3 | Hoàn thành | commit này | Debounce one-shot 10 ms; test lặp 3 lần đạt |
 | A4 | Xác minh signed Release idle behavior | M6.4 | Hoàn thành | commit này | Time Profiler 300,84s; +0,01s CPU; không app-owned loop |
 | A5 | Chuyển user-visible strings sang catalog | M8.4 | Hoàn thành | commit này | App/Core Vietnamese catalogs, key/resource verification, 97/97 tests |
+| A6 | Xác minh runtime network inactivity | M8.4 | Hoàn thành | commit này | Signed Release, 60 mẫu nettop + lsof không có socket/traffic |
 | B0 | Ghi nhận independent-reference blocker | M2.4 | Hoàn thành | commit này | Không dùng candidate JSON làm oracle hoặc sao chép data chưa rõ license |
 | M0.1 | Tạo Xcode project, app/core/infrastructure/test targets | A0 | Hoàn thành | commit này | 6 targets, shared scheme, Debug build và 3 test bundles đạt |
 | M0.2 | Tạo `MenuBarExtra`, ẩn Dock, Settings và Quit | M0.1 | Hoàn thành | commit này | Build/test đạt; LSUIElement=true; app bundle chạy thật và hiện `ÂL` trên menu bar |
@@ -76,7 +77,7 @@ Trạng thái:
 | M8.1 | Chạy full test matrix | M2-M7 | Bị chặn | commit này | 97/97 hiện tại + exhaustive round-trip đạt; independent/manual gates còn mở |
 | M8.2 | Ghi performance baseline | M8.1 | Bị chặn | commit này | Core/grid/bundle/idle đạt; cold launch/RSS fail, popover timing thiếu |
 | M8.3 | Privacy, attribution và release metadata | M8.1 | Hoàn thành | commit này | Privacy/NOTICE/range/version/build/signing/notarization docs đạt |
-| M8.4 | Acceptance review | M8.2, M8.3 | Bị chặn | commit này | 24/32 đạt; 8 accuracy/manual/performance gates còn mở |
+| M8.4 | Acceptance review | M8.2, M8.3 | Bị chặn | commit này | 25/32 đạt; 7 accuracy/manual/performance gates còn mở |
 
 ## 4. Release gates đang mở
 
@@ -398,3 +399,10 @@ Trạng thái:
 - Chuyển label, help, error, Settings/About, accessibility text và các pattern định dạng ngày sang resource lookup; giữ Can–Chi names/serialized identifiers là canonical values.
 - Thêm verification script để fail khi thiếu/thừa key, thiếu bản dịch `vi` hoặc còn direct user-facing SwiftUI literal; full test script kiểm tra compiled resources trong app và embedded Core framework.
 - Đóng acceptance Q5; tổng hiện tại là 24/32, M8.4 vẫn bị chặn bởi 8 gate không liên quan localization.
+
+### A6 — Runtime network observation
+
+- Chạy Developer ID signed Release ngoài Xcode với App Sandbox/Hardened Runtime; entitlement chỉ có sandbox và không có outbound network.
+- `nettop` ghi 60 mẫu cách nhau một giây chỉ có header, không có process/socket row hoặc bytes; `lsof` trước/sau không có Internet socket.
+- Đóng performance acceptance P3; tổng hiện tại 25/32 và còn 7 blocker.
+- Không suy diễn sang functional F12: mạng máy chưa bị tắt, nên offline-disabled checklist vẫn mở và cần quyền hệ thống riêng.

@@ -6,7 +6,7 @@
 
 **Kết luận phát hành:** **KHÔNG PHÁT HÀNH**
 
-Kết quả hiện tại: **24/32 tiêu chí đạt**, **8/32 tiêu chí bị chặn**. Không có ADR hoặc waiver nào được chấp thuận để bỏ qua tiêu chí chưa đạt.
+Kết quả hiện tại: **25/32 tiêu chí đạt**, **7/32 tiêu chí bị chặn**. Không có ADR hoặc waiver nào được chấp thuận để bỏ qua tiêu chí chưa đạt.
 
 Quy ước trạng thái:
 
@@ -49,7 +49,7 @@ Quy ước trạng thái:
 |---|---|---|---|
 | P1 | Không repeating timer ở cấu hình mặc định | Đạt | One-shot scheduler, source scan và replacement/cancel tests; không có polling theo giây. |
 | P2 | Không sustained idle CPU work | Đạt | Signed Release Time Profiler 300,84 giây chỉ tăng 0,01 giây CPU, không có app-owned loop. |
-| P3 | Không có network traffic bất ngờ | Bị chặn | Không có API/package/entitlement mạng; vẫn cần runtime Network capture hoặc offline run. |
+| P3 | Không có network traffic bất ngờ | Đạt | Signed Release: 60 mẫu `nettop` không có process/socket row hoặc bytes; `lsof` trước/sau không có Internet socket. |
 | P4 | Có số đo launch, popover, memory và conversion | Bị chặn | Launch/memory/conversion đã ghi; chưa có số first/subsequent popover không nhiễu. |
 | P5 | Vi phạm hard threshold có profiling note và quyết định được duyệt | Bị chặn | Cold launch 951,10 ms và RSS 63.264 KB vượt ngưỡng; đã có note nhưng chưa có fix hoặc ADR/waiver được chấp thuận. |
 

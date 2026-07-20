@@ -22,6 +22,7 @@
 | Release build | Đạt | Clean universal Release build; embedded frameworks và signature verify |
 | Accessory behavior | Đạt | Signed Release launch thật; activation policy là `accessory` |
 | Network dependency static check | Đạt | Không có network API/runtime package hoặc outbound network entitlement |
+| Runtime network observation | Đạt | Signed Release, 60 mẫu nettop và lsof trước/sau không có socket/traffic |
 | Vietnamese localization resources | Đạt | 96 App/Core keys; catalog coverage và compiled app/framework resources được kiểm tra |
 
 ## Gate chưa đạt
@@ -32,7 +33,7 @@
 | Independent 2033 evidence | Bị chặn | Hai nguồn độc lập, gồm nguồn xác nhận tháng 11 nhuận Việt Nam |
 | Signed installed login item | Chờ quyền thay đổi hệ thống | Cài vào `/Applications`, test enable/disable/approval rồi dọn trạng thái |
 | Real sleep/wake and clock change | Chờ kiểm tra thủ công | Chạy checklist trên signed installed app |
-| Offline runtime | Chờ kiểm tra thủ công | Chạy app khi network tắt hoặc capture traffic xác nhận zero outbound |
+| Offline runtime | Chờ kiểm tra thủ công | Chạy app khi network adapter thực sự tắt; runtime zero-traffic đã xác nhận riêng |
 | Launch/RSS/popover performance | Bị chặn | Idle CPU Release đạt; cold launch/RSS fail hard threshold và popover timing chưa tin cậy |
 
 ## Kết luận
