@@ -28,7 +28,7 @@
             buildForAnalyzing = "YES">
             <BuildableReference
                BuildableIdentifier = "primary"
-               BlueprintIdentifier = "99FF6697BD833918D8455DDC6A65985F"
+               BlueprintIdentifier = "20C68A49E2DDD919CFDC198B458A9C86"
                BuildableName = "VietLunarCore.framework"
                BlueprintName = "VietLunarCore"
                ReferencedContainer = "container:VietLunar.xcodeproj">
@@ -69,7 +69,7 @@
             skipped = "NO">
             <BuildableReference
                BuildableIdentifier = "primary"
-               BlueprintIdentifier = "17D45AE3FDFEB8A13B644E912D06F8C5"
+               BlueprintIdentifier = "3007CC1DD1B82FA27A983B5D1918B254"
                BuildableName = "VietLunarCoreTests.xctest"
                BlueprintName = "VietLunarCoreTests"
                ReferencedContainer = "container:VietLunar.xcodeproj">

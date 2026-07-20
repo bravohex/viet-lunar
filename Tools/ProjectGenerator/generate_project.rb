@@ -97,6 +97,7 @@ add_sources(
     "MonthGrid/WeekStart.swift",
     "MonthGrid/MonthGridCell.swift",
     "MonthGrid/MonthGridBuilder.swift",
+    "Formatting/VietnameseCalendarFormatter.swift",
     "Lunar/EncodedLunarYearRecord.swift",
     "Lunar/LunarCalendarCalculating.swift",
     "Lunar/LunarCalendarEngine.swift",
@@ -127,7 +128,8 @@ add_sources(
     "CanChiCalculatorTests.swift",
     "CanChiHourTests.swift",
     "CalendarSnapshotFactoryTests.swift",
-    "MonthGridBuilderTests.swift"
+    "MonthGridBuilderTests.swift",
+    "VietnameseCalendarFormatterTests.swift"
   ]
 )
 add_sources(project, infrastructure_tests, "InfrastructureTests", "Tests/InfrastructureTests", ["VietLunarInfrastructureTests.swift"])

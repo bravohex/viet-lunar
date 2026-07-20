@@ -56,7 +56,7 @@ Trạng thái:
 | M3.3 | Can-Chi giờ và boundary policy | M3.2 | Hoàn thành | commit này | 12 khoảng giờ, 1.440 phút và hai boundary policies đạt |
 | M3.4 | `CalendarSnapshotFactory` | M2.4, M3.3, M1.3 | Hoàn thành | commit này | Một instant tạo solar/lunar và 4 Can-Chi; midnight tests đạt |
 | M4.1 | `MonthGridBuilder` 42 ô | M2.4 | Hoàn thành | commit này | 42 ngày liên tiếp; week starts/leap/boundary tests đạt |
-| M4.2 | Vietnamese formatters | M3.4, M4.1 | Chờ | — | Exact string/diacritics/accessibility tests |
+| M4.2 | Vietnamese formatters | M3.4, M4.1 | Hoàn thành | commit này | Exact strings, leap marker, weekday và VoiceOver tests đạt |
 | M5.1 | Menu title từ live snapshot | M3.4, M4.2 | Chờ | — | State/preference update tests + build |
 | M5.2 | Calendar popover và month navigation | M4.1, M5.1 | Chờ | — | Build + view/domain tests |
 | M5.3 | Keyboard và accessibility | M5.2 | Chờ | — | Keyboard semantics tests; Accessibility Inspector thủ công |
@@ -226,3 +226,11 @@ Trạng thái:
 - Test tháng bắt đầu ở đủ bảy weekday, tuần bắt đầu Thứ Hai/Chủ Nhật, February thường/nhuận, today/in-month flags, Tết 1984 và tháng nhuận 2004.
 - Hai grid chạm ngoài dải 1800–2199 trả typed `unsupportedSolarDate` thay vì tạo cell không có dữ liệu âm lịch.
 - Reference checks đạt; toàn scheme đạt 58/58 tests.
+
+### M4.2 — Vietnamese formatters
+
+- Thêm formatter deterministic cho compact menu title, ngày dương đầy đủ, ngày âm thường/nhuận, Can–Chi, secondary grid label và cell accessibility label.
+- Weekday tiếng Việt được suy từ JDN, không phụ thuộc locale/time-zone của máy chạy.
+- Compact leap month dùng hậu tố `N`; mô tả đầy đủ dùng `nhuận`; chuỗi `Tỵ`, `ÂL`, `Bính Ngọ` được test chính xác dấu.
+- VoiceOver label khớp product copy trong spec, gồm trạng thái `hôm nay` khi phù hợp.
+- Reference checks đạt; toàn scheme đạt 64/64 tests.
