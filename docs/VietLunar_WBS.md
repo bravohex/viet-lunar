@@ -62,7 +62,7 @@ Trạng thái:
 | M5.2 | Calendar popover và month navigation | M4.1, M5.1 | Hoàn thành | commit này | Header, grid 6×7, detail/footer/range navigation; app chạy thật |
 | M5.3 | Keyboard và accessibility | M5.2 | Hoàn thành | `d7d6113` + commit này | AX tree xác nhận label/value/selected state trong flow thật |
 | M5.4 | UI smoke tests | M5.3 | Hoàn thành | commit này | Launch/open/navigate/today/settings end-to-end đạt |
-| M6.1 | Pure next-boundary calculation | M3.3 | Chờ | — | Midnight/minute/hour/time-zone tests |
+| M6.1 | Pure next-boundary calculation | M3.3 | Hoàn thành | commit này | Midnight/hour/minute/DST/exact-equality tests đạt |
 | M6.2 | One-shot scheduler | M6.1 | Chờ | — | Cancellation/single-task/fake scheduler tests |
 | M6.3 | Lifecycle source và coalesced refresh | M6.2, M5.1 | Chờ | — | Synthetic lifecycle tests |
 | M6.4 | Xác minh idle behavior | M6.3 | Chờ | — | `docs/performance-baseline.md` + Instruments thủ công |
@@ -273,3 +273,11 @@ Trạng thái:
 - AX hierarchy xác nhận cell hôm nay có full Vietnamese lunar label, value `Đã chọn, hôm nay` và selected trait; bằng chứng này thay thế manual Inspector bị chặn ở M5.3.
 - Sửa root accessibility identifier từng ghi đè identifier của con trên macOS; identifier nay đặt ở element cụ thể.
 - Reference checks đạt; toàn scheme đạt 69/69 tests, gồm hai UI tests chạy trên app thật.
+
+### M6.1 — Pure next-boundary calculation
+
+- Thêm `RefreshGranularity`, `RefreshRequirements`, `BoundaryCalculating` và pure `BoundaryCalculator` trong Core.
+- Can–Chi hour refresh xét cả 12 odd-hour branch boundaries và civil midnight để cập nhật day stem theo policy mặc định.
+- `after` có ngữ nghĩa strictly-after: đúng tại 00:00/01:00/phút tròn luôn tiến tới boundary kế tiếp, không trả lại instant hiện tại.
+- Test UTC+7 midnight, mọi boundary quan trọng, minute display time zone, DST spring-forward và nhiều requirements chọn thời điểm sớm nhất.
+- Project regeneration vẫn byte-identical; reference checks và toàn scheme đạt 76/76 tests.

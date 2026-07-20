@@ -120,6 +120,7 @@ add_sources(
     "Formatting/MenuBarTitleFormat.swift",
     "Formatting/MenuBarTitlePresentation.swift",
     "Formatting/VietnameseCalendarFormatter.swift",
+    "Refresh/BoundaryCalculator.swift",
     "Lunar/EncodedLunarYearRecord.swift",
     "Lunar/LunarCalendarCalculating.swift",
     "Lunar/LunarCalendarEngine.swift",
@@ -165,7 +166,8 @@ add_sources(
     "CanChiHourTests.swift",
     "CalendarSnapshotFactoryTests.swift",
     "MonthGridBuilderTests.swift",
-    "VietnameseCalendarFormatterTests.swift"
+    "VietnameseCalendarFormatterTests.swift",
+    "BoundaryCalculatorTests.swift"
   ]
 )
 add_sources(project, infrastructure_tests, "InfrastructureTests", "Tests/InfrastructureTests", ["VietLunarInfrastructureTests.swift"])
