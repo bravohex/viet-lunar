@@ -55,7 +55,7 @@ Trạng thái:
 | M3.2 | Can-Chi năm/tháng/ngày | M3.1, M1.2 | Hoàn thành | commit này | Golden vectors và exhaustive 146.097 ngày/chu kỳ 60 đạt |
 | M3.3 | Can-Chi giờ và boundary policy | M3.2 | Hoàn thành | commit này | 12 khoảng giờ, 1.440 phút và hai boundary policies đạt |
 | M3.4 | `CalendarSnapshotFactory` | M2.4, M3.3, M1.3 | Hoàn thành | commit này | Một instant tạo solar/lunar và 4 Can-Chi; midnight tests đạt |
-| M4.1 | `MonthGridBuilder` 42 ô | M2.4 | Chờ | — | Week starts, leap February, boundary tests |
+| M4.1 | `MonthGridBuilder` 42 ô | M2.4 | Hoàn thành | commit này | 42 ngày liên tiếp; week starts/leap/boundary tests đạt |
 | M4.2 | Vietnamese formatters | M3.4, M4.1 | Chờ | — | Exact string/diacritics/accessibility tests |
 | M5.1 | Menu title từ live snapshot | M3.4, M4.2 | Chờ | — | State/preference update tests + build |
 | M5.2 | Calendar popover và month navigation | M4.1, M5.1 | Chờ | — | Build + view/domain tests |
@@ -218,3 +218,11 @@ Trạng thái:
 - `CalendarSnapshotFactory` chỉ gọi `clock.now()` một lần rồi tạo đồng bộ solar date, lunar date và Can-Chi năm/tháng/ngày/giờ.
 - Test bằng `FixedClock` ngay trước/sau nửa đêm Việt Nam, test `startOfZiHour`, và spy clock xác nhận chính xác một lần đọc.
 - Reference checks đạt; toàn scheme đạt 50/50 tests.
+
+### M4.1 — MonthGridBuilder 42 ô
+
+- Thêm `WeekStart`, `MonthGridCell` và `MonthGridBuilder` thuần Core; mỗi grid luôn có đúng 42 ngày Gregorian liên tiếp với lunar date tương ứng.
+- `id` suy ra trực tiếp từ `SolarDate`; không có per-cell observable state hoặc phụ thuộc UI.
+- Test tháng bắt đầu ở đủ bảy weekday, tuần bắt đầu Thứ Hai/Chủ Nhật, February thường/nhuận, today/in-month flags, Tết 1984 và tháng nhuận 2004.
+- Hai grid chạm ngoài dải 1800–2199 trả typed `unsupportedSolarDate` thay vì tạo cell không có dữ liệu âm lịch.
+- Reference checks đạt; toàn scheme đạt 58/58 tests.
