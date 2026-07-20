@@ -43,7 +43,7 @@ Trạng thái:
 | M0.3 | Bổ sung chuẩn repo, logging, README/NOTICE, test script | M0.2 | Hoàn thành | commit này | `.gitignore` đầy đủ; `./scripts/test.sh` build và test đạt |
 | M1.1 | Value types được validate | M0.3 | Hoàn thành | commit này | 4 immutable types; validation/Comparable/Codable tests đạt |
 | M1.2 | Gregorian/JDN conversion | M1.1 | Hoàn thành | commit này | Known JDN, adjacent dates và 146.097-day round trip đạt |
-| M1.3 | Trích xuất ngày theo UTC+7 | M1.1 | Chờ | — | Test trước/sau nửa đêm UTC+7 |
+| M1.3 | Trích xuất ngày theo UTC+7 | M1.1 | Hoàn thành | commit này | Fixed UTC+7; before/after midnight và year-boundary tests đạt |
 | M2.1 | Thiết lập provenance cho reference data | M1 | Chờ | — | README nguồn dữ liệu, checksum, license note |
 | M2.2 | Generator và generated/reference outputs | M2.1 | Chờ | — | Output deterministic + invariant validation |
 | M2.3 | Lunar year record decoder | M2.2 | Chờ | — | Common/leap year decoder tests |
@@ -138,3 +138,10 @@ Trạng thái:
 - Kiểm tra known vectors 1970, 2000, 2004; các boundary liền ngày; typed error cho JDN ngoài miền value type.
 - Round-trip toàn bộ 146.097 ngày trong khoảng production 1800-2199.
 - Toàn scheme đạt 14/14 tests sau task.
+
+### M1.3 — Canonical UTC+7 date extraction
+
+- Thêm `VietnamCalendarConvention` và `VietnamCalendarTime` với fixed offset +07:00.
+- Dùng Gregorian `Calendar` được khởi tạo explicit; không dùng `Calendar.current` hoặc user-selected calendar.
+- Test ngay trước và đúng nửa đêm UTC+7, cùng boundary đổi năm.
+- Toàn scheme đạt 18/18 tests sau task.
