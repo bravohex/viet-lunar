@@ -1,0 +1,233 @@
+{
+  "schemaVersion": 1,
+  "calendar": "Vietnamese modern lunisolar calendar",
+  "calculationTimeZone": "+07:00",
+  "notes": [
+    "These curated vectors complement, but do not replace, exhaustive 1800-2199 reference comparison.",
+    "Dates before 1976 are proleptic modern astronomical results unless a historical official source is explicitly used."
+  ],
+  "solarToLunar": [
+    {
+      "solar": "1984-02-01",
+      "lunar": {
+        "year": 1983,
+        "month": 12,
+        "day": 30,
+        "isLeapMonth": false
+      },
+      "purpose": "Day immediately before the documented 1984 Tet boundary",
+      "sourceKey": "ho-ngoc-duc-calrules-example-1984"
+    },
+    {
+      "solar": "1984-02-02",
+      "lunar": {
+        "year": 1984,
+        "month": 1,
+        "day": 1,
+        "isLeapMonth": false
+      },
+      "purpose": "Documented 1984 Tet boundary",
+      "sourceKey": "ho-ngoc-duc-calrules-example-1984"
+    },
+    {
+      "solar": "2004-03-21",
+      "lunar": {
+        "year": 2004,
+        "month": 2,
+        "day": 1,
+        "isLeapMonth": true
+      },
+      "purpose": "Start of documented leap month 2",
+      "sourceKey": "ho-ngoc-duc-calrules-example-2004"
+    },
+    {
+      "solar": "2004-04-18",
+      "lunar": {
+        "year": 2004,
+        "month": 2,
+        "day": 29,
+        "isLeapMonth": true
+      },
+      "purpose": "End of documented leap-month interval",
+      "sourceKey": "ho-ngoc-duc-calrules-example-2004"
+    },
+    {
+      "solar": "2004-04-19",
+      "lunar": {
+        "year": 2004,
+        "month": 3,
+        "day": 1,
+        "isLeapMonth": false
+      },
+      "purpose": "First day after documented leap-month interval",
+      "sourceKey": "ho-ngoc-duc-calrules-example-2004"
+    },
+    {
+      "solar": "2020-08-18",
+      "lunar": {
+        "year": 2020,
+        "month": 6,
+        "day": 29,
+        "isLeapMonth": false
+      },
+      "purpose": "Modern public implementation regression",
+      "sourceKey": "swift-lunarsolar-test"
+    },
+    {
+      "solar": "2025-08-18",
+      "lunar": {
+        "year": 2025,
+        "month": 6,
+        "day": 25,
+        "isLeapMonth": true
+      },
+      "purpose": "Modern leap-month regression",
+      "sourceKey": "swift-lunarsolar-test"
+    },
+    {
+      "solar": "2033-11-22",
+      "lunar": {
+        "year": 2033,
+        "month": 11,
+        "day": 1,
+        "isLeapMonth": false
+      },
+      "purpose": "Start of normal month 11 before the rare leap month",
+      "sourceKey": "2033-independent-crosscheck"
+    },
+    {
+      "solar": "2033-12-21",
+      "lunar": {
+        "year": 2033,
+        "month": 11,
+        "day": 30,
+        "isLeapMonth": false
+      },
+      "purpose": "Last day of normal month 11",
+      "sourceKey": "2033-independent-crosscheck"
+    },
+    {
+      "solar": "2033-12-22",
+      "lunar": {
+        "year": 2033,
+        "month": 11,
+        "day": 1,
+        "isLeapMonth": true
+      },
+      "purpose": "Start of rare leap month 11",
+      "sourceKey": "2033-independent-crosscheck"
+    },
+    {
+      "solar": "2034-01-19",
+      "lunar": {
+        "year": 2033,
+        "month": 11,
+        "day": 29,
+        "isLeapMonth": true
+      },
+      "purpose": "Last day of leap month 11",
+      "sourceKey": "2033-independent-crosscheck"
+    },
+    {
+      "solar": "2034-01-20",
+      "lunar": {
+        "year": 2033,
+        "month": 12,
+        "day": 1,
+        "isLeapMonth": false
+      },
+      "purpose": "First day after leap month 11",
+      "sourceKey": "2033-independent-crosscheck"
+    }
+  ],
+  "canChi": [
+    {
+      "kind": "year",
+      "lunarYear": 2004,
+      "expected": "Giáp Thân",
+      "formula": "stem=(Y+6)%10; branch=(Y+8)%12"
+    },
+    {
+      "kind": "lunarMonth",
+      "lunarYear": 2004,
+      "lunarMonth": 3,
+      "isLeapMonth": false,
+      "expected": "Mậu Thìn",
+      "formula": "stem=(Y*12+M+3)%10; branch=(M+1)%12"
+    },
+    {
+      "kind": "day",
+      "solar": "2004-04-19",
+      "julianDayNumber": 2453115,
+      "expected": "Mậu Thìn",
+      "formula": "stem=(JDN+9)%10; branch=(JDN+1)%12"
+    }
+  ],
+  "hourBoundaryCases": [
+    {
+      "time": "22:59",
+      "expectedBranch": "Hợi"
+    },
+    {
+      "time": "23:00",
+      "expectedBranch": "Tý"
+    },
+    {
+      "time": "23:59",
+      "expectedBranch": "Tý"
+    },
+    {
+      "time": "00:00",
+      "expectedBranch": "Tý"
+    },
+    {
+      "time": "00:59",
+      "expectedBranch": "Tý"
+    },
+    {
+      "time": "01:00",
+      "expectedBranch": "Sửu"
+    },
+    {
+      "time": "02:59",
+      "expectedBranch": "Sửu"
+    },
+    {
+      "time": "03:00",
+      "expectedBranch": "Dần"
+    },
+    {
+      "time": "20:59",
+      "expectedBranch": "Tuất"
+    },
+    {
+      "time": "21:00",
+      "expectedBranch": "Hợi"
+    }
+  ],
+  "required2033Regression": {
+    "status": "ACCEPTED_GOLDEN_SEQUENCE_REQUIRES_COMMITTED_PROVENANCE",
+    "leapMonth": 11,
+    "normalMonth11Start": "2033-11-22",
+    "normalMonth11End": "2033-12-21",
+    "leapMonth11Start": "2033-12-22",
+    "leapMonth11End": "2034-01-19",
+    "normalMonth12Start": "2034-01-20",
+    "requiredAssertions": [
+      "solar-to-lunar conversion for all five boundary dates",
+      "lunar-to-solar conversion for both normal and leap month 11",
+      "month lengths: normal month 11 has 30 days; leap month 11 has 29 days",
+      "round trips around every boundary"
+    ]
+  },
+  "sourceCatalog": {
+    "ho-ngoc-duc-calrules-example-1984": "https://www.xemamlich.uhm.vn/calrules.html#example-1984",
+    "ho-ngoc-duc-calrules-example-2004": "https://www.xemamlich.uhm.vn/calrules.html#example-2004",
+    "swift-lunarsolar-test": "Public Swift LunarSolar test vectors; retain exact repository commit URL in ReferenceData/README.md before release",
+    "2033-independent-crosscheck": [
+      "Hồ Ngọc Đức VNCal change log records correction of the 2033 leap-month calculation: https://www.xemamlich.uhm.vn/vncal_en.html",
+      "Hermetic Systems Vietnamese calendrics identifies leap month 11 starting 2033-12-22: https://www.hermetic.ch/chcal/leap_months.htm",
+      "Cross-check boundary pages: 2033-12-21 = 30/11 normal, 2033-12-22 = 1/11 leap, 2034-01-20 = 1/12 normal"
+    ]
+  }
+}
