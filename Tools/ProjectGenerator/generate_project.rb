@@ -72,7 +72,13 @@ ui_tests.build_configurations.each do |configuration|
 end
 
 add_sources(project, core, "Core", "Sources/Core", ["VietLunarCore.swift"])
-add_sources(project, infrastructure, "Infrastructure", "Sources/Infrastructure", ["VietLunarInfrastructure.swift"])
+add_sources(
+  project,
+  infrastructure,
+  "Infrastructure",
+  "Sources/Infrastructure",
+  ["VietLunarInfrastructure.swift", "Logging/AppLog.swift"]
+)
 add_sources(project, app, "App", "App", ["VietLunarApp.swift"])
 add_sources(project, core_tests, "CoreTests", "Tests/CoreTests", ["VietLunarCoreTests.swift"])
 add_sources(project, infrastructure_tests, "InfrastructureTests", "Tests/InfrastructureTests", ["VietLunarInfrastructureTests.swift"])

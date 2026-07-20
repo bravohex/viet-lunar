@@ -1,2 +1,45 @@
+# macOS
 .DS_Store
+.AppleDouble
+.LSOverride
+Icon?
+._*
+
+# Xcode user state and build output
+.build/
+build/
+DerivedData/
+*.xcresult
+*.dSYM
+*.dSYM.zip
+*.xcarchive
+*.xccheckout
+*.xcscmblueprint
+*.xcuserstate
+*.moved-aside
+xcuserdata/
+*.xcodeproj/xcuserdata/
+*.xcworkspace/xcuserdata/
+
+# Swift tooling caches
+.swiftpm/
+.sourcekit-lsp/
+
+# Local IDE settings
+.idea/
+.vscode/
+
+# Local environment and secrets
 .env
+.env.*
+!.env.example
+*.local
+
+# Local analysis artifacts
+.understand-anything/
+
+# Logs and temporary files
+*.log
+*.tmp
+*.swp
+*~

@@ -1,16 +1,47 @@
-# VietLunar implementation-document bundle
+# VietLunar
 
-Files:
+VietLunar là ứng dụng macOS native, chạy hoàn toàn offline trên menu bar để hiển thị lịch âm Việt Nam. MVP dùng Swift 6, SwiftUI `MenuBarExtra`, calculation convention UTC+7 và không có runtime dependency ngoài Apple frameworks.
 
-- `docs/VietLunar_SPEC.md` — product requirements, calendar conventions, architecture, APIs, future event design, testing, acceptance criteria.
-- `docs/VietLunar_CODEX_PLAN.md` — ordered implementation tasks and definitions of done.
-- `docs/VietLunar_CODEX_PROMPT.md` — ready-to-paste prompt for a Codex coding session.
-- `docs/VietLunar_TEST_VECTORS.json` — curated regression inputs; exhaustive reference data is still required.
+## Trạng thái
 
-Recommended use:
+Project đã có app/core/infrastructure targets, unit/UI test targets và menu-bar shell với nhãn `ÂL`. Calendar engine và giao diện lịch sẽ được triển khai tuần tự theo [WBS](docs/VietLunar_WBS.md).
 
-1. Copy the Markdown files into the repository’s `docs/` directory.
-2. Give Codex the prompt file and tell it which milestone to execute.
-3. Require Codex to stop at milestone boundaries and attach test/build results.
-4. Preserve the accepted 2033 golden sequence and commit its independent source provenance before release.
+## Yêu cầu phát triển
 
+- macOS 13.0 trở lên.
+- Xcode 26 hoặc một Xcode stable hỗ trợ Swift 6.
+- Ruby gem `xcodeproj` chỉ cần khi tái tạo project file; đây không phải runtime dependency.
+
+## Build và test
+
+Chạy toàn bộ build và test bằng một lệnh:
+
+```bash
+./scripts/test.sh
+```
+
+Tái tạo Xcode project sau khi thêm/xóa source file:
+
+```bash
+ruby Tools/ProjectGenerator/generate_project.rb
+```
+
+Project generator là công cụ phát triển. Generated `VietLunar.xcodeproj` vẫn được commit để người dùng có thể mở và build ngay bằng Xcode.
+
+## Kiến trúc
+
+- `App/`: SwiftUI application shell và giao diện.
+- `Sources/Core/`: date/lunar/Can-Chi domain thuần Swift, không phụ thuộc UI.
+- `Sources/Infrastructure/`: clock, lifecycle, preferences, login item và logging adapters.
+- `Tests/`: unit tests và UI smoke tests.
+- `Tools/`: development-only generators.
+- `docs/`: product spec, implementation plan, WBS và curated regression vectors.
+
+## Quy ước lịch
+
+- Khoảng ngày production dự kiến: `1800-01-01...2199-12-31`.
+- Ngày lịch âm hiện tại được tính theo UTC+7.
+- Dữ liệu trước 1976 là proleptic modern astronomical Vietnamese calendar, không được mô tả như lịch chính thức lịch sử.
+- App trả typed error ngoài khoảng được xác minh; không xấp xỉ.
+
+Reference data, provenance và exhaustive accuracy tests sẽ được hoàn thiện ở milestone M2 trước khi phát hành.

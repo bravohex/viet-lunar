@@ -39,7 +39,7 @@ Trạng thái:
 | A0 | Phân tích tài liệu và tạo WBS thực thi | — | Hoàn thành | commit này | Đã đọc đầy đủ spec, plan, prompt, test vectors; knowledge graph hợp lệ |
 | M0.1 | Tạo Xcode project, app/core/infrastructure/test targets | A0 | Hoàn thành | commit này | 6 targets, shared scheme, Debug build và 3 test bundles đạt |
 | M0.2 | Tạo `MenuBarExtra`, ẩn Dock, Settings và Quit | M0.1 | Hoàn thành | commit này | Build/test đạt; LSUIElement=true; app bundle chạy thật và hiện `ÂL` trên menu bar |
-| M0.3 | Bổ sung chuẩn repo, logging, README/NOTICE, test script | M0.2 | Chờ | — | Một lệnh build/test được tài liệu hóa |
+| M0.3 | Bổ sung chuẩn repo, logging, README/NOTICE, test script | M0.2 | Hoàn thành | commit này | `.gitignore` đầy đủ; `./scripts/test.sh` build và test đạt |
 | M1.1 | Value types được validate | M0.3 | Chờ | — | Leap-year, invalid input, Comparable, Codable tests |
 | M1.2 | Gregorian/JDN conversion | M1.1 | Chờ | — | Known JDN + broad round-trip tests |
 | M1.3 | Trích xuất ngày theo UTC+7 | M1.1 | Chờ | — | Test trước/sau nửa đêm UTC+7 |
@@ -107,3 +107,11 @@ Trạng thái:
 - Bật `LSUIElement=true` để ẩn Dock icon và menu ứng dụng thông thường.
 - Sửa build phase để nhúng cả hai framework nội bộ vào app bundle; kiểm tra trực tiếp app chạy được ngoài test runner.
 - Debug build, unit/UI test scheme và kiểm tra Info.plist đều đạt; ảnh chụp thực tế xác nhận mục `ÂL` xuất hiện trên menu bar.
+
+### M0.3 — Chuẩn repository
+
+- Mở rộng `.gitignore` cho macOS, Xcode/DerivedData, Swift caches, IDE state, local secrets, logs và artifact phân tích.
+- Cập nhật README với yêu cầu môi trường, kiến trúc, quy ước lịch và lệnh build/test.
+- Thêm NOTICE scaffold để khóa yêu cầu attribution/license trước khi đưa reference data vào repo.
+- Thêm logging subsystem/category constants bằng `OSLog`.
+- Thêm `scripts/test.sh`; lệnh duy nhất này đã chạy thành công `xcodebuild -list`, Debug build và toàn bộ test scheme.
