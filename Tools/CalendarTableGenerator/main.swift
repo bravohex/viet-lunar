@@ -542,7 +542,7 @@ private enum Generator {
     private static func renderSwift(records: [YearRecord]) -> String {
         let rows = records.map { record in
             let bits = String(format: "0x%04X", record.monthLengthBits)
-            return "        (tetJDN: \(record.tetJDN), leapMonth: \(record.leapMonth), monthLengthBits: \(bits))"
+            return "        EncodedLunarYearRecord(uncheckedYear: \(record.year), tetJDN: \(record.tetJDN), leapMonth: \(record.leapMonth), monthLengthBits: \(bits))"
         }.joined(separator: ",\n")
 
         return """
@@ -553,7 +553,7 @@ private enum Generator {
         enum GeneratedLunarYearTableData {
             static let firstYear = 1799
             static let lastYear = 2200
-            static let records: [(tetJDN: Int, leapMonth: Int, monthLengthBits: UInt16)] = [
+            static let records: [EncodedLunarYearRecord] = [
         \(rows)
             ]
         }

@@ -46,7 +46,7 @@ Trạng thái:
 | M1.3 | Trích xuất ngày theo UTC+7 | M1.1 | Hoàn thành | commit này | Fixed UTC+7; before/after midnight và year-boundary tests đạt |
 | M2.1 | Thiết lập provenance cho reference data | M1 | Hoàn thành | commit này | Source catalog, license policy và checksum verification đạt |
 | M2.2 | Generator và generated/reference outputs | M2.1 | Hoàn thành | commit này | 402 records, 146.097 rows, deterministic checksums và invariants đạt |
-| M2.3 | Lunar year record decoder | M2.2 | Chờ | — | Common/leap year decoder tests |
+| M2.3 | Lunar year record decoder | M2.2 | Hoàn thành | commit này | Compact bitset decoder; 2004/2025 leap mapping tests đạt |
 | M2.4 | `LunarCalendarEngine` hai chiều | M2.3 | Chờ | — | Golden, boundary, leap/error tests |
 | M2.5 | Exhaustive conformance suite | M2.4 | Chờ | — | Toàn bộ solar/lunar round trip và independent reference |
 | M2.6 | Release gate năm 2033 | M2.5 | Chờ | — | Named regression suite + hai nguồn độc lập |
@@ -162,3 +162,11 @@ Trạng thái:
 - Curated sentinels 1984, 2004, 2025 và 2033 được kiểm tra trong generator.
 - Hai lần generate liên tiếp cho checksum byte-identical; checksum verification và toàn Xcode scheme đều đạt.
 - Reference JSON cùng production table đến từ cùng generator nên M2.5 vẫn chưa được xem là independent conformance.
+
+### M2.3 — Encoded lunar-year decoder
+
+- Thêm compact `EncodedLunarYearRecord` với `Int32` Tết JDN, `UInt8` leap month và `UInt16` month-length bitset.
+- Hỗ trợ month length lookup, sequential index ↔ logical normal/leap month mà không cấp phát heap cho mỗi conversion.
+- Generated table dùng trực tiếp typed records và debug invariants.
+- Test common year, nhuận tháng 2/2004, nhuận tháng 6/2025, invalid leap flag/index và invalid bit mask.
+- Checksum verification đạt; toàn scheme đạt 23/23 tests.
