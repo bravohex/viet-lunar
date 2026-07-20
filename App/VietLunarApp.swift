@@ -35,11 +35,11 @@ private struct SettingsPlaceholderView: View {
         VStack(alignment: .leading, spacing: 10) {
             Text("Cài đặt VietLunar")
                 .font(.title2.bold())
+                .accessibilityIdentifier("settings-title")
             Text("Các tùy chọn hiển thị sẽ được bổ sung ở milestone M7.")
                 .foregroundStyle(.secondary)
         }
         .padding(24)
         .frame(width: 420, height: 180, alignment: .topLeading)
-        .accessibilityIdentifier("settings-placeholder")
     }
 }

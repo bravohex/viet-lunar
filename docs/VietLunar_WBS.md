@@ -60,8 +60,8 @@ Trạng thái:
 | M4.2 | Vietnamese formatters | M3.4, M4.1 | Hoàn thành | commit này | Exact strings, leap marker, weekday và VoiceOver tests đạt |
 | M5.1 | Menu title từ live snapshot | M3.4, M4.2 | Hoàn thành | commit này | Live snapshot title, 5 formats, full accessibility label; app chạy thật |
 | M5.2 | Calendar popover và month navigation | M4.1, M5.1 | Hoàn thành | commit này | Header, grid 6×7, detail/footer/range navigation; app chạy thật |
-| M5.3 | Keyboard và accessibility | M5.2 | Bị chặn | commit này | Code/build đạt; manual Inspector chờ macOS Assistive Access |
-| M5.4 | UI smoke tests | M5.3 | Chờ | — | Launch/open/navigate/today/settings UI tests |
+| M5.3 | Keyboard và accessibility | M5.2 | Hoàn thành | `d7d6113` + commit này | AX tree xác nhận label/value/selected state trong flow thật |
+| M5.4 | UI smoke tests | M5.3 | Hoàn thành | commit này | Launch/open/navigate/today/settings end-to-end đạt |
 | M6.1 | Pure next-boundary calculation | M3.3 | Chờ | — | Midnight/minute/hour/time-zone tests |
 | M6.2 | One-shot scheduler | M6.1 | Chờ | — | Cancellation/single-task/fake scheduler tests |
 | M6.3 | Lifecycle source và coalesced refresh | M6.2, M5.1 | Chờ | — | Synthetic lifecycle tests |
@@ -265,3 +265,11 @@ Trạng thái:
 - Generator nay cấp chuỗi UUID đầu vào deterministic trước bước path-based predictabilization; không thay đổi target graph hoặc build settings.
 - Ba process generate liên tiếp cho checksum byte-identical của cả `project.pbxproj` và shared scheme.
 - Toàn scheme tiếp tục đạt 68/68 tests.
+
+### M5.4 — UI smoke tests và đóng accessibility gate
+
+- XCUITest mở trực tiếp `StatusItem` thật, chờ popover, xác nhận today header và visible month title.
+- Flow sang tháng sau rồi bấm Hôm nay quay đúng tháng ban đầu; sau đó mở Settings và xác nhận settings scene xuất hiện.
+- AX hierarchy xác nhận cell hôm nay có full Vietnamese lunar label, value `Đã chọn, hôm nay` và selected trait; bằng chứng này thay thế manual Inspector bị chặn ở M5.3.
+- Sửa root accessibility identifier từng ghi đè identifier của con trên macOS; identifier nay đặt ở element cụ thể.
+- Reference checks đạt; toàn scheme đạt 69/69 tests, gồm hai UI tests chạy trên app thật.

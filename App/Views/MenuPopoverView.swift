@@ -39,6 +39,5 @@ struct MenuPopoverView: View {
         .onExitCommand {
             dismiss()
         }
-        .accessibilityIdentifier("menu-popover")
     }
 }
