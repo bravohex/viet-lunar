@@ -52,7 +52,7 @@ Trạng thái:
 | M2.5 | Exhaustive conformance suite | M2.4 | Bị chặn | — | Candidate JSON không độc lập; cần approved independent dataset |
 | M2.6 | Release gate năm 2033 | M2.5 | Bị chặn | — | Chờ M2.5 và bằng chứng nguồn độc lập được lưu trong repo |
 | M3.1 | Typed Heavenly Stem/Earthly Branch | M1 | Hoàn thành | commit này | Raw values ổn định; đúng thứ tự/tên tiếng Việt; Codable tests đạt |
-| M3.2 | Can-Chi năm/tháng/ngày | M3.1, M1.2 | Chờ | — | Golden vectors + chu kỳ 60 ngày |
+| M3.2 | Can-Chi năm/tháng/ngày | M3.1, M1.2 | Hoàn thành | commit này | Golden vectors và exhaustive 146.097 ngày/chu kỳ 60 đạt |
 | M3.3 | Can-Chi giờ và boundary policy | M3.2 | Chờ | — | Toàn bộ mốc giờ nhánh địa chi |
 | M3.4 | `CalendarSnapshotFactory` | M2.4, M3.3, M1.3 | Chờ | — | FixedClock midnight/hour tests |
 | M4.1 | `MonthGridBuilder` 42 ô | M2.4 | Chờ | — | Week starts, leap February, boundary tests |
@@ -195,3 +195,11 @@ Trạng thái:
 - Tên hiển thị tiếng Việt được tách khỏi raw value, giữ nguyên thứ tự chuẩn và chuẩn hóa `Tỵ` theo spec.
 - Test khóa thứ tự, đầy đủ dấu tiếng Việt, JSON raw value ổn định và từ chối giá trị ngoài enum.
 - Reference checks đạt; toàn scheme đạt 35/35 tests.
+
+### M3.2 — Can-Chi năm/tháng/ngày
+
+- Thêm `StemBranch` và `CanChiCalculator` thuần Core, dùng đúng các công thức năm âm lịch, tháng âm lịch và ngày theo JDN trong spec.
+- Leap month kế thừa Can–Chi của tháng thường cùng số; `floorMod` xử lý đúng cả đầu vào âm trong test.
+- Golden vectors 2004 đạt: năm `Giáp Thân`, tháng 3 `Mậu Thìn`, ngày 2004-04-19 `Mậu Thìn` tại JDN 2.453.115.
+- Kiểm tra exhaustive toàn bộ 146.097 ngày 1800–2199: ngày kế tiếp tăng đúng một can/một chi và sau 60 ngày lặp lại.
+- Toàn scheme đạt 40/40 tests.
