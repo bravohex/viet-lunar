@@ -30,10 +30,46 @@ public struct CanChiCalculator: Sendable {
         day(forJDN: GregorianJDN.jdn(for: solarDate))
     }
 
+    public func day(
+        for solarDate: SolarDate,
+        at localTime: LocalTime,
+        boundaryPolicy: CanChiDayBoundaryPolicy = .defaultValue
+    ) -> StemBranch {
+        let civilJDN = GregorianJDN.jdn(for: solarDate)
+        let effectiveJDN: Int
+
+        switch boundaryPolicy {
+        case .civilMidnight:
+            effectiveJDN = civilJDN
+        case .startOfZiHour:
+            effectiveJDN = localTime.hour == 23 ? civilJDN + 1 : civilJDN
+        }
+
+        return day(forJDN: effectiveJDN)
+    }
+
     public func day(forJDN jdn: Int) -> StemBranch {
         stemBranch(
             stemIndex: floorMod(jdn + 9, 10),
             branchIndex: floorMod(jdn + 1, 12)
+        )
+    }
+
+    public func hour(
+        for solarDate: SolarDate,
+        at localTime: LocalTime,
+        boundaryPolicy: CanChiDayBoundaryPolicy = .defaultValue
+    ) -> StemBranch {
+        let hourBranchIndex = floorMod((localTime.hour + 1) / 2, 12)
+        let effectiveDayStem = day(
+            for: solarDate,
+            at: localTime,
+            boundaryPolicy: boundaryPolicy
+        ).stem.rawValue
+
+        return stemBranch(
+            stemIndex: floorMod((effectiveDayStem * 2) + hourBranchIndex, 10),
+            branchIndex: hourBranchIndex
         )
     }
 

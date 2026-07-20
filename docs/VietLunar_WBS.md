@@ -53,7 +53,7 @@ Trạng thái:
 | M2.6 | Release gate năm 2033 | M2.5 | Bị chặn | — | Chờ M2.5 và bằng chứng nguồn độc lập được lưu trong repo |
 | M3.1 | Typed Heavenly Stem/Earthly Branch | M1 | Hoàn thành | commit này | Raw values ổn định; đúng thứ tự/tên tiếng Việt; Codable tests đạt |
 | M3.2 | Can-Chi năm/tháng/ngày | M3.1, M1.2 | Hoàn thành | commit này | Golden vectors và exhaustive 146.097 ngày/chu kỳ 60 đạt |
-| M3.3 | Can-Chi giờ và boundary policy | M3.2 | Chờ | — | Toàn bộ mốc giờ nhánh địa chi |
+| M3.3 | Can-Chi giờ và boundary policy | M3.2 | Hoàn thành | commit này | 12 khoảng giờ, 1.440 phút và hai boundary policies đạt |
 | M3.4 | `CalendarSnapshotFactory` | M2.4, M3.3, M1.3 | Chờ | — | FixedClock midnight/hour tests |
 | M4.1 | `MonthGridBuilder` 42 ô | M2.4 | Chờ | — | Week starts, leap February, boundary tests |
 | M4.2 | Vietnamese formatters | M3.4, M4.1 | Chờ | — | Exact string/diacritics/accessibility tests |
@@ -203,3 +203,11 @@ Trạng thái:
 - Golden vectors 2004 đạt: năm `Giáp Thân`, tháng 3 `Mậu Thìn`, ngày 2004-04-19 `Mậu Thìn` tại JDN 2.453.115.
 - Kiểm tra exhaustive toàn bộ 146.097 ngày 1800–2199: ngày kế tiếp tăng đúng một can/một chi và sau 60 ngày lặp lại.
 - Toàn scheme đạt 40/40 tests.
+
+### M3.3 — Can-Chi giờ và boundary policy
+
+- Thêm `CanChiDayBoundaryPolicy` có mặc định ổn định là `civilMidnight` và đường triển khai đầy đủ cho `startOfZiHour`.
+- `CanChiCalculator` tính chi giờ từ 12 khoảng hai giờ và can giờ từ can ngày hiệu lực theo policy.
+- Test toàn bộ boundary được nêu trong spec, đủ 12 chi và exhaustive cả 1.440 phút trong ngày.
+- Test xác nhận giờ Tý bị tách can tại nửa đêm theo mặc định; với `startOfZiHour`, 23:00 dùng can của ngày kế tiếp.
+- Reference checks đạt; toàn scheme đạt 45/45 tests.
