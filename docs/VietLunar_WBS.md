@@ -67,7 +67,7 @@ Trạng thái:
 | M6.2 | One-shot scheduler | M6.1 | Hoàn thành | commit này | Single task, replacement/cancel/deinit/tolerance tests đạt |
 | M6.3 | Lifecycle source và coalesced refresh | M6.2, M5.1 | Hoàn thành | commit này | 5 system + popover/boundary events; coalescing tests đạt |
 | M6.4 | Xác minh idle behavior | M6.3 | Bị chặn | commit này | 5-minute Debug run fail CPU/RSS; cần Instruments Release profile |
-| M7.1 | Typed preferences store | M0.3 | Chờ | — | Defaults, isolated suite, migration/change stream tests |
+| M7.1 | Typed preferences store | M0.3 | Hoàn thành | commit này | Versioned root, v0 migration/change stream; toàn scheme 88/88 tests |
 | M7.2 | Settings UI | M7.1, M5.1, M6.3 | Chờ | — | Build + preference integration tests |
 | M7.3 | `SMLoginItemService` | M7.2 | Chờ | — | Status mapping tests; signed install thủ công |
 | M7.4 | Hoàn thiện Dock/accessory behavior | M7.3 | Chờ | — | Installed-app behavior checklist |
@@ -311,3 +311,11 @@ Trạng thái:
 - `Task.yield()` cho phép refresh task xen giữa các event đã buffer, làm burst ba notification đôi khi tạo hai refresh.
 - Thay bằng debounce task one-shot 10 ms; event mới trong cửa sổ này dùng chung pending refresh, không tạo polling/repeating timer.
 - Test coordinator dùng cửa sổ 30 ms xác định và đạt ba lần chạy riêng liên tiếp.
+
+### M7.1 — Typed preferences store
+
+- Thêm `AppPreferences` đúng typed schema của spec và tập trung toàn bộ giá trị mặc định ở `defaultValue`.
+- `UserDefaultsPreferencesStore` chỉ ghi một root key có schema version; không lưu title dẫn xuất, login-item truth, bảng âm lịch hoặc events.
+- Hỗ trợ migration payload v0 sang v1; dữ liệu hỏng, version tương lai hoặc legacy không hợp lệ trả về defaults nhưng không bị xóa.
+- Change stream phát giá trị hiện tại và các lần save khác biệt; bộ test dùng isolated `UserDefaults` suite.
+- Project generator chạy hai lần byte-identical; reference checks và toàn scheme đạt 88/88 tests.

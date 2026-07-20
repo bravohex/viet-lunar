@@ -121,6 +121,7 @@ add_sources(
     "Formatting/MenuBarTitlePresentation.swift",
     "Formatting/VietnameseCalendarFormatter.swift",
     "Refresh/BoundaryCalculator.swift",
+    "Preferences/AppPreferences.swift",
     "Lunar/EncodedLunarYearRecord.swift",
     "Lunar/LunarCalendarCalculating.swift",
     "Lunar/LunarCalendarEngine.swift",
@@ -138,7 +139,8 @@ add_sources(
     "Time/OneShotBoundaryScheduler.swift",
     "Lifecycle/AppLifecycleEvent.swift",
     "Lifecycle/SystemLifecycleSource.swift",
-    "Lifecycle/LifecycleEventCoordinator.swift"
+    "Lifecycle/LifecycleEventCoordinator.swift",
+    "Preferences/UserDefaultsPreferencesStore.swift"
   ]
 )
 add_sources(
@@ -185,7 +187,8 @@ add_sources(
   [
     "VietLunarInfrastructureTests.swift",
     "OneShotBoundarySchedulerTests.swift",
-    "LifecycleSourceTests.swift"
+    "LifecycleSourceTests.swift",
+    "UserDefaultsPreferencesStoreTests.swift"
   ]
 )
 add_sources(project, ui_tests, "UITests", "Tests/UITests", ["VietLunarUITests.swift"])
