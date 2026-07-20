@@ -74,7 +74,7 @@ def link_target(consumer, dependency)
 end
 
 core = project.new_target(:framework, "VietLunarCore", :osx, "13.0")
-infrastructure = project.new_target(:framework, "VietLunarInfrastructure", :osx, "13.0")
+infrastructure = project.new_target(:static_library, "VietLunarInfrastructure", :osx, "13.0")
 app = project.new_target(:application, "VietLunar", :osx, "13.0")
 core_tests = project.new_target(:unit_test_bundle, "VietLunarCoreTests", :osx, "13.0")
 infrastructure_tests = project.new_target(:unit_test_bundle, "VietLunarInfrastructureTests", :osx, "13.0")
@@ -237,7 +237,7 @@ ui_tests.add_dependency(app)
 
 embed_frameworks = app.new_copy_files_build_phase("Embed Frameworks")
 embed_frameworks.dst_subfolder_spec = "10"
-[core, infrastructure].each do |framework_target|
+[core].each do |framework_target|
   build_file = embed_frameworks.add_file_reference(framework_target.product_reference, true)
   build_file.settings = {
     "ATTRIBUTES" => ["CodeSignOnCopy", "RemoveHeadersOnCopy"]

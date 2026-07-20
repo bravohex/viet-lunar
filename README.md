@@ -46,7 +46,7 @@ Hướng dẫn ký/notarize nằm tại [docs/DISTRIBUTION.md](docs/DISTRIBUTION
 
 - `App/`: `NSStatusItem`/`NSPopover` shell và giao diện SwiftUI được tạo lười.
 - `Sources/Core/`: date/lunar/Can-Chi domain thuần Swift, không phụ thuộc UI.
-- `Sources/Infrastructure/`: clock, lifecycle, preferences, login item và logging adapters.
+- `Sources/Infrastructure/`: clock, lifecycle, preferences, login item và logging adapters; được link tĩnh vào app.
 - `Tests/`: unit tests và UI smoke tests.
 - `Tools/`: development-only generators.
 - `docs/`: product spec, implementation plan, WBS và curated regression vectors.

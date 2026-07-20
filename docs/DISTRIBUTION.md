@@ -48,7 +48,7 @@ codesign --verify --deep --strict --verbose=2 "$APP_PATH"
 codesign -d --entitlements :- "$APP_PATH"
 ```
 
-Release app phải có sandbox entitlement, hardened runtime, cùng Team ID cho app/frameworks, không có `get-task-allow` và không có outbound network entitlement.
+Release app phải có sandbox entitlement, hardened runtime, cùng Team ID cho app và embedded Core framework, không có `get-task-allow` và không có outbound network entitlement. Infrastructure được link tĩnh, không tồn tại như framework cần ký riêng.
 
 ## Notarization
 

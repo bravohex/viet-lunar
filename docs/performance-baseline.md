@@ -47,11 +47,11 @@ Memory gate chuyển sang M8.2: cần Allocations/VM investigation ổn định 
 
 | Metric | Kết quả đo | Target / hard review | Kết luận |
 |---|---:|---:|---|
-| Cold launch đến initial frame | 718,08–888,14 ms; median 829,33 ms | <=400 / <=800 ms | Cải thiện nhưng vẫn fail hard review |
-| AppKit init đến initial frame | 212,50–249,40 ms; median 224,06 ms | Thông tin phân rã | Cải thiện so với 330,43 ms cũ |
-| Popover first open | 114,08–115,60 ms; median 114,42 ms | <=100 / <=200 ms | Qua hard review; chưa đạt target |
-| Popover subsequent open | 28,65–48,72 ms; median 40,56 ms | <=50 / <=100 ms | Đạt target |
-| RSS khoảng 30 giây | 32.816–42.384 KB; median 37.776 KB | <=35 MB / review >60 MB | Qua hard review; target chưa ổn định |
+| Cold launch đến initial frame | 802,18–977,88 ms; median 846,92 ms | <=400 / <=800 ms | Vẫn fail hard review |
+| AppKit init đến initial frame | 217,74–261,54 ms; median 229,65 ms | Thông tin phân rã | Vẫn thấp hơn 330,43 ms ban đầu |
+| Popover first open | 108,89–129,47 ms; median 112,78 ms | <=100 / <=200 ms | Qua hard review; chưa đạt target |
+| Popover subsequent open | 28,50–43,03 ms; median 35,41 ms | <=50 / <=100 ms | Đạt target |
+| RSS khoảng 30 giây | 31.744–38.144 KB; median 32.496 KB | <=35 MB / review >60 MB | Median đạt target; cả ba qua hard review |
 | RSS cuối idle trace | 31.232 KB | <=35 MB | Đạt sau warm-up |
 | Idle CPU 5 phút | +0,01 s / 300,84 s | <=0,1% | Đạt |
 | Release app bundle | 2.284 KB (2,2 MB) | <=10 / <=20 MB | Đạt |
@@ -105,6 +105,14 @@ Release-optimized measurement dùng ba sample sau một warm-up bị XCTest lo�
 
 `scripts/measure_popover.sh` tái lập measurement bằng Release optimization và ad-hoc/no-hardened signing chỉ để XCUITest điều khiển app. Signed distribution build vẫn được build/ký/verify riêng; script đo không tạo release artifact. P4 được đóng vì launch, popover, RSS và conversion đều đã có số; P5 vẫn mở bởi launch hard threshold.
 
+### A11 — Static Infrastructure linkage
+
+Infrastructure không có resource bundle nên được đổi từ dynamic framework sang static library, còn Core tiếp tục là embedded framework để giữ ownership của Vietnamese localization resources. Signed Release app vì vậy chỉ load một internal dylib và chỉ cần ký app/Core nhất quán.
+
+Ba RSS sample khoảng 30 giây là 38.144, 31.744 và 32.496 KB; median 32.496 KB lần đầu đạt target 35 MB, dù một run vẫn cao hơn target. Ba App Launch trace kết thúc initial frame ở 977,88, 846,92 và 802,18 ms; median 846,92 ms không cải thiện gate và vẫn vượt hard threshold 800 ms. Process creation 461,57–503,59 ms cùng phần trước AppKit tiếp tục chiếm phần lớn biến thiên.
+
+Release popover metric sau static relink vẫn đạt measurement gate: first 108,89–129,47 ms (median 112,78 ms, dưới hard 200 ms), subsequent 28,50–43,03 ms (median 35,41 ms, dưới target 50 ms). Thay đổi được giữ cho memory/bundle/signing simplification, không được dùng để tuyên bố launch đạt.
+
 ### M8.2 gate
 
-M8.2 chưa đạt vì cold/median launch vẫn vượt hard-review threshold. Popover đã có signpost metrics và không vi phạm hard threshold; RSS 30 giây đã xuống dưới mức hard review nhờ AppKit shell nhưng target 35 MB chưa ổn định. Core/grid/bundle/idle CPU đều đạt và calendar core không bị viết lại.
+M8.2 chưa đạt vì cold/median launch vẫn vượt hard-review threshold. Popover đã có signpost metrics và không vi phạm hard threshold; RSS median 30 giây đạt target 35 MB sau AppKit shell + static Infrastructure. Core/grid/bundle/idle CPU đều đạt và calendar core không bị viết lại.

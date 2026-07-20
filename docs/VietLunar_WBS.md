@@ -47,6 +47,7 @@ Trạng thái:
 | A8 | Trì hoãn launch work không cần thiết | M8.2 | Hoàn thành | commit này | Grid/login-item chỉ chuẩn bị khi UI tương ứng mở; 97/97 tests; RSS gate vẫn fail |
 | A9 | Chuyển menu-bar shell sang AppKit | M8.2, A8 | Hoàn thành | commit này | RSS median 37.776 KB, hard review đạt; UI flow ổn định; launch gate vẫn fail |
 | A10 | Đo first/subsequent popover bằng signpost | M8.2, A9 | Hoàn thành | commit này | Release first median 114,42 ms; subsequent 40,56 ms; P4 đạt |
+| A11 | Link tĩnh Infrastructure module | M8.2, A10 | Hoàn thành | commit này | RSS median 32.496 KB đạt target; một embedded Core framework; launch vẫn fail |
 | B0 | Ghi nhận independent-reference blocker | M2.4 | Hoàn thành | commit này | Không dùng candidate JSON làm oracle hoặc sao chép data chưa rõ license |
 | M0.1 | Tạo Xcode project, app/core/infrastructure/test targets | A0 | Hoàn thành | commit này | 6 targets, shared scheme, Debug build và 3 test bundles đạt |
 | M0.2 | Tạo `MenuBarExtra`, ẩn Dock, Settings và Quit | M0.1 | Hoàn thành | commit này | Build/test đạt; LSUIElement=true; app bundle chạy thật và hiện `ÂL` trên menu bar |
@@ -79,7 +80,7 @@ Trạng thái:
 | M7.3 | `SMLoginItemService` | M7.2 | Bị chặn | commit này | Code/93 tests/Developer ID Release đạt; chưa cài `/Applications` và register thật |
 | M7.4 | Hoàn thiện Dock/accessory behavior | M7.3 | Hoàn thành | commit này | Signed Release launch, accessory policy, persistent status item/UI flow đạt |
 | M8.1 | Chạy full test matrix | M2-M7 | Bị chặn | commit này | 98/98 hiện tại + exhaustive round-trip đạt; independent/manual gates còn mở |
-| M8.2 | Ghi performance baseline | M8.1 | Bị chặn | commit này | Core/grid/bundle/idle/RSS/popover measured; cold launch median vẫn fail |
+| M8.2 | Ghi performance baseline | M8.1 | Bị chặn | commit này | Core/grid/bundle/idle/RSS median/popover đạt; cold launch median vẫn fail |
 | M8.3 | Privacy, attribution và release metadata | M8.1 | Hoàn thành | commit này | Privacy/NOTICE/range/version/build/signing/notarization docs đạt |
 | M8.4 | Acceptance review | M8.2, M8.3 | Bị chặn | commit này | 26/32 đạt; 6 accuracy/manual/performance gates còn mở |
 
@@ -444,3 +445,12 @@ Trạng thái:
 - Subsequent open 28,65–48,72 ms, median 40,56 ms: cả ba đạt target 50 ms.
 - Thêm `scripts/measure_popover.sh` để tái lập build đo ad-hoc không hardened dành riêng cho XCUITest; distribution Release vẫn dùng Developer ID/Hardened Runtime gate độc lập.
 - Đóng acceptance P4; tổng hiện tại 26/32 và còn 6 blocker. P5/M8.2 vẫn bị chặn duy nhất bởi launch hard threshold chưa được xử lý hoặc phê duyệt waiver.
+
+### A11 — Static Infrastructure linkage
+
+- Chuyển `VietLunarInfrastructure` từ dynamic framework sang Swift static library; module API và target dependency giữ nguyên, Core vẫn là framework để sở hữu compiled localization resources.
+- App chỉ embed một `VietLunarCore.framework`; test script fail nếu Infrastructure framework xuất hiện lại trong bundle. Distribution checklist chỉ còn app/Core signature consistency.
+- Clean DerivedData full scheme đạt 98/98; clean universal Release chỉ link runtime với Core framework, deep signature verification và launch ngoài Xcode đạt.
+- Ba RSS run tại khoảng 30 giây là 38.144, 31.744 và 32.496 KB; median 32.496 KB đạt target 35 MB, cả ba tiếp tục dưới hard-review threshold 60 MB.
+- Ba App Launch trace là 977,88, 846,92 và 802,18 ms; median 846,92 ms vẫn fail hard threshold 800 ms và không được che bởi memory improvement.
+- Popover Release signposts sau relink: first median 112,78 ms (qua hard review), subsequent median 35,41 ms (đạt target). P4 giữ `Đạt`; P5/M8.2 vẫn `Bị chặn` bởi launch.

@@ -50,15 +50,15 @@ Quy ước trạng thái:
 | P1 | Không repeating timer ở cấu hình mặc định | Đạt | One-shot scheduler, source scan và replacement/cancel tests; không có polling theo giây. |
 | P2 | Không sustained idle CPU work | Đạt | Signed Release Time Profiler 300,84 giây chỉ tăng 0,01 giây CPU, không có app-owned loop. |
 | P3 | Không có network traffic bất ngờ | Đạt | Signed Release: 60 mẫu `nettop` không có process/socket row hoặc bytes; `lsof` trước/sau không có Internet socket. |
-| P4 | Có số đo launch, popover, memory và conversion | Đạt | Release signposts: first median 114,42 ms, subsequent median 40,56 ms; launch/RSS/conversion đã có trace/benchmark riêng. |
-| P5 | Vi phạm hard threshold có profiling note và quyết định được duyệt | Bị chặn | A9 AppKit shell đưa RSS xuống 32.816–42.384 KB, nhưng App Launch median 829,33 ms vẫn vượt 800 ms; ADR không phải waiver và chưa có quyết định chấp thuận vi phạm còn lại. |
+| P4 | Có số đo launch, popover, memory và conversion | Đạt | Release signposts sau static relink: first median 112,78 ms, subsequent median 35,41 ms; launch/RSS/conversion có trace/benchmark riêng. |
+| P5 | Vi phạm hard threshold có profiling note và quyết định được duyệt | Bị chặn | AppKit shell + static Infrastructure đưa RSS median xuống 32.496 KB, nhưng App Launch median 846,92 ms vẫn vượt 800 ms; chưa có fix đạt ngưỡng hoặc waiver được chấp thuận. |
 
 ## 19.4 — Nghiệm thu chất lượng code
 
 | ID | Tiêu chí | Trạng thái | Bằng chứng / việc còn lại |
 |---|---|---|---|
 | Q1 | Core không import SwiftUI/AppKit | Đạt | Toàn bộ `Sources/Core` chỉ phụ thuộc Foundation/Core API. |
-| Q2 | Không có runtime third-party package | Đạt | Xcode project không có package reference; app chỉ nhúng hai framework nội bộ. |
+| Q2 | Không có runtime third-party package | Đạt | Xcode project không có package reference; app nhúng Core framework nội bộ và link tĩnh Infrastructure. |
 | Q3 | Không force unwrap trong date conversion paths | Đạt | Source scan và warnings-as-errors không phát hiện force unwrap trong Core conversion. |
 | Q4 | Generated data có provenance/checksum | Đạt | Source catalog, metadata và checksum verification script đều đạt; independent accuracy vẫn thuộc gate A1/A3. |
 | Q5 | Mọi user-visible string nằm trong localized resources | Đạt | App/Core có Vietnamese string catalogs; 96 khóa được đối chiếu tự động, resources được kiểm tra trong built app/framework. |
