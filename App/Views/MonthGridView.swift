@@ -9,7 +9,14 @@ struct MonthGridView: View {
         repeating: GridItem(.flexible(minimum: 36), spacing: 3),
         count: 7
     )
-    private let weekdayLabels = ["T2", "T3", "T4", "T5", "T6", "T7", "CN"]
+    private var weekdayLabels: [String] {
+        switch appState.preferences.weekStart {
+        case .monday:
+            ["T2", "T3", "T4", "T5", "T6", "T7", "CN"]
+        case .sunday:
+            ["CN", "T2", "T3", "T4", "T5", "T6", "T7"]
+        }
+    }
 
     var body: some View {
         VStack(spacing: 7) {

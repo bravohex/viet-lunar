@@ -1,10 +1,30 @@
 import AppKit
+import Foundation
 import SwiftUI
 import VietLunarCore
+import VietLunarInfrastructure
 
 @main
 struct VietLunarApp: App {
-    @StateObject private var appState = AppState()
+    @StateObject private var appState: AppState
+
+    init() {
+        let store: UserDefaultsPreferencesStore
+#if DEBUG
+        if let suiteName = ProcessInfo.processInfo.environment["VIETLUNAR_TEST_PREFERENCES_SUITE"],
+           let defaults = UserDefaults(suiteName: suiteName) {
+            defaults.removePersistentDomain(forName: suiteName)
+            store = UserDefaultsPreferencesStore(userDefaults: defaults)
+        } else {
+            store = UserDefaultsPreferencesStore()
+        }
+#else
+        store = UserDefaultsPreferencesStore()
+#endif
+        _appState = StateObject(
+            wrappedValue: AppState(preferencesStore: store)
+        )
+    }
 
     var body: some Scene {
         MenuBarExtra {
@@ -14,32 +34,40 @@ struct VietLunarApp: App {
                     appState.popoverOpened()
                 }
         } label: {
-            if let title = appState.menuBarPresentation.title {
-                Text(title)
-                    .accessibilityLabel(appState.menuBarPresentation.accessibilityLabel)
-            } else {
-                Image(systemName: "moon.circle.fill")
-                    .accessibilityLabel(appState.menuBarPresentation.accessibilityLabel)
-            }
+            MenuBarLabelView(
+                presentation: appState.menuBarPresentation,
+                showsIcon: appState.preferences.titleFormat.isIconOnly
+            )
         }
         .menuBarExtraStyle(.window)
 
         Settings {
-            SettingsPlaceholderView()
+            SettingsView()
+                .environmentObject(appState)
         }
     }
 }
 
-private struct SettingsPlaceholderView: View {
+private struct MenuBarLabelView: View {
+    let presentation: MenuBarTitlePresentation
+    let showsIcon: Bool
+
     var body: some View {
-        VStack(alignment: .leading, spacing: 10) {
-            Text("Cài đặt VietLunar")
-                .font(.title2.bold())
-                .accessibilityIdentifier("settings-title")
-            Text("Các tùy chọn hiển thị sẽ được bổ sung ở milestone M7.")
-                .foregroundStyle(.secondary)
+        if showsIcon {
+            HStack(spacing: 4) {
+                Image(systemName: "moon.circle.fill")
+                if let title = presentation.title {
+                    Text(title)
+                }
+            }
+            .accessibilityElement(children: .ignore)
+            .accessibilityLabel(presentation.accessibilityLabel)
+        } else if let title = presentation.title {
+            Text(title)
+                .accessibilityLabel(presentation.accessibilityLabel)
+        } else {
+            Text("ÂL")
+                .accessibilityLabel(presentation.accessibilityLabel)
         }
-        .padding(24)
-        .frame(width: 420, height: 180, alignment: .topLeading)
     }
 }

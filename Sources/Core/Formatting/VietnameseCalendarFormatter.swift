@@ -1,7 +1,10 @@
+import Foundation
+
 public enum VietnameseCalendarFormatter: Sendable {
     public static func menuBarPresentation(
         for snapshot: CalendarSnapshot,
-        format: MenuBarTitleFormat
+        format: MenuBarTitleFormat,
+        clockText: String? = nil
     ) -> MenuBarTitlePresentation {
         let lunar = compactLunarDate(snapshot.lunarDate, includesSuffix: false)
         let solar = compactSolarDate(snapshot.solarDate)
@@ -20,10 +23,37 @@ public enum VietnameseCalendarFormatter: Sendable {
             title = nil
         }
 
+        let composedTitle = [title, clockText]
+            .compactMap { $0 }
+            .joined(separator: " · ")
+        let clockAccessibility = clockText.map { "; Giờ hệ thống \($0)" } ?? ""
+
         return MenuBarTitlePresentation(
-            title: title,
-            accessibilityLabel: menuBarAccessibilityLabel(for: snapshot)
+            title: composedTitle.isEmpty ? nil : composedTitle,
+            accessibilityLabel: "\(menuBarAccessibilityLabel(for: snapshot).dropLast())\(clockAccessibility)."
         )
+    }
+
+    public static func systemClockText(
+        at instant: Date,
+        timeZone: TimeZone,
+        uses24HourClock: Bool
+    ) -> String {
+        var calendar = Calendar(identifier: .gregorian)
+        calendar.locale = Locale(identifier: "vi_VN")
+        calendar.timeZone = timeZone
+        let components = calendar.dateComponents([.hour, .minute], from: instant)
+        guard let hour = components.hour, let minute = components.minute else {
+            preconditionFailure("Foundation produced invalid clock components")
+        }
+
+        if uses24HourClock {
+            return "\(twoDigits(hour)):\(twoDigits(minute))"
+        }
+
+        let twelveHour = hour % 12 == 0 ? 12 : hour % 12
+        let period = hour < 12 ? "SA" : "CH"
+        return "\(twelveHour):\(twoDigits(minute)) \(period)"
     }
 
     public static func compactMenuTitle(for lunarDate: LunarDate) -> String {

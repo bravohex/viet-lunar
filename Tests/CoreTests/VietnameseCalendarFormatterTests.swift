@@ -168,6 +168,44 @@ final class VietnameseCalendarFormatterTests: XCTestCase {
         )
     }
 
+    func testSystemClockUsesCapturedInstantAndRequestedHourFormat() throws {
+        let instant = try XCTUnwrap(
+            ISO8601DateFormatter().date(from: "2026-07-20T05:07:00Z")
+        )
+
+        XCTAssertEqual(
+            VietnameseCalendarFormatter.systemClockText(
+                at: instant,
+                timeZone: VietnamCalendarTime.timeZone,
+                uses24HourClock: true
+            ),
+            "12:07"
+        )
+        XCTAssertEqual(
+            VietnameseCalendarFormatter.systemClockText(
+                at: instant,
+                timeZone: VietnamCalendarTime.timeZone,
+                uses24HourClock: false
+            ),
+            "12:07 CH"
+        )
+    }
+
+    func testClockIsComposedIntoTitleAndAccessibilityText() throws {
+        let snapshot = try snapshot(at: "2026-07-20T05:00:00Z")
+        let presentation = VietnameseCalendarFormatter.menuBarPresentation(
+            for: snapshot,
+            format: .lunarDate,
+            clockText: "12:00"
+        )
+
+        XCTAssertEqual(presentation.title, "07/06 ÂL · 12:00")
+        XCTAssertEqual(
+            presentation.accessibilityLabel,
+            "VietLunar; Thứ Hai, ngày 20 tháng 7 năm 2026; ngày 7 tháng 6 âm lịch, năm Bính Ngọ; Can–Chi ngày Ất Mùi; Can–Chi giờ Nhâm Ngọ; Giờ hệ thống 12:00."
+        )
+    }
+
     func testMenuBarTitleFormatDefaultAndCodableValuesAreStable() throws {
         XCTAssertEqual(MenuBarTitleFormat.defaultValue, .lunarDate)
 

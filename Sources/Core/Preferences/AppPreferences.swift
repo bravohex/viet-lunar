@@ -1,3 +1,5 @@
+import Foundation
+
 public struct AppPreferences: Equatable, Codable, Sendable {
     public var titleFormat: MenuBarTitleFormat
     public var showsClock: Bool
@@ -26,4 +28,17 @@ public struct AppPreferences: Equatable, Codable, Sendable {
         uses24HourClock: true,
         canChiBoundaryPolicy: .defaultValue
     )
+
+    public func refreshRequirements(
+        displayedClockTimeZone: TimeZone
+    ) -> RefreshRequirements {
+        var granularities: Set<RefreshGranularity> = [.vietnamMidnight]
+        if showsClock {
+            granularities.insert(.minute)
+        }
+        return RefreshRequirements(
+            granularities: granularities,
+            displayedClockTimeZone: displayedClockTimeZone
+        )
+    }
 }

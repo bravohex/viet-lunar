@@ -68,7 +68,7 @@ Trạng thái:
 | M6.3 | Lifecycle source và coalesced refresh | M6.2, M5.1 | Hoàn thành | commit này | 5 system + popover/boundary events; coalescing tests đạt |
 | M6.4 | Xác minh idle behavior | M6.3 | Bị chặn | commit này | 5-minute Debug run fail CPU/RSS; cần Instruments Release profile |
 | M7.1 | Typed preferences store | M0.3 | Hoàn thành | commit này | Versioned root, v0 migration/change stream; toàn scheme 88/88 tests |
-| M7.2 | Settings UI | M7.1, M5.1, M6.3 | Chờ | — | Build + preference integration tests |
+| M7.2 | Settings UI | M7.1, M5.1, M6.3 | Hoàn thành | commit này | Live controls, minute-boundary clock, isolated UI flow; 92/92 tests |
 | M7.3 | `SMLoginItemService` | M7.2 | Chờ | — | Status mapping tests; signed install thủ công |
 | M7.4 | Hoàn thiện Dock/accessory behavior | M7.3 | Chờ | — | Installed-app behavior checklist |
 | M8.1 | Chạy full test matrix | M2-M7 | Chờ | — | Unit/exhaustive/UI/Release build/checklists |
@@ -319,3 +319,12 @@ Trạng thái:
 - Hỗ trợ migration payload v0 sang v1; dữ liệu hỏng, version tương lai hoặc legacy không hợp lệ trả về defaults nhưng không bị xóa.
 - Change stream phát giá trị hiện tại và các lần save khác biệt; bộ test dùng isolated `UserDefaults` suite.
 - Project generator chạy hai lần byte-identical; reference checks và toàn scheme đạt 88/88 tests.
+
+### M7.2 — Settings UI và live preference integration
+
+- Thay Settings placeholder bằng màn Chung/Giới thiệu: title format, ngày dương, Can–Chi, clock, 24 giờ, đầu tuần, Launch at Login placeholder và thông tin range/privacy/attribution.
+- `AppState` load và quan sát typed store; thay đổi preference được lưu rồi áp dụng ngay cho title, snapshot, month grid và boundary policy mà không cần relaunch.
+- Bật clock ghép giờ hệ thống từ cùng captured instant vào title/accessibility text và đổi one-shot requirements sang boundary mỗi phút; tắt clock quay về UTC+7 midnight.
+- Week-start thay đổi cả thứ tự header lẫn 42-cell grid; title flags ánh xạ xác định vào bốn enum format, không tạo thêm key rời rạc.
+- UI test dùng isolated preference suite, mở Settings thật và xác nhận clock preview bật/tắt tức thời; project generation byte-identical, reference checks và toàn scheme đạt 92/92 tests.
+- Launch at Login có control bị vô hiệu hóa rõ ràng cho đến khi adapter `SMAppService` được triển khai ở M7.3.

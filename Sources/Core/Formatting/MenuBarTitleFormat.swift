@@ -16,4 +16,58 @@ public enum MenuBarTitleFormat: String, CaseIterable, Codable, Sendable {
         case .iconOnly: "Chỉ biểu tượng"
         }
     }
+
+    public var includesSolarDate: Bool {
+        switch self {
+        case .solarAndLunar, .solarLunarAndDayCanChi:
+            true
+        case .lunarDate, .lunarAndDayCanChi, .iconOnly:
+            false
+        }
+    }
+
+    public var includesDayCanChi: Bool {
+        switch self {
+        case .lunarAndDayCanChi, .solarLunarAndDayCanChi:
+            true
+        case .lunarDate, .solarAndLunar, .iconOnly:
+            false
+        }
+    }
+
+    public var isIconOnly: Bool {
+        self == .iconOnly
+    }
+
+    public func withSolarDate(_ isIncluded: Bool) -> Self {
+        guard !isIconOnly else {
+            return self
+        }
+        return Self.textFormat(
+            includesSolarDate: isIncluded,
+            includesDayCanChi: includesDayCanChi
+        )
+    }
+
+    public func withDayCanChi(_ isIncluded: Bool) -> Self {
+        guard !isIconOnly else {
+            return self
+        }
+        return Self.textFormat(
+            includesSolarDate: includesSolarDate,
+            includesDayCanChi: isIncluded
+        )
+    }
+
+    private static func textFormat(
+        includesSolarDate: Bool,
+        includesDayCanChi: Bool
+    ) -> Self {
+        switch (includesSolarDate, includesDayCanChi) {
+        case (false, false): .lunarDate
+        case (true, false): .solarAndLunar
+        case (false, true): .lunarAndDayCanChi
+        case (true, true): .solarLunarAndDayCanChi
+        }
+    }
 }

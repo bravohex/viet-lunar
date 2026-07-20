@@ -6,7 +6,7 @@ import VietLunarInfrastructure
 @MainActor
 final class AppState: ObservableObject {
     @Published private(set) var currentSnapshot: CalendarSnapshot?
-    @Published var titleFormat: MenuBarTitleFormat = .defaultValue
+    @Published private(set) var preferences: AppPreferences
     @Published private(set) var errorMessage: String?
     @Published private(set) var selectedSolarDate: SolarDate?
     @Published private(set) var visibleMonth: YearMonth?
@@ -14,25 +14,36 @@ final class AppState: ObservableObject {
     @Published private(set) var canNavigateToPreviousMonth = false
     @Published private(set) var canNavigateToNextMonth = false
 
-    private let snapshotFactory: CalendarSnapshotFactory
+    private var snapshotFactory: CalendarSnapshotFactory
     private let monthGridBuilder: MonthGridBuilder
+    private let lunarEngine: any LunarCalendarCalculating
+    private let clock: any Clock
+    private let preferencesStore: any PreferencesStoring
     private let lifecycleSource: any LifecycleEventSourcing
     private let boundaryCalculator: any BoundaryCalculating
     private let boundaryScheduler: any BoundaryScheduling
     private var lifecycleCoordinator: LifecycleEventCoordinator?
+    private var preferencesTask: Task<Void, Never>?
 
     init(
         lunarEngine: any LunarCalendarCalculating = LunarCalendarEngine(),
         clock: any Clock = SystemClock(),
         lifecycleSource: any LifecycleEventSourcing = SystemLifecycleSource(),
         boundaryCalculator: any BoundaryCalculating = BoundaryCalculator(),
-        boundaryScheduler: (any BoundaryScheduling)? = nil
+        boundaryScheduler: (any BoundaryScheduling)? = nil,
+        preferencesStore: any PreferencesStoring = UserDefaultsPreferencesStore()
     ) {
+        let initialPreferences = preferencesStore.load()
+        preferences = initialPreferences
         snapshotFactory = CalendarSnapshotFactory(
             lunarEngine: lunarEngine,
-            clock: clock
+            clock: clock,
+            boundaryPolicy: initialPreferences.canChiBoundaryPolicy
         )
         monthGridBuilder = MonthGridBuilder(lunarEngine: lunarEngine)
+        self.lunarEngine = lunarEngine
+        self.clock = clock
+        self.preferencesStore = preferencesStore
         self.lifecycleSource = lifecycleSource
         self.boundaryCalculator = boundaryCalculator
         self.boundaryScheduler = boundaryScheduler
@@ -46,6 +57,7 @@ final class AppState: ObservableObject {
         }
         lifecycleCoordinator = coordinator
         coordinator.start()
+        observePreferences()
     }
 
     var menuBarPresentation: MenuBarTitlePresentation {
@@ -56,10 +68,33 @@ final class AppState: ObservableObject {
             )
         }
 
+        let clockText = preferences.showsClock
+            ? VietnameseCalendarFormatter.systemClockText(
+                at: currentSnapshot.instant,
+                timeZone: .autoupdatingCurrent,
+                uses24HourClock: preferences.uses24HourClock
+            )
+            : nil
         return VietnameseCalendarFormatter.menuBarPresentation(
             for: currentSnapshot,
-            format: titleFormat
+            format: preferences.titleFormat,
+            clockText: clockText
         )
+    }
+
+    func updatePreferences(_ mutate: (inout AppPreferences) -> Void) {
+        var updated = preferences
+        mutate(&updated)
+        guard updated != preferences else {
+            return
+        }
+
+        do {
+            try preferencesStore.save(updated)
+            applyPreferences(updated)
+        } catch {
+            errorMessage = "Không thể lưu cài đặt. Vui lòng thử lại."
+        }
     }
 
     func refresh() {
@@ -120,7 +155,7 @@ final class AppState: ObservableObject {
         do {
             monthCells = try monthGridBuilder.build(
                 displayedMonth: targetMonth,
-                weekStart: .defaultValue,
+                weekStart: preferences.weekStart,
                 today: snapshot.solarDate
             )
             visibleMonth = targetMonth
@@ -143,7 +178,7 @@ final class AppState: ObservableObject {
         do {
             let cells = try monthGridBuilder.build(
                 displayedMonth: targetMonth,
-                weekStart: .defaultValue,
+                weekStart: preferences.weekStart,
                 today: snapshot.solarDate
             )
             self.visibleMonth = targetMonth
@@ -193,7 +228,7 @@ final class AppState: ObservableObject {
 
         monthCells = try monthGridBuilder.build(
             displayedMonth: visibleMonth,
-            weekStart: .defaultValue,
+            weekStart: preferences.weekStart,
             today: snapshot.solarDate
         )
         updateNavigationAvailability()
@@ -214,7 +249,7 @@ final class AppState: ObservableObject {
 
         return (try? monthGridBuilder.build(
             displayedMonth: target,
-            weekStart: .defaultValue,
+            weekStart: preferences.weekStart,
             today: snapshot.solarDate
         )) != nil
     }
@@ -223,7 +258,9 @@ final class AppState: ObservableObject {
         do {
             let boundary = try boundaryCalculator.nextBoundary(
                 after: instant,
-                requirements: .lunarDateOnly
+                requirements: preferences.refreshRequirements(
+                    displayedClockTimeZone: .autoupdatingCurrent
+                )
             )
             boundaryScheduler.schedule(at: boundary, tolerance: 1) { [weak self] in
                 self?.lifecycleSource.emit(.scheduledBoundary)
@@ -232,5 +269,30 @@ final class AppState: ObservableObject {
             boundaryScheduler.cancel()
             errorMessage = "Không thể lên lịch cập nhật ngày tiếp theo."
         }
+    }
+
+    private func observePreferences() {
+        let changes = preferencesStore.changes()
+        preferencesTask = Task { [weak self] in
+            for await preferences in changes {
+                guard !Task.isCancelled, let self else {
+                    return
+                }
+                applyPreferences(preferences)
+            }
+        }
+    }
+
+    private func applyPreferences(_ newPreferences: AppPreferences) {
+        guard newPreferences != preferences else {
+            return
+        }
+        preferences = newPreferences
+        snapshotFactory = CalendarSnapshotFactory(
+            lunarEngine: lunarEngine,
+            clock: clock,
+            boundaryPolicy: newPreferences.canChiBoundaryPolicy
+        )
+        refresh()
     }
 }

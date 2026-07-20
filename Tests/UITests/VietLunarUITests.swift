@@ -3,7 +3,7 @@ import XCTest
 final class VietLunarUITests: XCTestCase {
     @MainActor
     func testApplicationLaunches() {
-        let application = XCUIApplication()
+        let application = makeApplication()
         application.launch()
         XCTAssertTrue(application.wait(for: .runningBackground, timeout: 5))
         application.terminate()
@@ -11,7 +11,7 @@ final class VietLunarUITests: XCTestCase {
 
     @MainActor
     func testMenuBarPopoverNavigationTodayAndSettingsFlow() throws {
-        let application = XCUIApplication()
+        let application = makeApplication()
         application.launch()
         defer { application.terminate() }
 
@@ -42,6 +42,44 @@ final class VietLunarUITests: XCTestCase {
         XCTAssertTrue(
             application.staticTexts["settings-title"].waitForExistence(timeout: 3)
         )
+
+        XCTAssertTrue(
+            application.descendants(matching: .any)["title-format-picker"].exists
+        )
+        XCTAssertTrue(
+            application.descendants(matching: .any)["week-start-picker"].exists
+        )
+
+        let clockToggle = application.descendants(matching: .any)["show-clock-toggle"]
+        let titlePreview = application.staticTexts["menu-title-preview"]
+        XCTAssertTrue(clockToggle.exists)
+        XCTAssertTrue(titlePreview.exists)
+        XCTAssertFalse(textValue(of: titlePreview)?.contains(":") ?? true)
+
+        clockToggle.click()
+        XCTAssertTrue(
+            waitUntil(timeout: 3) {
+                textValue(of: titlePreview)?.contains(":") == true
+            }
+        )
+        XCTAssertTrue(
+            application.descendants(matching: .any)["use-24-hour-toggle"].isEnabled
+        )
+
+        clockToggle.click()
+        XCTAssertTrue(
+            waitUntil(timeout: 3) {
+                textValue(of: titlePreview)?.contains(":") == false
+            }
+        )
+    }
+
+    @MainActor
+    private func makeApplication() -> XCUIApplication {
+        let application = XCUIApplication()
+        application.launchEnvironment["VIETLUNAR_TEST_PREFERENCES_SUITE"] =
+            "VietLunarUITests.\(UUID().uuidString)"
+        return application
     }
 
     @MainActor

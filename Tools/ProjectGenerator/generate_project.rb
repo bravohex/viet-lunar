@@ -155,7 +155,8 @@ add_sources(
     "Views/CalendarHeaderView.swift",
     "Views/MonthGridView.swift",
     "Views/SelectedDayDetailView.swift",
-    "Views/PopoverFooterView.swift"
+    "Views/PopoverFooterView.swift",
+    "Views/SettingsView.swift"
   ]
 )
 add_sources(
@@ -176,7 +177,8 @@ add_sources(
     "CalendarSnapshotFactoryTests.swift",
     "MonthGridBuilderTests.swift",
     "VietnameseCalendarFormatterTests.swift",
-    "BoundaryCalculatorTests.swift"
+    "BoundaryCalculatorTests.swift",
+    "AppPreferencesTests.swift"
   ]
 )
 add_sources(
