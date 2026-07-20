@@ -38,6 +38,7 @@ Trạng thái:
 |---|---|---|---|---|---|
 | A0 | Phân tích tài liệu và tạo WBS thực thi | — | Hoàn thành | commit này | Đã đọc đầy đủ spec, plan, prompt, test vectors; knowledge graph hợp lệ |
 | A1 | Ổn định deterministic Xcode project generation | M0.1 | Hoàn thành | commit này | Hai lần generate liên tiếp có checksum byte-identical |
+| B0 | Ghi nhận independent-reference blocker | M2.4 | Hoàn thành | commit này | Không dùng candidate JSON làm oracle hoặc sao chép data chưa rõ license |
 | M0.1 | Tạo Xcode project, app/core/infrastructure/test targets | A0 | Hoàn thành | commit này | 6 targets, shared scheme, Debug build và 3 test bundles đạt |
 | M0.2 | Tạo `MenuBarExtra`, ẩn Dock, Settings và Quit | M0.1 | Hoàn thành | commit này | Build/test đạt; LSUIElement=true; app bundle chạy thật và hiện `ÂL` trên menu bar |
 | M0.3 | Bổ sung chuẩn repo, logging, README/NOTICE, test script | M0.2 | Hoàn thành | commit này | `.gitignore` đầy đủ; `./scripts/test.sh` build và test đạt |
@@ -48,8 +49,8 @@ Trạng thái:
 | M2.2 | Generator và generated/reference outputs | M2.1 | Hoàn thành | commit này | 402 records, 146.097 rows, deterministic checksums và invariants đạt |
 | M2.3 | Lunar year record decoder | M2.2 | Hoàn thành | commit này | Compact bitset decoder; 2004/2025 leap mapping tests đạt |
 | M2.4 | `LunarCalendarEngine` hai chiều | M2.3 | Hoàn thành | commit này | Binary-search engine; golden/all-month boundary/error tests đạt |
-| M2.5 | Exhaustive conformance suite | M2.4 | Chờ | — | Toàn bộ solar/lunar round trip và independent reference |
-| M2.6 | Release gate năm 2033 | M2.5 | Chờ | — | Named regression suite + hai nguồn độc lập |
+| M2.5 | Exhaustive conformance suite | M2.4 | Bị chặn | — | Candidate JSON không độc lập; cần approved independent dataset |
+| M2.6 | Release gate năm 2033 | M2.5 | Bị chặn | — | Chờ M2.5 và bằng chứng nguồn độc lập được lưu trong repo |
 | M3.1 | Typed Heavenly Stem/Earthly Branch | M1 | Chờ | — | Order, Vietnamese names, Codable tests |
 | M3.2 | Can-Chi năm/tháng/ngày | M3.1, M1.2 | Chờ | — | Golden vectors + chu kỳ 60 ngày |
 | M3.3 | Can-Chi giờ và boundary policy | M3.2 | Chờ | — | Toàn bộ mốc giờ nhánh địa chi |
@@ -179,3 +180,11 @@ Trạng thái:
 - Test toàn bộ curated vectors, Tết boundary, month length/leap metadata, invalid day/leap/range và hai đầu supported range.
 - Test ngày đầu/cuối của mọi generated lunar month round-trip khi nằm trong production range.
 - Checksum verification đạt; toàn scheme đạt 31/31 tests.
+
+### B0 — Independent-reference blocker
+
+- `vietnam-lunar-1800-2199.reference.json` và generated production table được sinh từ cùng original Swift generator; chúng chỉ chứng minh deterministic/self-consistency, không phải independence.
+- Hồ Ngọc Đức JavaScript/prepared tables chưa có redistribution license rõ ràng trong các trang đã kiểm tra, nên không sao chép vào repo để làm test oracle.
+- M2.5 chỉ được mở lại khi có approved independent dataset hoặc original independent implementation đã được review và có provenance riêng.
+- M2.6 chờ M2.5, đồng thời cần lưu bằng chứng của ít nhất hai nguồn độc lập cho chuỗi leap month 11 năm 2033.
+- Theo stop conditions, các task M3/M4/M6/M7 không phụ thuộc independent data vẫn tiếp tục; release acceptance M8 chưa thể đóng.
