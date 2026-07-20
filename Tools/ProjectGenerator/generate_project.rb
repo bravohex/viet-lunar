@@ -71,7 +71,20 @@ ui_tests.build_configurations.each do |configuration|
   configuration.build_settings["TEST_TARGET_NAME"] = "VietLunar"
 end
 
-add_sources(project, core, "Core", "Sources/Core", ["VietLunarCore.swift"])
+add_sources(
+  project,
+  core,
+  "Core",
+  "Sources/Core",
+  [
+    "VietLunarCore.swift",
+    "DateTypes/DateValidationError.swift",
+    "DateTypes/SolarDate.swift",
+    "DateTypes/LunarDate.swift",
+    "DateTypes/YearMonth.swift",
+    "DateTypes/LocalTime.swift"
+  ]
+)
 add_sources(
   project,
   infrastructure,
@@ -80,7 +93,13 @@ add_sources(
   ["VietLunarInfrastructure.swift", "Logging/AppLog.swift"]
 )
 add_sources(project, app, "App", "App", ["VietLunarApp.swift"])
-add_sources(project, core_tests, "CoreTests", "Tests/CoreTests", ["VietLunarCoreTests.swift"])
+add_sources(
+  project,
+  core_tests,
+  "CoreTests",
+  "Tests/CoreTests",
+  ["VietLunarCoreTests.swift", "DateTypesTests.swift"]
+)
 add_sources(project, infrastructure_tests, "InfrastructureTests", "Tests/InfrastructureTests", ["VietLunarInfrastructureTests.swift"])
 add_sources(project, ui_tests, "UITests", "Tests/UITests", ["VietLunarUITests.swift"])
 

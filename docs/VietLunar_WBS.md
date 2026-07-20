@@ -40,7 +40,7 @@ Trạng thái:
 | M0.1 | Tạo Xcode project, app/core/infrastructure/test targets | A0 | Hoàn thành | commit này | 6 targets, shared scheme, Debug build và 3 test bundles đạt |
 | M0.2 | Tạo `MenuBarExtra`, ẩn Dock, Settings và Quit | M0.1 | Hoàn thành | commit này | Build/test đạt; LSUIElement=true; app bundle chạy thật và hiện `ÂL` trên menu bar |
 | M0.3 | Bổ sung chuẩn repo, logging, README/NOTICE, test script | M0.2 | Hoàn thành | commit này | `.gitignore` đầy đủ; `./scripts/test.sh` build và test đạt |
-| M1.1 | Value types được validate | M0.3 | Chờ | — | Leap-year, invalid input, Comparable, Codable tests |
+| M1.1 | Value types được validate | M0.3 | Hoàn thành | commit này | 4 immutable types; validation/Comparable/Codable tests đạt |
 | M1.2 | Gregorian/JDN conversion | M1.1 | Chờ | — | Known JDN + broad round-trip tests |
 | M1.3 | Trích xuất ngày theo UTC+7 | M1.1 | Chờ | — | Test trước/sau nửa đêm UTC+7 |
 | M2.1 | Thiết lập provenance cho reference data | M1 | Chờ | — | README nguồn dữ liệu, checksum, license note |
@@ -115,3 +115,11 @@ Trạng thái:
 - Thêm NOTICE scaffold để khóa yêu cầu attribution/license trước khi đưa reference data vào repo.
 - Thêm logging subsystem/category constants bằng `OSLog`.
 - Thêm `scripts/test.sh`; lệnh duy nhất này đã chạy thành công `xcodebuild -list`, Debug build và toàn bộ test scheme.
+
+### M1.1 — Validated date/time value types
+
+- Thêm `SolarDate`, `LunarDate`, `YearMonth` và `LocalTime` với immutable public fields.
+- Tất cả type đều `Hashable`, `Codable`, `Sendable`; `SolarDate`, `YearMonth` và `LocalTime` có thứ tự deterministic.
+- Public factories/throwing initializers validate component; custom Codable decoding không thể tạo trạng thái ngày sai.
+- Test leap-year bao gồm quy tắc thế kỷ, input lỗi, boundary comparison và Codable round trip.
+- Toàn scheme đạt 10/10 tests sau task.
