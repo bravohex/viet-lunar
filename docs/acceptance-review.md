@@ -6,7 +6,7 @@
 
 **Kết luận phát hành:** **KHÔNG PHÁT HÀNH**
 
-Kết quả hiện tại: **23/32 tiêu chí đạt**, **9/32 tiêu chí bị chặn**. Không có ADR hoặc waiver nào được chấp thuận để bỏ qua tiêu chí chưa đạt.
+Kết quả hiện tại: **24/32 tiêu chí đạt**, **8/32 tiêu chí bị chặn**. Không có ADR hoặc waiver nào được chấp thuận để bỏ qua tiêu chí chưa đạt.
 
 Quy ước trạng thái:
 
@@ -61,7 +61,7 @@ Quy ước trạng thái:
 | Q2 | Không có runtime third-party package | Đạt | Xcode project không có package reference; app chỉ nhúng hai framework nội bộ. |
 | Q3 | Không force unwrap trong date conversion paths | Đạt | Source scan và warnings-as-errors không phát hiện force unwrap trong Core conversion. |
 | Q4 | Generated data có provenance/checksum | Đạt | Source catalog, metadata và checksum verification script đều đạt; independent accuracy vẫn thuộc gate A1/A3. |
-| Q5 | Mọi user-visible string nằm trong localized resources | Bị chặn | UI hiện dùng literal Swift/SwiftUI và chưa có string catalog/localization resource. |
+| Q5 | Mọi user-visible string nằm trong localized resources | Đạt | App/Core có Vietnamese string catalogs; 96 khóa được đối chiếu tự động, resources được kiểm tra trong built app/framework. |
 | Q6 | Strict concurrency warnings đã giải quyết | Đạt | Swift 6 complete strict concurrency và warnings-as-errors; clean Release/full tests build đạt. |
 | Q7 | README ghi build, test, distribution và calendar conventions | Đạt | README liên kết privacy, notice, WBS và distribution guide; UTC+7/range/historical caveat đã ghi. |
 
@@ -70,6 +70,5 @@ Quy ước trạng thái:
 1. Cung cấp independent oracle có quyền sử dụng và hai bằng chứng độc lập cho chuỗi 2033.
 2. Đo first/subsequent popover bằng signpost/Instruments; xử lý launch/RSS hoặc phê duyệt ADR/waiver có chủ sở hữu.
 3. Với quyền thay đổi hệ thống, cài signed app và chạy login-item, sleep/wake, clock-change, offline/network checklist.
-4. Chuyển toàn bộ user-visible text sang string catalog và kiểm tra fallback tiếng Việt.
 
 M8.4 chỉ được chuyển sang `Hoàn thành` khi tất cả mục `Bị chặn` đã được sửa hoặc có ADR/waiver được người có thẩm quyền chấp thuận.

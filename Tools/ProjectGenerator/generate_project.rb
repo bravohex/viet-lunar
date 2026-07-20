@@ -59,6 +59,15 @@ def add_sources(project, target, group_name, directory, files)
   group
 end
 
+def add_resources(project, target, group_name, directory, files)
+  group = project.main_group.new_group(group_name, directory)
+  files.each do |relative_path|
+    reference = group.new_file(relative_path)
+    target.resources_build_phase.add_file_reference(reference)
+  end
+  group
+end
+
 def link_target(consumer, dependency)
   consumer.add_dependency(dependency)
   consumer.frameworks_build_phase.add_file_reference(dependency.product_reference)
@@ -121,6 +130,7 @@ add_sources(
     "MonthGrid/WeekStart.swift",
     "MonthGrid/MonthGridCell.swift",
     "MonthGrid/MonthGridBuilder.swift",
+    "Formatting/CoreLocalization.swift",
     "Formatting/MenuBarTitleFormat.swift",
     "Formatting/MenuBarTitlePresentation.swift",
     "Formatting/VietnameseCalendarFormatter.swift",
@@ -156,6 +166,7 @@ add_sources(
   [
     "VietLunarApp.swift",
     "AppState.swift",
+    "Localization/AppLocalization.swift",
     "Views/MenuPopoverView.swift",
     "Views/CalendarHeaderView.swift",
     "Views/MonthGridView.swift",
@@ -163,6 +174,20 @@ add_sources(
     "Views/PopoverFooterView.swift",
     "Views/SettingsView.swift"
   ]
+)
+add_resources(
+  project,
+  core,
+  "CoreResources",
+  "Sources/Core/Resources",
+  ["Localizable.xcstrings"]
+)
+add_resources(
+  project,
+  app,
+  "AppResources",
+  "App/Resources",
+  ["Localizable.xcstrings"]
 )
 add_sources(
   project,

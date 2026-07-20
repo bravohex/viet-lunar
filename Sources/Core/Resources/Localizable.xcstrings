@@ -1,0 +1,186 @@
+{
+  "sourceLanguage" : "vi",
+  "strings" : {
+    "accessibility.gregorian_date" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "vi" : { "stringUnit" : { "state" : "translated", "value" : "%1$@, ngày %2$lld tháng %3$lld năm %4$lld" } }
+      }
+    },
+    "accessibility.lunar_date" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "vi" : { "stringUnit" : { "state" : "translated", "value" : "ngày %1$@, năm %2$@" } }
+      }
+    },
+    "accessibility.menu_bar" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "vi" : { "stringUnit" : { "state" : "translated", "value" : "VietLunar; %1$@; %2$@; Can–Chi ngày %3$@; Can–Chi giờ %4$@." } }
+      }
+    },
+    "accessibility.today_suffix" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "vi" : { "stringUnit" : { "state" : "translated", "value" : "; hôm nay" } }
+      }
+    },
+    "clock.period.am" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "vi" : { "stringUnit" : { "state" : "translated", "value" : "SA" } }
+      }
+    },
+    "clock.period.pm" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "vi" : { "stringUnit" : { "state" : "translated", "value" : "CH" } }
+      }
+    },
+    "date.gregorian.full" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "vi" : { "stringUnit" : { "state" : "translated", "value" : "%1$@, %2$lld tháng %3$lld năm %4$lld" } }
+      }
+    },
+    "date.lunar.full" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "vi" : { "stringUnit" : { "state" : "translated", "value" : "Ngày %1$@, năm %2$@" } }
+      }
+    },
+    "date.lunar.popover.leap" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "vi" : { "stringUnit" : { "state" : "translated", "value" : "%1$@ tháng %2$lld nhuận năm %3$@" } }
+      }
+    },
+    "date.lunar.popover.normal" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "vi" : { "stringUnit" : { "state" : "translated", "value" : "%1$@ tháng %2$lld năm %3$@" } }
+      }
+    },
+    "lunar.compact.leap_marker" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "vi" : { "stringUnit" : { "state" : "translated", "value" : "N" } }
+      }
+    },
+    "lunar.compact.suffix" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "vi" : { "stringUnit" : { "state" : "translated", "value" : " ÂL" } }
+      }
+    },
+    "lunar.fragment.leap" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "vi" : { "stringUnit" : { "state" : "translated", "value" : "%1$lld tháng %2$lld nhuận âm lịch" } }
+      }
+    },
+    "lunar.fragment.normal" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "vi" : { "stringUnit" : { "state" : "translated", "value" : "%1$lld tháng %2$lld âm lịch" } }
+      }
+    },
+    "menu_title.clock_accessibility" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "vi" : { "stringUnit" : { "state" : "translated", "value" : "; Giờ hệ thống %@" } }
+      }
+    },
+    "month.title" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "vi" : { "stringUnit" : { "state" : "translated", "value" : "Tháng %1$lld năm %2$lld" } }
+      }
+    },
+    "title_format.icon" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "vi" : { "stringUnit" : { "state" : "translated", "value" : "Chỉ biểu tượng" } }
+      }
+    },
+    "title_format.lunar" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "vi" : { "stringUnit" : { "state" : "translated", "value" : "Ngày âm" } }
+      }
+    },
+    "title_format.lunar_can_chi" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "vi" : { "stringUnit" : { "state" : "translated", "value" : "Ngày âm và Can–Chi" } }
+      }
+    },
+    "title_format.solar_lunar" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "vi" : { "stringUnit" : { "state" : "translated", "value" : "Ngày dương và ngày âm" } }
+      }
+    },
+    "title_format.solar_lunar_can_chi" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "vi" : { "stringUnit" : { "state" : "translated", "value" : "Ngày dương, ngày âm và Can–Chi" } }
+      }
+    },
+    "week_start.monday" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "vi" : { "stringUnit" : { "state" : "translated", "value" : "Thứ Hai" } }
+      }
+    },
+    "week_start.sunday" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "vi" : { "stringUnit" : { "state" : "translated", "value" : "Chủ Nhật" } }
+      }
+    },
+    "weekday.friday" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "vi" : { "stringUnit" : { "state" : "translated", "value" : "Thứ Sáu" } }
+      }
+    },
+    "weekday.monday" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "vi" : { "stringUnit" : { "state" : "translated", "value" : "Thứ Hai" } }
+      }
+    },
+    "weekday.saturday" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "vi" : { "stringUnit" : { "state" : "translated", "value" : "Thứ Bảy" } }
+      }
+    },
+    "weekday.sunday" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "vi" : { "stringUnit" : { "state" : "translated", "value" : "Chủ Nhật" } }
+      }
+    },
+    "weekday.thursday" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "vi" : { "stringUnit" : { "state" : "translated", "value" : "Thứ Năm" } }
+      }
+    },
+    "weekday.tuesday" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "vi" : { "stringUnit" : { "state" : "translated", "value" : "Thứ Ba" } }
+      }
+    },
+    "weekday.wednesday" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "vi" : { "stringUnit" : { "state" : "translated", "value" : "Thứ Tư" } }
+      }
+    }
+  },
+  "version" : "1.0"
+}

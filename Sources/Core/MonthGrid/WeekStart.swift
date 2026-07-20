@@ -6,8 +6,10 @@ public enum WeekStart: String, CaseIterable, Codable, Sendable {
 
     public var vietnameseName: String {
         switch self {
-        case .monday: "Thứ Hai"
-        case .sunday: "Chủ Nhật"
+        case .monday:
+            CoreLocalization.text("week_start.monday", fallback: "Thứ Hai")
+        case .sunday:
+            CoreLocalization.text("week_start.sunday", fallback: "Chủ Nhật")
         }
     }
 }

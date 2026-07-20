@@ -12,9 +12,9 @@ struct MonthGridView: View {
     private var weekdayLabels: [String] {
         switch appState.preferences.weekStart {
         case .monday:
-            ["T2", "T3", "T4", "T5", "T6", "T7", "CN"]
+            localizedWeekdays(startingOnMonday: true)
         case .sunday:
-            ["CN", "T2", "T3", "T4", "T5", "T6", "T7"]
+            localizedWeekdays(startingOnMonday: false)
         }
     }
 
@@ -29,9 +29,19 @@ struct MonthGridView: View {
                 .buttonStyle(.plain)
                 .keyboardShortcut(.leftArrow, modifiers: .command)
                 .disabled(!appState.canNavigateToPreviousMonth)
-                .accessibilityLabel("Tháng trước")
+                .accessibilityLabel(
+                    AppLocalization.text(
+                        "navigation.previous_month",
+                        fallback: "Tháng trước"
+                    )
+                )
                 .accessibilityIdentifier("previous-month-button")
-                .help("Xem tháng trước (⌘←)")
+                .help(
+                    AppLocalization.text(
+                        "navigation.previous_month.help",
+                        fallback: "Xem tháng trước (⌘←)"
+                    )
+                )
 
                 Spacer()
 
@@ -51,9 +61,19 @@ struct MonthGridView: View {
                 .buttonStyle(.plain)
                 .keyboardShortcut(.rightArrow, modifiers: .command)
                 .disabled(!appState.canNavigateToNextMonth)
-                .accessibilityLabel("Tháng sau")
+                .accessibilityLabel(
+                    AppLocalization.text(
+                        "navigation.next_month",
+                        fallback: "Tháng sau"
+                    )
+                )
                 .accessibilityIdentifier("next-month-button")
-                .help("Xem tháng sau (⌘→)")
+                .help(
+                    AppLocalization.text(
+                        "navigation.next_month.help",
+                        fallback: "Xem tháng sau (⌘→)"
+                    )
+                )
             }
 
             LazyVGrid(columns: columns, spacing: 3) {
@@ -94,6 +114,22 @@ struct MonthGridView: View {
                 isGridFocused = true
             }
         }
+    }
+
+    private func localizedWeekdays(startingOnMonday: Bool) -> [String] {
+        let mondayFirst = [
+            AppLocalization.text("weekday.short.monday", fallback: "T2"),
+            AppLocalization.text("weekday.short.tuesday", fallback: "T3"),
+            AppLocalization.text("weekday.short.wednesday", fallback: "T4"),
+            AppLocalization.text("weekday.short.thursday", fallback: "T5"),
+            AppLocalization.text("weekday.short.friday", fallback: "T6"),
+            AppLocalization.text("weekday.short.saturday", fallback: "T7"),
+            AppLocalization.text("weekday.short.sunday", fallback: "CN")
+        ]
+        guard !startingOnMonday else {
+            return mondayFirst
+        }
+        return [mondayFirst[6]] + mondayFirst[0...5]
     }
 }
 
@@ -141,9 +177,15 @@ private struct MonthGridCellView: View {
 
     private var accessibilityValue: String {
         switch (isSelected, cell.isToday) {
-        case (true, true): "Đã chọn, hôm nay"
-        case (true, false): "Đã chọn"
-        case (false, true): "Hôm nay"
+        case (true, true):
+            AppLocalization.text(
+                "selection.selected_today",
+                fallback: "Đã chọn, hôm nay"
+            )
+        case (true, false):
+            AppLocalization.text("selection.selected", fallback: "Đã chọn")
+        case (false, true):
+            AppLocalization.text("selection.today", fallback: "Hôm nay")
         case (false, false): ""
         }
     }

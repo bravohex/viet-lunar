@@ -9,11 +9,25 @@ public enum MenuBarTitleFormat: String, CaseIterable, Codable, Sendable {
 
     public var vietnameseName: String {
         switch self {
-        case .lunarDate: "Ngày âm"
-        case .solarAndLunar: "Ngày dương và ngày âm"
-        case .lunarAndDayCanChi: "Ngày âm và Can–Chi"
-        case .solarLunarAndDayCanChi: "Ngày dương, ngày âm và Can–Chi"
-        case .iconOnly: "Chỉ biểu tượng"
+        case .lunarDate:
+            CoreLocalization.text("title_format.lunar", fallback: "Ngày âm")
+        case .solarAndLunar:
+            CoreLocalization.text(
+                "title_format.solar_lunar",
+                fallback: "Ngày dương và ngày âm"
+            )
+        case .lunarAndDayCanChi:
+            CoreLocalization.text(
+                "title_format.lunar_can_chi",
+                fallback: "Ngày âm và Can–Chi"
+            )
+        case .solarLunarAndDayCanChi:
+            CoreLocalization.text(
+                "title_format.solar_lunar_can_chi",
+                fallback: "Ngày dương, ngày âm và Can–Chi"
+            )
+        case .iconOnly:
+            CoreLocalization.text("title_format.icon", fallback: "Chỉ biểu tượng")
         }
     }
 

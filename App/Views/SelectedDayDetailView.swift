@@ -22,14 +22,26 @@ struct SelectedDayDetailView: View {
             .accessibilityIdentifier("selected-lunar-date")
 
             Text(
-                verbatim: "Năm \(yearCanChi.description) · Tháng \(monthCanChi.description) · Ngày \(dayCanChi.description)"
+                AppLocalization.format(
+                    "selected.can_chi",
+                    fallback: "Năm %1$@ · Tháng %2$@ · Ngày %3$@",
+                    yearCanChi.description,
+                    monthCanChi.description,
+                    dayCanChi.description
+                )
             )
                 .font(.caption)
                 .foregroundStyle(.secondary)
                 .accessibilityIdentifier("selected-can-chi")
 
             if cell.solarDate == currentSnapshot.solarDate {
-                Text(verbatim: "Giờ \(currentSnapshot.hourCanChi.description)")
+                Text(
+                    AppLocalization.format(
+                        "selected.can_chi.hour",
+                        fallback: "Giờ %@",
+                        currentSnapshot.hourCanChi.description
+                    )
+                )
                     .font(.caption)
                     .foregroundStyle(.secondary)
                     .accessibilityIdentifier("selected-hour-can-chi")

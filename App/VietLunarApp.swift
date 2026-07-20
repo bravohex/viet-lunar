@@ -65,7 +65,12 @@ private struct MenuBarLabelView: View {
             Text(title)
                 .accessibilityLabel(presentation.accessibilityLabel)
         } else {
-            Text("ÂL")
+            Text(
+                AppLocalization.text(
+                    "common.lunar_abbreviation",
+                    fallback: "ÂL"
+                )
+            )
                 .accessibilityLabel(presentation.accessibilityLabel)
         }
     }

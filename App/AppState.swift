@@ -69,8 +69,14 @@ final class AppState: ObservableObject {
     var menuBarPresentation: MenuBarTitlePresentation {
         guard let currentSnapshot else {
             return MenuBarTitlePresentation(
-                title: "ÂL",
-                accessibilityLabel: "VietLunar — không thể tải ngày âm lịch"
+                title: AppLocalization.text(
+                    "common.lunar_abbreviation",
+                    fallback: "ÂL"
+                ),
+                accessibilityLabel: AppLocalization.text(
+                    "error.lunar_load.accessibility",
+                    fallback: "VietLunar — không thể tải ngày âm lịch"
+                )
             )
         }
 
@@ -99,7 +105,10 @@ final class AppState: ObservableObject {
             try preferencesStore.save(updated)
             applyPreferences(updated)
         } catch {
-            errorMessage = "Không thể lưu cài đặt. Vui lòng thử lại."
+            errorMessage = AppLocalization.text(
+                "error.preferences_save",
+                fallback: "Không thể lưu cài đặt. Vui lòng thử lại."
+            )
         }
     }
 
@@ -113,7 +122,11 @@ final class AppState: ObservableObject {
             refreshLoginItemStatus()
         } catch {
             loginItemStatus = .error(
-                "Không thể thay đổi mục mở khi đăng nhập: \(error.localizedDescription)"
+                AppLocalization.format(
+                    "error.login_item",
+                    fallback: "Không thể thay đổi mục mở khi đăng nhập: %@",
+                    error.localizedDescription
+                )
             )
         }
     }
@@ -139,7 +152,10 @@ final class AppState: ObservableObject {
             errorMessage = nil
             scheduleNextBoundary(after: snapshot.instant)
         } catch {
-            errorMessage = "Không thể cập nhật lịch âm trong dải ngày được hỗ trợ."
+            errorMessage = AppLocalization.text(
+                "error.calendar_refresh",
+                fallback: "Không thể cập nhật lịch âm trong dải ngày được hỗ trợ."
+            )
         }
     }
 
@@ -188,7 +204,10 @@ final class AppState: ObservableObject {
             updateNavigationAvailability()
             errorMessage = nil
         } catch {
-            errorMessage = "Ngày này nằm ngoài dải lịch được hỗ trợ."
+            errorMessage = AppLocalization.text(
+                "error.date_out_of_range",
+                fallback: "Ngày này nằm ngoài dải lịch được hỗ trợ."
+            )
         }
     }
 
@@ -222,7 +241,10 @@ final class AppState: ObservableObject {
             updateNavigationAvailability()
             errorMessage = nil
         } catch {
-            errorMessage = "Tháng này nằm ngoài dải lịch được hỗ trợ."
+            errorMessage = AppLocalization.text(
+                "error.month_out_of_range",
+                fallback: "Tháng này nằm ngoài dải lịch được hỗ trợ."
+            )
         }
     }
 
@@ -242,7 +264,10 @@ final class AppState: ObservableObject {
             try rebuildVisibleMonth()
             errorMessage = nil
         } catch {
-            errorMessage = "Không thể mở tháng hiện tại."
+            errorMessage = AppLocalization.text(
+                "error.current_month",
+                fallback: "Không thể mở tháng hiện tại."
+            )
         }
     }
 
@@ -292,7 +317,10 @@ final class AppState: ObservableObject {
             }
         } catch {
             boundaryScheduler.cancel()
-            errorMessage = "Không thể lên lịch cập nhật ngày tiếp theo."
+            errorMessage = AppLocalization.text(
+                "error.refresh_schedule",
+                fallback: "Không thể lên lịch cập nhật ngày tiếp theo."
+            )
         }
     }
 

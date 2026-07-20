@@ -41,6 +41,7 @@ Trạng thái:
 | A2 | Khóa UUID cho target dependency trùng cấu trúc | A1 | Hoàn thành | commit này | Ba lần generate liên tiếp byte-identical sau khi project mở rộng |
 | A3 | Ổn định lifecycle burst coalescing | M6.3 | Hoàn thành | commit này | Debounce one-shot 10 ms; test lặp 3 lần đạt |
 | A4 | Xác minh signed Release idle behavior | M6.4 | Hoàn thành | commit này | Time Profiler 300,84s; +0,01s CPU; không app-owned loop |
+| A5 | Chuyển user-visible strings sang catalog | M8.4 | Hoàn thành | commit này | App/Core Vietnamese catalogs, key/resource verification, 97/97 tests |
 | B0 | Ghi nhận independent-reference blocker | M2.4 | Hoàn thành | commit này | Không dùng candidate JSON làm oracle hoặc sao chép data chưa rõ license |
 | M0.1 | Tạo Xcode project, app/core/infrastructure/test targets | A0 | Hoàn thành | commit này | 6 targets, shared scheme, Debug build và 3 test bundles đạt |
 | M0.2 | Tạo `MenuBarExtra`, ẩn Dock, Settings và Quit | M0.1 | Hoàn thành | commit này | Build/test đạt; LSUIElement=true; app bundle chạy thật và hiện `ÂL` trên menu bar |
@@ -72,10 +73,10 @@ Trạng thái:
 | M7.2 | Settings UI | M7.1, M5.1, M6.3 | Hoàn thành | commit này | Live controls, minute-boundary clock, isolated UI flow; 92/92 tests |
 | M7.3 | `SMLoginItemService` | M7.2 | Bị chặn | commit này | Code/93 tests/Developer ID Release đạt; chưa cài `/Applications` và register thật |
 | M7.4 | Hoàn thiện Dock/accessory behavior | M7.3 | Hoàn thành | commit này | Signed Release launch, accessory policy, persistent status item/UI flow đạt |
-| M8.1 | Chạy full test matrix | M2-M7 | Bị chặn | commit này | 96/96 hiện tại + exhaustive round-trip đạt; independent/manual gates còn mở |
+| M8.1 | Chạy full test matrix | M2-M7 | Bị chặn | commit này | 97/97 hiện tại + exhaustive round-trip đạt; independent/manual gates còn mở |
 | M8.2 | Ghi performance baseline | M8.1 | Bị chặn | commit này | Core/grid/bundle/idle đạt; cold launch/RSS fail, popover timing thiếu |
 | M8.3 | Privacy, attribution và release metadata | M8.1 | Hoàn thành | commit này | Privacy/NOTICE/range/version/build/signing/notarization docs đạt |
-| M8.4 | Acceptance review | M8.2, M8.3 | Bị chặn | commit này | 23/32 đạt; 9 accuracy/manual/performance/localization gates còn mở |
+| M8.4 | Acceptance review | M8.2, M8.3 | Bị chặn | commit này | 24/32 đạt; 8 accuracy/manual/performance gates còn mở |
 
 ## 4. Release gates đang mở
 
@@ -388,5 +389,12 @@ Trạng thái:
 
 - Đối chiếu đủ 32 tiêu chí mục 19 với source, full tests, Release build, test matrix và performance baseline; kết quả 23 đạt, 9 bị chặn.
 - Bổ sung UI test relaunch thật cho Settings; sửa test-only preferences suite để không xóa dữ liệu ở mỗi lần launch.
-- Không chấp nhận waiver ngầm: independent oracle/2033, installed-system checklist, runtime network proof, popover timing, launch/RSS decision và string catalog vẫn mở.
+- Không chấp nhận waiver ngầm: tại thời điểm review, independent oracle/2033, installed-system checklist, runtime network proof, popover timing, launch/RSS decision và string catalog đều còn mở.
 - Ghi quyết định `KHÔNG PHÁT HÀNH` cùng bằng chứng và điều kiện đóng tại `docs/acceptance-review.md`.
+
+### A5 — Vietnamese string catalogs
+
+- Thêm 66 App keys và 30 Core keys trong hai `Localizable.xcstrings`; tiếng Việt vẫn là ngôn ngữ MVP được chọn rõ ràng.
+- Chuyển label, help, error, Settings/About, accessibility text và các pattern định dạng ngày sang resource lookup; giữ Can–Chi names/serialized identifiers là canonical values.
+- Thêm verification script để fail khi thiếu/thừa key, thiếu bản dịch `vi` hoặc còn direct user-facing SwiftUI literal; full test script kiểm tra compiled resources trong app và embedded Core framework.
+- Đóng acceptance Q5; tổng hiện tại là 24/32, M8.4 vẫn bị chặn bởi 8 gate không liên quan localization.

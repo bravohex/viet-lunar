@@ -6,22 +6,34 @@ struct PopoverFooterView: View {
 
     var body: some View {
         HStack(spacing: 12) {
-            Button("Hôm nay") {
+            Button(AppLocalization.text("footer.today", fallback: "Hôm nay")) {
                 appState.returnToToday()
             }
             .accessibilityIdentifier("today-button")
-            .help("Trở về ngày hôm nay")
+            .help(
+                AppLocalization.text(
+                    "footer.today.help",
+                    fallback: "Trở về ngày hôm nay"
+                )
+            )
 
             settingsControl
 
             Spacer()
 
-            Button("Thoát VietLunar") {
+            Button(
+                AppLocalization.text("footer.quit", fallback: "Thoát VietLunar")
+            ) {
                 NSApplication.shared.terminate(nil)
             }
             .keyboardShortcut("q")
             .accessibilityIdentifier("quit-button")
-            .help("Thoát hoàn toàn khỏi VietLunar (⌘Q)")
+            .help(
+                AppLocalization.text(
+                    "footer.quit.help",
+                    fallback: "Thoát hoàn toàn khỏi VietLunar (⌘Q)"
+                )
+            )
         }
         .controlSize(.small)
     }
@@ -30,12 +42,19 @@ struct PopoverFooterView: View {
     private var settingsControl: some View {
         if #available(macOS 14.0, *) {
             SettingsLink {
-                Text("Cài đặt")
+                Text(AppLocalization.text("footer.settings", fallback: "Cài đặt"))
             }
             .accessibilityIdentifier("settings-button")
-            .help("Mở cài đặt VietLunar")
+            .help(
+                AppLocalization.text(
+                    "footer.settings.help",
+                    fallback: "Mở cài đặt VietLunar"
+                )
+            )
         } else {
-            Button("Cài đặt") {
+            Button(
+                AppLocalization.text("footer.settings", fallback: "Cài đặt")
+            ) {
                 NSApplication.shared.activate(ignoringOtherApps: true)
                 NSApplication.shared.sendAction(
                     Selector(("showPreferencesWindow:")),
@@ -44,7 +63,12 @@ struct PopoverFooterView: View {
                 )
             }
             .accessibilityIdentifier("settings-button")
-            .help("Mở cài đặt VietLunar")
+            .help(
+                AppLocalization.text(
+                    "footer.settings.help",
+                    fallback: "Mở cài đặt VietLunar"
+                )
+            )
         }
     }
 }

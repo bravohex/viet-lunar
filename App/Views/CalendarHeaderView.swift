@@ -19,16 +19,32 @@ struct CalendarHeaderView: View {
             .foregroundStyle(.secondary)
 
             Text(
-                verbatim: "Ngày \(snapshot.dayCanChi.description) · Tháng \(snapshot.monthCanChi.description)"
+                AppLocalization.format(
+                    "header.can_chi.day_month",
+                    fallback: "Ngày %1$@ · Tháng %2$@",
+                    snapshot.dayCanChi.description,
+                    snapshot.monthCanChi.description
+                )
             )
                 .font(.caption)
                 .foregroundStyle(.secondary)
 
-            Text(verbatim: "Giờ \(snapshot.hourCanChi.description)")
+            Text(
+                AppLocalization.format(
+                    "header.can_chi.hour",
+                    fallback: "Giờ %@",
+                    snapshot.hourCanChi.description
+                )
+            )
                 .font(.caption)
                 .foregroundStyle(.secondary)
 
-            Text("Lịch Việt Nam: UTC+7")
+            Text(
+                AppLocalization.text(
+                    "header.canonical_time_zone",
+                    fallback: "Lịch Việt Nam: UTC+7"
+                )
+            )
                 .font(.caption2)
                 .foregroundStyle(.tertiary)
                 .accessibilityIdentifier("canonical-time-zone-note")
