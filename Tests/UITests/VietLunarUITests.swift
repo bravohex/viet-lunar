@@ -27,9 +27,23 @@ final class VietLunarUITests: XCTestCase {
         XCTAssertTrue(nextMonth.isEnabled)
         nextMonth.click()
         XCTAssertTrue(waitUntil(timeout: 3) { textValue(of: monthTitle) != originalMonth })
+        XCTAssertFalse(
+            application.staticTexts["selected-hour-can-chi"].exists
+        )
 
         application.buttons["today-button"].click()
         XCTAssertTrue(waitUntil(timeout: 3) { textValue(of: monthTitle) == originalMonth })
+        let canChiDetail = application.staticTexts["selected-can-chi"]
+        XCTAssertTrue(canChiDetail.exists)
+        let canChiText = try XCTUnwrap(textValue(of: canChiDetail))
+        XCTAssertTrue(canChiText.contains("Năm"))
+        XCTAssertTrue(canChiText.contains("Tháng"))
+        XCTAssertTrue(canChiText.contains("Ngày"))
+        XCTAssertTrue(application.staticTexts["selected-hour-can-chi"].exists)
+        XCTAssertTrue(
+            application.staticTexts["canonical-time-zone-note"].exists
+        )
+        XCTAssertTrue(application.buttons["quit-button"].exists)
 
         let todayCell = application.buttons[todayCellIdentifier()]
         XCTAssertTrue(todayCell.exists)
@@ -71,6 +85,10 @@ final class VietLunarUITests: XCTestCase {
             waitUntil(timeout: 3) {
                 textValue(of: titlePreview)?.contains(":") == false
             }
+        )
+
+        XCTAssertTrue(
+            application.descendants(matching: .statusItem).firstMatch.exists
         )
     }
 

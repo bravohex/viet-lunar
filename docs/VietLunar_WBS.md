@@ -70,7 +70,7 @@ Trạng thái:
 | M7.1 | Typed preferences store | M0.3 | Hoàn thành | commit này | Versioned root, v0 migration/change stream; toàn scheme 88/88 tests |
 | M7.2 | Settings UI | M7.1, M5.1, M6.3 | Hoàn thành | commit này | Live controls, minute-boundary clock, isolated UI flow; 92/92 tests |
 | M7.3 | `SMLoginItemService` | M7.2 | Bị chặn | commit này | Code/93 tests/Developer ID Release đạt; chưa cài `/Applications` và register thật |
-| M7.4 | Hoàn thiện Dock/accessory behavior | M7.3 | Chờ | — | Installed-app behavior checklist |
+| M7.4 | Hoàn thiện Dock/accessory behavior | M7.3 | Hoàn thành | commit này | Signed Release launch, accessory policy, persistent status item/UI flow đạt |
 | M8.1 | Chạy full test matrix | M2-M7 | Chờ | — | Unit/exhaustive/UI/Release build/checklists |
 | M8.2 | Ghi performance baseline | M8.1 | Chờ | — | Launch, popover, RSS, idle, conversion, bundle size |
 | M8.3 | Privacy, attribution và release metadata | M8.1 | Chờ | — | Privacy/range/notarization/reproducible commands |
@@ -337,3 +337,12 @@ Trạng thái:
 - Trạng thái cần phê duyệt có hướng dẫn và action mở Login Items trong System Settings; lỗi register/unregister hiển thị không fatal.
 - Mapping test và toàn scheme đạt 93/93; Release universal app build đạt và Developer ID signature được verify local.
 - Chưa cài bundle vào `/Applications` hoặc gọi register thật vì hai thao tác này thay đổi trạng thái hệ thống; task giữ `Bị chặn` cho đến khi manual gate đó được người dùng cho phép và xác nhận.
+
+### M7.4 — Dock/accessory behavior và calendar detail
+
+- Header popover dùng đầy đủ ngày dương/weekday và ngày âm/năm Can–Chi; thêm ghi chú canonical `Lịch Việt Nam: UTC+7` ngay trong giao diện.
+- Selected-day detail trình bày năm/tháng/ngày Can–Chi thành các semantic elements riêng; Can–Chi giờ chỉ tồn tại khi ngày chọn là hôm nay.
+- UI flow xác nhận app launch background, status item còn tồn tại sau khi mở Settings, Settings activatable và nút Quit luôn có trong popover.
+- Clean Release bundle được ký cùng Developer ID cho app và hai framework, verify chữ ký rồi launch thật; `NSRunningApplication.activationPolicy` trả `accessory`, không tạo Dock app kiểu regular.
+- Process kiểm tra đã được terminate sau khi đo; không cài vào `/Applications` và không thay đổi login-item state.
+- Reference checks, Debug build và toàn scheme đạt 93/93 tests; Release build đạt.

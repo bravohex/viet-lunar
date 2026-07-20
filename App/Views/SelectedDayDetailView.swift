@@ -11,6 +11,7 @@ struct SelectedDayDetailView: View {
         VStack(alignment: .leading, spacing: 3) {
             Text(VietnameseCalendarFormatter.fullGregorianDate(cell.solarDate))
                 .font(.subheadline.weight(.semibold))
+                .accessibilityIdentifier("selected-gregorian-date")
             Text(
                 VietnameseCalendarFormatter.fullLunarDate(
                     cell.lunarDate,
@@ -18,22 +19,22 @@ struct SelectedDayDetailView: View {
                 )
             )
             .font(.caption)
+            .accessibilityIdentifier("selected-lunar-date")
 
             Text(
                 verbatim: "Năm \(yearCanChi.description) · Tháng \(monthCanChi.description) · Ngày \(dayCanChi.description)"
             )
                 .font(.caption)
                 .foregroundStyle(.secondary)
+                .accessibilityIdentifier("selected-can-chi")
 
             if cell.solarDate == currentSnapshot.solarDate {
                 Text(verbatim: "Giờ \(currentSnapshot.hourCanChi.description)")
                     .font(.caption)
                     .foregroundStyle(.secondary)
+                    .accessibilityIdentifier("selected-hour-can-chi")
             }
         }
-        .accessibilityElement(children: .combine)
-        .accessibilityLabel(detailAccessibilityLabel)
-        .accessibilityIdentifier("selected-day-detail")
     }
 
     private var yearCanChi: StemBranch {
@@ -48,18 +49,4 @@ struct SelectedDayDetailView: View {
         calculator.day(for: cell.solarDate)
     }
 
-    private var detailAccessibilityLabel: String {
-        var parts = [
-            VietnameseCalendarFormatter.cellAccessibilityLabel(
-                for: cell,
-                yearCanChi: yearCanChi
-            ),
-            "Can–Chi tháng \(monthCanChi.description)",
-            "Can–Chi ngày \(dayCanChi.description)"
-        ]
-        if cell.solarDate == currentSnapshot.solarDate {
-            parts.append("Can–Chi giờ \(currentSnapshot.hourCanChi.description)")
-        }
-        return parts.joined(separator: "; ")
-    }
 }

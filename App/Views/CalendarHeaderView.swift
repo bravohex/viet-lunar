@@ -11,7 +11,7 @@ struct CalendarHeaderView: View {
                 .accessibilityIdentifier("today-header")
 
             Text(
-                VietnameseCalendarFormatter.popoverLunarDate(
+                VietnameseCalendarFormatter.fullLunarDate(
                     snapshot.lunarDate,
                     yearCanChi: snapshot.yearCanChi
                 )
@@ -27,6 +27,11 @@ struct CalendarHeaderView: View {
             Text(verbatim: "Giờ \(snapshot.hourCanChi.description)")
                 .font(.caption)
                 .foregroundStyle(.secondary)
+
+            Text("Lịch Việt Nam: UTC+7")
+                .font(.caption2)
+                .foregroundStyle(.tertiary)
+                .accessibilityIdentifier("canonical-time-zone-note")
         }
     }
 }
