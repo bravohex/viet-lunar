@@ -73,6 +73,40 @@ final class AppState: ObservableObject {
         selectedSolarDate = solarDate
     }
 
+    func moveSelection(byDays offset: Int) {
+        guard let selectedSolarDate,
+              let snapshot = currentSnapshot,
+              let targetDate = try? GregorianJDN.solarDate(
+                  forJDN: GregorianJDN.jdn(for: selectedSolarDate) + offset
+              ),
+              let targetMonth = YearMonth.valid(
+                  year: targetDate.year,
+                  month: targetDate.month
+              )
+        else {
+            return
+        }
+
+        if monthCells.contains(where: { $0.solarDate == targetDate }) {
+            self.selectedSolarDate = targetDate
+            return
+        }
+
+        do {
+            monthCells = try monthGridBuilder.build(
+                displayedMonth: targetMonth,
+                weekStart: .defaultValue,
+                today: snapshot.solarDate
+            )
+            visibleMonth = targetMonth
+            self.selectedSolarDate = targetDate
+            updateNavigationAvailability()
+            errorMessage = nil
+        } catch {
+            errorMessage = "Ngày này nằm ngoài dải lịch được hỗ trợ."
+        }
+    }
+
     func navigateMonth(by offset: Int) {
         guard let visibleMonth,
               let targetMonth = try? visibleMonth.adding(months: offset),

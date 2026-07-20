@@ -59,7 +59,7 @@ Trạng thái:
 | M4.2 | Vietnamese formatters | M3.4, M4.1 | Hoàn thành | commit này | Exact strings, leap marker, weekday và VoiceOver tests đạt |
 | M5.1 | Menu title từ live snapshot | M3.4, M4.2 | Hoàn thành | commit này | Live snapshot title, 5 formats, full accessibility label; app chạy thật |
 | M5.2 | Calendar popover và month navigation | M4.1, M5.1 | Hoàn thành | commit này | Header, grid 6×7, detail/footer/range navigation; app chạy thật |
-| M5.3 | Keyboard và accessibility | M5.2 | Chờ | — | Keyboard semantics tests; Accessibility Inspector thủ công |
+| M5.3 | Keyboard và accessibility | M5.2 | Bị chặn | commit này | Code/build đạt; manual Inspector chờ macOS Assistive Access |
 | M5.4 | UI smoke tests | M5.3 | Chờ | — | Launch/open/navigate/today/settings UI tests |
 | M6.1 | Pure next-boundary calculation | M3.3 | Chờ | — | Midnight/minute/hour/time-zone tests |
 | M6.2 | One-shot scheduler | M6.1 | Chờ | — | Cancellation/single-task/fake scheduler tests |
@@ -250,3 +250,10 @@ Trạng thái:
 - Điều hướng tháng giữ ngày chọn khi có thể, clamp ngày cuối tháng, và tự vô hiệu hóa nút khi grid kế tiếp chạm ngoài dải dữ liệu.
 - Thêm phép cộng tháng có kiểm tra biên cho `YearMonth`; domain grid/leap/range tests tiếp tục bảo vệ state UI.
 - Debug app bundle khởi chạy thật thành công; reference checks và toàn scheme đạt 68/68 tests.
+
+### M5.3 — Keyboard và accessibility
+
+- Thêm `⌘←`/`⌘→` để đổi tháng, phím mũi tên để di chuyển ngày ±1/±7, và Escape để đóng popover.
+- Mọi cell có nhãn VoiceOver đầy đủ ngày dương/ngày âm, semantic value `Đã chọn`/`Hôm nay`, selected trait và tooltip; các control điều hướng/footer đều có label/tooltip.
+- Build và toàn scheme đạt 68/68 tests; không phát sinh warning dưới warnings-as-errors.
+- Manual Accessibility Inspector chưa hoàn tất: macOS từ chối Assistive Access cho tiến trình kiểm tra với lỗi `-1719`. Task chỉ chuyển `Hoàn thành` sau khi chạy Inspector hoặc có AX inspection tương đương được chấp nhận.

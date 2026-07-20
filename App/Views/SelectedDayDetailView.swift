@@ -31,6 +31,8 @@ struct SelectedDayDetailView: View {
                     .foregroundStyle(.secondary)
             }
         }
+        .accessibilityElement(children: .combine)
+        .accessibilityLabel(detailAccessibilityLabel)
         .accessibilityIdentifier("selected-day-detail")
     }
 
@@ -44,5 +46,20 @@ struct SelectedDayDetailView: View {
 
     private var dayCanChi: StemBranch {
         calculator.day(for: cell.solarDate)
+    }
+
+    private var detailAccessibilityLabel: String {
+        var parts = [
+            VietnameseCalendarFormatter.cellAccessibilityLabel(
+                for: cell,
+                yearCanChi: yearCanChi
+            ),
+            "Can–Chi tháng \(monthCanChi.description)",
+            "Can–Chi ngày \(dayCanChi.description)"
+        ]
+        if cell.solarDate == currentSnapshot.solarDate {
+            parts.append("Can–Chi giờ \(currentSnapshot.hourCanChi.description)")
+        }
+        return parts.joined(separator: "; ")
     }
 }

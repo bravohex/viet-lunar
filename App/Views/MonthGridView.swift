@@ -3,6 +3,7 @@ import VietLunarCore
 
 struct MonthGridView: View {
     @EnvironmentObject private var appState: AppState
+    @FocusState private var isGridFocused: Bool
 
     private let columns = Array(
         repeating: GridItem(.flexible(minimum: 36), spacing: 3),
@@ -19,9 +20,11 @@ struct MonthGridView: View {
                     Image(systemName: "chevron.left")
                 }
                 .buttonStyle(.plain)
+                .keyboardShortcut(.leftArrow, modifiers: .command)
                 .disabled(!appState.canNavigateToPreviousMonth)
                 .accessibilityLabel("Tháng trước")
                 .accessibilityIdentifier("previous-month-button")
+                .help("Xem tháng trước (⌘←)")
 
                 Spacer()
 
@@ -39,9 +42,11 @@ struct MonthGridView: View {
                     Image(systemName: "chevron.right")
                 }
                 .buttonStyle(.plain)
+                .keyboardShortcut(.rightArrow, modifiers: .command)
                 .disabled(!appState.canNavigateToNextMonth)
                 .accessibilityLabel("Tháng sau")
                 .accessibilityIdentifier("next-month-button")
+                .help("Xem tháng sau (⌘→)")
             }
 
             LazyVGrid(columns: columns, spacing: 3) {
@@ -58,8 +63,28 @@ struct MonthGridView: View {
                         isSelected: cell.solarDate == appState.selectedSolarDate
                     ) {
                         appState.select(cell.solarDate)
+                        isGridFocused = true
                     }
                 }
+            }
+            .focusable()
+            .focused($isGridFocused)
+            .onMoveCommand { direction in
+                switch direction {
+                case .left:
+                    appState.moveSelection(byDays: -1)
+                case .right:
+                    appState.moveSelection(byDays: 1)
+                case .up:
+                    appState.moveSelection(byDays: -7)
+                case .down:
+                    appState.moveSelection(byDays: 7)
+                default:
+                    break
+                }
+            }
+            .onAppear {
+                isGridFocused = true
             }
         }
     }
@@ -93,6 +118,26 @@ private struct MonthGridCellView: View {
             .opacity(cell.isInDisplayedMonth ? 1 : 0.42)
         }
         .buttonStyle(.plain)
+        .accessibilityLabel(accessibilityLabel)
+        .accessibilityValue(accessibilityValue)
+        .accessibilityAddTraits(isSelected ? .isSelected : [])
         .accessibilityIdentifier("day-\(cell.solarDate.year)-\(cell.solarDate.month)-\(cell.solarDate.day)")
+        .help(accessibilityLabel)
+    }
+
+    private var accessibilityLabel: String {
+        VietnameseCalendarFormatter.cellAccessibilityLabel(
+            for: cell,
+            yearCanChi: CanChiCalculator().year(forLunarYear: cell.lunarDate.year)
+        )
+    }
+
+    private var accessibilityValue: String {
+        switch (isSelected, cell.isToday) {
+        case (true, true): "Đã chọn, hôm nay"
+        case (true, false): "Đã chọn"
+        case (false, true): "Hôm nay"
+        case (false, false): ""
+        }
     }
 }

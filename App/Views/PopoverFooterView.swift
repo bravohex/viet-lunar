@@ -10,6 +10,7 @@ struct PopoverFooterView: View {
                 appState.returnToToday()
             }
             .accessibilityIdentifier("today-button")
+            .help("Trở về ngày hôm nay")
 
             settingsControl
 
@@ -20,6 +21,7 @@ struct PopoverFooterView: View {
             }
             .keyboardShortcut("q")
             .accessibilityIdentifier("quit-button")
+            .help("Thoát hoàn toàn khỏi VietLunar (⌘Q)")
         }
         .controlSize(.small)
     }
@@ -31,6 +33,7 @@ struct PopoverFooterView: View {
                 Text("Cài đặt")
             }
             .accessibilityIdentifier("settings-button")
+            .help("Mở cài đặt VietLunar")
         } else {
             Button("Cài đặt") {
                 NSApplication.shared.activate(ignoringOtherApps: true)
@@ -41,6 +44,7 @@ struct PopoverFooterView: View {
                 )
             }
             .accessibilityIdentifier("settings-button")
+            .help("Mở cài đặt VietLunar")
         }
     }
 }
