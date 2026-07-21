@@ -18,6 +18,8 @@ final class VietLunarUITests: XCTestCase {
         try openPopover(for: application)
 
         XCTAssertTrue(application.staticTexts["today-header"].waitForExistence(timeout: 3))
+        XCTAssertEqual(application.staticTexts["weekday-header-7"].label, "T7")
+        XCTAssertEqual(application.staticTexts["weekday-header-1"].label, "CN")
 
         let monthTitle = application.staticTexts["visible-month-title"]
         XCTAssertTrue(monthTitle.exists)

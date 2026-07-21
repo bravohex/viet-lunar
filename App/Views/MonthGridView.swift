@@ -9,12 +9,12 @@ struct MonthGridView: View {
         repeating: GridItem(.flexible(minimum: 36), spacing: 3),
         count: 7
     )
-    private var weekdayLabels: [String] {
+    private var weekdayHeaders: [WeekdayHeader] {
         switch appState.preferences.weekStart {
         case .monday:
-            localizedWeekdays(startingOnMonday: true)
+            localizedWeekdayHeaders(startingOnMonday: true)
         case .sunday:
-            localizedWeekdays(startingOnMonday: false)
+            localizedWeekdayHeaders(startingOnMonday: false)
         }
     }
 
@@ -77,11 +77,15 @@ struct MonthGridView: View {
             }
 
             LazyVGrid(columns: columns, spacing: 3) {
-                ForEach(weekdayLabels, id: \.self) { label in
-                    Text(label)
+                ForEach(weekdayHeaders) { header in
+                    Text(header.label)
                         .font(.caption2.weight(.semibold))
-                        .foregroundStyle(.secondary)
+                        .foregroundStyle(header.color)
                         .frame(maxWidth: .infinity)
+                        .accessibilityLabel(header.label)
+                        .accessibilityIdentifier(
+                            "weekday-header-\(header.id)"
+                        )
                 }
 
                 ForEach(appState.monthCells) { cell in
@@ -96,6 +100,7 @@ struct MonthGridView: View {
             }
             .focusable()
             .focused($isGridFocused)
+            .hidesFocusEffectWhenSupported()
             .onMoveCommand { direction in
                 switch direction {
                 case .left:
@@ -116,20 +121,88 @@ struct MonthGridView: View {
         }
     }
 
-    private func localizedWeekdays(startingOnMonday: Bool) -> [String] {
+    private func localizedWeekdayHeaders(
+        startingOnMonday: Bool
+    ) -> [WeekdayHeader] {
         let mondayFirst = [
-            AppLocalization.text("weekday.short.monday", fallback: "T2"),
-            AppLocalization.text("weekday.short.tuesday", fallback: "T3"),
-            AppLocalization.text("weekday.short.wednesday", fallback: "T4"),
-            AppLocalization.text("weekday.short.thursday", fallback: "T5"),
-            AppLocalization.text("weekday.short.friday", fallback: "T6"),
-            AppLocalization.text("weekday.short.saturday", fallback: "T7"),
-            AppLocalization.text("weekday.short.sunday", fallback: "CN")
+            WeekdayHeader(
+                id: 2,
+                label: AppLocalization.text(
+                    "weekday.short.monday",
+                    fallback: "T2"
+                ),
+                color: .secondary
+            ),
+            WeekdayHeader(
+                id: 3,
+                label: AppLocalization.text(
+                    "weekday.short.tuesday",
+                    fallback: "T3"
+                ),
+                color: .secondary
+            ),
+            WeekdayHeader(
+                id: 4,
+                label: AppLocalization.text(
+                    "weekday.short.wednesday",
+                    fallback: "T4"
+                ),
+                color: .secondary
+            ),
+            WeekdayHeader(
+                id: 5,
+                label: AppLocalization.text(
+                    "weekday.short.thursday",
+                    fallback: "T5"
+                ),
+                color: .secondary
+            ),
+            WeekdayHeader(
+                id: 6,
+                label: AppLocalization.text(
+                    "weekday.short.friday",
+                    fallback: "T6"
+                ),
+                color: .secondary
+            ),
+            WeekdayHeader(
+                id: 7,
+                label: AppLocalization.text(
+                    "weekday.short.saturday",
+                    fallback: "T7"
+                ),
+                color: .blue
+            ),
+            WeekdayHeader(
+                id: 1,
+                label: AppLocalization.text(
+                    "weekday.short.sunday",
+                    fallback: "CN"
+                ),
+                color: .red
+            )
         ]
         guard !startingOnMonday else {
             return mondayFirst
         }
         return [mondayFirst[6]] + mondayFirst[0...5]
+    }
+}
+
+private struct WeekdayHeader: Identifiable {
+    let id: Int
+    let label: String
+    let color: Color
+}
+
+private extension View {
+    @ViewBuilder
+    func hidesFocusEffectWhenSupported() -> some View {
+        if #available(macOS 14.0, *) {
+            focusEffectDisabled()
+        } else {
+            self
+        }
     }
 }
 
