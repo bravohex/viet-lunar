@@ -52,6 +52,7 @@ Trạng thái:
 | A13 | Audit và tích hợp icon kit | M5.4, M8.3 | Hoàn thành | commit này | 785-file audit; 8 compiled assets; 98/98 tests; signed universal Release đạt |
 | A14 | Tinh chỉnh weekday header và focus ring | M5.2, M5.3 | Đang làm | — | Ẩn focus effect trên macOS 14+; T7 xanh, CN đỏ; chờ test/runtime verification |
 | A15 | Bổ sung tác giả, copyright và MIT License | M8.3 | Hoàn thành | commit này | 69 localization keys; MIT/Info.plist assertions; deterministic project; 94/94 non-UI tests |
+| A16 | Bổ sung hướng dẫn build/cài development | M0.1, M8.3 | Hoàn thành | commit này | README có Debug build, chạy từ build artifact, cài/cập nhật `/Applications` và ranh giới signed Release |
 | B0 | Ghi nhận independent-reference blocker | M2.4 | Hoàn thành | commit này | Không dùng candidate JSON làm oracle hoặc sao chép data chưa rõ license |
 | M0.1 | Tạo Xcode project, app/core/infrastructure/test targets | A0 | Hoàn thành | commit này | 6 targets, shared scheme, Debug build và 3 test bundles đạt |
 | M0.2 | Tạo `MenuBarExtra`, ẩn Dock, Settings và Quit | M0.1 | Hoàn thành | commit này | Build/test đạt; LSUIElement=true; app bundle chạy thật và hiện `ÂL` trên menu bar |
@@ -491,3 +492,8 @@ Trạng thái:
 - Thêm toàn văn giấy phép MIT tại `LICENSE`; cập nhật NOTICE và README với cùng copyright holder/năm.
 - Thêm build assertions cho license header, copyright holder và bundle metadata.
 - Localization catalog đạt 69/69 khóa App; project generation byte-identical, 94/94 non-UI tests đạt và built Info.plist có đúng `Copyright © 2026 bravohex`.
+
+### A16 — Development build and install documentation
+
+- README ghi lệnh Debug build với `derivedDataPath` riêng, mở trực tiếp build artifact và copy/cập nhật app vào `/Applications` bằng `ditto`.
+- Hướng dẫn làm rõ bản Debug không thay thế signed Release, notarization hoặc login-item validation; dẫn đến distribution guide chính thức.

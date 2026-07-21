@@ -12,6 +12,36 @@ VietLunar là ứng dụng macOS native, chạy hoàn toàn offline trên menu b
 - Xcode 26 hoặc một Xcode stable hỗ trợ Swift 6.
 - Ruby gem `xcodeproj` chỉ cần khi tái tạo project file; đây không phải runtime dependency.
 
+## Build, chạy và cài bản development
+
+Build Debug nhanh và mở trực tiếp app vừa build:
+
+```bash
+DEV_DERIVED_DATA=".build/DevDerivedData"
+xcodebuild \
+  -project VietLunar.xcodeproj \
+  -scheme VietLunar \
+  -configuration Debug \
+  -destination "platform=macOS,arch=$(uname -m)" \
+  -derivedDataPath "$DEV_DERIVED_DATA" \
+  build
+open "$DEV_DERIVED_DATA/Build/Products/Debug/VietLunar.app"
+```
+
+Để cài/cập nhật bản Debug vào `/Applications` khi kiểm thử như người dùng cuối, chạy sau khi build. Tài khoản cần có quyền ghi vào `/Applications`.
+
+```bash
+DEV_DERIVED_DATA=".build/DevDerivedData"
+APP_SOURCE="$DEV_DERIVED_DATA/Build/Products/Debug/VietLunar.app"
+APP_TARGET="/Applications/VietLunar.app"
+
+ditto "$APP_SOURCE" "$APP_TARGET"
+xattr -cr "$APP_TARGET"
+open "$APP_TARGET"
+```
+
+Bản Debug này chỉ dành cho development; không dùng để xác minh login item, notarization hoặc phát hành. Quy trình archive, ký và cài signed Release ở [hướng dẫn phân phối](docs/DISTRIBUTION.md).
+
 ## Build và test
 
 Chạy toàn bộ build và test bằng một lệnh:
