@@ -34,8 +34,8 @@ jobs:
       - name: Verify reference data
         run: ./scripts/verify_reference_data.sh
 
-      - name: Build and run the full test scheme
-        run: ./scripts/test.sh
+      - name: Build and run functional tests (excluding performance measurement)
+        run: ./scripts/test.sh --skip-performance
 
       - name: Build an unsigned universal Release app
         run: |

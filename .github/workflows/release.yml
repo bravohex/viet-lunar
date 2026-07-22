@@ -28,10 +28,10 @@ jobs:
           xcodebuild -version
           swift --version
 
-      - name: Verify source and test suite
+      - name: Verify source and functional test suite
         run: |
           ./scripts/verify_reference_data.sh
-          ./scripts/test.sh
+          ./scripts/test.sh --skip-performance
 
       - name: Import Developer ID certificate
         id: signing

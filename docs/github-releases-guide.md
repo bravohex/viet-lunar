@@ -18,7 +18,7 @@ git push origin "$TAG_NAME"
 
 Workflow thực hiện theo thứ tự:
 
-1. Xác nhận Xcode 16.4/Swift 6, reference data và full Xcode test scheme.
+1. Xác nhận Xcode 16.4/Swift 6, reference data, unit/infrastructure test và UI flow chức năng. Signpost performance measurement không chạy trên shared runner.
 2. Import Developer ID Application certificate vào keychain tạm thời.
 3. Archive universal app cho Apple Silicon và Intel, ký hardened runtime kèm secure timestamp.
 4. Kiểm tra bundle ID, version tag, entitlement, chữ ký và hai kiến trúc binary.
@@ -62,7 +62,7 @@ base64 -i "AuthKey_ABC123XYZ.p8" | tr -d '\n' | pbcopy
 
 ## Release bằng script
 
-Dùng script để chạy toàn bộ đường chuẩn bị release, bao gồm test, set version/build, regenerate Xcode project, commit, annotated tag và push tùy chọn:
+Dùng script để chạy toàn bộ đường chuẩn bị release, bao gồm test local không có UI target, set version/build, regenerate Xcode project, commit, annotated tag và push tùy chọn:
 
 ```bash
 ./scripts/release.sh 0.1.2 --push
@@ -74,7 +74,7 @@ Mặc định build number tự tăng một đơn vị. Đặt build number cụ
 ./scripts/release.sh 0.1.2 --build 42 --push
 ```
 
-Không truyền `--push` nếu chỉ muốn tạo commit và tag ở local để review trước. Script từ chối chạy khi working tree còn thay đổi, tag đã tồn tại hoặc version không theo dạng `X.Y.Z`.
+Không truyền `--push` nếu chỉ muốn tạo commit và tag ở local để review trước. Script từ chối chạy khi working tree còn thay đổi, tag đã tồn tại hoặc version không theo dạng `X.Y.Z`. UI flow chức năng vẫn chạy trên GitHub release workflow; nếu cần đo signpost performance ở local, chạy `./scripts/measure_popover.sh` riêng.
 
 ## Versioning
 

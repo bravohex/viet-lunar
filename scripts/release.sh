@@ -16,7 +16,7 @@ Usage: ./scripts/release.sh VERSION [--build NUMBER] [--push]
 
 Prepares an annotated VietLunar release tag:
   1. Updates MARKETING_VERSION and CURRENT_PROJECT_VERSION.
-  2. Regenerates the Xcode project and runs the full test script.
+  2. Regenerates the Xcode project and runs local non-UI tests.
   3. Commits the version change and creates tag vVERSION named "VietLunar vVERSION".
 
 Use --push to push both the current branch and release tag to origin. The
@@ -113,7 +113,7 @@ RUBY
 
 ruby Tools/ProjectGenerator/generate_project.rb
 ./scripts/verify_reference_data.sh
-./scripts/test.sh
+./scripts/test.sh --skip-ui
 git diff --check
 
 git add "$VERSION_SOURCE" "$PROJECT_FILE" VietLunar.xcodeproj/xcshareddata/xcschemes/VietLunar.xcscheme
