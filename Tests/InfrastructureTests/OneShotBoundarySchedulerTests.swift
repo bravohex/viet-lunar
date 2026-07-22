@@ -42,9 +42,12 @@ final class OneShotBoundarySchedulerTests: XCTestCase {
         }
         _ = try await sleeper.waitForRequest(at: 1)
         await sleeper.resumeRequest(at: 1)
-        await waitForMainActorTurn()
 
+        let didRunNewestAction = await recorder.waitUntilValues(["new"])
+        let didCancelOldRequest = await sleeper.waitForCancelledRequestCount(1)
         let cancelledCount = await sleeper.cancelledRequestCount
+        XCTAssertTrue(didRunNewestAction, "Newest scheduled action did not run.")
+        XCTAssertTrue(didCancelOldRequest, "Replaced scheduled task was not cancelled.")
         XCTAssertEqual(recorder.values, ["new"])
         XCTAssertFalse(scheduler.hasScheduledBoundary)
         XCTAssertEqual(cancelledCount, 1)
@@ -68,9 +71,10 @@ final class OneShotBoundarySchedulerTests: XCTestCase {
         XCTAssertEqual(request.tolerance, 0)
 
         scheduler.cancel()
-        await waitForMainActorTurn()
 
+        let didCancelRequest = await sleeper.waitForCancelledRequestCount(1)
         let cancelledCount = await sleeper.cancelledRequestCount
+        XCTAssertTrue(didCancelRequest, "Scheduled task was not cancelled.")
         XCTAssertTrue(recorder.values.isEmpty)
         XCTAssertFalse(scheduler.hasScheduledBoundary)
         XCTAssertEqual(cancelledCount, 1)
@@ -89,17 +93,12 @@ final class OneShotBoundarySchedulerTests: XCTestCase {
         scheduler?.schedule(at: now.addingTimeInterval(60), tolerance: 1) {}
         _ = try await sleeper.waitForRequest(at: 0)
         scheduler = nil
-        await waitForMainActorTurn()
 
+        let didCancelRequest = await sleeper.waitForCancelledRequestCount(1)
         let cancelledCount = await sleeper.cancelledRequestCount
         XCTAssertNil(weakScheduler)
+        XCTAssertTrue(didCancelRequest, "Deinitialization did not cancel the pending task.")
         XCTAssertEqual(cancelledCount, 1)
-    }
-
-    @MainActor
-    private func waitForMainActorTurn() async {
-        await Task.yield()
-        await Task.yield()
     }
 }
 
@@ -155,6 +154,23 @@ private actor ManualBoundarySleeper: BoundarySleeping {
         request.continuation.resume()
     }
 
+    func waitForCancelledRequestCount(
+        _ expectedCount: Int,
+        timeout: Duration = .seconds(1)
+    ) async -> Bool {
+        let clock = ContinuousClock()
+        let deadline = clock.now.advanced(by: timeout)
+
+        while cancelledRequestCount < expectedCount {
+            guard clock.now < deadline else {
+                return false
+            }
+            try? await Task<Never, Never>.sleep(for: .milliseconds(5))
+        }
+
+        return cancelledRequestCount == expectedCount
+    }
+
     private func cancel(id: UUID) {
         guard let request = pending.removeValue(forKey: id) else {
             return
@@ -170,6 +186,20 @@ private final class ActionRecorder {
 
     func record(_ value: String) {
         values.append(value)
+    }
+
+    func waitUntilValues(_ expectedValues: [String], timeout: Duration = .seconds(1)) async -> Bool {
+        let clock = ContinuousClock()
+        let deadline = clock.now.advanced(by: timeout)
+
+        while values.count < expectedValues.count {
+            guard clock.now < deadline else {
+                return false
+            }
+            try? await Task<Never, Never>.sleep(for: .milliseconds(5))
+        }
+
+        return values == expectedValues
     }
 }
 
