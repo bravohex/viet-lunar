@@ -45,8 +45,8 @@ def configure_target(target, bundle_identifier)
     settings["ENABLE_USER_SCRIPT_SANDBOXING"] = "YES"
     settings["GENERATE_INFOPLIST_FILE"] = "YES"
     settings["PRODUCT_BUNDLE_IDENTIFIER"] = bundle_identifier
-    settings["MARKETING_VERSION"] = "0.1.5"
-    settings["CURRENT_PROJECT_VERSION"] = "5"
+    settings["MARKETING_VERSION"] = "0.1.6"
+    settings["CURRENT_PROJECT_VERSION"] = "6"
   end
 end
 
