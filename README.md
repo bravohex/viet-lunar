@@ -1,5 +1,8 @@
 # VietLunar
 
+[![macOS CI](https://github.com/bravohex/viet-lunar/actions/workflows/ci.yml/badge.svg)](https://github.com/bravohex/viet-lunar/actions/workflows/ci.yml)
+[![Release macOS app](https://github.com/bravohex/viet-lunar/actions/workflows/release.yml/badge.svg)](https://github.com/bravohex/viet-lunar/actions/workflows/release.yml)
+
 Lịch âm Việt Nam gọn nhẹ, riêng tư và luôn sẵn trên thanh menu của macOS.
 
 <p align="center">
