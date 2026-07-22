@@ -62,22 +62,24 @@ final class LifecycleSourceTests: XCTestCase {
         source.emit(.calendarDayChanged)
         source.emit(.systemClockChanged)
         source.emit(.systemTimeZoneChanged)
-        await drainTasks()
+        let didProcessInitialBurst = await recorder.waitUntilCount(1)
+        XCTAssertTrue(
+            didProcessInitialBurst,
+            "Coordinator did not process the initial lifecycle event burst."
+        )
         XCTAssertEqual(recorder.count, 1)
 
         source.emit(.systemWoke)
-        await drainTasks()
+        let didProcessWakeEvent = await recorder.waitUntilCount(2)
+        XCTAssertTrue(
+            didProcessWakeEvent,
+            "Coordinator did not process the subsequent lifecycle event."
+        )
         XCTAssertEqual(recorder.count, 2)
 
         coordinator.stop()
         source.emit(.popoverOpened)
-        await drainTasks()
         XCTAssertEqual(recorder.count, 2)
-    }
-
-    @MainActor
-    private func drainTasks() async {
-        try? await Task<Never, Never>.sleep(for: .milliseconds(30))
     }
 }
 
@@ -108,5 +110,19 @@ private final class RefreshRecorder {
 
     func recordRefresh() {
         count += 1
+    }
+
+    func waitUntilCount(_ expectedCount: Int, timeout: Duration = .seconds(1)) async -> Bool {
+        let clock = ContinuousClock()
+        let deadline = clock.now.advanced(by: timeout)
+
+        while count < expectedCount {
+            guard clock.now < deadline else {
+                return false
+            }
+            try? await Task<Never, Never>.sleep(for: .milliseconds(5))
+        }
+
+        return count == expectedCount
     }
 }
