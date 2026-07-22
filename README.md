@@ -5,6 +5,10 @@
 
 VietLunar là ứng dụng macOS native, chạy hoàn toàn offline trên menu bar để hiển thị lịch âm Việt Nam. MVP dùng Swift 6, lớp vỏ AppKit nhẹ với nội dung SwiftUI, calculation convention UTC+7 và không có runtime dependency ngoài Apple frameworks.
 
+<p align="center">
+  <img src="docs/images/vietlunar-popover.png" alt="Popover VietLunar hiển thị lịch âm Việt Nam tháng 7 năm 2026" width="360">
+</p>
+
 ## Trạng thái
 
 Ứng dụng MVP đã có menu-bar calendar, Can–Chi, Settings, preferences, lifecycle scheduler và `SMAppService` adapter. Full automated scheme hiện đạt 98/98 tests, nhưng build chưa release-ready vì 6 gate trong [acceptance review](docs/acceptance-review.md) và [WBS](docs/VietLunar_WBS.md) vẫn còn mở.
