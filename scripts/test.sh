@@ -8,8 +8,8 @@ DERIVED_DATA_PATH="$PROJECT_ROOT/.build/DerivedData"
 DESTINATION="platform=macOS,arch=$(uname -m)"
 
 test -f "$PROJECT_ROOT/LICENSE"
-rg -q '^MIT License$' "$PROJECT_ROOT/LICENSE"
-rg -q '^Copyright \(c\) 2026 bravohex$' "$PROJECT_ROOT/LICENSE"
+grep -Eq '^MIT License$' "$PROJECT_ROOT/LICENSE"
+grep -Eq '^Copyright \(c\) 2026 bravohex$' "$PROJECT_ROOT/LICENSE"
 
 "$PROJECT_ROOT/scripts/verify_localizations.sh"
 
