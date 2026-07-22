@@ -1,113 +1,73 @@
 # VietLunar
 
-[![macOS CI](https://github.com/bravohex/viet-lunar/actions/workflows/ci.yml/badge.svg)](https://github.com/bravohex/viet-lunar/actions/workflows/ci.yml)
-[![Release macOS app](https://github.com/bravohex/viet-lunar/actions/workflows/release.yml/badge.svg)](https://github.com/bravohex/viet-lunar/actions/workflows/release.yml)
-
-VietLunar là ứng dụng macOS native, chạy hoàn toàn offline trên menu bar để hiển thị lịch âm Việt Nam. MVP dùng Swift 6, lớp vỏ AppKit nhẹ với nội dung SwiftUI, calculation convention UTC+7 và không có runtime dependency ngoài Apple frameworks.
+Lịch âm Việt Nam gọn nhẹ, riêng tư và luôn sẵn trên thanh menu của macOS.
 
 <p align="center">
-  <img src="docs/images/vietlunar-popover.png" alt="Popover VietLunar hiển thị lịch âm Việt Nam tháng 7 năm 2026" width="360">
+  <img src="docs/images/vietlunar-popover.png" alt="VietLunar hiển thị lịch âm Việt Nam trên macOS" width="360">
 </p>
 
-## Trạng thái
+VietLunar là ứng dụng macOS native chạy hoàn toàn trên máy. Ứng dụng không cần tài khoản, không cần kết nối mạng và không có thư viện runtime bên thứ ba.
 
-Ứng dụng MVP đã có menu-bar calendar, Can–Chi, Settings, preferences, lifecycle scheduler và `SMAppService` adapter. Full automated scheme hiện đạt 98/98 tests, nhưng build chưa release-ready vì 6 gate trong [acceptance review](docs/acceptance-review.md) và [WBS](docs/VietLunar_WBS.md) vẫn còn mở.
+[Tải bản phát hành mới nhất](https://github.com/bravohex/viet-lunar/releases) · [Giấy phép MIT](LICENSE)
 
-## Yêu cầu phát triển
+## Tính năng
 
-- macOS 13.0 trở lên.
-- Xcode 26 hoặc một Xcode stable hỗ trợ Swift 6.
-- Ruby gem `xcodeproj` chỉ cần khi tái tạo project file; đây không phải runtime dependency.
+- Xem lịch tháng dương và ngày âm Việt Nam ngay từ thanh menu.
+- Hiển thị Can–Chi của năm, tháng, ngày và giờ; kèm giờ hoàng đạo và phân loại ngày.
+- Tùy chỉnh nội dung thanh menu, đồng hồ, ngày bắt đầu tuần và quy ước đổi ngày Can–Chi.
+- Có thể mở VietLunar cùng lúc đăng nhập macOS.
+- Hỗ trợ VoiceOver và điều hướng bằng bàn phím.
 
-## Build, chạy và cài bản development
+## Cài đặt
 
-Build Debug nhanh và mở trực tiếp app vừa build:
+1. Tải tệp ZIP ở [bản phát hành mới nhất](https://github.com/bravohex/viet-lunar/releases).
+2. Giải nén rồi kéo `VietLunar.app` vào thư mục `Applications`.
+3. Mở VietLunar. Biểu tượng lịch âm sẽ xuất hiện trên thanh menu.
+
+Nếu macOS yêu cầu xác nhận ở lần mở đầu tiên, hãy làm theo hướng dẫn hiển thị trên máy.
+
+## Phạm vi lịch
+
+- Hỗ trợ ngày dương từ **01/01/1800** đến **31/12/2199**.
+- Ngày âm và Can–Chi được tính theo quy ước múi giờ **UTC+7**.
+- Kết quả từ năm 1800 đến 1975 là lịch Việt Nam hiện đại suy rộng, không phải bản phục dựng lịch chính thức cho mọi vùng và giai đoạn lịch sử.
+
+## Quyền riêng tư
+
+VietLunar hoạt động offline. Ứng dụng chỉ lưu các tùy chọn hiển thị trên máy Mac của bạn; không thu thập analytics, không hiển thị quảng cáo và không gửi dữ liệu cá nhân ra ngoài thiết bị. Xem [chính sách quyền riêng tư](PRIVACY.md).
+
+## Phát triển
+
+Yêu cầu: macOS 13 trở lên và Xcode có hỗ trợ Swift 6.
 
 ```bash
-DEV_DERIVED_DATA=".build/DevDerivedData"
-xcodebuild \
-  -project VietLunar.xcodeproj \
-  -scheme VietLunar \
-  -configuration Debug \
-  -destination "platform=macOS,arch=$(uname -m)" \
-  -derivedDataPath "$DEV_DERIVED_DATA" \
-  build
-open "$DEV_DERIVED_DATA/Build/Products/Debug/VietLunar.app"
+git clone https://github.com/bravohex/viet-lunar.git
+cd viet-lunar
+open VietLunar.xcodeproj
 ```
 
-Để build và cài/cập nhật bản Debug vào `~/Applications`, chạy:
+Chọn scheme **VietLunar** trong Xcode rồi nhấn Run. Để build, cài bản Debug vào `~/Applications` và mở ứng dụng bằng một lệnh:
 
 ```bash
 ./scripts/install.sh
 ```
 
-Để cài một bundle signed/notarized đã tải về, truyền đường dẫn app. Thêm `--system` nếu chủ động cài vào `/Applications` (có thể cần quyền quản trị):
+Chạy bộ kiểm tra chức năng:
 
 ```bash
-./scripts/install.sh --app /path/to/VietLunar.app
-./scripts/install.sh --app /path/to/VietLunar.app --system
+./scripts/test.sh --skip-performance
 ```
 
-Gỡ app khỏi `~/Applications`; chỉ dùng `--purge-data` khi muốn xóa luôn preferences và sandbox container không thể khôi phục:
-
-```bash
-./scripts/uninstall.sh
-./scripts/uninstall.sh --purge-data
-```
-
-Bản Debug này chỉ dành cho development; không dùng để xác minh login item, notarization hoặc phát hành. Quy trình archive, ký, notarize và phát hành theo GitHub tag ở [hướng dẫn phân phối](docs/DISTRIBUTION.md).
-
-## Build và test
-
-Chạy toàn bộ build và test bằng một lệnh:
-
-```bash
-./scripts/test.sh
-```
-
-Tái tạo Xcode project sau khi thêm/xóa source file:
+Sau khi thêm hoặc xóa tệp nguồn, tái tạo project Xcode trước khi build:
 
 ```bash
 ruby Tools/ProjectGenerator/generate_project.rb
 ```
 
-Chạy microbenchmark Core ở cấu hình optimized:
+## Đóng góp
 
-```bash
-./scripts/benchmark.sh
-```
+Đóng góp qua issue hoặc pull request đều được chào đón. Trước khi gửi pull request, hãy chạy bộ kiểm tra ở trên và mô tả rõ thay đổi ảnh hưởng đến cách tính lịch hoặc giao diện.
 
-Đo first/subsequent popover bằng Release-optimized signposts:
+## Giấy phép
 
-```bash
-./scripts/measure_popover.sh
-```
-
-Project generator là công cụ phát triển. Generated `VietLunar.xcodeproj` vẫn được commit để người dùng có thể mở và build ngay bằng Xcode.
-
-Hướng dẫn ký/notarize nằm tại [docs/DISTRIBUTION.md](docs/DISTRIBUTION.md); quy trình phát hành theo GitHub tag nằm tại [GitHub Release Guide](docs/github-releases-guide.md). Không phân phối candidate build khi WBS còn release blocker.
-
-## Kiến trúc
-
-- `App/`: `NSStatusItem`/`NSPopover` shell và giao diện SwiftUI được tạo lười.
-- `App/Resources/Assets.xcassets`: app icon và các template icon đang được MVP sử dụng; xem [icon kit review](docs/icon-kit-review.md).
-- `Sources/Core/`: date/lunar/Can-Chi domain thuần Swift, không phụ thuộc UI.
-- `Sources/Infrastructure/`: clock, lifecycle, preferences, login item và logging adapters; được link tĩnh vào app.
-- `Tests/`: unit tests và UI smoke tests.
-- `Tools/`: development-only generators.
-- `docs/`: product spec, implementation plan, WBS và curated regression vectors.
-
-Quyết định chuyển lớp vỏ từ `MenuBarExtra` sang AppKit để giảm resident memory được ghi tại [ADR-001](docs/ADR-001-appkit-shell.md); calendar core và các SwiftUI content views không thay đổi.
-
-## Quy ước lịch
-
-- Khoảng ngày runtime: `1800-01-01...2199-12-31`.
-- Ngày lịch âm hiện tại được tính theo UTC+7.
-- Dữ liệu trước 1976 là proleptic modern astronomical Vietnamese calendar, không được mô tả như lịch chính thức lịch sử.
-- App trả typed error ngoài khoảng được xác minh; không xấp xỉ.
-
-Generated table đã có checksum và exhaustive round-trip, nhưng independent conformance/2033 evidence vẫn chưa đạt. Xem [ReferenceData/README.md](ReferenceData/README.md), [NOTICE.md](NOTICE.md) và [PRIVACY.md](PRIVACY.md).
-
-## Tác giả và giấy phép
-
-Copyright © 2026 bravohex. VietLunar được phát hành theo [giấy phép MIT](LICENSE).
+Copyright © 2026 bravohex. Phát hành theo [MIT License](LICENSE).
