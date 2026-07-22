@@ -25,6 +25,7 @@ Implement the next incomplete MVP milestone only. Begin with M0 if the repositor
 - Outside the verified range, return typed errors; never approximate.
 - Can–Chi formulas and day-boundary policy must follow the spec.
 - Only when the operator explicitly accepts this scope, giờ hoàng đạo may be shown as an offline cultural-reference lookup from the selected civil date's day branch; never present personal, activity-specific, or outcome-based advice.
+- Only when the operator explicitly accepts this scope, the month grid may show the compact hoàng đạo/hắc đạo/ordinary status defined by the spec. Use green, gray, and no dot respectively, with an accessible textual status; never treat it as personalised date-selection advice.
 - No one-second polling. Default mode has no repeating timer.
 - `SMAppService.mainApp` is the login-item mechanism.
 - User preferences go through a typed store; future events use a repository abstraction and later SQLite.

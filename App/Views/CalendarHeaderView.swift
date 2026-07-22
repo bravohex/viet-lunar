@@ -18,6 +18,12 @@ struct CalendarHeaderView: View {
             )
             .foregroundStyle(.secondary)
 
+            TraditionalDayStatusLabel(
+                lunarDate: snapshot.lunarDate,
+                solarDate: snapshot.solarDate,
+                accessibilityIdentifier: "today-day-classification"
+            )
+
             Text(
                 AppLocalization.format(
                     "header.can_chi.day_month",

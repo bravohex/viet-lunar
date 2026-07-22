@@ -34,6 +34,12 @@ struct SelectedDayDetailView: View {
                 .foregroundStyle(.secondary)
                 .accessibilityIdentifier("selected-can-chi")
 
+            TraditionalDayStatusLabel(
+                lunarDate: cell.lunarDate,
+                solarDate: cell.solarDate,
+                accessibilityIdentifier: "selected-day-classification"
+            )
+
             Text(
                 AppLocalization.format(
                     "selected.auspicious_hours",

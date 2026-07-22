@@ -75,6 +75,7 @@ The MVP is complete when it can:
 9. Pass exhaustive conversion, round-trip, boundary, lifecycle, and performance tests for the declared range.
 10. Expose clean domain/repository interfaces for a later local-events feature.
 11. Show six traditional giờ hoàng đạo intervals for a selected civil date as cultural-reference information only.
+12. Mark the month-grid's compact traditional day status: hoàng đạo, hắc đạo, or ordinary; repeat its label in the current-day header and selected-day detail when it is not ordinary.
 
 ### 2.2 Explicit MVP non-goals
 
@@ -85,7 +86,7 @@ Do not implement these in the first release:
 - Local notifications and reminders.
 - Sync with Apple Calendar/EventKit.
 - iCloud, account login, web sync, or multi-device sync.
-- Holidays, auspicious/inauspicious day interpretations, tử vi, bát tự, ngũ hành, sao, trực, or religious advice.
+- Holidays, personalised date-selection advice, tử vi, bát tự, ngũ hành, sao, trực, or religious advice.
 - Solar terms unless later accepted as a small optional enhancement.
 - iOS, iPadOS, watchOS, widget, or browser versions.
 - A historically reconstructed official Vietnamese calendar before 1976.
@@ -288,7 +289,28 @@ Use the existing 12 civil intervals: Tý is `23:00–00:59`; the remaining branc
 
 The implementation is an original declarative representation of this small rule table; it copies neither code nor prose. The mapping was cross-checked against the [Linh Thông reference](https://linhthong.com/TinhNgayGioHoangDao) and the [Khoi A0 programming guide](https://static.khoia0.com/PDF-Files/THAMKHAO.pdf). It must stay offline and must not offer activity-specific, age-specific, or outcome-based advice.
 
-### 3.9 Date identity versus instant
+### 3.9 Compact month-grid day classification
+
+The operator has explicitly accepted a small, offline cultural-reference marker for every month-grid cell. It is determined by the lunar month number and the canonical civil-midnight day branch. A leap month uses the same month number as its normal counterpart.
+
+This is intentionally a compact three-state display, not a complete traditional date-selection system. The four selected hoàng đạo branches receive a green dot; the four selected hắc đạo branches receive a gray dot; the four remaining branches receive no dot and are announced as `Ngày thường`.
+
+| Lunar month | Hoàng đạo (green) | Hắc đạo (gray) |
+|---|---|---|
+| 1, 7 | Tý, Sửu, Tỵ, Mùi | Ngọ, Mão, Hợi, Dậu |
+| 2, 8 | Dần, Mão, Mùi, Dậu | Thân, Tỵ, Sửu, Hợi |
+| 3, 9 | Thìn, Tỵ, Dậu, Hợi | Tuất, Mùi, Sửu, Mão |
+| 4, 10 | Ngọ, Mùi, Hợi, Sửu | Tý, Dậu, Tỵ, Mão |
+| 5, 11 | Thân, Dậu, Sửu, Mão | Dần, Hợi, Mùi, Tỵ |
+| 6, 12 | Tuất, Hợi, Mão, Tỵ | Thìn, Sửu, Dậu, Mùi |
+
+The no-dot state is a deliberate visual convention: it covers the four remaining branches in the traditional twelve-deity cycle and does not claim that a date is universally neutral, suitable, unsuitable, or predictive for a person or activity. This product must not include activity, age, outcome, fortune, or religious advice.
+
+The dot is supplementary visual information. Every day cell must expose its Vietnamese classification in its VoiceOver value and hover help; color alone is never the only representation. The declarative mapping is original and was checked against the full traditional month/branch cycle published by [Linh Thông](https://linhthong.com/tinhngaygiohoangdao) and the cross-check table in [Tiki's guide](https://tiki.vn/blog/ngay-hac-dao/). It must stay offline.
+
+When today's header or a selected-day detail uses this status, show the localized `Ngày hoàng đạo` or `Ngày hắc đạo` label with the matching green or gray semantic color. Do not render a label for `Ngày thường`.
+
+### 3.10 Date identity versus instant
 
 The core must distinguish:
 
@@ -499,6 +521,8 @@ Main month grid:
 - Lunar day 1 displays `1/<month>`; other lunar days may display only the day number.
 - Leap month marker must be visible when a cell starts a leap month.
 - Today and selected day have distinct, accessible states.
+- A compact cultural-reference dot marks hoàng đạo in green, hắc đạo in gray, or leaves an ordinary day unmarked; its Vietnamese status is also available to VoiceOver and in hover help.
+- The current-day header shows the same hoàng đạo/hắc đạo label when applicable; an ordinary day adds no label.
 - Days outside the displayed Gregorian month are dimmed but selectable.
 - Selection reveals detailed lunar/Can–Chi information.
 
@@ -531,6 +555,7 @@ For selected day, display:
 - Can–Chi year;
 - Can–Chi lunar month;
 - Can–Chi day;
+- compact `Ngày hoàng đạo` or `Ngày hắc đạo` label when applicable; omit it for an ordinary day;
 - current hour Can–Chi only when selected day is today; otherwise omit or require a selected time;
 - six giờ hoàng đạo intervals derived from the selected date's day branch, labelled `tham khảo`;
 - canonical calculation note `UTC+7` in Help/About or when system zone differs.

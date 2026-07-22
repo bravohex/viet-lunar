@@ -62,6 +62,17 @@ final class VietLunarUITests: XCTestCase {
         XCTAssertTrue(
             ((todayCell.value as? String) ?? "").lowercased().contains("hôm nay")
         )
+        let dayClassificationValue = (todayCell.value as? String) ?? ""
+        XCTAssertTrue(
+            ["Ngày hoàng đạo", "Ngày hắc đạo", "Ngày thường"].contains {
+                dayClassificationValue.contains($0)
+            },
+            "Mỗi ô ngày phải công bố trạng thái hoàng đạo, hắc đạo hoặc thường cho VoiceOver"
+        )
+        assertContextualDayStatusLabels(
+            in: application,
+            dayCellValue: dayClassificationValue
+        )
 
         application.buttons["settings-button"].click()
         XCTAssertTrue(
@@ -242,6 +253,41 @@ final class VietLunarUITests: XCTestCase {
             return value
         }
         return element.label.isEmpty ? nil : element.label
+    }
+
+    @MainActor
+    private func assertContextualDayStatusLabels(
+        in application: XCUIApplication,
+        dayCellValue: String,
+        file: StaticString = #filePath,
+        line: UInt = #line
+    ) {
+        let expectedStatus = ["Ngày hoàng đạo", "Ngày hắc đạo"].first {
+            dayCellValue.contains($0)
+        }
+        let headerStatus = application.staticTexts["today-day-classification"]
+        let selectedStatus = application.staticTexts["selected-day-classification"]
+
+        guard let expectedStatus else {
+            XCTAssertFalse(headerStatus.exists, file: file, line: line)
+            XCTAssertFalse(selectedStatus.exists, file: file, line: line)
+            return
+        }
+
+        XCTAssertTrue(headerStatus.exists, file: file, line: line)
+        XCTAssertTrue(selectedStatus.exists, file: file, line: line)
+        XCTAssertEqual(
+            headerStatus.value as? String,
+            expectedStatus,
+            file: file,
+            line: line
+        )
+        XCTAssertEqual(
+            selectedStatus.value as? String,
+            expectedStatus,
+            file: file,
+            line: line
+        )
     }
 
     @MainActor

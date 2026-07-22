@@ -128,6 +128,7 @@ add_sources(
     "CanChi/StemBranch.swift",
     "CanChi/CanChiDayBoundaryPolicy.swift",
     "CanChi/AuspiciousHour.swift",
+    "CanChi/TraditionalDayClassification.swift",
     "CanChi/CanChiCalculator.swift",
     "Time/Clock.swift",
     "Snapshot/CalendarSnapshot.swift",
@@ -177,6 +178,7 @@ add_sources(
     "Views/CalendarHeaderView.swift",
     "Views/MonthGridView.swift",
     "Views/SelectedDayDetailView.swift",
+    "Views/TraditionalDayStatusLabel.swift",
     "Views/PopoverFooterView.swift",
     "Views/SettingsView.swift"
   ]
@@ -211,6 +213,7 @@ add_sources(
     "CanChiCalculatorTests.swift",
     "CanChiHourTests.swift",
     "AuspiciousHourCalculatorTests.swift",
+    "TraditionalDayClassificationTests.swift",
     "CalendarSnapshotFactoryTests.swift",
     "MonthGridBuilderTests.swift",
     "VietnameseCalendarFormatterTests.swift",

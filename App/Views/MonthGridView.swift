@@ -220,8 +220,10 @@ private struct MonthGridCellView: View {
                 Text(VietnameseCalendarFormatter.monthGridLunarLabel(cell.lunarDate))
                     .font(.caption2)
                     .foregroundStyle(.secondary)
+
+                dayClassificationIndicator
             }
-            .frame(maxWidth: .infinity, minHeight: 34)
+            .frame(maxWidth: .infinity, minHeight: 39)
             .background {
                 RoundedRectangle(cornerRadius: 6)
                     .fill(isSelected ? Color.accentColor.opacity(0.28) : .clear)
@@ -239,7 +241,7 @@ private struct MonthGridCellView: View {
         .accessibilityValue(accessibilityValue)
         .accessibilityAddTraits(isSelected ? .isSelected : [])
         .accessibilityIdentifier("day-\(cell.solarDate.year)-\(cell.solarDate.month)-\(cell.solarDate.day)")
-        .help(accessibilityLabel)
+        .help("\(accessibilityLabel), \(dayClassificationText)")
     }
 
     private var accessibilityLabel: String {
@@ -250,7 +252,7 @@ private struct MonthGridCellView: View {
     }
 
     private var accessibilityValue: String {
-        switch (isSelected, cell.isToday) {
+        let selectionStatus: String = switch (isSelected, cell.isToday) {
         case (true, true):
             AppLocalization.text(
                 "selection.selected_today",
@@ -262,5 +264,52 @@ private struct MonthGridCellView: View {
             AppLocalization.text("selection.today", fallback: "Hôm nay")
         case (false, false): ""
         }
+
+        return [selectionStatus, dayClassificationText]
+            .filter { !$0.isEmpty }
+            .joined(separator: ", ")
+    }
+
+    private var dayClassification: TraditionalDayClassification {
+        TraditionalDayClassifier.classification(
+            for: cell.lunarDate,
+            solarDate: cell.solarDate
+        )
+    }
+
+    private var dayClassificationText: String {
+        switch dayClassification {
+        case .auspicious:
+            AppLocalization.text(
+                "day_classification.auspicious",
+                fallback: "Ngày hoàng đạo"
+            )
+        case .inauspicious:
+            AppLocalization.text(
+                "day_classification.inauspicious",
+                fallback: "Ngày hắc đạo"
+            )
+        case .ordinary:
+            AppLocalization.text(
+                "day_classification.ordinary",
+                fallback: "Ngày thường"
+            )
+        }
+    }
+
+    @ViewBuilder
+    private var dayClassificationIndicator: some View {
+        Group {
+            switch dayClassification {
+            case .auspicious:
+                Circle().fill(Color.green)
+            case .inauspicious:
+                Circle().fill(Color.gray)
+            case .ordinary:
+                Color.clear
+            }
+        }
+        .frame(width: 5, height: 5)
+        .accessibilityHidden(true)
     }
 }

@@ -53,7 +53,9 @@ Trạng thái:
 | A14 | Tinh chỉnh weekday header và focus ring | M5.2, M5.3 | Đang làm | — | Ẩn focus effect trên macOS 14+; T7 xanh, CN đỏ; chờ test/runtime verification |
 | A15 | Bổ sung tác giả, copyright và MIT License | M8.3 | Hoàn thành | commit này | 69 localization keys; MIT/Info.plist assertions; deterministic project; 94/94 non-UI tests |
 | A16 | Bổ sung hướng dẫn build/cài development | M0.1, M8.3 | Hoàn thành | commit này | README có Debug build, chạy từ build artifact, cài/cập nhật `/Applications` và ranh giới signed Release |
-| A17 | Thêm giờ hoàng đạo theo ngày | M3.2, M5.2 | Đang làm | — | 12 Chi mapping, UI/accessibility, 71 App keys, 101/101 full tests đạt; chờ user review, không commit |
+| A17 | Thêm giờ hoàng đạo theo ngày | M3.2, M5.2 | Đang làm | — | 12 Chi mapping, UI/accessibility, 74 App keys, 104/104 full tests đạt; chờ user review, không commit |
+| A18 | Thêm chấm trạng thái ngày trong lịch tháng | M3.2, M4.1, M5.2 | Đang làm | — | Hoàng đạo xanh, hắc đạo xám, ngày thường không chấm; Core partition, accessibility, 74 App keys, 104/104 full tests đạt; chờ user review, không commit |
+| A19 | Hiện nhãn trạng thái ở header và ngày chọn | M3.6, M5.2 | Đang làm | — | Chỉ hiện `Ngày hoàng đạo`/`Ngày hắc đạo` ở header hôm nay và chi tiết ngày chọn; ngày thường không có nhãn; 104/104 full tests và UI flow đạt, chờ user review, không commit |
 | B0 | Ghi nhận independent-reference blocker | M2.4 | Hoàn thành | commit này | Không dùng candidate JSON làm oracle hoặc sao chép data chưa rõ license |
 | M0.1 | Tạo Xcode project, app/core/infrastructure/test targets | A0 | Hoàn thành | commit này | 6 targets, shared scheme, Debug build và 3 test bundles đạt |
 | M0.2 | Tạo `MenuBarExtra`, ẩn Dock, Settings và Quit | M0.1 | Hoàn thành | commit này | Build/test đạt; LSUIElement=true; app bundle chạy thật và hiện `ÂL` trên menu bar |
@@ -71,7 +73,8 @@ Trạng thái:
 | M3.2 | Can-Chi năm/tháng/ngày | M3.1, M1.2 | Hoàn thành | commit này | Golden vectors và exhaustive 146.097 ngày/chu kỳ 60 đạt |
 | M3.3 | Can-Chi giờ và boundary policy | M3.2 | Hoàn thành | commit này | 12 khoảng giờ, 1.440 phút và hai boundary policies đạt |
 | M3.4 | `CalendarSnapshotFactory` | M2.4, M3.3, M1.3 | Hoàn thành | commit này | Một instant tạo solar/lunar và 4 Can-Chi; midnight tests đạt |
-| M3.5 | Giờ hoàng đạo reference | M3.2, M5.2 | Đang làm | — | Static table theo Chi ngày, 12 mapping + time range + selected-day UI tests đạt; chờ user review |
+| M3.5 | Giờ hoàng đạo reference | M3.2, M5.2 | Đang làm | — | Static table theo Chi ngày, 12 mapping + time range + selected-day UI tests; 104/104 full tests đạt; chờ user review |
+| M3.6 | Chấm trạng thái hoàng/hắc/thường | M3.2, M4.1, M5.2 | Đang làm | — | Static mapping 4/4/4 theo tháng âm, chấm/accessibility; 104/104 full tests đạt; chờ user review |
 | M4.1 | `MonthGridBuilder` 42 ô | M2.4 | Hoàn thành | commit này | 42 ngày liên tiếp; week starts/leap/boundary tests đạt |
 | M4.2 | Vietnamese formatters | M3.4, M4.1 | Hoàn thành | commit này | Exact strings, leap marker, weekday và VoiceOver tests đạt |
 | M5.1 | Menu title từ live snapshot | M3.4, M4.2 | Hoàn thành | commit này | Live snapshot title, 5 formats, full accessibility label; app chạy thật |
@@ -505,4 +508,16 @@ Trạng thái:
 - Người dùng đã mở rộng scope vốn là non-goal để hiển thị sáu khung giờ hoàng đạo của mọi ngày được chọn.
 - Giới hạn rõ là bảng tham khảo truyền thống theo Chi ngày, không tư vấn theo tuổi/công việc/kết quả và không dùng network.
 - Đối chiếu table với hai nguồn độc lập, thêm pure Core model/calculator, text đã localize và semantic accessibility value cho cả khung giờ lẫn weekday header.
-- Project generator vẫn deterministic; `./scripts/test.sh` đạt 101/101 test trên macOS thật. Chờ review của người dùng; không stage hoặc commit cho đến khi được phê duyệt.
+- Project generator vẫn deterministic; `./scripts/test.sh` hiện đạt 104/104 test trên macOS thật. Chờ review của người dùng; không stage hoặc commit cho đến khi được phê duyệt.
+
+### A18 — Chấm trạng thái ngày trong lịch tháng
+
+- Người dùng đã mở rộng scope để đánh dấu trạng thái ngày ngay trong bảng tháng: hoàng đạo dùng chấm xanh, hắc đạo dùng chấm xám, ngày thường không chấm.
+- Quy ước hiển thị cố định 4/4/4 theo tháng âm và Chi ngày; bốn nhánh không được đánh dấu là `Ngày thường`. Đây là tham chiếu văn hóa tối giản, không phải hệ thống tư vấn chọn ngày.
+- Thêm pure Core classifier, chỗ giữ layout cho ô không chấm, trạng thái VoiceOver/hover và unit/UI test. `./scripts/test.sh` đạt 104/104; chờ review của người dùng, không stage hoặc commit cho đến khi được phê duyệt.
+
+### A19 — Nhãn trạng thái tại header và ngày chọn
+
+- Khi ngày hôm nay hoặc ngày được chọn thuộc nhóm hoàng đạo/hắc đạo, hiện nhãn màu xanh/xám tương ứng trong header hoặc phần chi tiết ở cuối popover.
+- Ngày thường không hiện nhãn, tránh thêm thông tin không cần thiết.
+- Nhãn dùng cùng classifier/localization với lưới tháng, có accessibility identifier ổn định và UI test bao phủ cả trạng thái có nhãn và không nhãn. `./scripts/test.sh` đạt 104/104 và UI flow chạy riêng đạt; chờ review của người dùng, không stage hoặc commit cho đến khi được phê duyệt.

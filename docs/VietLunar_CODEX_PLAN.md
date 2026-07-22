@@ -350,6 +350,20 @@ Tests:
 - a known day Can–Chi vector selects the expected six intervals;
 - selected-day UI exposes the labelled reference text accessibly.
 
+### Task M3.6 — Add compact traditional day-status markers
+
+Only when this scope is explicitly accepted, add a pure Core classification using the lunar month number and canonical civil-date day branch. It must partition each month group into exactly four `auspicious`, four `inauspicious`, and four `ordinary` branches. This is a compact visual convention, not a comprehensive date-selection system.
+
+The month grid renders an auspicious day with a green dot, an inauspicious day with a gray dot, and an ordinary day with no dot. Reserve the marker's layout space so cell geometry is stable. The parent day-cell accessibility value and hover help must state the localized status; do not rely on color alone. Keep all content offline and do not add activity-, age-, or outcome-specific advice.
+
+Tests:
+
+- all 12 day branches are partitioned exactly once for every lunar-month group;
+- paired lunar months (1/7 through 6/12) have equivalent mappings;
+- a canonical JDN day branch drives the Core lookup;
+- the live day-cell accessibility value includes one of the three localized statuses.
+- current-day header and selected-day detail show the matching label for hoàng/hắc days, and render no status label for ordinary days.
+
 ---
 
 ## 6. Month grid domain — M4
