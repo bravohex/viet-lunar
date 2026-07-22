@@ -37,6 +37,8 @@
     "navigation.previous_month.help" : { "extractionState" : "manual", "localizations" : { "vi" : { "stringUnit" : { "state" : "translated", "value" : "Xem tháng trước (⌘←)" } } } },
     "selected.can_chi" : { "extractionState" : "manual", "localizations" : { "vi" : { "stringUnit" : { "state" : "translated", "value" : "Năm %1$@ · Tháng %2$@ · Ngày %3$@" } } } },
     "selected.can_chi.hour" : { "extractionState" : "manual", "localizations" : { "vi" : { "stringUnit" : { "state" : "translated", "value" : "Giờ %@" } } } },
+    "selected.auspicious_hours" : { "extractionState" : "manual", "localizations" : { "vi" : { "stringUnit" : { "state" : "translated", "value" : "Giờ hoàng đạo: %@" } } } },
+    "selected.auspicious_hours.title" : { "extractionState" : "manual", "localizations" : { "vi" : { "stringUnit" : { "state" : "translated", "value" : "Giờ hoàng đạo" } } } },
     "selection.selected" : { "extractionState" : "manual", "localizations" : { "vi" : { "stringUnit" : { "state" : "translated", "value" : "Đã chọn" } } } },
     "selection.selected_today" : { "extractionState" : "manual", "localizations" : { "vi" : { "stringUnit" : { "state" : "translated", "value" : "Đã chọn, hôm nay" } } } },
     "selection.today" : { "extractionState" : "manual", "localizations" : { "vi" : { "stringUnit" : { "state" : "translated", "value" : "Hôm nay" } } } },

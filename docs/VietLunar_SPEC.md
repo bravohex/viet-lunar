@@ -74,6 +74,7 @@ The MVP is complete when it can:
 8. Persist user preferences locally.
 9. Pass exhaustive conversion, round-trip, boundary, lifecycle, and performance tests for the declared range.
 10. Expose clean domain/repository interfaces for a later local-events feature.
+11. Show six traditional giờ hoàng đạo intervals for a selected civil date as cultural-reference information only.
 
 ### 2.2 Explicit MVP non-goals
 
@@ -84,7 +85,7 @@ Do not implement these in the first release:
 - Local notifications and reminders.
 - Sync with Apple Calendar/EventKit.
 - iCloud, account login, web sync, or multi-device sync.
-- Holidays, auspicious/inauspicious day interpretations, tử vi, bát tự, ngũ hành, sao, trực, giờ hoàng đạo, or religious advice.
+- Holidays, auspicious/inauspicious day interpretations, tử vi, bát tự, ngũ hành, sao, trực, or religious advice.
 - Solar terms unless later accepted as a small optional enhancement.
 - iOS, iPadOS, watchOS, widget, or browser versions.
 - A historically reconstructed official Vietnamese calendar before 1976.
@@ -270,7 +271,24 @@ MVP default: `civilMidnight` for the displayed **day Can–Chi**, because it ali
 
 The UI help text should state the chosen convention. Golden tests must cover 22:59, 23:00, 23:59, 00:00, 00:59, and 01:00.
 
-### 3.8 Date identity versus instant
+### 3.8 Giờ hoàng đạo reference
+
+Giờ hoàng đạo is an optional cultural-reference lookup, not a prediction, recommendation, or personalised assessment. For every selected civil date, derive its day branch from the canonical JDN-based Can–Chi calculation, then display these six two-hour intervals in UTC+7:
+
+| Day branch | Auspicious hour branches |
+|---|---|
+| Tý, Ngọ | Tý, Sửu, Mão, Ngọ, Thân, Dậu |
+| Sửu, Mùi | Dần, Mão, Tỵ, Thân, Tuất, Hợi |
+| Dần, Thân | Tý, Sửu, Thìn, Tỵ, Mùi, Tuất |
+| Mão, Dậu | Tý, Dần, Mão, Ngọ, Mùi, Dậu |
+| Thìn, Tuất | Dần, Thìn, Tỵ, Thân, Dậu, Hợi |
+| Tỵ, Hợi | Sửu, Thìn, Ngọ, Mùi, Tuất, Hợi |
+
+Use the existing 12 civil intervals: Tý is `23:00–00:59`; the remaining branches begin at `01:00`, `03:00`, …, `21:00` and end at minute 59 of the next hour. The selected-date lookup is anchored to that date's civil-midnight day branch, so it remains stable and does not depend on the optional 23:00 Can–Chi display policy.
+
+The implementation is an original declarative representation of this small rule table; it copies neither code nor prose. The mapping was cross-checked against the [Linh Thông reference](https://linhthong.com/TinhNgayGioHoangDao) and the [Khoi A0 programming guide](https://static.khoia0.com/PDF-Files/THAMKHAO.pdf). It must stay offline and must not offer activity-specific, age-specific, or outcome-based advice.
+
+### 3.9 Date identity versus instant
 
 The core must distinguish:
 
@@ -514,6 +532,7 @@ For selected day, display:
 - Can–Chi lunar month;
 - Can–Chi day;
 - current hour Can–Chi only when selected day is today; otherwise omit or require a selected time;
+- six giờ hoàng đạo intervals derived from the selected date's day branch, labelled `tham khảo`;
 - canonical calculation note `UTC+7` in Help/About or when system zone differs.
 
 ### 5.5 Settings
@@ -1414,6 +1433,7 @@ Test:
 - Leap month mapping.
 - Can–Chi formulas.
 - Hour intervals and boundary policy.
+- Auspicious-hour mapping for all 12 day branches and its civil-time ranges.
 - Month grid generation and week-start preference.
 - Formatting of normal/leap months.
 - preference defaults/migrations.
@@ -1684,4 +1704,3 @@ These sources establish API availability and calendar rules; they are not a subs
 | Future reminders | UserNotifications, opt-in |
 | Calendar data | Generated, immutable, independently validated |
 | Performance | No polling by default; profile SwiftUI and retain AppKit fallback |
-

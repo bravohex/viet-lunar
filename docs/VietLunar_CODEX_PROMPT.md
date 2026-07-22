@@ -24,6 +24,7 @@ Implement the next incomplete MVP milestone only. Begin with M0 if the repositor
 - Do not substitute Foundation’s Chinese calendar.
 - Outside the verified range, return typed errors; never approximate.
 - Can–Chi formulas and day-boundary policy must follow the spec.
+- Only when the operator explicitly accepts this scope, giờ hoàng đạo may be shown as an offline cultural-reference lookup from the selected civil date's day branch; never present personal, activity-specific, or outcome-based advice.
 - No one-second polling. Default mode has no repeating timer.
 - `SMAppService.mainApp` is the login-item mechanism.
 - User preferences go through a typed store; future events use a repository abstraction and later SQLite.
@@ -62,4 +63,3 @@ Complete M0.1–M0.3 only:
 - provide placeholder popover with Settings and Quit;
 - add test/build scripts and repository scaffolding;
 - do not add lunar conversion code yet.
-

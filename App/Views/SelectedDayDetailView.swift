@@ -34,6 +34,25 @@ struct SelectedDayDetailView: View {
                 .foregroundStyle(.secondary)
                 .accessibilityIdentifier("selected-can-chi")
 
+            Text(
+                AppLocalization.format(
+                    "selected.auspicious_hours",
+                    fallback: "Giờ hoàng đạo: %@",
+                    auspiciousHoursText
+                )
+            )
+                .font(.caption)
+                .foregroundStyle(.secondary)
+                .fixedSize(horizontal: false, vertical: true)
+                .accessibilityLabel(
+                    AppLocalization.text(
+                        "selected.auspicious_hours.title",
+                        fallback: "Giờ hoàng đạo"
+                    )
+                )
+                .accessibilityValue(auspiciousHoursText)
+                .accessibilityIdentifier("selected-auspicious-hours")
+
             if cell.solarDate == currentSnapshot.solarDate {
                 Text(
                     AppLocalization.format(
@@ -59,6 +78,12 @@ struct SelectedDayDetailView: View {
 
     private var dayCanChi: StemBranch {
         calculator.day(for: cell.solarDate)
+    }
+
+    private var auspiciousHoursText: String {
+        AuspiciousHourCalculator.hours(for: dayCanChi.branch)
+            .map(\.description)
+            .joined(separator: " · ")
     }
 
 }

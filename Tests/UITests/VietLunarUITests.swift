@@ -18,8 +18,12 @@ final class VietLunarUITests: XCTestCase {
         try openPopover(for: application)
 
         XCTAssertTrue(application.staticTexts["today-header"].waitForExistence(timeout: 3))
-        XCTAssertEqual(application.staticTexts["weekday-header-7"].label, "T7")
-        XCTAssertEqual(application.staticTexts["weekday-header-1"].label, "CN")
+        let saturdayHeader = application.staticTexts["weekday-header-7"]
+        let sundayHeader = application.staticTexts["weekday-header-1"]
+        XCTAssertTrue(saturdayHeader.exists)
+        XCTAssertTrue(sundayHeader.exists)
+        XCTAssertEqual(saturdayHeader.value as? String, "T7")
+        XCTAssertEqual(sundayHeader.value as? String, "CN")
 
         let monthTitle = application.staticTexts["visible-month-title"]
         XCTAssertTrue(monthTitle.exists)
@@ -41,6 +45,11 @@ final class VietLunarUITests: XCTestCase {
         XCTAssertTrue(canChiText.contains("Năm"))
         XCTAssertTrue(canChiText.contains("Tháng"))
         XCTAssertTrue(canChiText.contains("Ngày"))
+        let auspiciousHours = application.staticTexts["selected-auspicious-hours"]
+        XCTAssertTrue(auspiciousHours.exists)
+        let auspiciousHoursValue = try XCTUnwrap(auspiciousHours.value as? String)
+        XCTAssertTrue(auspiciousHoursValue.contains("("))
+        XCTAssertTrue(auspiciousHoursValue.contains("–"))
         XCTAssertTrue(application.staticTexts["selected-hour-can-chi"].exists)
         XCTAssertTrue(
             application.staticTexts["canonical-time-zone-note"].exists

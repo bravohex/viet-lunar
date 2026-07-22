@@ -1,6 +1,6 @@
 # VietLunar — Work Breakdown Structure
 
-**Cập nhật gần nhất:** 2026-07-20
+**Cập nhật gần nhất:** 2026-07-22
 
 **Phạm vi:** MVP macOS theo `VietLunar_SPEC.md` và `VietLunar_CODEX_PLAN.md`
 
@@ -53,6 +53,7 @@ Trạng thái:
 | A14 | Tinh chỉnh weekday header và focus ring | M5.2, M5.3 | Đang làm | — | Ẩn focus effect trên macOS 14+; T7 xanh, CN đỏ; chờ test/runtime verification |
 | A15 | Bổ sung tác giả, copyright và MIT License | M8.3 | Hoàn thành | commit này | 69 localization keys; MIT/Info.plist assertions; deterministic project; 94/94 non-UI tests |
 | A16 | Bổ sung hướng dẫn build/cài development | M0.1, M8.3 | Hoàn thành | commit này | README có Debug build, chạy từ build artifact, cài/cập nhật `/Applications` và ranh giới signed Release |
+| A17 | Thêm giờ hoàng đạo theo ngày | M3.2, M5.2 | Đang làm | — | 12 Chi mapping, UI/accessibility, 71 App keys, 101/101 full tests đạt; chờ user review, không commit |
 | B0 | Ghi nhận independent-reference blocker | M2.4 | Hoàn thành | commit này | Không dùng candidate JSON làm oracle hoặc sao chép data chưa rõ license |
 | M0.1 | Tạo Xcode project, app/core/infrastructure/test targets | A0 | Hoàn thành | commit này | 6 targets, shared scheme, Debug build và 3 test bundles đạt |
 | M0.2 | Tạo `MenuBarExtra`, ẩn Dock, Settings và Quit | M0.1 | Hoàn thành | commit này | Build/test đạt; LSUIElement=true; app bundle chạy thật và hiện `ÂL` trên menu bar |
@@ -70,6 +71,7 @@ Trạng thái:
 | M3.2 | Can-Chi năm/tháng/ngày | M3.1, M1.2 | Hoàn thành | commit này | Golden vectors và exhaustive 146.097 ngày/chu kỳ 60 đạt |
 | M3.3 | Can-Chi giờ và boundary policy | M3.2 | Hoàn thành | commit này | 12 khoảng giờ, 1.440 phút và hai boundary policies đạt |
 | M3.4 | `CalendarSnapshotFactory` | M2.4, M3.3, M1.3 | Hoàn thành | commit này | Một instant tạo solar/lunar và 4 Can-Chi; midnight tests đạt |
+| M3.5 | Giờ hoàng đạo reference | M3.2, M5.2 | Đang làm | — | Static table theo Chi ngày, 12 mapping + time range + selected-day UI tests đạt; chờ user review |
 | M4.1 | `MonthGridBuilder` 42 ô | M2.4 | Hoàn thành | commit này | 42 ngày liên tiếp; week starts/leap/boundary tests đạt |
 | M4.2 | Vietnamese formatters | M3.4, M4.1 | Hoàn thành | commit này | Exact strings, leap marker, weekday và VoiceOver tests đạt |
 | M5.1 | Menu title từ live snapshot | M3.4, M4.2 | Hoàn thành | commit này | Live snapshot title, 5 formats, full accessibility label; app chạy thật |
@@ -497,3 +499,10 @@ Trạng thái:
 
 - README ghi lệnh Debug build với `derivedDataPath` riêng, mở trực tiếp build artifact và copy/cập nhật app vào `/Applications` bằng `ditto`.
 - Hướng dẫn làm rõ bản Debug không thay thế signed Release, notarization hoặc login-item validation; dẫn đến distribution guide chính thức.
+
+### A17 — Giờ hoàng đạo theo ngày
+
+- Người dùng đã mở rộng scope vốn là non-goal để hiển thị sáu khung giờ hoàng đạo của mọi ngày được chọn.
+- Giới hạn rõ là bảng tham khảo truyền thống theo Chi ngày, không tư vấn theo tuổi/công việc/kết quả và không dùng network.
+- Đối chiếu table với hai nguồn độc lập, thêm pure Core model/calculator, text đã localize và semantic accessibility value cho cả khung giờ lẫn weekday header.
+- Project generator vẫn deterministic; `./scripts/test.sh` đạt 101/101 test trên macOS thật. Chờ review của người dùng; không stage hoặc commit cho đến khi được phê duyệt.

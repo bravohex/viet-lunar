@@ -83,6 +83,7 @@ struct MonthGridView: View {
                         .foregroundStyle(header.color)
                         .frame(maxWidth: .infinity)
                         .accessibilityLabel(header.label)
+                        .accessibilityValue(header.label)
                         .accessibilityIdentifier(
                             "weekday-header-\(header.id)"
                         )

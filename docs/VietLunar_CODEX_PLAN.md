@@ -339,6 +339,17 @@ No multiple `Date()` reads.
 
 Use `FixedClock` in tests around midnight and hour boundaries.
 
+### Task M3.5 — Add traditional auspicious-hour reference
+
+When this scope is explicitly accepted, add a pure Core lookup from the selected civil date's day branch to six traditional two-hour intervals. Keep it offline and label it as cultural reference only; do not infer suitability for a person, activity, or outcome.
+
+Tests:
+
+- all 12 day branches map to exactly six distinct hour branches;
+- all twelve civil ranges are exact, including Tý `23:00–00:59`;
+- a known day Can–Chi vector selects the expected six intervals;
+- selected-day UI exposes the labelled reference text accessibly.
+
 ---
 
 ## 6. Month grid domain — M4
@@ -734,4 +745,3 @@ Codex must stop and report rather than guess when:
 - a proposed optimization weakens correctness or test coverage.
 
 A stop condition does not justify abandoning all work: complete unaffected tasks, isolate the discrepancy, and report exact inputs/outputs and candidate causes.
-
