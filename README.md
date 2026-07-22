@@ -1,5 +1,7 @@
 # VietLunar
 
+[![macOS CI](https://github.com/bravohex/viet-lunar/actions/workflows/ci.yml/badge.svg)](https://github.com/bravohex/viet-lunar/actions/workflows/ci.yml)
+
 VietLunar là ứng dụng macOS native, chạy hoàn toàn offline trên menu bar để hiển thị lịch âm Việt Nam. MVP dùng Swift 6, lớp vỏ AppKit nhẹ với nội dung SwiftUI, calculation convention UTC+7 và không có runtime dependency ngoài Apple frameworks.
 
 ## Trạng thái
