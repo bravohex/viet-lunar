@@ -865,24 +865,6 @@
 /* End PBXTargetDependency section */
 
 /* Begin XCBuildConfiguration section */
-		05A4140F6ABC0F526F7B3DEBCF14F2ED /* Debug */ = {
-			isa = XCBuildConfiguration;
-			buildSettings = {
-				CLANG_WARN_DOCUMENTATION_COMMENTS = YES;
-				CLANG_WARN_QUOTED_INCLUDE_IN_FRAMEWORK_HEADER = YES;
-				CURRENT_PROJECT_VERSION = 1;
-				ENABLE_USER_SCRIPT_SANDBOXING = YES;
-				GENERATE_INFOPLIST_FILE = YES;
-				MACOSX_DEPLOYMENT_TARGET = 13.0;
-				MARKETING_VERSION = 0.1.1;
-				PRODUCT_BUNDLE_IDENTIFIER = "com.bravohex.vietlunar.infrastructure-tests";
-				SDKROOT = macosx;
-				SWIFT_STRICT_CONCURRENCY = complete;
-				SWIFT_TREAT_WARNINGS_AS_ERRORS = YES;
-				SWIFT_VERSION = 6.0;
-			};
-			name = Debug;
-		};
 		0BA6E691B342E7343B1123A8B69EC10D /* Release */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
@@ -939,75 +921,17 @@
 			};
 			name = Release;
 		};
-		29F7E474A178E5FA9E581D7B574586DA /* Release */ = {
+		3A126381C58B8F587D2C8B03316F3799 /* Release */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				CLANG_WARN_DOCUMENTATION_COMMENTS = YES;
 				CLANG_WARN_QUOTED_INCLUDE_IN_FRAMEWORK_HEADER = YES;
-				COMBINE_HIDPI_IMAGES = YES;
-				CURRENT_PROJECT_VERSION = 1;
-				DEFINES_MODULE = YES;
-				DYLIB_COMPATIBILITY_VERSION = 1;
-				DYLIB_CURRENT_VERSION = 1;
-				DYLIB_INSTALL_NAME_BASE = "@rpath";
-				ENABLE_USER_SCRIPT_SANDBOXING = YES;
-				GENERATE_INFOPLIST_FILE = YES;
-				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Frameworks";
-				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/../Frameworks @loader_path/Frameworks";
-				MACOSX_DEPLOYMENT_TARGET = 13.0;
-				MARKETING_VERSION = 0.1.1;
-				PRODUCT_BUNDLE_IDENTIFIER = com.bravohex.vietlunar.core;
-				PRODUCT_NAME = "$(TARGET_NAME:c99extidentifier)";
-				SDKROOT = macosx;
-				SKIP_INSTALL = YES;
-				SWIFT_STRICT_CONCURRENCY = complete;
-				SWIFT_TREAT_WARNINGS_AS_ERRORS = YES;
-				SWIFT_VERSION = 6.0;
-				VERSIONING_SYSTEM = "apple-generic";
-				VERSION_INFO_PREFIX = "";
-			};
-			name = Release;
-		};
-		3A3A8EF6DCABB5A6EE8EB26CAFC76CFC /* Debug */ = {
-			isa = XCBuildConfiguration;
-			buildSettings = {
-				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
-				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = "";
-				CLANG_WARN_DOCUMENTATION_COMMENTS = YES;
-				CLANG_WARN_QUOTED_INCLUDE_IN_FRAMEWORK_HEADER = YES;
-				CODE_SIGN_ENTITLEMENTS = App/VietLunar.entitlements;
-				COMBINE_HIDPI_IMAGES = YES;
-				CURRENT_PROJECT_VERSION = 1;
-				ENABLE_APP_SANDBOX = YES;
-				ENABLE_HARDENED_RUNTIME = YES;
-				ENABLE_USER_SCRIPT_SANDBOXING = YES;
-				GENERATE_INFOPLIST_FILE = YES;
-				INFOPLIST_KEY_LSApplicationCategoryType = "public.app-category.utilities";
-				INFOPLIST_KEY_LSUIElement = YES;
-				INFOPLIST_KEY_NSHumanReadableCopyright = "Copyright © 2026 bravohex";
-				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/../Frameworks";
-				MACOSX_DEPLOYMENT_TARGET = 13.0;
-				MARKETING_VERSION = 0.1.1;
-				PRODUCT_BUNDLE_IDENTIFIER = com.bravohex.vietlunar;
-				PRODUCT_NAME = VietLunar;
-				SDKROOT = macosx;
-				SWIFT_STRICT_CONCURRENCY = complete;
-				SWIFT_TREAT_WARNINGS_AS_ERRORS = YES;
-				SWIFT_VERSION = 6.0;
-			};
-			name = Debug;
-		};
-		5685F11A31CCC7FDDD4369C7D6C4D8A1 /* Release */ = {
-			isa = XCBuildConfiguration;
-			buildSettings = {
-				CLANG_WARN_DOCUMENTATION_COMMENTS = YES;
-				CLANG_WARN_QUOTED_INCLUDE_IN_FRAMEWORK_HEADER = YES;
-				CURRENT_PROJECT_VERSION = 1;
+				CURRENT_PROJECT_VERSION = 2;
 				ENABLE_USER_SCRIPT_SANDBOXING = YES;
 				EXECUTABLE_PREFIX = lib;
 				GENERATE_INFOPLIST_FILE = YES;
 				MACOSX_DEPLOYMENT_TARGET = 13.0;
-				MARKETING_VERSION = 0.1.1;
+				MARKETING_VERSION = 0.1.2;
 				PRODUCT_BUNDLE_IDENTIFIER = com.bravohex.vietlunar.infrastructure;
 				SDKROOT = macosx;
 				SKIP_INSTALL = YES;
@@ -1017,16 +941,16 @@
 			};
 			name = Release;
 		};
-		685E77FCA50BBAB611C10BFD08297CD2 /* Debug */ = {
+		552AFB801CC407FCFB05A534D497DA93 /* Release */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				CLANG_WARN_DOCUMENTATION_COMMENTS = YES;
 				CLANG_WARN_QUOTED_INCLUDE_IN_FRAMEWORK_HEADER = YES;
-				CURRENT_PROJECT_VERSION = 1;
+				CURRENT_PROJECT_VERSION = 2;
 				ENABLE_USER_SCRIPT_SANDBOXING = YES;
 				GENERATE_INFOPLIST_FILE = YES;
 				MACOSX_DEPLOYMENT_TARGET = 13.0;
-				MARKETING_VERSION = 0.1.1;
+				MARKETING_VERSION = 0.1.2;
 				PRODUCT_BUNDLE_IDENTIFIER = "com.bravohex.vietlunar.ui-tests";
 				SDKROOT = macosx;
 				SWIFT_STRICT_CONCURRENCY = complete;
@@ -1034,33 +958,15 @@
 				SWIFT_VERSION = 6.0;
 				TEST_TARGET_NAME = VietLunar;
 			};
-			name = Debug;
+			name = Release;
 		};
-		75E1B632CC558A1C83AB1F37367857CC /* Debug */ = {
-			isa = XCBuildConfiguration;
-			buildSettings = {
-				CLANG_WARN_DOCUMENTATION_COMMENTS = YES;
-				CLANG_WARN_QUOTED_INCLUDE_IN_FRAMEWORK_HEADER = YES;
-				CURRENT_PROJECT_VERSION = 1;
-				ENABLE_USER_SCRIPT_SANDBOXING = YES;
-				GENERATE_INFOPLIST_FILE = YES;
-				MACOSX_DEPLOYMENT_TARGET = 13.0;
-				MARKETING_VERSION = 0.1.1;
-				PRODUCT_BUNDLE_IDENTIFIER = "com.bravohex.vietlunar.core-tests";
-				SDKROOT = macosx;
-				SWIFT_STRICT_CONCURRENCY = complete;
-				SWIFT_TREAT_WARNINGS_AS_ERRORS = YES;
-				SWIFT_VERSION = 6.0;
-			};
-			name = Debug;
-		};
-		921420A6749593B3456658C8E213FFF3 /* Debug */ = {
+		63C6AA0EA8294C5B030A95242E375520 /* Release */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				CLANG_WARN_DOCUMENTATION_COMMENTS = YES;
 				CLANG_WARN_QUOTED_INCLUDE_IN_FRAMEWORK_HEADER = YES;
 				COMBINE_HIDPI_IMAGES = YES;
-				CURRENT_PROJECT_VERSION = 1;
+				CURRENT_PROJECT_VERSION = 2;
 				DEFINES_MODULE = YES;
 				DYLIB_COMPATIBILITY_VERSION = 1;
 				DYLIB_CURRENT_VERSION = 1;
@@ -1070,7 +976,7 @@
 				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Frameworks";
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/../Frameworks @loader_path/Frameworks";
 				MACOSX_DEPLOYMENT_TARGET = 13.0;
-				MARKETING_VERSION = 0.1.1;
+				MARKETING_VERSION = 0.1.2;
 				PRODUCT_BUNDLE_IDENTIFIER = com.bravohex.vietlunar.core;
 				PRODUCT_NAME = "$(TARGET_NAME:c99extidentifier)";
 				SDKROOT = macosx;
@@ -1080,6 +986,42 @@
 				SWIFT_VERSION = 6.0;
 				VERSIONING_SYSTEM = "apple-generic";
 				VERSION_INFO_PREFIX = "";
+			};
+			name = Release;
+		};
+		6FC1A936B2F58B352DCF66571D84C9A3 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				CLANG_WARN_DOCUMENTATION_COMMENTS = YES;
+				CLANG_WARN_QUOTED_INCLUDE_IN_FRAMEWORK_HEADER = YES;
+				CURRENT_PROJECT_VERSION = 2;
+				ENABLE_USER_SCRIPT_SANDBOXING = YES;
+				GENERATE_INFOPLIST_FILE = YES;
+				MACOSX_DEPLOYMENT_TARGET = 13.0;
+				MARKETING_VERSION = 0.1.2;
+				PRODUCT_BUNDLE_IDENTIFIER = "com.bravohex.vietlunar.infrastructure-tests";
+				SDKROOT = macosx;
+				SWIFT_STRICT_CONCURRENCY = complete;
+				SWIFT_TREAT_WARNINGS_AS_ERRORS = YES;
+				SWIFT_VERSION = 6.0;
+			};
+			name = Debug;
+		};
+		9835F2E00FAE685935F5F7DFAE0B7CA7 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				CLANG_WARN_DOCUMENTATION_COMMENTS = YES;
+				CLANG_WARN_QUOTED_INCLUDE_IN_FRAMEWORK_HEADER = YES;
+				CURRENT_PROJECT_VERSION = 2;
+				ENABLE_USER_SCRIPT_SANDBOXING = YES;
+				GENERATE_INFOPLIST_FILE = YES;
+				MACOSX_DEPLOYMENT_TARGET = 13.0;
+				MARKETING_VERSION = 0.1.2;
+				PRODUCT_BUNDLE_IDENTIFIER = "com.bravohex.vietlunar.core-tests";
+				SDKROOT = macosx;
+				SWIFT_STRICT_CONCURRENCY = complete;
+				SWIFT_TREAT_WARNINGS_AS_ERRORS = YES;
+				SWIFT_VERSION = 6.0;
 			};
 			name = Debug;
 		};
@@ -1146,53 +1088,16 @@
 			};
 			name = Debug;
 		};
-		AAD29E74943800BE6A5956339C4310F6 /* Release */ = {
+		B7DDEEED43C2C0AD6CBAB49CF35963CC /* Release */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				CLANG_WARN_DOCUMENTATION_COMMENTS = YES;
 				CLANG_WARN_QUOTED_INCLUDE_IN_FRAMEWORK_HEADER = YES;
-				CURRENT_PROJECT_VERSION = 1;
+				CURRENT_PROJECT_VERSION = 2;
 				ENABLE_USER_SCRIPT_SANDBOXING = YES;
 				GENERATE_INFOPLIST_FILE = YES;
 				MACOSX_DEPLOYMENT_TARGET = 13.0;
-				MARKETING_VERSION = 0.1.1;
-				PRODUCT_BUNDLE_IDENTIFIER = "com.bravohex.vietlunar.core-tests";
-				SDKROOT = macosx;
-				SWIFT_STRICT_CONCURRENCY = complete;
-				SWIFT_TREAT_WARNINGS_AS_ERRORS = YES;
-				SWIFT_VERSION = 6.0;
-			};
-			name = Release;
-		};
-		D3EC024F462CD098EC46192FA65E06EA /* Release */ = {
-			isa = XCBuildConfiguration;
-			buildSettings = {
-				CLANG_WARN_DOCUMENTATION_COMMENTS = YES;
-				CLANG_WARN_QUOTED_INCLUDE_IN_FRAMEWORK_HEADER = YES;
-				CURRENT_PROJECT_VERSION = 1;
-				ENABLE_USER_SCRIPT_SANDBOXING = YES;
-				GENERATE_INFOPLIST_FILE = YES;
-				MACOSX_DEPLOYMENT_TARGET = 13.0;
-				MARKETING_VERSION = 0.1.1;
-				PRODUCT_BUNDLE_IDENTIFIER = "com.bravohex.vietlunar.ui-tests";
-				SDKROOT = macosx;
-				SWIFT_STRICT_CONCURRENCY = complete;
-				SWIFT_TREAT_WARNINGS_AS_ERRORS = YES;
-				SWIFT_VERSION = 6.0;
-				TEST_TARGET_NAME = VietLunar;
-			};
-			name = Release;
-		};
-		D40257EC01D687135A57D4DCE857B8BA /* Release */ = {
-			isa = XCBuildConfiguration;
-			buildSettings = {
-				CLANG_WARN_DOCUMENTATION_COMMENTS = YES;
-				CLANG_WARN_QUOTED_INCLUDE_IN_FRAMEWORK_HEADER = YES;
-				CURRENT_PROJECT_VERSION = 1;
-				ENABLE_USER_SCRIPT_SANDBOXING = YES;
-				GENERATE_INFOPLIST_FILE = YES;
-				MACOSX_DEPLOYMENT_TARGET = 13.0;
-				MARKETING_VERSION = 0.1.1;
+				MARKETING_VERSION = 0.1.2;
 				PRODUCT_BUNDLE_IDENTIFIER = "com.bravohex.vietlunar.infrastructure-tests";
 				SDKROOT = macosx;
 				SWIFT_STRICT_CONCURRENCY = complete;
@@ -1201,17 +1106,17 @@
 			};
 			name = Release;
 		};
-		E1B479D531CBC3B0EB754794CF06A398 /* Debug */ = {
+		D42E9CBC8A09140C868C3C52B646686E /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				CLANG_WARN_DOCUMENTATION_COMMENTS = YES;
 				CLANG_WARN_QUOTED_INCLUDE_IN_FRAMEWORK_HEADER = YES;
-				CURRENT_PROJECT_VERSION = 1;
+				CURRENT_PROJECT_VERSION = 2;
 				ENABLE_USER_SCRIPT_SANDBOXING = YES;
 				EXECUTABLE_PREFIX = lib;
 				GENERATE_INFOPLIST_FILE = YES;
 				MACOSX_DEPLOYMENT_TARGET = 13.0;
-				MARKETING_VERSION = 0.1.1;
+				MARKETING_VERSION = 0.1.2;
 				PRODUCT_BUNDLE_IDENTIFIER = com.bravohex.vietlunar.infrastructure;
 				SDKROOT = macosx;
 				SKIP_INSTALL = YES;
@@ -1221,7 +1126,7 @@
 			};
 			name = Debug;
 		};
-		EDC7C9306820948DAB11E0B7578BAA14 /* Release */ = {
+		D6E11FB863E7F42EA79E432A8FD71704 /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
@@ -1229,9 +1134,8 @@
 				CLANG_WARN_DOCUMENTATION_COMMENTS = YES;
 				CLANG_WARN_QUOTED_INCLUDE_IN_FRAMEWORK_HEADER = YES;
 				CODE_SIGN_ENTITLEMENTS = App/VietLunar.entitlements;
-				CODE_SIGN_INJECT_BASE_ENTITLEMENTS = NO;
 				COMBINE_HIDPI_IMAGES = YES;
-				CURRENT_PROJECT_VERSION = 1;
+				CURRENT_PROJECT_VERSION = 2;
 				ENABLE_APP_SANDBOX = YES;
 				ENABLE_HARDENED_RUNTIME = YES;
 				ENABLE_USER_SCRIPT_SANDBOXING = YES;
@@ -1241,7 +1145,66 @@
 				INFOPLIST_KEY_NSHumanReadableCopyright = "Copyright © 2026 bravohex";
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/../Frameworks";
 				MACOSX_DEPLOYMENT_TARGET = 13.0;
-				MARKETING_VERSION = 0.1.1;
+				MARKETING_VERSION = 0.1.2;
+				PRODUCT_BUNDLE_IDENTIFIER = com.bravohex.vietlunar;
+				PRODUCT_NAME = VietLunar;
+				SDKROOT = macosx;
+				SWIFT_STRICT_CONCURRENCY = complete;
+				SWIFT_TREAT_WARNINGS_AS_ERRORS = YES;
+				SWIFT_VERSION = 6.0;
+			};
+			name = Debug;
+		};
+		D74238072B1EB7AD5AE3E725EFF6A3C3 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				CLANG_WARN_DOCUMENTATION_COMMENTS = YES;
+				CLANG_WARN_QUOTED_INCLUDE_IN_FRAMEWORK_HEADER = YES;
+				COMBINE_HIDPI_IMAGES = YES;
+				CURRENT_PROJECT_VERSION = 2;
+				DEFINES_MODULE = YES;
+				DYLIB_COMPATIBILITY_VERSION = 1;
+				DYLIB_CURRENT_VERSION = 1;
+				DYLIB_INSTALL_NAME_BASE = "@rpath";
+				ENABLE_USER_SCRIPT_SANDBOXING = YES;
+				GENERATE_INFOPLIST_FILE = YES;
+				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Frameworks";
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/../Frameworks @loader_path/Frameworks";
+				MACOSX_DEPLOYMENT_TARGET = 13.0;
+				MARKETING_VERSION = 0.1.2;
+				PRODUCT_BUNDLE_IDENTIFIER = com.bravohex.vietlunar.core;
+				PRODUCT_NAME = "$(TARGET_NAME:c99extidentifier)";
+				SDKROOT = macosx;
+				SKIP_INSTALL = YES;
+				SWIFT_STRICT_CONCURRENCY = complete;
+				SWIFT_TREAT_WARNINGS_AS_ERRORS = YES;
+				SWIFT_VERSION = 6.0;
+				VERSIONING_SYSTEM = "apple-generic";
+				VERSION_INFO_PREFIX = "";
+			};
+			name = Debug;
+		};
+		DAC0F653957745DB40C8AF660DD41A59 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = "";
+				CLANG_WARN_DOCUMENTATION_COMMENTS = YES;
+				CLANG_WARN_QUOTED_INCLUDE_IN_FRAMEWORK_HEADER = YES;
+				CODE_SIGN_ENTITLEMENTS = App/VietLunar.entitlements;
+				CODE_SIGN_INJECT_BASE_ENTITLEMENTS = NO;
+				COMBINE_HIDPI_IMAGES = YES;
+				CURRENT_PROJECT_VERSION = 2;
+				ENABLE_APP_SANDBOX = YES;
+				ENABLE_HARDENED_RUNTIME = YES;
+				ENABLE_USER_SCRIPT_SANDBOXING = YES;
+				GENERATE_INFOPLIST_FILE = YES;
+				INFOPLIST_KEY_LSApplicationCategoryType = "public.app-category.utilities";
+				INFOPLIST_KEY_LSUIElement = YES;
+				INFOPLIST_KEY_NSHumanReadableCopyright = "Copyright © 2026 bravohex";
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/../Frameworks";
+				MACOSX_DEPLOYMENT_TARGET = 13.0;
+				MARKETING_VERSION = 0.1.2;
 				PRODUCT_BUNDLE_IDENTIFIER = com.bravohex.vietlunar;
 				PRODUCT_NAME = VietLunar;
 				SDKROOT = macosx;
@@ -1251,14 +1214,51 @@
 			};
 			name = Release;
 		};
+		F22D0F5A1EC4E5B2C351A39E5BAFF04A /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				CLANG_WARN_DOCUMENTATION_COMMENTS = YES;
+				CLANG_WARN_QUOTED_INCLUDE_IN_FRAMEWORK_HEADER = YES;
+				CURRENT_PROJECT_VERSION = 2;
+				ENABLE_USER_SCRIPT_SANDBOXING = YES;
+				GENERATE_INFOPLIST_FILE = YES;
+				MACOSX_DEPLOYMENT_TARGET = 13.0;
+				MARKETING_VERSION = 0.1.2;
+				PRODUCT_BUNDLE_IDENTIFIER = "com.bravohex.vietlunar.core-tests";
+				SDKROOT = macosx;
+				SWIFT_STRICT_CONCURRENCY = complete;
+				SWIFT_TREAT_WARNINGS_AS_ERRORS = YES;
+				SWIFT_VERSION = 6.0;
+			};
+			name = Release;
+		};
+		FC13753B76E219C26A670E8AB5E346E5 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				CLANG_WARN_DOCUMENTATION_COMMENTS = YES;
+				CLANG_WARN_QUOTED_INCLUDE_IN_FRAMEWORK_HEADER = YES;
+				CURRENT_PROJECT_VERSION = 2;
+				ENABLE_USER_SCRIPT_SANDBOXING = YES;
+				GENERATE_INFOPLIST_FILE = YES;
+				MACOSX_DEPLOYMENT_TARGET = 13.0;
+				MARKETING_VERSION = 0.1.2;
+				PRODUCT_BUNDLE_IDENTIFIER = "com.bravohex.vietlunar.ui-tests";
+				SDKROOT = macosx;
+				SWIFT_STRICT_CONCURRENCY = complete;
+				SWIFT_TREAT_WARNINGS_AS_ERRORS = YES;
+				SWIFT_VERSION = 6.0;
+				TEST_TARGET_NAME = VietLunar;
+			};
+			name = Debug;
+		};
 /* End XCBuildConfiguration section */
 
 /* Begin XCConfigurationList section */
 		0590DAC975A367FF75BC0840A2081379 /* Build configuration list for PBXNativeTarget "VietLunarUITests" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
-				D3EC024F462CD098EC46192FA65E06EA /* Release */,
-				685E77FCA50BBAB611C10BFD08297CD2 /* Debug */,
+				552AFB801CC407FCFB05A534D497DA93 /* Release */,
+				FC13753B76E219C26A670E8AB5E346E5 /* Debug */,
 			);
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;
@@ -1266,8 +1266,8 @@
 		392A359272AD3A6E6FF7A150C5220C3E /* Build configuration list for PBXNativeTarget "VietLunarCore" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
-				29F7E474A178E5FA9E581D7B574586DA /* Release */,
-				921420A6749593B3456658C8E213FFF3 /* Debug */,
+				63C6AA0EA8294C5B030A95242E375520 /* Release */,
+				D74238072B1EB7AD5AE3E725EFF6A3C3 /* Debug */,
 			);
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;
@@ -1275,8 +1275,8 @@
 		39B820F40DE3D56B21BE4B62569CED32 /* Build configuration list for PBXNativeTarget "VietLunarCoreTests" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
-				AAD29E74943800BE6A5956339C4310F6 /* Release */,
-				75E1B632CC558A1C83AB1F37367857CC /* Debug */,
+				F22D0F5A1EC4E5B2C351A39E5BAFF04A /* Release */,
+				9835F2E00FAE685935F5F7DFAE0B7CA7 /* Debug */,
 			);
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;
@@ -1284,8 +1284,8 @@
 		40818EECC729BB1DFAD2BBC1C12F7378 /* Build configuration list for PBXNativeTarget "VietLunar" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
-				EDC7C9306820948DAB11E0B7578BAA14 /* Release */,
-				3A3A8EF6DCABB5A6EE8EB26CAFC76CFC /* Debug */,
+				DAC0F653957745DB40C8AF660DD41A59 /* Release */,
+				D6E11FB863E7F42EA79E432A8FD71704 /* Debug */,
 			);
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;
@@ -1293,8 +1293,8 @@
 		7A0BF369DBE3BCF554060D2F6AFA579F /* Build configuration list for PBXNativeTarget "VietLunarInfrastructureTests" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
-				D40257EC01D687135A57D4DCE857B8BA /* Release */,
-				05A4140F6ABC0F526F7B3DEBCF14F2ED /* Debug */,
+				B7DDEEED43C2C0AD6CBAB49CF35963CC /* Release */,
+				6FC1A936B2F58B352DCF66571D84C9A3 /* Debug */,
 			);
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;
@@ -1302,8 +1302,8 @@
 		ADBD2F690BB38440B5419DD03EA86391 /* Build configuration list for PBXNativeTarget "VietLunarInfrastructure" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
-				5685F11A31CCC7FDDD4369C7D6C4D8A1 /* Release */,
-				E1B479D531CBC3B0EB754794CF06A398 /* Debug */,
+				3A126381C58B8F587D2C8B03316F3799 /* Release */,
+				D42E9CBC8A09140C868C3C52B646686E /* Debug */,
 			);
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;
