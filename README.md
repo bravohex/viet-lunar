@@ -85,7 +85,7 @@ Chạy microbenchmark Core ở cấu hình optimized:
 
 Project generator là công cụ phát triển. Generated `VietLunar.xcodeproj` vẫn được commit để người dùng có thể mở và build ngay bằng Xcode.
 
-Hướng dẫn ký/notarize nằm tại [docs/DISTRIBUTION.md](docs/DISTRIBUTION.md). Không phân phối candidate build khi WBS còn release blocker.
+Hướng dẫn ký/notarize nằm tại [docs/DISTRIBUTION.md](docs/DISTRIBUTION.md); quy trình phát hành theo GitHub tag nằm tại [GitHub Release Guide](docs/github-releases-guide.md). Không phân phối candidate build khi WBS còn release blocker.
 
 ## Kiến trúc
 

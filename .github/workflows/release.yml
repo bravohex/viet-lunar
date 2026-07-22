@@ -36,14 +36,12 @@ jobs:
       - name: Import Developer ID certificate
         id: signing
         env:
-          APPLE_TEAM_ID: ${{ secrets.APPLE_TEAM_ID }}
           DEVELOPER_ID_CERTIFICATE_BASE64: ${{ secrets.DEVELOPER_ID_CERTIFICATE_BASE64 }}
           DEVELOPER_ID_CERTIFICATE_PASSWORD: ${{ secrets.DEVELOPER_ID_CERTIFICATE_PASSWORD }}
         run: |
           set -euo pipefail
 
           for secret_name in \
-            APPLE_TEAM_ID \
             DEVELOPER_ID_CERTIFICATE_BASE64 \
             DEVELOPER_ID_CERTIFICATE_PASSWORD; do
             if [[ -z "${!secret_name:-}" ]]; then
@@ -83,7 +81,6 @@ jobs:
 
       - name: Archive a signed universal Release app
         env:
-          APPLE_TEAM_ID: ${{ secrets.APPLE_TEAM_ID }}
           SIGNING_IDENTITY: ${{ steps.signing.outputs.identity }}
         run: |
           xcodebuild \
@@ -97,7 +94,6 @@ jobs:
             ONLY_ACTIVE_ARCH=NO \
             CODE_SIGN_STYLE=Manual \
             CODE_SIGN_IDENTITY="$SIGNING_IDENTITY" \
-            DEVELOPMENT_TEAM="$APPLE_TEAM_ID" \
             OTHER_CODE_SIGN_FLAGS="--timestamp" \
             clean archive
 

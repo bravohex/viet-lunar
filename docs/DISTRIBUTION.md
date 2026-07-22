@@ -14,13 +14,12 @@ Không notarize hoặc phân phối candidate build khi independent accuracy/lic
 
 `/.github/workflows/ci.yml` chạy trên mọi push và pull request: kiểm tra shell/Ruby script, reference data, full Xcode scheme và universal unsigned Release build. Không cần secret cho CI.
 
-`/.github/workflows/release.yml` chạy khi push tag `v*`. Workflow yêu cầu tag khớp `MARKETING_VERSION` trong app (`v0.1.0` cho phiên bản hiện tại), archive universal binary, ký Developer ID, gửi notarization, staple, kiểm tra Gatekeeper và publish GitHub Release gồm ZIP cùng SHA-256.
+`/.github/workflows/release.yml` chạy khi push tag `v*`. Workflow yêu cầu tag khớp `MARKETING_VERSION` trong app, archive universal binary, ký Developer ID, gửi notarization, staple, kiểm tra Gatekeeper và publish GitHub Release gồm ZIP cùng SHA-256. Dùng [GitHub Release Guide](github-releases-guide.md) hoặc `./scripts/release.sh VERSION --push` để chuẩn bị tag nhất quán.
 
 Tạo các **GitHub Actions secrets** sau trước lần release đầu tiên:
 
 | Secret | Giá trị cần lưu |
 |---|---|
-| `APPLE_TEAM_ID` | Apple Developer Team ID dùng để ký. |
 | `DEVELOPER_ID_CERTIFICATE_BASE64` | File `.p12` chứa Developer ID Application certificate **và private key**, mã hóa Base64. |
 | `DEVELOPER_ID_CERTIFICATE_PASSWORD` | Mật khẩu của file `.p12`. |
 | `NOTARY_KEY_ID` | Key ID của App Store Connect API key dùng cho notarization. |
