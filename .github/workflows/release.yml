@@ -16,7 +16,6 @@ jobs:
   release:
     runs-on: macos-15
     timeout-minutes: 45
-    environment: Configure CICD Release
     env:
       DEVELOPER_DIR: /Applications/Xcode_16.4.app/Contents/Developer
 
@@ -54,7 +53,11 @@ jobs:
           keychain_path="${RUNNER_TEMP}/vietlunar-signing.keychain-db"
           keychain_password="$(openssl rand -base64 32)"
 
-          printf '%s' "$DEVELOPER_ID_CERTIFICATE_BASE64" | base64 -D > "$certificate_path"
+          if ! printf '%s' "$DEVELOPER_ID_CERTIFICATE_BASE64" | base64 -D > "$certificate_path"; then
+            rm -f "$certificate_path"
+            echo "::error title=Invalid certificate Base64::Recreate DEVELOPER_ID_CERTIFICATE_BASE64 from the exported .p12 file. Paste only the Base64 text, without a data: prefix, quotes, or Markdown fences."
+            exit 1
+          fi
           security create-keychain -p "$keychain_password" "$keychain_path"
           security set-keychain-settings -lut 21600 "$keychain_path"
           security unlock-keychain -p "$keychain_password" "$keychain_path"

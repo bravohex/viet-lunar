@@ -41,7 +41,7 @@ Nếu rerun cùng tag sau khi release đã tồn tại, workflow upload đè hai
 - App Store Connect API key có quyền gửi notarization request.
 - GitHub Actions được cấp `contents: write`; workflow đã tự yêu cầu quyền này.
 
-Release dùng GitHub Environment **`Configure CICD Release`**. Tạo năm Environment secrets tại **Settings → Environments → Configure CICD Release**:
+Tạo năm Repository secrets tại **Settings → Secrets and variables → Actions → Secrets**:
 
 | Secret | Giá trị |
 |---|---|
@@ -53,11 +53,20 @@ Release dùng GitHub Environment **`Configure CICD Release`**. Tạo năm Enviro
 
 Developer ID certificate đã mang Apple Team ID, vì vậy không cần thêm `APPLE_TEAM_ID` secret. `GITHUB_TOKEN` cũng do GitHub tự cấp; không tự tạo secret cho token này.
 
-Tạo hai giá trị Base64 trên macOS, không commit file gốc:
+Tạo hai giá trị Base64 trên macOS, không commit file gốc. Các lệnh này tạo một dòng duy nhất để dán trực tiếp vào GitHub:
 
 ```bash
-base64 -i "Developer ID Application.p12" | tr -d '\n' | pbcopy
-base64 -i "AuthKey_ABC123XYZ.p8" | tr -d '\n' | pbcopy
+openssl base64 -A -in "Developer ID Application.p12" | pbcopy
+openssl base64 -A -in "AuthKey_ABC123XYZ.p8" | pbcopy
+```
+
+Với `DEVELOPER_ID_CERTIFICATE_BASE64`, phải export lại certificate từ Keychain Access dưới dạng `.p12` có cả **private key**, chạy lệnh đầu tiên và chọn **Update secret** để dán đúng nội dung clipboard. Không dán đường dẫn file, nội dung PEM, tiền tố `data:...;base64,`, dấu ngoặc kép hay Markdown code fence. Có thể tự kiểm tra trước khi dán:
+
+```bash
+openssl base64 -A -in "Developer ID Application.p12" |
+  openssl base64 -d -A > /tmp/vietlunar-developer-id-verify.p12
+cmp -s "Developer ID Application.p12" /tmp/vietlunar-developer-id-verify.p12 && echo "Base64 OK"
+rm -f /tmp/vietlunar-developer-id-verify.p12
 ```
 
 ## Release bằng script
