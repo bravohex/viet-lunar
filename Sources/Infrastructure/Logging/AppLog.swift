@@ -1,7 +1,7 @@
 import OSLog
 
 public enum AppLog: Sendable {
-    public static let subsystem = "com.tuanlm.VietLunar"
+    public static let subsystem = "com.bravohex.vietlunar"
 
     public static let lifecycle = Logger(subsystem: subsystem, category: "lifecycle")
     public static let calendar = Logger(subsystem: subsystem, category: "calendar")

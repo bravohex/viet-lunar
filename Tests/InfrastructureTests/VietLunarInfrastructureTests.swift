@@ -7,6 +7,6 @@ final class VietLunarInfrastructureTests: XCTestCase {
     }
 
     func testLoggingSubsystemIsStable() {
-        XCTAssertEqual(AppLog.subsystem, "com.tuanlm.VietLunar")
+        XCTAssertEqual(AppLog.subsystem, "com.bravohex.vietlunar")
     }
 }

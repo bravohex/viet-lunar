@@ -80,12 +80,12 @@ core_tests = project.new_target(:unit_test_bundle, "VietLunarCoreTests", :osx, "
 infrastructure_tests = project.new_target(:unit_test_bundle, "VietLunarInfrastructureTests", :osx, "13.0")
 ui_tests = project.new_target(:ui_test_bundle, "VietLunarUITests", :osx, "13.0")
 
-configure_target(core, "com.tuanlm.VietLunar.core")
-configure_target(infrastructure, "com.tuanlm.VietLunar.infrastructure")
-configure_target(app, "com.tuanlm.VietLunar")
-configure_target(core_tests, "com.tuanlm.VietLunar.core-tests")
-configure_target(infrastructure_tests, "com.tuanlm.VietLunar.infrastructure-tests")
-configure_target(ui_tests, "com.tuanlm.VietLunar.ui-tests")
+configure_target(core, "com.bravohex.vietlunar.core")
+configure_target(infrastructure, "com.bravohex.vietlunar.infrastructure")
+configure_target(app, "com.bravohex.vietlunar")
+configure_target(core_tests, "com.bravohex.vietlunar.core-tests")
+configure_target(infrastructure_tests, "com.bravohex.vietlunar.infrastructure-tests")
+configure_target(ui_tests, "com.bravohex.vietlunar.ui-tests")
 
 app.build_configurations.each do |configuration|
   settings = configuration.build_settings

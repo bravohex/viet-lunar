@@ -158,12 +158,12 @@ final class VietLunarUITests: XCTestCase {
     @MainActor
     func testPopoverPerformanceSignposts() {
         let firstOpenMetric = XCTOSSignpostMetric(
-            subsystem: "com.tuanlm.VietLunar",
+            subsystem: "com.bravohex.vietlunar",
             category: "PointsOfInterest",
             name: "Popover First Open"
         )
         let subsequentOpenMetric = XCTOSSignpostMetric(
-            subsystem: "com.tuanlm.VietLunar",
+            subsystem: "com.bravohex.vietlunar",
             category: "PointsOfInterest",
             name: "Popover Subsequent Open"
         )

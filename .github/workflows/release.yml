@@ -1,0 +1,190 @@
+name: Release macOS app
+
+on:
+  push:
+    tags:
+      - "v*"
+
+permissions:
+  contents: write
+
+concurrency:
+  group: release-${{ github.ref }}
+  cancel-in-progress: false
+
+jobs:
+  release:
+    runs-on: macos-14
+    timeout-minutes: 45
+
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Verify source and test suite
+        run: |
+          ./scripts/verify_reference_data.sh
+          ./scripts/test.sh
+
+      - name: Import Developer ID certificate
+        id: signing
+        env:
+          APPLE_TEAM_ID: ${{ secrets.APPLE_TEAM_ID }}
+          DEVELOPER_ID_CERTIFICATE_BASE64: ${{ secrets.DEVELOPER_ID_CERTIFICATE_BASE64 }}
+          DEVELOPER_ID_CERTIFICATE_PASSWORD: ${{ secrets.DEVELOPER_ID_CERTIFICATE_PASSWORD }}
+        run: |
+          set -euo pipefail
+
+          for secret_name in \
+            APPLE_TEAM_ID \
+            DEVELOPER_ID_CERTIFICATE_BASE64 \
+            DEVELOPER_ID_CERTIFICATE_PASSWORD; do
+            if [[ -z "${!secret_name:-}" ]]; then
+              echo "::error title=Missing release secret::${secret_name} must be configured."
+              exit 1
+            fi
+          done
+
+          certificate_path="${RUNNER_TEMP}/developer-id.p12"
+          keychain_path="${RUNNER_TEMP}/vietlunar-signing.keychain-db"
+          keychain_password="$(openssl rand -base64 32)"
+
+          printf '%s' "$DEVELOPER_ID_CERTIFICATE_BASE64" | base64 -D > "$certificate_path"
+          security create-keychain -p "$keychain_password" "$keychain_path"
+          security set-keychain-settings -lut 21600 "$keychain_path"
+          security unlock-keychain -p "$keychain_password" "$keychain_path"
+          security import "$certificate_path" \
+            -k "$keychain_path" \
+            -P "$DEVELOPER_ID_CERTIFICATE_PASSWORD" \
+            -A -t cert -f pkcs12
+          security set-key-partition-list \
+            -S apple-tool:,apple:,codesign: \
+            -s -k "$keychain_password" "$keychain_path"
+          security list-keychain -d user -s "$keychain_path"
+
+          signing_identity="$(
+            security find-identity -v -p codesigning "$keychain_path" |
+              sed -n 's/.*"\(Developer ID Application:.*\)"/\1/p' |
+              head -n 1
+          )"
+          if [[ -z "$signing_identity" ]]; then
+            echo "::error title=Developer ID certificate not found::Import a Developer ID Application certificate with its private key."
+            exit 1
+          fi
+
+          echo "identity=$signing_identity" >> "$GITHUB_OUTPUT"
+
+      - name: Archive a signed universal Release app
+        env:
+          APPLE_TEAM_ID: ${{ secrets.APPLE_TEAM_ID }}
+          SIGNING_IDENTITY: ${{ steps.signing.outputs.identity }}
+        run: |
+          xcodebuild \
+            -quiet \
+            -project VietLunar.xcodeproj \
+            -scheme VietLunar \
+            -configuration Release \
+            -destination "generic/platform=macOS" \
+            -archivePath "$RUNNER_TEMP/VietLunar.xcarchive" \
+            ARCHS="arm64 x86_64" \
+            ONLY_ACTIVE_ARCH=NO \
+            CODE_SIGN_STYLE=Manual \
+            CODE_SIGN_IDENTITY="$SIGNING_IDENTITY" \
+            DEVELOPMENT_TEAM="$APPLE_TEAM_ID" \
+            OTHER_CODE_SIGN_FLAGS="--timestamp" \
+            clean archive
+
+      - name: Verify signed archive and version tag
+        env:
+          RELEASE_TAG: ${{ github.ref_name }}
+        run: |
+          set -euo pipefail
+
+          app_path="$RUNNER_TEMP/VietLunar.xcarchive/Products/Applications/VietLunar.app"
+          info_plist="$app_path/Contents/Info.plist"
+          version="$(plutil -extract CFBundleShortVersionString raw "$info_plist")"
+
+          [[ "$(plutil -extract CFBundleIdentifier raw "$info_plist")" == "com.bravohex.vietlunar" ]]
+          [[ "$RELEASE_TAG" == "v$version" ]]
+          codesign --verify --deep --strict --verbose=2 "$app_path"
+          codesign -d --entitlements :- "$app_path" > "$RUNNER_TEMP/VietLunar.entitlements.plist"
+          [[ "$(plutil -extract com.apple.security.app-sandbox raw "$RUNNER_TEMP/VietLunar.entitlements.plist")" == "true" ]]
+          ! plutil -extract get-task-allow raw "$RUNNER_TEMP/VietLunar.entitlements.plist" >/dev/null 2>&1
+          lipo -archs "$app_path/Contents/MacOS/VietLunar" | grep -E '^arm64 x86_64$|^x86_64 arm64$'
+
+      - name: Create notarization archive
+        run: |
+          ditto -c -k --sequesterRsrc --keepParent \
+            "$RUNNER_TEMP/VietLunar.xcarchive/Products/Applications/VietLunar.app" \
+            "$RUNNER_TEMP/VietLunar-notarization.zip"
+
+      - name: Notarize app
+        env:
+          NOTARY_KEY_ID: ${{ secrets.NOTARY_KEY_ID }}
+          NOTARY_ISSUER_ID: ${{ secrets.NOTARY_ISSUER_ID }}
+          NOTARY_PRIVATE_KEY_BASE64: ${{ secrets.NOTARY_PRIVATE_KEY_BASE64 }}
+        run: |
+          set -euo pipefail
+
+          for secret_name in \
+            NOTARY_KEY_ID \
+            NOTARY_ISSUER_ID \
+            NOTARY_PRIVATE_KEY_BASE64; do
+            if [[ -z "${!secret_name:-}" ]]; then
+              echo "::error title=Missing release secret::${secret_name} must be configured."
+              exit 1
+            fi
+          done
+
+          notary_key_path="$RUNNER_TEMP/AuthKey_${NOTARY_KEY_ID}.p8"
+          trap 'rm -f "$notary_key_path"' EXIT
+          printf '%s' "$NOTARY_PRIVATE_KEY_BASE64" | base64 -D > "$notary_key_path"
+          xcrun notarytool submit "$RUNNER_TEMP/VietLunar-notarization.zip" \
+            --key "$notary_key_path" \
+            --key-id "$NOTARY_KEY_ID" \
+            --issuer "$NOTARY_ISSUER_ID" \
+            --wait
+
+      - name: Staple and assess notarized app
+        run: |
+          app_path="$RUNNER_TEMP/VietLunar.xcarchive/Products/Applications/VietLunar.app"
+          xcrun stapler staple "$app_path"
+          xcrun stapler validate "$app_path"
+          spctl --assess --type execute --verbose=4 "$app_path"
+
+      - name: Package release archive and checksum
+        id: package
+        env:
+          RELEASE_TAG: ${{ github.ref_name }}
+        run: |
+          archive_name="VietLunar-${RELEASE_TAG}-macos-universal.zip"
+          archive_path="$RUNNER_TEMP/$archive_name"
+
+          ditto -c -k --sequesterRsrc --keepParent \
+            "$RUNNER_TEMP/VietLunar.xcarchive/Products/Applications/VietLunar.app" \
+            "$archive_path"
+          shasum -a 256 "$archive_path" > "$archive_path.sha256"
+
+          echo "archive_name=$archive_name" >> "$GITHUB_OUTPUT"
+
+      - name: Publish GitHub Release
+        env:
+          GH_TOKEN: ${{ github.token }}
+          RELEASE_TAG: ${{ github.ref_name }}
+          ARCHIVE_NAME: ${{ steps.package.outputs.archive_name }}
+        run: |
+          assets=(
+            "$RUNNER_TEMP/$ARCHIVE_NAME"
+            "$RUNNER_TEMP/$ARCHIVE_NAME.sha256"
+          )
+
+          if gh release view "$RELEASE_TAG" >/dev/null 2>&1; then
+            gh release upload "$RELEASE_TAG" "${assets[@]}" --clobber
+          else
+            gh release create "$RELEASE_TAG" "${assets[@]}" \
+              --title "VietLunar $RELEASE_TAG" \
+              --generate-notes
+          fi
+
+      - name: Remove temporary signing keychain
+        if: always()
+        run: security delete-keychain "$RUNNER_TEMP/vietlunar-signing.keychain-db" || true

@@ -19,7 +19,7 @@ Không có dữ liệu cá nhân nào được gửi ra ngoài máy Mac. Project
 Gỡ VietLunar sẽ xóa application bundle nhưng macOS có thể giữ preferences. Người dùng kỹ thuật có thể xóa preferences bằng:
 
 ```bash
-defaults delete com.tuanlm.VietLunar
+defaults delete com.bravohex.vietlunar
 ```
 
 Login-item state có thể được tắt trong VietLunar hoặc tại **Cài đặt hệ thống > Cài đặt chung > Mục đăng nhập**.

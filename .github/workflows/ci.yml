@@ -1,0 +1,48 @@
+name: macOS CI
+
+on:
+  push:
+  pull_request:
+
+permissions:
+  contents: read
+
+concurrency:
+  group: ci-${{ github.workflow }}-${{ github.ref }}
+  cancel-in-progress: true
+
+jobs:
+  verify:
+    runs-on: macos-14
+    timeout-minutes: 30
+
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Validate repository scripts
+        run: |
+          bash -n scripts/*.sh
+          ruby -c Tools/ProjectGenerator/generate_project.rb
+
+      - name: Verify reference data
+        run: ./scripts/verify_reference_data.sh
+
+      - name: Build and run the full test scheme
+        run: ./scripts/test.sh
+
+      - name: Build an unsigned universal Release app
+        run: |
+          xcodebuild \
+            -quiet \
+            -project VietLunar.xcodeproj \
+            -scheme VietLunar \
+            -configuration Release \
+            -destination "generic/platform=macOS" \
+            -derivedDataPath .build/CIDerivedData \
+            ARCHS="arm64 x86_64" \
+            ONLY_ACTIVE_ARCH=NO \
+            CODE_SIGNING_ALLOWED=NO \
+            build
+
+          lipo -archs .build/CIDerivedData/Build/Products/Release/VietLunar.app/Contents/MacOS/VietLunar | \
+            grep -E '^arm64 x86_64$|^x86_64 arm64$'

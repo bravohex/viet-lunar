@@ -28,19 +28,27 @@ xcodebuild \
 open "$DEV_DERIVED_DATA/Build/Products/Debug/VietLunar.app"
 ```
 
-Để cài/cập nhật bản Debug vào `/Applications` khi kiểm thử như người dùng cuối, chạy sau khi build. Tài khoản cần có quyền ghi vào `/Applications`.
+Để build và cài/cập nhật bản Debug vào `~/Applications`, chạy:
 
 ```bash
-DEV_DERIVED_DATA=".build/DevDerivedData"
-APP_SOURCE="$DEV_DERIVED_DATA/Build/Products/Debug/VietLunar.app"
-APP_TARGET="/Applications/VietLunar.app"
-
-ditto "$APP_SOURCE" "$APP_TARGET"
-xattr -cr "$APP_TARGET"
-open "$APP_TARGET"
+./scripts/install.sh
 ```
 
-Bản Debug này chỉ dành cho development; không dùng để xác minh login item, notarization hoặc phát hành. Quy trình archive, ký và cài signed Release ở [hướng dẫn phân phối](docs/DISTRIBUTION.md).
+Để cài một bundle signed/notarized đã tải về, truyền đường dẫn app. Thêm `--system` nếu chủ động cài vào `/Applications` (có thể cần quyền quản trị):
+
+```bash
+./scripts/install.sh --app /path/to/VietLunar.app
+./scripts/install.sh --app /path/to/VietLunar.app --system
+```
+
+Gỡ app khỏi `~/Applications`; chỉ dùng `--purge-data` khi muốn xóa luôn preferences và sandbox container không thể khôi phục:
+
+```bash
+./scripts/uninstall.sh
+./scripts/uninstall.sh --purge-data
+```
+
+Bản Debug này chỉ dành cho development; không dùng để xác minh login item, notarization hoặc phát hành. Quy trình archive, ký, notarize và phát hành theo GitHub tag ở [hướng dẫn phân phối](docs/DISTRIBUTION.md).
 
 ## Build và test
 
