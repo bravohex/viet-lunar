@@ -56,6 +56,7 @@ grep -Eq '^MIT License$' "$PROJECT_ROOT/LICENSE"
 grep -Eq '^Copyright \(c\) 2026 bravohex$' "$PROJECT_ROOT/LICENSE"
 
 "$PROJECT_ROOT/scripts/verify_localizations.sh"
+python3 -m unittest discover -s "$PROJECT_ROOT/Tests/ScriptTests" -p 'test_*.py'
 
 xcodebuild -list -project "$PROJECT_PATH"
 

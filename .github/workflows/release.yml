@@ -114,8 +114,7 @@ jobs:
           [[ "$RELEASE_TAG" == "v$version" ]]
           codesign --verify --deep --strict --verbose=2 "$app_path"
           codesign -d --entitlements :- "$app_path" > "$RUNNER_TEMP/VietLunar.entitlements.plist"
-          [[ "$(plutil -extract com.apple.security.app-sandbox raw "$RUNNER_TEMP/VietLunar.entitlements.plist")" == "true" ]]
-          ! plutil -extract get-task-allow raw "$RUNNER_TEMP/VietLunar.entitlements.plist" >/dev/null 2>&1
+          python3 scripts/verify_release_entitlements.py "$RUNNER_TEMP/VietLunar.entitlements.plist"
           lipo -archs "$app_path/Contents/MacOS/VietLunar" | grep -E '^arm64 x86_64$|^x86_64 arm64$'
 
       - name: Create notarization archive
