@@ -10,7 +10,7 @@
 
 - [x] 1. Release entitlement verification: literal plist keys, reject debug/network entitlements; positive/negative fixture tests.
 - [x] 2. Portable release checksums: use archive basename; verify downloaded-file layout.
-- [ ] 3. CI shell validation: parse every script; demonstrate invalid later file is rejected.
+- [x] 3. CI shell validation: parse every script; demonstrate invalid later file is rejected.
 - [ ] 4. Can–Chi refresh: include hour boundaries even with clock hidden; test default/clock configurations and 00:59/22:59 transitions.
 - [ ] 5. Icon plus clock: render icon with actual presentation title; test AppKit configuration and preview parity.
 - [ ] 6. Calendar range and refresh isolation: render supported days at both ends, preserve weekday positions, isolate grid failures, test AppState orchestration.
