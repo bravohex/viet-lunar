@@ -152,10 +152,18 @@ private enum Astronomy {
 
     static func lunarDate(for solarDate: CivilDate, timeZoneHours: Double) -> LunarValue {
         let dayNumber = gregorianJDN(solarDate)
-        let k = Int(floor((Double(dayNumber) - 2_415_021.076_998_695) / 29.530_588_853))
-        var monthStart = newMoonDay(k: k + 1, timeZoneHours: timeZoneHours)
-        if monthStart > dayNumber {
+        var k = Int(floor((Double(dayNumber) - 2_415_021.076_998_695) / 29.530_588_853))
+        var monthStart = newMoonDay(k: k, timeZoneHours: timeZoneHours)
+        // The mean lunation estimate can lie on either side of the actual new moon.
+        while monthStart > dayNumber {
+            k -= 1
             monthStart = newMoonDay(k: k, timeZoneHours: timeZoneHours)
+        }
+        var nextStart = newMoonDay(k: k + 1, timeZoneHours: timeZoneHours)
+        while nextStart <= dayNumber {
+            k += 1
+            monthStart = nextStart
+            nextStart = newMoonDay(k: k + 1, timeZoneHours: timeZoneHours)
         }
 
         var month11Start = lunarMonth11(year: solarDate.year, timeZoneHours: timeZoneHours)
@@ -356,10 +364,7 @@ private enum Generator {
         try validateCuratedSentinels(timeZoneHours: arguments.timeZoneHours)
 
         let swiftSource = renderSwift(records: records)
-        try write(
-            Data(swiftSource.utf8),
-            to: arguments.swiftOutput
-        )
+        let recordsByYear = Dictionary(uniqueKeysWithValues: records.map { ($0.year, $0) })
 
         var rows: [[Int]] = []
         rows.reserveCapacity(upperJDN - lowerJDN + 1)
@@ -369,6 +374,19 @@ private enum Generator {
                 for: solar,
                 timeZoneHours: arguments.timeZoneHours
             )
+            guard let record = recordsByYear[lunar.year], (1...12).contains(lunar.month),
+                  !lunar.isLeapMonth || record.leapMonth == lunar.month else {
+                throw GeneratorError(description: "Invalid reference month at \(solar.iso8601)")
+            }
+            let monthIndex = lunar.month - 1
+                + ((record.leapMonth > 0 && lunar.month > record.leapMonth) ? 1 : 0)
+                + (lunar.isLeapMonth ? 1 : 0)
+            guard record.monthLengths.indices.contains(monthIndex),
+                  (1...record.monthLengths[monthIndex]).contains(lunar.day),
+                  record.tetJDN + record.monthLengths.prefix(monthIndex).reduce(0, +)
+                    + lunar.day - 1 == jdn else {
+                throw GeneratorError(description: "Reference/table mismatch at \(solar.iso8601)")
+            }
             rows.append([
                 jdn,
                 lunar.year,
@@ -382,7 +400,7 @@ private enum Generator {
             schemaVersion: 1,
             calendar: "Vietnamese modern astronomical lunisolar calendar",
             calculationTimeZone: "+07:00",
-            generator: "VietLunar original Swift astronomical table generator v1",
+            generator: "VietLunar original Swift astronomical table generator v2",
             independence: "Candidate data from the production-table generator; not an independent conformance oracle.",
             lowerSolarDate: arguments.lowerDate.iso8601,
             upperSolarDate: arguments.upperDate.iso8601,
@@ -401,6 +419,7 @@ private enum Generator {
         encoder.outputFormatting = [.sortedKeys, .withoutEscapingSlashes]
         var referenceData = try encoder.encode(payload)
         referenceData.append(0x0A)
+        try write(Data(swiftSource.utf8), to: arguments.swiftOutput)
         try write(referenceData, to: arguments.referenceOutput)
 
         print("Generated \(records.count) lunar-year records (1799...2200)")

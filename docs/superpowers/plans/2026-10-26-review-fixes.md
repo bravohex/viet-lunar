@@ -14,7 +14,7 @@
 - [x] 4. Can–Chi refresh: include hour boundaries even with clock hidden; test default/clock configurations and 00:59/22:59 transitions.
 - [x] 5. Icon plus clock: render icon with actual presentation title; test AppKit configuration and preview parity.
 - [x] 6. Calendar range and refresh isolation: render supported days at both ends, preserve weekday positions, isolate grid failures, test AppState orchestration.
-- [ ] 7. Reference generator: find the containing lunation, enforce valid days, regenerate deterministically and compare every JSON row to runtime.
+- [x] 7. Reference generator: find the containing lunation, enforce valid days, regenerate deterministically and compare every JSON row to runtime.
 - [ ] 8. Installer: reject source=destination, stage and validate before replacement, preserve previous install on failure; isolated fixture tests.
 - [ ] 9. Launch at login: inspect installed-path/registration evidence, fix lifecycle/state/error handling and actionable installation guidance; mock regressions plus real registration verification where available.
 
@@ -39,3 +39,5 @@
 - Task 5: AppKit renderer regression RED (3 assertions) → GREEN; 86 Core + 15 Infrastructure + 2 App tests pass. Added hostless AppTests target for orchestration tests.
 
 - Task 6: core boundary failure + 9 AppState assertions RED → GREEN; 87 Core + 15 Infrastructure + 4 App tests pass. Skip unsupported padding, add leading empty cells, compute navigation from supported bounds, rearm scheduler despite grid failure.
+
+- Task 7: invalid reference row RED → GREEN; all 146,097 rows match runtime, 88 Core + 15 Infrastructure + 4 App tests pass. Regeneration repeated with identical checksums; runtime Swift table unchanged. Independent-oracle release gate remains open.
