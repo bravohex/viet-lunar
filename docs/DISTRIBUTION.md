@@ -37,6 +37,28 @@ git push origin v0.1.0
 
 ## Reproducible verification
 
+### Launch at login
+
+Install the app in `/Applications` or `~/Applications`, launch that copy, then enable
+**Mở VietLunar khi đăng nhập** in Settings. This launches the app after user login,
+not before the macOS login screen. If macOS requires approval, use the System Settings
+button shown by VietLunar. A translocated, disk-image, temporary or build-directory
+copy must be installed before enabling this setting; do not remove quarantine as a workaround.
+
+The signed installed executable also supports explicit maintenance commands:
+
+```bash
+~/Applications/VietLunar.app/Contents/MacOS/VietLunar --login-item-status
+~/Applications/VietLunar.app/Contents/MacOS/VietLunar --enable-login-item
+~/Applications/VietLunar.app/Contents/MacOS/VietLunar --disable-login-item
+```
+
+Status is read-only. Enable/disable return a nonzero exit code on failure or pending
+approval. They never approve a macOS permission on the user's behalf. Verify `enabled`
+from the installed path, then log out/in manually to validate a real login launch.
+
+### Automated checks
+
 Từ repository root:
 
 ```bash

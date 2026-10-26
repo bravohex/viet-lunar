@@ -8,6 +8,7 @@ final class AppState: ObservableObject {
     @Published private(set) var currentSnapshot: CalendarSnapshot?
     @Published private(set) var preferences: AppPreferences
     @Published private(set) var loginItemStatus: LoginItemStatus
+    @Published private(set) var loginItemErrorMessage: String?
     @Published private(set) var errorMessage: String?
     @Published private(set) var selectedSolarDate: SolarDate?
     @Published private(set) var visibleMonth: YearMonth?
@@ -127,17 +128,25 @@ final class AppState: ObservableObject {
         isSettingsVisible = false
     }
 
+    var loginItemRequiresInstallation: Bool { loginItemService.requiresInstallation }
+
+    var canChangeLoginItem: Bool {
+        !loginItemRequiresInstallation || loginItemStatus == .enabled
+            || loginItemStatus == .requiresUserApproval
+    }
+
     func setLoginItemEnabled(_ isEnabled: Bool) {
         do {
             try loginItemService.setEnabled(isEnabled)
             refreshLoginItemStatus()
+            loginItemErrorMessage = nil
         } catch {
-            loginItemStatus = .error(
-                AppLocalization.format(
-                    "error.login_item",
-                    fallback: "Không thể thay đổi mục mở khi đăng nhập: %@",
-                    error.localizedDescription
-                )
+            // An unsuccessful unregister does not mean the item is disabled.
+            refreshLoginItemStatus()
+            loginItemErrorMessage = AppLocalization.format(
+                "error.login_item",
+                fallback: "Không thể thay đổi mục mở khi đăng nhập: %@",
+                error.localizedDescription
             )
         }
     }

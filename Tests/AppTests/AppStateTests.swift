@@ -5,6 +5,41 @@ import XCTest
 
 final class AppStateTests: XCTestCase {
     @MainActor
+    func testTemporaryAppCanDisableButCannotReenableLoginItem() {
+        let login = TestLoginService()
+        login.requiresInstallation = true
+        login.currentStatus = .enabled
+        let state = makeState(clock: TestClock("2026-10-26T05:00:00Z"), login: login)
+        state.settingsAppeared()
+        XCTAssertTrue(state.canChangeLoginItem)
+        state.setLoginItemEnabled(false)
+        XCTAssertEqual(state.loginItemStatus, .disabled)
+        XCTAssertFalse(state.canChangeLoginItem)
+    }
+    @MainActor
+    func testFailedUnregisterKeepsActualEnabledState() {
+        let login = TestLoginService()
+        login.currentStatus = .enabled
+        login.failure = NSError(domain: "LoginTest", code: 1)
+        let state = makeState(clock: TestClock("2026-10-26T05:00:00Z"), login: login)
+        state.settingsAppeared()
+        state.setLoginItemEnabled(false)
+        XCTAssertEqual(state.loginItemStatus, .enabled)
+    }
+
+    @MainActor
+    func testSettingsRefreshReadsExternalLoginItemChanges() {
+        let login = TestLoginService()
+        let state = makeState(clock: TestClock("2026-10-26T05:00:00Z"), login: login)
+        state.settingsAppeared()
+        XCTAssertEqual(state.loginItemStatus, .disabled)
+        login.currentStatus = .requiresUserApproval
+        state.settingsDisappeared()
+        state.settingsAppeared()
+        XCTAssertEqual(state.loginItemStatus, .requiresUserApproval)
+    }
+
+    @MainActor
     func testBoundaryMonthsRemainNavigable() throws {
         for (instant, previous, next, leading) in [
             ("1800-01-01T05:00:00Z", false, true, 2),
@@ -83,6 +118,7 @@ struct TestPreferences: PreferencesStoring {
 }
 
 final class TestLoginService: LoginItemServicing, @unchecked Sendable {
+    var requiresInstallation = false
     var currentStatus: LoginItemStatus = .disabled
     var failure: Error?
     func status() -> LoginItemStatus { currentStatus }

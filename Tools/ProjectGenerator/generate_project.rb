@@ -174,6 +174,7 @@ add_sources(
   [
     "VietLunarApp.swift",
     "StatusItemRenderer.swift",
+    "LoginItemCommand.swift",
     "IconAsset.swift",
     "AppState.swift",
     "Localization/AppLocalization.swift",
@@ -241,7 +242,7 @@ add_sources(
 add_sources(project, ui_tests, "UITests", "Tests/UITests", ["VietLunarUITests.swift"])
 
 add_sources(project, app_tests, "AppTests", "Tests/AppTests", Dir.glob(ROOT.join("Tests/AppTests/*.swift")).map { |path| File.basename(path) }.sort)
-add_sources(project, app_tests, "AppUnderTest", "App", ["AppState.swift", "Localization/AppLocalization.swift", "StatusItemRenderer.swift"])
+add_sources(project, app_tests, "AppUnderTest", "App", ["AppState.swift", "Localization/AppLocalization.swift", "StatusItemRenderer.swift", "LoginItemCommand.swift"])
 link_target(app_tests, core)
 link_target(app_tests, infrastructure)
 

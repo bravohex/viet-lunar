@@ -16,7 +16,7 @@
 - [x] 6. Calendar range and refresh isolation: render supported days at both ends, preserve weekday positions, isolate grid failures, test AppState orchestration.
 - [x] 7. Reference generator: find the containing lunation, enforce valid days, regenerate deterministically and compare every JSON row to runtime.
 - [x] 8. Installer: reject source=destination, stage and validate before replacement, preserve previous install on failure; isolated fixture tests.
-- [ ] 9. Launch at login: inspect installed-path/registration evidence, fix lifecycle/state/error handling and actionable installation guidance; mock regressions plus real registration verification where available.
+- [x] 9. Launch at login: inspect installed-path/registration evidence, fix lifecycle/state/error handling and actionable installation guidance; mock regressions plus real registration verification where available.
 
 ## Review focus
 
@@ -43,3 +43,8 @@
 - Task 7: invalid reference row RED → GREEN; all 146,097 rows match runtime, 88 Core + 15 Infrastructure + 4 App tests pass. Regeneration repeated with identical checksums; runtime Swift table unchanged. Independent-oracle release gate remains open.
 
 - Task 8: staged installer with source/alias protection and rollback; 9 script tests pass, including copy and promotion failures. Existing app is only stopped after successful installation.
+
+- Task 9: login failure state + transient registration tests RED → GREEN. 88 Core + 19 Infrastructure + 11 App tests pass; 9 script tests pass, localization/checksum checks pass.
+- Actual machine: only Downloads/translocated copy existed; macOS BTM dump contained no VietLunar registration. Installed signed universal Release into ~/Applications. Fresh installed process initially returned unavailable (.notFound), a state previously disabling the toggle. Explicit enable succeeded and a separate status process returned enabled; repeated enable remained enabled.
+- Final reviewer found temporary-location eligibility hid actual registration state. Fixed by exposing eligibility separately; temporary enabled items can still be disabled and CLI reports successful removal. Regression RED → GREEN; no other actionable final-review findings.
+- Verification limit: no logout/reboot performed; actual next-login launch remains a manual acceptance check. UI automation previously timed out. Independent astronomical-oracle and old acceptance gates remain open; no release published.
