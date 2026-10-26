@@ -168,7 +168,7 @@ jobs:
           ditto -c -k --sequesterRsrc --keepParent \
             "$RUNNER_TEMP/VietLunar.xcarchive/Products/Applications/VietLunar.app" \
             "$archive_path"
-          shasum -a 256 "$archive_path" > "$archive_path.sha256"
+          (cd "$RUNNER_TEMP" && shasum -a 256 "$archive_name") > "$archive_path.sha256"
 
           echo "archive_name=$archive_name" >> "$GITHUB_OUTPUT"
 
