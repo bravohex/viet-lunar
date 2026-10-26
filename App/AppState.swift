@@ -159,10 +159,16 @@ final class AppState: ObservableObject {
                     month: snapshot.solarDate.month
                 )
             }
-            if isCalendarPrepared {
-                try rebuildVisibleMonth()
-            }
             errorMessage = nil
+            if isCalendarPrepared {
+                do {
+                    try rebuildVisibleMonth()
+                } catch {
+                    errorMessage = AppLocalization.text(
+                        "error.current_month", fallback: "Không thể mở tháng hiện tại."
+                    )
+                }
+            }
             scheduleNextBoundary(after: snapshot.instant)
             menuBarPresentationDidChange?()
         } catch {
@@ -194,6 +200,12 @@ final class AppState: ObservableObject {
             return nil
         }
         return monthCells.first { $0.solarDate == selectedSolarDate }
+    }
+
+    var leadingGridPlaceholderCount: Int {
+        guard let first = monthCells.first else { return 0 }
+        let mondayIndex = GregorianJDN.jdn(for: first.solarDate) % 7
+        return preferences.weekStart == .monday ? mondayIndex : (mondayIndex + 1) % 7
     }
 
     func select(_ solarDate: SolarDate) {
@@ -302,12 +314,12 @@ final class AppState: ObservableObject {
             return
         }
 
+        defer { updateNavigationAvailability() }
         monthCells = try monthGridBuilder.build(
             displayedMonth: visibleMonth,
             weekStart: preferences.weekStart,
             today: snapshot.solarDate
         )
-        updateNavigationAvailability()
     }
 
     private func makeInstrumentedSnapshot() throws -> CalendarSnapshot {
@@ -330,17 +342,13 @@ final class AppState: ObservableObject {
 
     private func canBuildMonth(offset: Int) -> Bool {
         guard let visibleMonth,
-              let snapshot = currentSnapshot,
-              let target = try? visibleMonth.adding(months: offset)
+              let target = try? visibleMonth.adding(months: offset),
+              let firstDay = SolarDate.valid(year: target.year, month: target.month, day: 1)
         else {
             return false
         }
 
-        return (try? monthGridBuilder.build(
-            displayedMonth: target,
-            weekStart: preferences.weekStart,
-            today: snapshot.solarDate
-        )) != nil
+        return lunarEngine.supportedSolarRange.contains(firstDay)
     }
 
     private func scheduleNextBoundary(after instant: Date) {

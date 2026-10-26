@@ -89,7 +89,7 @@
             skipped = "NO">
             <BuildableReference
                BuildableIdentifier = "primary"
-               BlueprintIdentifier = "F1C29821A8ED4678678783B7D933B5EB"
+               BlueprintIdentifier = "DB84DC5A2E52C0F3DCDFC8C4ED1ACA30"
                BuildableName = "VietLunarAppTests.xctest"
                BlueprintName = "VietLunarAppTests"
                ReferencedContainer = "container:VietLunar.xcodeproj">
