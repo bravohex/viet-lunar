@@ -14,7 +14,7 @@
             buildForAnalyzing = "YES">
             <BuildableReference
                BuildableIdentifier = "primary"
-               BlueprintIdentifier = "74D9527A3FFCA4B04B515B93E1396CCB"
+               BlueprintIdentifier = "A156CF55DF4692578160D757291DA2F7"
                BuildableName = "VietLunar.app"
                BlueprintName = "VietLunar"
                ReferencedContainer = "container:VietLunar.xcodeproj">
@@ -58,7 +58,7 @@
       <MacroExpansion>
          <BuildableReference
             BuildableIdentifier = "primary"
-            BlueprintIdentifier = "74D9527A3FFCA4B04B515B93E1396CCB"
+            BlueprintIdentifier = "A156CF55DF4692578160D757291DA2F7"
             BuildableName = "VietLunar.app"
             BlueprintName = "VietLunar"
             ReferencedContainer = "container:VietLunar.xcodeproj">
@@ -89,6 +89,16 @@
             skipped = "NO">
             <BuildableReference
                BuildableIdentifier = "primary"
+               BlueprintIdentifier = "F1C29821A8ED4678678783B7D933B5EB"
+               BuildableName = "VietLunarAppTests.xctest"
+               BlueprintName = "VietLunarAppTests"
+               ReferencedContainer = "container:VietLunar.xcodeproj">
+            </BuildableReference>
+         </TestableReference>
+         <TestableReference
+            skipped = "NO">
+            <BuildableReference
+               BuildableIdentifier = "primary"
                BlueprintIdentifier = "4A011862F5D9B59B8E3A5EF83B7C4EBF"
                BuildableName = "VietLunarUITests.xctest"
                BlueprintName = "VietLunarUITests"
@@ -111,7 +121,7 @@
          runnableDebuggingMode = "0">
          <BuildableReference
             BuildableIdentifier = "primary"
-            BlueprintIdentifier = "74D9527A3FFCA4B04B515B93E1396CCB"
+            BlueprintIdentifier = "A156CF55DF4692578160D757291DA2F7"
             BuildableName = "VietLunar.app"
             BlueprintName = "VietLunar"
             ReferencedContainer = "container:VietLunar.xcodeproj">
@@ -128,7 +138,7 @@
          runnableDebuggingMode = "0">
          <BuildableReference
             BuildableIdentifier = "primary"
-            BlueprintIdentifier = "74D9527A3FFCA4B04B515B93E1396CCB"
+            BlueprintIdentifier = "A156CF55DF4692578160D757291DA2F7"
             BuildableName = "VietLunar.app"
             BlueprintName = "VietLunar"
             ReferencedContainer = "container:VietLunar.xcodeproj">

@@ -78,6 +78,7 @@ infrastructure = project.new_target(:static_library, "VietLunarInfrastructure", 
 app = project.new_target(:application, "VietLunar", :osx, "13.0")
 core_tests = project.new_target(:unit_test_bundle, "VietLunarCoreTests", :osx, "13.0")
 infrastructure_tests = project.new_target(:unit_test_bundle, "VietLunarInfrastructureTests", :osx, "13.0")
+app_tests = project.new_target(:unit_test_bundle, "VietLunarAppTests", :osx, "13.0")
 ui_tests = project.new_target(:ui_test_bundle, "VietLunarUITests", :osx, "13.0")
 
 configure_target(core, "com.bravohex.vietlunar.core")
@@ -85,6 +86,7 @@ configure_target(infrastructure, "com.bravohex.vietlunar.infrastructure")
 configure_target(app, "com.bravohex.vietlunar")
 configure_target(core_tests, "com.bravohex.vietlunar.core-tests")
 configure_target(infrastructure_tests, "com.bravohex.vietlunar.infrastructure-tests")
+configure_target(app_tests, "com.bravohex.vietlunar.app-tests")
 configure_target(ui_tests, "com.bravohex.vietlunar.ui-tests")
 
 app.build_configurations.each do |configuration|
@@ -171,6 +173,7 @@ add_sources(
   "App",
   [
     "VietLunarApp.swift",
+    "StatusItemRenderer.swift",
     "IconAsset.swift",
     "AppState.swift",
     "Localization/AppLocalization.swift",
@@ -237,6 +240,11 @@ add_sources(
 )
 add_sources(project, ui_tests, "UITests", "Tests/UITests", ["VietLunarUITests.swift"])
 
+add_sources(project, app_tests, "AppTests", "Tests/AppTests", Dir.glob(ROOT.join("Tests/AppTests/*.swift")).map { |path| File.basename(path) }.sort)
+add_sources(project, app_tests, "AppUnderTest", "App", ["AppState.swift", "Localization/AppLocalization.swift", "StatusItemRenderer.swift"])
+link_target(app_tests, core)
+link_target(app_tests, infrastructure)
+
 link_target(infrastructure, core)
 link_target(app, core)
 link_target(app, infrastructure)
@@ -270,6 +278,7 @@ scheme.add_build_target(core)
 scheme.add_build_target(infrastructure)
 scheme.add_test_target(core_tests)
 scheme.add_test_target(infrastructure_tests)
+scheme.add_test_target(app_tests)
 scheme.add_test_target(ui_tests)
 scheme.set_launch_target(app)
 scheme.save_as(PROJECT_PATH.to_s, "VietLunar", true)

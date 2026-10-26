@@ -172,28 +172,18 @@ final class VietLunarApplicationDelegate: NSObject, NSApplicationDelegate {
         }
 
         let presentation = appState.menuBarPresentation
+        let image: NSImage?
         if appState.preferences.titleFormat.isIconOnly {
-            let image = IconAsset.menuBarLunar.nsImage
+            image = IconAsset.menuBarLunar.nsImage
                 ?? NSImage(
                     systemSymbolName: "moon.circle.fill",
                     accessibilityDescription: presentation.accessibilityLabel
                 )
             image?.isTemplate = true
-            button.image = image
-            button.imagePosition = .imageOnly
-            button.imageScaling = .scaleProportionallyDown
-            button.title = ""
         } else {
-            button.image = nil
-            button.imagePosition = .noImage
-            button.title = presentation.title
-                ?? AppLocalization.text(
-                    "common.lunar_abbreviation",
-                    fallback: "ÂL"
-                )
+            image = nil
         }
-        button.toolTip = presentation.accessibilityLabel
-        button.setAccessibilityLabel(presentation.accessibilityLabel)
+        StatusItemRenderer.apply(presentation, icon: image, to: button)
     }
 
     private func makePreferencesStore() -> UserDefaultsPreferencesStore {

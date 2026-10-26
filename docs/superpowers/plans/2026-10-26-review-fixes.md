@@ -12,7 +12,7 @@
 - [x] 2. Portable release checksums: use archive basename; verify downloaded-file layout.
 - [x] 3. CI shell validation: parse every script; demonstrate invalid later file is rejected.
 - [x] 4. Can–Chi refresh: include hour boundaries even with clock hidden; test default/clock configurations and 00:59/22:59 transitions.
-- [ ] 5. Icon plus clock: render icon with actual presentation title; test AppKit configuration and preview parity.
+- [x] 5. Icon plus clock: render icon with actual presentation title; test AppKit configuration and preview parity.
 - [ ] 6. Calendar range and refresh isolation: render supported days at both ends, preserve weekday positions, isolate grid failures, test AppState orchestration.
 - [ ] 7. Reference generator: find the containing lunation, enforce valid days, regenerate deterministically and compare every JSON row to runtime.
 - [ ] 8. Installer: reject source=destination, stage and validate before replacement, preserve previous install on failure; isolated fixture tests.
@@ -35,3 +35,5 @@
 - Task 1 complete: literal entitlement checks; 4 fixture tests pass, real sandbox plist accepted. Prior workflow failure reproduced during review.
 
 - Task 4: RED 4 failures, GREEN 86 Core + 15 Infrastructure tests. Default refresh now includes Can–Chi hour boundaries.
+
+- Task 5: AppKit renderer regression RED (3 assertions) → GREEN; 86 Core + 15 Infrastructure + 2 App tests pass. Added hostless AppTests target for orchestration tests.
