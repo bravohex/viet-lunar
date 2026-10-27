@@ -28,7 +28,9 @@ jobs:
 
       - name: Validate repository scripts
         run: |
-          bash -n scripts/*.sh
+          for script in scripts/*.sh; do
+            bash -n "$script"
+          done
           ruby -c Tools/ProjectGenerator/generate_project.rb
 
       - name: Verify reference data

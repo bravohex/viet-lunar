@@ -71,10 +71,8 @@ if [[ ! -f "$INFO_PLIST" ]] || [[ "$(plutil -extract CFBundleIdentifier raw "$IN
 fi
 
 APP_DESTINATION="$INSTALL_DIRECTORY/${APP_NAME}.app"
-mkdir -p "$INSTALL_DIRECTORY"
+bash "$PROJECT_ROOT/scripts/install_bundle.sh" "$APP_SOURCE" "$APP_DESTINATION"
 /usr/bin/pkill -x "$APP_NAME" 2>/dev/null || true
-rm -rf "$APP_DESTINATION"
-ditto "$APP_SOURCE" "$APP_DESTINATION"
 
 echo "Installed: $APP_DESTINATION"
 if "$LAUNCH_AFTER_INSTALL"; then

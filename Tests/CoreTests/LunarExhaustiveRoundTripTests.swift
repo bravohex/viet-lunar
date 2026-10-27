@@ -4,6 +4,32 @@ import XCTest
 final class LunarExhaustiveRoundTripTests: XCTestCase {
     private let engine = LunarCalendarEngine()
 
+    func testEveryReferenceRowIsValidAndMatchesRuntimeTable() throws {
+        let root = URL(fileURLWithPath: #filePath)
+            .deletingLastPathComponent().deletingLastPathComponent().deletingLastPathComponent()
+        let data = try Data(contentsOf: root.appendingPathComponent(
+            "ReferenceData/vietnam-lunar-1800-2199.reference.json"
+        ))
+        let payload = try XCTUnwrap(JSONSerialization.jsonObject(with: data) as? [String: Any])
+        let rows = try XCTUnwrap(payload["rows"] as? [[Int]])
+        XCTAssertEqual(rows.count, 146_097)
+        let lowerJDN = GregorianJDN.jdn(for: engine.supportedSolarRange.lowerBound)
+        for (offset, row) in rows.enumerated() {
+            guard row.count == 5, row[0] == lowerJDN + offset,
+                  (1...30).contains(row[3]), (0...1).contains(row[4]) else {
+                return XCTFail("Invalid reference row at offset \(offset): \(row)")
+            }
+            let solar = try GregorianJDN.solarDate(forJDN: row[0])
+            let reference = try LunarDate(
+                validatingYear: row[1], month: row[2], day: row[3], isLeapMonth: row[4] == 1
+            )
+            let actual = try engine.lunarDate(for: solar)
+            guard actual == reference else {
+                return XCTFail("Reference mismatch for \(solar): \(reference) vs \(actual)")
+            }
+        }
+    }
+
     func testEverySupportedSolarDateRoundTripsThroughLunarDate() throws {
         let lowerJDN = GregorianJDN.jdn(for: engine.supportedSolarRange.lowerBound)
         let upperJDN = GregorianJDN.jdn(for: engine.supportedSolarRange.upperBound)

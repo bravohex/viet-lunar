@@ -1,3 +1,4 @@
+import Foundation
 import ServiceManagement
 
 public enum LoginItemStatus: Equatable, Sendable {
@@ -8,24 +9,50 @@ public enum LoginItemStatus: Equatable, Sendable {
     case error(String)
 }
 
+public enum LoginItemServiceError: Error {
+    case requiresInstallation
+}
+
+protocol LoginItemRegistering {
+    var status: SMAppService.Status { get }
+    func register() throws
+    func unregister() throws
+}
+
+extension SMAppService: LoginItemRegistering {}
+
 public protocol LoginItemServicing: Sendable {
+    var requiresInstallation: Bool { get }
     func status() -> LoginItemStatus
     func setEnabled(_ enabled: Bool) throws
     func openSystemSettings()
 }
 
-public final class SMLoginItemService: LoginItemServicing, @unchecked Sendable {
-    private let service: SMAppService
+public extension LoginItemServicing {
+    var requiresInstallation: Bool { false }
+}
 
-    public init(service: SMAppService = .mainApp) {
-        self.service = service
+public final class SMLoginItemService: LoginItemServicing, @unchecked Sendable {
+    private let service: any LoginItemRegistering
+    private let bundleURL: URL
+
+    public convenience init(service: SMAppService = .mainApp) {
+        self.init(registration: service, bundleURL: Bundle.main.bundleURL)
+    }
+
+    init(registration: any LoginItemRegistering, bundleURL: URL) {
+        self.bundleURL = bundleURL
+        self.service = registration
     }
 
     public func status() -> LoginItemStatus {
-        Self.map(status: service.status)
+        return Self.map(status: service.status)
     }
 
     public func setEnabled(_ enabled: Bool) throws {
+        if enabled && requiresInstallation {
+            throw LoginItemServiceError.requiresInstallation
+        }
         let currentStatus = status()
         if enabled,
            currentStatus == .enabled || currentStatus == .requiresUserApproval {
@@ -44,6 +71,15 @@ public final class SMLoginItemService: LoginItemServicing, @unchecked Sendable {
 
     public func openSystemSettings() {
         SMAppService.openSystemSettingsLoginItems()
+    }
+
+    public var requiresInstallation: Bool {
+        let path = bundleURL.standardizedFileURL.resolvingSymlinksInPath().path
+        let components = bundleURL.pathComponents
+        return components.contains("AppTranslocation")
+            || components.contains("DerivedData") || components.contains(".build")
+            || path.hasPrefix("/Volumes/") || path.hasPrefix("/private/var/folders/")
+            || path.hasPrefix("/private/tmp/") || path.hasPrefix("/tmp/")
     }
 
     public static func map(status: SMAppService.Status) -> LoginItemStatus {

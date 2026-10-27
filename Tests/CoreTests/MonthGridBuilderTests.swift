@@ -92,24 +92,20 @@ final class MonthGridBuilderTests: XCTestCase {
         XCTAssertTrue(leapMonthStart.lunarDate.isLeapMonth)
     }
 
-    func testGridReportsUnsupportedLeadingAndTrailingBoundaryDates() throws {
-        XCTAssertThrowsError(
-            try build(year: 1800, month: 1, weekStart: .monday, todayDay: 1)
-        ) { error in
-            guard case LunarCalendarError.unsupportedSolarDate(let date) = error else {
-                return XCTFail("Expected unsupportedSolarDate, got \(error)")
+    func testBoundaryMonthsContainEverySupportedDay() throws {
+        for weekStart in WeekStart.allCases {
+            for (year, month) in [(1800, 1), (2199, 12)] {
+                let cells = try build(year: year, month: month, weekStart: weekStart, todayDay: 1)
+                XCTAssertEqual(cells.filter(\.isInDisplayedMonth).count, 31)
+                XCTAssertTrue(cells.allSatisfy { engine.supportedSolarRange.contains($0.solarDate) })
+                XCTAssertEqual(cells.filter(\.isToday).count, 1)
             }
-            XCTAssertLessThan(date, self.engine.supportedSolarRange.lowerBound)
         }
+    }
 
-        XCTAssertThrowsError(
-            try build(year: 2199, month: 12, weekStart: .monday, todayDay: 1)
-        ) { error in
-            guard case LunarCalendarError.unsupportedSolarDate(let date) = error else {
-                return XCTFail("Expected unsupportedSolarDate, got \(error)")
-            }
-            XCTAssertGreaterThan(date, self.engine.supportedSolarRange.upperBound)
-        }
+    func testOutsideMonthsRemainUnsupportedEvenWhenPaddingOverlapsRange() {
+        XCTAssertThrowsError(try build(year: 1799, month: 12, weekStart: .monday, todayDay: 1))
+        XCTAssertThrowsError(try build(year: 2200, month: 1, weekStart: .monday, todayDay: 1))
     }
 
     private func build(

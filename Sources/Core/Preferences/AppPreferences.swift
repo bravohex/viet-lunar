@@ -32,7 +32,8 @@ public struct AppPreferences: Equatable, Codable, Sendable {
     public func refreshRequirements(
         displayedClockTimeZone: TimeZone
     ) -> RefreshRequirements {
-        var granularities: Set<RefreshGranularity> = [.vietnamMidnight]
+        // The popover and status-item accessibility text always expose the hour.
+        var granularities: Set<RefreshGranularity> = [.vietnamMidnight, .canChiHour]
         if showsClock {
             granularities.insert(.minute)
         }

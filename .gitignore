@@ -25,6 +25,7 @@ xcuserdata/
 # Swift tooling caches
 .swiftpm/
 .sourcekit-lsp/
+__pycache__/
 
 # Local IDE settings
 .idea/

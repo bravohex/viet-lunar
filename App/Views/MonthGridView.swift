@@ -89,6 +89,13 @@ struct MonthGridView: View {
                         )
                 }
 
+                ForEach(0..<appState.leadingGridPlaceholderCount, id: \.self) { _ in
+                    Color.clear
+                        .frame(height: 39)
+                        .accessibilityHidden(true)
+                        .allowsHitTesting(false)
+                }
+
                 ForEach(appState.monthCells) { cell in
                     MonthGridCellView(
                         cell: cell,

@@ -17,6 +17,9 @@ public struct MonthGridBuilder: Sendable {
             month: displayedMonth.month,
             day: 1
         )
+        guard lunarEngine.supportedSolarRange.contains(firstDay) else {
+            throw LunarCalendarError.unsupportedSolarDate(firstDay)
+        }
         let firstDayJDN = GregorianJDN.jdn(for: firstDay)
         let leadingDayCount = leadingDayCount(
             firstDayJDN: firstDayJDN,
@@ -29,6 +32,8 @@ public struct MonthGridBuilder: Sendable {
 
         for offset in 0..<Self.cellCount {
             let solarDate = try GregorianJDN.solarDate(forJDN: gridStartJDN + offset)
+            // Boundary padding is blank in the UI, not a failed supported month.
+            guard lunarEngine.supportedSolarRange.contains(solarDate) else { continue }
             let lunarDate = try lunarEngine.lunarDate(for: solarDate)
             cells.append(
                 MonthGridCell(

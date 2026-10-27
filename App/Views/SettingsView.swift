@@ -198,11 +198,18 @@ struct SettingsView: View {
                     ),
                     isOn: loginItemBinding
                 )
-                    .disabled(appState.loginItemStatus == .unavailable)
+                    .disabled(!appState.canChangeLoginItem)
                     .accessibilityIdentifier("launch-at-login-toggle")
                 Text(loginItemStatusMessage)
                     .font(.caption)
                     .foregroundStyle(.secondary)
+
+                if let message = appState.loginItemErrorMessage {
+                    Text(message)
+                        .font(.caption)
+                        .foregroundStyle(.red)
+                        .accessibilityIdentifier("login-item-error")
+                }
 
                 if appState.loginItemStatus == .requiresUserApproval {
                     Button(
@@ -330,7 +337,13 @@ struct SettingsView: View {
     }
 
     private var loginItemStatusMessage: String {
-        switch appState.loginItemStatus {
+        if appState.loginItemRequiresInstallation {
+            return AppLocalization.text(
+                "settings.login_item.requires_installation",
+                fallback: "Hãy chuyển VietLunar vào Applications, mở bản đã cài rồi bật lại tùy chọn này. Bản chạy từ thư mục tạm không thể tự mở ổn định khi đăng nhập."
+            )
+        }
+        return switch appState.loginItemStatus {
         case .disabled:
             AppLocalization.text(
                 "settings.login_item.disabled",
@@ -349,7 +362,7 @@ struct SettingsView: View {
         case .unavailable:
             AppLocalization.text(
                 "settings.login_item.unavailable",
-                fallback: "Chỉ khả dụng khi VietLunar được cài đặt và ký hợp lệ."
+                fallback: "Chưa tìm thấy đăng ký mở khi đăng nhập. Hãy mở bản VietLunar đã cài trong Applications và bật lại để thử đăng ký."
             )
         case let .error(message):
             message

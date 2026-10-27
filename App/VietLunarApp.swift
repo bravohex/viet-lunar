@@ -5,7 +5,7 @@ import VietLunarInfrastructure
 
 @main
 @MainActor
-final class VietLunarApplicationDelegate: NSObject, NSApplicationDelegate {
+final class VietLunarApplicationDelegate: NSObject, NSApplicationDelegate, NSWindowDelegate {
     static let shared = VietLunarApplicationDelegate()
 
     private var appState: AppState?
@@ -17,6 +17,13 @@ final class VietLunarApplicationDelegate: NSObject, NSApplicationDelegate {
         let application = NSApplication.shared
         application.delegate = shared
         application.setActivationPolicy(.accessory)
+        if let argument = CommandLine.arguments.dropFirst().first,
+           let command = LoginItemCommand(rawValue: argument) {
+            let result = command.execute(using: SMLoginItemService())
+            print("App: \(Bundle.main.bundlePath)")
+            print(result.message)
+            exit(result.exitCode)
+        }
         application.run()
     }
 
@@ -70,6 +77,7 @@ final class VietLunarApplicationDelegate: NSObject, NSApplicationDelegate {
         }
 
         closePopover()
+        appState.settingsAppeared()
         let windowController: NSWindowController
         if let settingsWindowController {
             windowController = settingsWindowController
@@ -84,6 +92,7 @@ final class VietLunarApplicationDelegate: NSObject, NSApplicationDelegate {
             window.styleMask = [.titled, .closable, .miniaturizable]
             window.setContentSize(NSSize(width: 540, height: 440))
             window.isReleasedWhenClosed = false
+            window.delegate = self
             window.center()
             windowController = NSWindowController(window: window)
             settingsWindowController = windowController
@@ -96,6 +105,18 @@ final class VietLunarApplicationDelegate: NSObject, NSApplicationDelegate {
 
     func closePopover() {
         popover?.performClose(nil)
+    }
+
+    func windowDidBecomeKey(_ notification: Notification) {
+        if notification.object as? NSWindow === settingsWindowController?.window {
+            appState?.settingsAppeared()
+        }
+    }
+
+    func windowWillClose(_ notification: Notification) {
+        if notification.object as? NSWindow === settingsWindowController?.window {
+            appState?.settingsDisappeared()
+        }
     }
 
     @objc
@@ -172,28 +193,18 @@ final class VietLunarApplicationDelegate: NSObject, NSApplicationDelegate {
         }
 
         let presentation = appState.menuBarPresentation
+        let image: NSImage?
         if appState.preferences.titleFormat.isIconOnly {
-            let image = IconAsset.menuBarLunar.nsImage
+            image = IconAsset.menuBarLunar.nsImage
                 ?? NSImage(
                     systemSymbolName: "moon.circle.fill",
                     accessibilityDescription: presentation.accessibilityLabel
                 )
             image?.isTemplate = true
-            button.image = image
-            button.imagePosition = .imageOnly
-            button.imageScaling = .scaleProportionallyDown
-            button.title = ""
         } else {
-            button.image = nil
-            button.imagePosition = .noImage
-            button.title = presentation.title
-                ?? AppLocalization.text(
-                    "common.lunar_abbreviation",
-                    fallback: "ÂL"
-                )
+            image = nil
         }
-        button.toolTip = presentation.accessibilityLabel
-        button.setAccessibilityLabel(presentation.accessibilityLabel)
+        StatusItemRenderer.apply(presentation, icon: image, to: button)
     }
 
     private func makePreferencesStore() -> UserDefaultsPreferencesStore {
