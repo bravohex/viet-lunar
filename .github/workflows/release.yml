@@ -152,9 +152,36 @@ jobs:
 
       - name: Staple and assess notarized app
         run: |
+          set -euo pipefail
+
+          stapler_with_retry() {
+            local action="$1" app="$2"
+            local attempt=1 delay=10 output exit_code
+            while true; do
+              if output="$(xcrun stapler "$action" "$app" 2>&1)"; then
+                printf '%s\n' "$output"
+                return 0
+              else
+                exit_code=$?
+              fi
+              printf '%s\n' "$output" >&2
+
+              # Exit 68 alone can mean an invalid ticket. Only retry a confirmed
+              # dropped connection to Apple's ticket service, never bypass validation.
+              if [[ "$attempt" -ge 4 ]] ||
+                 ! grep -Eq 'NSURLErrorDomain Code=-1005([^0-9]|$)' <<< "$output"; then
+                return "$exit_code"
+              fi
+              echo "::warning::stapler $action lost its connection; retrying in ${delay}s (attempt $((attempt + 1))/4)."
+              sleep "$delay"
+              attempt=$((attempt + 1))
+              delay=$((delay * 2))
+            done
+          }
+
           app_path="$RUNNER_TEMP/VietLunar.xcarchive/Products/Applications/VietLunar.app"
-          xcrun stapler staple "$app_path"
-          xcrun stapler validate "$app_path"
+          stapler_with_retry staple "$app_path"
+          stapler_with_retry validate "$app_path"
           spctl --assess --type execute --verbose=4 "$app_path"
 
       - name: Package release archive and checksum
