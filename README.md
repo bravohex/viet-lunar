@@ -18,7 +18,7 @@ VietLunar là ứng dụng macOS native chạy hoàn toàn trên máy. Ứng d�
 - Xem lịch tháng dương và ngày âm Việt Nam ngay từ thanh menu.
 - Hiển thị Can–Chi của năm, tháng, ngày và giờ; kèm giờ hoàng đạo và phân loại ngày.
 - Tùy chỉnh nội dung thanh menu, đồng hồ, ngày bắt đầu tuần và quy ước đổi ngày Can–Chi.
-- Hiển thị ngày lễ Việt Nam: số ngày lễ chính thức đổi sang màu đỏ, tên ngày lễ hiện ở phần chi tiết ngày được chọn. Có thể nhập tệp `.ics` của quốc gia khác.
+- Hiển thị ngày lễ Việt Nam: số ngày lễ chính thức đổi sang màu đỏ và có chấm đỏ dưới ô (ngày kỷ niệm có vòng tròn cam), tên ngày lễ hiện ở phần chi tiết ngày được chọn. Có thể nhập tệp `.ics` của quốc gia khác.
 - Có thể mở VietLunar cùng lúc đăng nhập macOS.
 - Hỗ trợ VoiceOver và điều hướng bằng bàn phím.
 
