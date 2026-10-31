@@ -144,6 +144,8 @@ add_sources(
     "Formatting/VietnameseCalendarFormatter.swift",
     "Refresh/BoundaryCalculator.swift",
     "Preferences/AppPreferences.swift",
+    "Holidays/HolidayModels.swift",
+    "Holidays/ICSHolidayParser.swift",
     "Lunar/EncodedLunarYearRecord.swift",
     "Lunar/LunarCalendarCalculating.swift",
     "Lunar/LunarCalendarEngine.swift",
@@ -223,6 +225,7 @@ add_sources(
     "VietnameseCalendarFormatterTests.swift",
     "BoundaryCalculatorTests.swift",
     "AppPreferencesTests.swift",
+    "ICSHolidayParserTests.swift",
     "LunarExhaustiveRoundTripTests.swift"
   ]
 )
