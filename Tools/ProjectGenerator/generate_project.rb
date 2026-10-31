@@ -165,7 +165,8 @@ add_sources(
     "Lifecycle/SystemLifecycleSource.swift",
     "Lifecycle/LifecycleEventCoordinator.swift",
     "Preferences/UserDefaultsPreferencesStore.swift",
-    "LoginItem/SMLoginItemService.swift"
+    "LoginItem/SMLoginItemService.swift",
+    "Holidays/FileHolidaySourceStore.swift"
   ]
 )
 add_sources(
@@ -239,7 +240,8 @@ add_sources(
     "OneShotBoundarySchedulerTests.swift",
     "LifecycleSourceTests.swift",
     "UserDefaultsPreferencesStoreTests.swift",
-    "SMLoginItemServiceTests.swift"
+    "SMLoginItemServiceTests.swift",
+    "FileHolidaySourceStoreTests.swift"
   ]
 )
 add_sources(project, ui_tests, "UITests", "Tests/UITests", ["VietLunarUITests.swift"])
