@@ -10,12 +10,19 @@ struct TraditionalDayStatusLabel: View {
 
     var body: some View {
         if let presentation {
-            Text(presentation.text)
-                .font(.caption.weight(.semibold))
-                .foregroundStyle(presentation.color)
-                .accessibilityLabel(presentation.text)
-                .accessibilityValue(presentation.text)
-                .accessibilityIdentifier(accessibilityIdentifier)
+            HStack(spacing: 5) {
+                // Same dot as the month grid; the text carries the meaning.
+                Circle()
+                    .fill(presentation.color)
+                    .frame(width: 6, height: 6)
+                    .accessibilityHidden(true)
+                Text(presentation.text)
+                    .font(.caption.weight(.semibold))
+                    .foregroundStyle(.primary)
+                    .accessibilityLabel(presentation.text)
+                    .accessibilityValue(presentation.text)
+                    .accessibilityIdentifier(accessibilityIdentifier)
+            }
         }
     }
 

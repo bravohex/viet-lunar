@@ -121,7 +121,7 @@ struct MonthGridView: View {
                     "weekday.short.saturday",
                     fallback: "T7"
                 ),
-                color: .blue
+                color: .secondary
             ),
             WeekdayHeader(
                 id: 1,
@@ -166,6 +166,7 @@ private struct MonthGridCellView: View {
             VStack(spacing: 0) {
                 Text(String(cell.solarDate.day))
                     .font(.body.weight(isSelected ? .semibold : .regular))
+                    .foregroundStyle(isSunday ? Color.red : Color.primary)
                 Text(VietnameseCalendarFormatter.monthGridLunarLabel(cell.lunarDate))
                     .font(.caption2)
                     .foregroundStyle(.secondary)
@@ -183,7 +184,7 @@ private struct MonthGridCellView: View {
                         .stroke(Color.accentColor, lineWidth: 1.5)
                 }
             }
-            .opacity(cell.isInDisplayedMonth ? 1 : 0.42)
+            .opacity(cell.isInDisplayedMonth ? 1 : 0.55)
         }
         .buttonStyle(.plain)
         .accessibilityLabel(accessibilityLabel)
@@ -191,6 +192,12 @@ private struct MonthGridCellView: View {
         .accessibilityAddTraits(isSelected ? .isSelected : [])
         .accessibilityIdentifier("day-\(cell.solarDate.year)-\(cell.solarDate.month)-\(cell.solarDate.day)")
         .help("\(accessibilityLabel), \(dayClassificationText)")
+    }
+
+    /// Julian day numbers advance Monday = 0 ... Sunday = 6 modulo 7, the same
+    /// convention the grid uses for its leading placeholders.
+    private var isSunday: Bool {
+        GregorianJDN.jdn(for: cell.solarDate) % 7 == 6
     }
 
     private var accessibilityLabel: String {
