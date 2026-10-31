@@ -8,10 +8,7 @@ struct MenuPopoverView: View {
             CalendarHeaderView()
 
             if let errorMessage = appState.errorMessage {
-                Text(errorMessage)
-                    .font(.caption)
-                    .foregroundStyle(.red)
-                    .accessibilityIdentifier("error-banner")
+                ErrorMessageLabel(errorMessage, identifier: "error-banner")
             }
 
             MonthGridView()
@@ -34,5 +31,28 @@ struct MenuPopoverView: View {
         .onExitCommand {
             VietLunarApplicationDelegate.shared.closePopover()
         }
+    }
+}
+
+/// Error text with a warning symbol so the state is not conveyed by red alone.
+struct ErrorMessageLabel: View {
+    private let message: String
+    private let identifier: String
+
+    init(_ message: String, identifier: String) {
+        self.message = message
+        self.identifier = identifier
+    }
+
+    var body: some View {
+        HStack(alignment: .firstTextBaseline, spacing: 5) {
+            Image(systemName: "exclamationmark.triangle.fill")
+                .accessibilityHidden(true)
+            Text(message)
+                .fixedSize(horizontal: false, vertical: true)
+                .accessibilityIdentifier(identifier)
+        }
+        .font(.caption)
+        .foregroundStyle(.red)
     }
 }

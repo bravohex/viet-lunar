@@ -205,10 +205,7 @@ struct SettingsView: View {
                 }
 
                 if let message = appState.loginItemErrorMessage {
-                    Text(message)
-                        .font(.caption)
-                        .foregroundStyle(.red)
-                        .accessibilityIdentifier("login-item-error")
+                    ErrorMessageLabel(message, identifier: "login-item-error")
                 }
 
                 if appState.loginItemStatus == .requiresUserApproval {
@@ -225,9 +222,7 @@ struct SettingsView: View {
             }
 
                 if let errorMessage = appState.errorMessage {
-                    Text(errorMessage)
-                        .font(.caption)
-                        .foregroundStyle(.red)
+                    ErrorMessageLabel(errorMessage, identifier: "settings-error")
                 }
             }
             .formStyle(.grouped)
