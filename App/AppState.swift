@@ -15,6 +15,11 @@ final class AppState: ObservableObject {
     @Published private(set) var monthCells: [MonthGridCell] = []
     @Published private(set) var canNavigateToPreviousMonth = false
     @Published private(set) var canNavigateToNextMonth = false
+    @Published private(set) var holidaySources: [HolidaySource] = []
+    @Published private(set) var activeHolidaySourceID: String?
+    @Published private(set) var showsHolidayObservances = false
+    @Published private(set) var holidayImportErrorMessage: String?
+    @Published private(set) var holidayIndex = HolidayIndex.empty
 
     private var snapshotFactory: CalendarSnapshotFactory
     private let monthGridBuilder: MonthGridBuilder
@@ -25,10 +30,12 @@ final class AppState: ObservableObject {
     private let lifecycleSource: any LifecycleEventSourcing
     private let boundaryCalculator: any BoundaryCalculating
     private let boundaryScheduler: any BoundaryScheduling
+    private let holidayStore: any HolidaySourceStoring
     private var lifecycleCoordinator: LifecycleEventCoordinator?
     private var preferencesTask: Task<Void, Never>?
     private var isCalendarPrepared = false
     private var isSettingsVisible = false
+    private var areHolidaysLoaded = false
 
     var menuBarPresentationDidChange: (() -> Void)?
 
@@ -39,7 +46,8 @@ final class AppState: ObservableObject {
         boundaryCalculator: any BoundaryCalculating = BoundaryCalculator(),
         boundaryScheduler: (any BoundaryScheduling)? = nil,
         preferencesStore: any PreferencesStoring = UserDefaultsPreferencesStore(),
-        loginItemService: any LoginItemServicing = SMLoginItemService()
+        loginItemService: any LoginItemServicing = SMLoginItemService(),
+        holidayStore: (any HolidaySourceStoring)? = nil
     ) {
         let initialPreferences = preferencesStore.load()
         preferences = initialPreferences
@@ -58,6 +66,9 @@ final class AppState: ObservableObject {
         self.boundaryCalculator = boundaryCalculator
         self.boundaryScheduler = boundaryScheduler
             ?? OneShotBoundaryScheduler(clock: clock)
+        self.holidayStore = holidayStore ?? FileHolidaySourceStore(
+            builtInURL: Bundle.main.url(forResource: "vietnam", withExtension: "ics")
+        )
         refresh()
 
         let coordinator = LifecycleEventCoordinator(
@@ -121,6 +132,7 @@ final class AppState: ObservableObject {
 
     func settingsAppeared() {
         isSettingsVisible = true
+        loadHolidaysIfNeeded()
         refreshLoginItemStatus()
     }
 
@@ -189,6 +201,7 @@ final class AppState: ObservableObject {
     }
 
     func popoverOpened() {
+        loadHolidaysIfNeeded()
         if !isCalendarPrepared {
             isCalendarPrepared = true
             do {
@@ -327,6 +340,166 @@ final class AppState: ObservableObject {
         }
     }
 
+    // MARK: - Holidays
+
+    /// Holidays shown for `date`: official ones always, observances only when
+    /// the user turned them on.
+    func holidays(on date: SolarDate) -> [HolidayOccurrence] {
+        let occurrences = holidayIndex.occurrences(on: date)
+        return showsHolidayObservances
+            ? occurrences
+            : occurrences.filter { $0.kind == .official }
+    }
+
+    /// Only one source is visible at a time; nil shows no holidays.
+    func selectHolidaySource(_ id: String?) {
+        loadHolidaysIfNeeded()
+        if let id, !holidaySources.contains(where: { $0.id == id }) {
+            return
+        }
+
+        holidayStore.setActiveSourceID(id)
+        activeHolidaySourceID = id
+        rebuildHolidayIndex()
+        holidayImportErrorMessage = nil
+    }
+
+    func setShowsHolidayObservances(_ value: Bool) {
+        loadHolidaysIfNeeded()
+        holidayStore.setShowsObservances(value)
+        showsHolidayObservances = value
+    }
+
+    func clearHolidayImportError() {
+        holidayImportErrorMessage = nil
+    }
+
+    /// Imports one file. A successful import becomes the visible source; a
+    /// failure is appended to the message so several files can be reported
+    /// together (call `clearHolidayImportError()` before a batch).
+    func importHolidayCalendar(data: Data, suggestedName: String) {
+        loadHolidaysIfNeeded()
+        do {
+            let source = try holidayStore.importSource(
+                data: data,
+                suggestedName: suggestedName
+            )
+            holidaySources = holidayStore.loadSources()
+            holidayStore.setActiveSourceID(source.id)
+            activeHolidaySourceID = source.id
+            rebuildHolidayIndex()
+        } catch let error as HolidaySourceStoreError {
+            reportHolidayImportMessage(
+                holidayMessage(for: error),
+                fileName: suggestedName
+            )
+        } catch {
+            reportHolidayImportMessage(
+                holidayMessage(for: .storageFailure),
+                fileName: suggestedName
+            )
+        }
+    }
+
+    func reportHolidayImportFailure(_ failure: HolidayImportFailure, fileName: String) {
+        switch failure {
+        case .unreadable:
+            reportHolidayImportMessage(
+                holidayMessage(for: .invalidCalendar(.notText)),
+                fileName: fileName
+            )
+        case .tooLarge:
+            reportHolidayImportMessage(
+                holidayMessage(for: .invalidCalendar(.tooLarge)),
+                fileName: fileName
+            )
+        }
+    }
+
+    func removeHolidaySource(_ id: String) {
+        loadHolidaysIfNeeded()
+        guard let source = holidaySources.first(where: { $0.id == id }),
+              !source.isBuiltIn
+        else {
+            return
+        }
+
+        do {
+            try holidayStore.removeSource(id: id)
+            reloadHolidays()
+            holidayImportErrorMessage = nil
+        } catch {
+            holidayImportErrorMessage = holidayMessage(for: .storageFailure)
+        }
+    }
+
+    private func loadHolidaysIfNeeded() {
+        guard !areHolidaysLoaded else {
+            return
+        }
+        areHolidaysLoaded = true
+        reloadHolidays()
+    }
+
+    private func reloadHolidays() {
+        holidaySources = holidayStore.loadSources()
+        let storedID = holidayStore.activeSourceID()
+        activeHolidaySourceID = holidaySources.contains { $0.id == storedID }
+            ? storedID
+            : nil
+        showsHolidayObservances = holidayStore.showsObservances()
+        rebuildHolidayIndex()
+    }
+
+    private func rebuildHolidayIndex() {
+        if let activeHolidaySourceID,
+           let source = holidaySources.first(where: { $0.id == activeHolidaySourceID }) {
+            holidayIndex = HolidayIndex(calendar: source.calendar)
+        } else {
+            holidayIndex = .empty
+        }
+    }
+
+    private func reportHolidayImportMessage(_ message: String, fileName: String) {
+        let line = AppLocalization.format(
+            "holidays.error.file",
+            fallback: "%1$@: %2$@",
+            fileName,
+            message
+        )
+        holidayImportErrorMessage = holidayImportErrorMessage.map { $0 + "\n" + line } ?? line
+    }
+
+    private func holidayMessage(for error: HolidaySourceStoreError) -> String {
+        switch error {
+        case .invalidCalendar(.tooLarge):
+            AppLocalization.text(
+                "holidays.error.too_large",
+                fallback: "Tệp quá lớn (tối đa 1 MB)."
+            )
+        case .invalidCalendar(.tooManyEvents):
+            AppLocalization.text(
+                "holidays.error.too_many",
+                fallback: "Tệp có quá nhiều ngày lễ."
+            )
+        case .invalidCalendar(.noEvents):
+            AppLocalization.text(
+                "holidays.error.empty",
+                fallback: "Tệp không có ngày lễ trong dải 1800–2199."
+            )
+        case .invalidCalendar(.notText):
+            AppLocalization.text(
+                "holidays.error.unreadable",
+                fallback: "Không đọc được tệp. Hãy chọn tệp .ics hợp lệ."
+            )
+        case .storageFailure:
+            AppLocalization.text(
+                "holidays.error.storage",
+                fallback: "Không thể lưu tệp ngày lễ. Vui lòng thử lại."
+            )
+        }
+    }
+
     private func rebuildVisibleMonth() throws {
         guard let visibleMonth, let snapshot = currentSnapshot else {
             return
@@ -417,4 +590,10 @@ final class AppState: ObservableObject {
         )
         refresh()
     }
+}
+
+/// Why a chosen holiday file could not even be handed to the importer.
+enum HolidayImportFailure {
+    case unreadable
+    case tooLarge
 }

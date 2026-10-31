@@ -114,11 +114,231 @@ final class AppStateTests: XCTestCase {
         clock: TestClock,
         scheduler: TestScheduler = TestScheduler(),
         engine: TestEngine = TestEngine(),
-        login: TestLoginService = TestLoginService()
+        login: TestLoginService = TestLoginService(),
+        holidays: TestHolidayStore = TestHolidayStore()
     ) -> AppState {
         AppState(lunarEngine: engine, clock: clock, lifecycleSource: TestLifecycle(),
-                 boundaryScheduler: scheduler, preferencesStore: TestPreferences(), loginItemService: login)
+                 boundaryScheduler: scheduler, preferencesStore: TestPreferences(), loginItemService: login,
+                 holidayStore: holidays)
     }
+
+    // MARK: - Holidays
+
+    @MainActor
+    func testDefaultHolidaySourceShowsOfficialDaysAndHidesObservances() throws {
+        let state = makeState(clock: TestClock("2026-10-26T05:00:00Z"))
+        state.popoverOpened()
+
+        XCTAssertEqual(state.activeHolidaySourceID, FileHolidaySourceStore.builtInSourceID)
+        XCTAssertEqual(state.holidays(on: try day(2026, 9, 2)).map(\.name), ["Quốc khánh"])
+        XCTAssertTrue(state.holidays(on: try day(2026, 4, 21)).isEmpty)
+        XCTAssertTrue(state.holidays(on: try day(2026, 6, 1)).isEmpty)
+    }
+
+    @MainActor
+    func testObservancesAppearWhenEnabledAndTheChoiceIsStored() throws {
+        let holidays = TestHolidayStore()
+        let state = makeState(clock: TestClock("2026-10-26T05:00:00Z"), holidays: holidays)
+        state.popoverOpened()
+
+        state.setShowsHolidayObservances(true)
+
+        XCTAssertEqual(state.holidays(on: try day(2026, 4, 21)).map(\.name), ["Ngày Sách"])
+        XCTAssertTrue(holidays.observances)
+
+        state.setShowsHolidayObservances(false)
+        XCTAssertTrue(state.holidays(on: try day(2026, 4, 21)).isEmpty)
+    }
+
+    @MainActor
+    func testMultiDayHolidayReportsPositionInsideTheEvent() throws {
+        let state = makeState(clock: TestClock("2026-10-26T05:00:00Z"))
+        state.popoverOpened()
+
+        XCTAssertEqual(
+            state.holidays(on: try day(2026, 2, 18)),
+            [HolidayOccurrence(name: "Tết", kind: .official, dayNumber: 2, dayCount: 3)]
+        )
+    }
+
+    @MainActor
+    func testChoosingNoSourceHidesEveryHolidayAndUnknownSourcesAreIgnored() throws {
+        let holidays = TestHolidayStore()
+        let state = makeState(clock: TestClock("2026-10-26T05:00:00Z"), holidays: holidays)
+        state.popoverOpened()
+
+        state.selectHolidaySource(nil)
+        XCTAssertNil(state.activeHolidaySourceID)
+        XCTAssertNil(holidays.active)
+        XCTAssertTrue(state.holidays(on: try day(2026, 9, 2)).isEmpty)
+
+        state.selectHolidaySource("missing")
+        XCTAssertNil(state.activeHolidaySourceID)
+
+        state.selectHolidaySource(FileHolidaySourceStore.builtInSourceID)
+        XCTAssertEqual(state.holidays(on: try day(2026, 9, 2)).count, 1)
+    }
+
+    @MainActor
+    func testImportedSourceBecomesTheOnlyVisibleSource() throws {
+        let holidays = TestHolidayStore()
+        let state = makeState(clock: TestClock("2026-10-26T05:00:00Z"), holidays: holidays)
+        state.popoverOpened()
+
+        state.importHolidayCalendar(data: Data(), suggestedName: "japan.ics")
+
+        XCTAssertNil(state.holidayImportErrorMessage)
+        XCTAssertEqual(state.holidaySources.count, 2)
+        XCTAssertEqual(state.activeHolidaySourceID, TestHolidayStore.importedID)
+        XCTAssertEqual(holidays.active, TestHolidayStore.importedID)
+        XCTAssertEqual(state.holidays(on: try day(2026, 5, 3)).map(\.name), ["Golden Week"])
+        XCTAssertTrue(state.holidays(on: try day(2026, 9, 2)).isEmpty)
+    }
+
+    @MainActor
+    func testImportFailureNamesTheFileAndTheReason() {
+        let holidays = TestHolidayStore()
+        holidays.importError = .invalidCalendar(.noEvents)
+        let state = makeState(clock: TestClock("2026-10-26T05:00:00Z"), holidays: holidays)
+        state.popoverOpened()
+
+        state.importHolidayCalendar(data: Data(), suggestedName: "x.ics")
+
+        XCTAssertEqual(
+            state.holidayImportErrorMessage,
+            "x.ics: Tệp không có ngày lễ trong dải 1800–2199."
+        )
+        XCTAssertEqual(state.activeHolidaySourceID, FileHolidaySourceStore.builtInSourceID)
+        XCTAssertEqual(state.holidaySources.count, 1)
+    }
+
+    @MainActor
+    func testSeveralFailuresAreReportedTogetherUntilCleared() {
+        let holidays = TestHolidayStore()
+        holidays.importError = .storageFailure
+        let state = makeState(clock: TestClock("2026-10-26T05:00:00Z"), holidays: holidays)
+        state.popoverOpened()
+
+        state.importHolidayCalendar(data: Data(), suggestedName: "a.ics")
+        state.reportHolidayImportFailure(.tooLarge, fileName: "b.ics")
+
+        XCTAssertEqual(
+            state.holidayImportErrorMessage,
+            "a.ics: Không thể lưu tệp ngày lễ. Vui lòng thử lại.\nb.ics: Tệp quá lớn (tối đa 1 MB)."
+        )
+
+        state.clearHolidayImportError()
+        XCTAssertNil(state.holidayImportErrorMessage)
+    }
+
+    @MainActor
+    func testRemovingTheActiveImportedSourceFallsBackToTheDefault() throws {
+        let state = makeState(clock: TestClock("2026-10-26T05:00:00Z"))
+        state.popoverOpened()
+        state.importHolidayCalendar(data: Data(), suggestedName: "japan.ics")
+
+        state.removeHolidaySource(TestHolidayStore.importedID)
+
+        XCTAssertEqual(state.holidaySources.map(\.id), [FileHolidaySourceStore.builtInSourceID])
+        XCTAssertEqual(state.activeHolidaySourceID, FileHolidaySourceStore.builtInSourceID)
+        XCTAssertEqual(state.holidays(on: try day(2026, 9, 2)).count, 1)
+    }
+
+    @MainActor
+    func testBuiltInSourceCannotBeRemoved() {
+        let state = makeState(clock: TestClock("2026-10-26T05:00:00Z"))
+        state.popoverOpened()
+
+        state.removeHolidaySource(FileHolidaySourceStore.builtInSourceID)
+
+        XCTAssertEqual(state.holidaySources.map(\.id), [FileHolidaySourceStore.builtInSourceID])
+    }
+
+    @MainActor
+    func testStoredSelectionOfAMissingSourceShowsNothing() throws {
+        let holidays = TestHolidayStore()
+        holidays.active = "deleted-elsewhere"
+        let state = makeState(clock: TestClock("2026-10-26T05:00:00Z"), holidays: holidays)
+        state.popoverOpened()
+
+        XCTAssertNil(state.activeHolidaySourceID)
+        XCTAssertTrue(state.holidays(on: try day(2026, 9, 2)).isEmpty)
+    }
+
+    @MainActor
+    func testHolidaysAreNotLoadedUntilNeeded() {
+        let holidays = TestHolidayStore()
+        _ = makeState(clock: TestClock("2026-10-26T05:00:00Z"), holidays: holidays)
+
+        XCTAssertEqual(holidays.loadCount, 0)
+    }
+
+    private func day(_ year: Int, _ month: Int, _ day: Int) throws -> SolarDate {
+        try SolarDate(validatingYear: year, month: month, day: day)
+    }
+}
+
+final class TestHolidayStore: HolidaySourceStoring, @unchecked Sendable {
+    static let importedID = "imported"
+
+    var sources: [HolidaySource]
+    var active: String? = FileHolidaySourceStore.builtInSourceID
+    var observances = false
+    var importError: HolidaySourceStoreError?
+    private(set) var loadCount = 0
+
+    init() {
+        func date(_ year: Int, _ month: Int, _ day: Int) -> SolarDate {
+            SolarDate.valid(year: year, month: month, day: day)!
+        }
+        sources = [
+            HolidaySource(
+                id: FileHolidaySourceStore.builtInSourceID,
+                name: "",
+                isBuiltIn: true,
+                calendar: HolidayCalendar(name: nil, events: [
+                    HolidayEvent(name: "Tết", kind: .official, firstDate: date(2026, 2, 17), dayCount: 3),
+                    HolidayEvent(name: "Ngày Sách", kind: .observance, firstDate: date(2026, 4, 21)),
+                    HolidayEvent(name: "Quốc khánh", kind: .official, firstDate: date(2026, 9, 2))
+                ])
+            )
+        ]
+    }
+
+    func loadSources() -> [HolidaySource] {
+        loadCount += 1
+        return sources
+    }
+
+    func importSource(data: Data, suggestedName: String) throws -> HolidaySource {
+        if let importError { throw importError }
+        let source = HolidaySource(
+            id: Self.importedID,
+            name: suggestedName,
+            isBuiltIn: false,
+            calendar: HolidayCalendar(name: nil, events: [
+                HolidayEvent(
+                    name: "Golden Week",
+                    kind: .official,
+                    firstDate: SolarDate.valid(year: 2026, month: 5, day: 3)!
+                )
+            ])
+        )
+        sources.append(source)
+        return source
+    }
+
+    func removeSource(id: String) throws {
+        sources.removeAll { $0.id == id && !$0.isBuiltIn }
+        if active == id {
+            active = FileHolidaySourceStore.builtInSourceID
+        }
+    }
+
+    func activeSourceID() -> String? { active }
+    func setActiveSourceID(_ id: String?) { active = id }
+    func showsObservances() -> Bool { observances }
+    func setShowsObservances(_ value: Bool) { observances = value }
 }
 
 final class TestClock: Clock, @unchecked Sendable {
