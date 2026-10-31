@@ -203,7 +203,7 @@ add_resources(
   app,
   "AppResources",
   "App/Resources",
-  ["Localizable.xcstrings", "Assets.xcassets"]
+  ["Localizable.xcstrings", "Assets.xcassets", "Holidays/vietnam.ics"]
 )
 add_sources(
   project,
@@ -228,6 +228,7 @@ add_sources(
     "BoundaryCalculatorTests.swift",
     "AppPreferencesTests.swift",
     "ICSHolidayParserTests.swift",
+    "BundledHolidayCalendarTests.swift",
     "LunarExhaustiveRoundTripTests.swift"
   ]
 )

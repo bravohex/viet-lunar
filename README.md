@@ -18,6 +18,7 @@ VietLunar là ứng dụng macOS native chạy hoàn toàn trên máy. Ứng d�
 - Xem lịch tháng dương và ngày âm Việt Nam ngay từ thanh menu.
 - Hiển thị Can–Chi của năm, tháng, ngày và giờ; kèm giờ hoàng đạo và phân loại ngày.
 - Tùy chỉnh nội dung thanh menu, đồng hồ, ngày bắt đầu tuần và quy ước đổi ngày Can–Chi.
+- Hiển thị ngày lễ Việt Nam: số ngày lễ chính thức đổi sang màu đỏ, tên ngày lễ hiện ở phần chi tiết ngày được chọn. Có thể nhập tệp `.ics` của quốc gia khác.
 - Có thể mở VietLunar cùng lúc đăng nhập macOS.
 - Hỗ trợ VoiceOver và điều hướng bằng bàn phím.
 
@@ -35,9 +36,17 @@ Nếu macOS yêu cầu xác nhận ở lần mở đầu tiên, hãy làm theo h
 - Ngày âm và Can–Chi được tính theo quy ước múi giờ **UTC+7**.
 - Kết quả từ năm 1800 đến 1975 là lịch Việt Nam hiện đại suy rộng, không phải bản phục dựng lịch chính thức cho mọi vùng và giai đoạn lịch sử.
 
+## Ngày lễ
+
+- Dữ liệu mặc định là tệp [`App/Resources/Holidays/vietnam.ics`](App/Resources/Holidays/vietnam.ics). Khi cần cập nhật (năm mới, ngày nghỉ bù, ngày lễ mới), chỉ cần thay tệp này bằng bản mới, giữ nguyên tên, rồi build lại; mã nguồn không phụ thuộc vào nội dung hay năm của tệp.
+- Người dùng có thể vào **Cài đặt > Ngày lễ > Nhập tệp .ics…** để thêm một hoặc nhiều tệp. Có thể nhập nhiều nguồn nhưng mỗi lúc chỉ hiển thị một nguồn (hoặc không hiển thị).
+- Định dạng được hỗ trợ: sự kiện cả ngày (`DTSTART` dạng ngày, `DTEND` không tính ngày cuối), lặp hằng năm đơn giản (`RRULE:FREQ=YEARLY` với `INTERVAL`, `COUNT`, `UNTIL`). Sự kiện có giờ và quy tắc lặp phức tạp bị bỏ qua.
+- Sự kiện có `DESCRIPTION` chứa “observance” được xem là ngày kỷ niệm và mặc định bị ẩn; các sự kiện còn lại là ngày lễ chính thức.
+- Giới hạn: tối đa 1 MB mỗi tệp và năm từ 1800 đến 2199.
+
 ## Quyền riêng tư
 
-VietLunar hoạt động offline. Ứng dụng chỉ lưu các tùy chọn hiển thị trên máy Mac của bạn; không thu thập analytics, không hiển thị quảng cáo và không gửi dữ liệu cá nhân ra ngoài thiết bị. Xem [chính sách quyền riêng tư](PRIVACY.md).
+VietLunar hoạt động offline. Ứng dụng chỉ lưu các tùy chọn hiển thị và các tệp ngày lễ `.ics` do bạn nhập trên máy Mac của bạn; không thu thập analytics, không hiển thị quảng cáo và không gửi dữ liệu cá nhân ra ngoài thiết bị. Xem [chính sách quyền riêng tư](PRIVACY.md).
 
 ## Phát triển
 
