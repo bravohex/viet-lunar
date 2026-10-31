@@ -90,7 +90,7 @@ final class VietLunarApplicationDelegate: NSObject, NSApplicationDelegate, NSWin
                 fallback: "Cài đặt"
             )
             window.styleMask = [.titled, .closable, .miniaturizable]
-            window.setContentSize(NSSize(width: 540, height: 440))
+            window.setContentSize(NSSize(width: 540, height: 560))
             window.isReleasedWhenClosed = false
             window.delegate = self
             window.center()

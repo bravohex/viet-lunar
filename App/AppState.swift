@@ -461,12 +461,14 @@ final class AppState: ObservableObject {
     }
 
     private func reportHolidayImportMessage(_ message: String, fileName: String) {
-        let line = AppLocalization.format(
-            "holidays.error.file",
-            fallback: "%1$@: %2$@",
-            fileName,
-            message
-        )
+        let line = fileName.isEmpty
+            ? message
+            : AppLocalization.format(
+                "holidays.error.file",
+                fallback: "%1$@: %2$@",
+                fileName,
+                message
+            )
         holidayImportErrorMessage = holidayImportErrorMessage.map { $0 + "\n" + line } ?? line
     }
 

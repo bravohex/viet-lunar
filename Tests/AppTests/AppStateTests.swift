@@ -232,6 +232,19 @@ final class AppStateTests: XCTestCase {
     }
 
     @MainActor
+    func testFailureWithoutAFileNameShowsOnlyTheReason() {
+        let state = makeState(clock: TestClock("2026-10-26T05:00:00Z"))
+        state.popoverOpened()
+
+        state.reportHolidayImportFailure(.unreadable, fileName: "")
+
+        XCTAssertEqual(
+            state.holidayImportErrorMessage,
+            "Không đọc được tệp. Hãy chọn tệp .ics hợp lệ."
+        )
+    }
+
+    @MainActor
     func testRemovingTheActiveImportedSourceFallsBackToTheDefault() throws {
         let state = makeState(clock: TestClock("2026-10-26T05:00:00Z"))
         state.popoverOpened()

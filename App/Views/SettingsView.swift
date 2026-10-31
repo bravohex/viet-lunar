@@ -1,10 +1,12 @@
 import Foundation
 import SwiftUI
+import UniformTypeIdentifiers
 import VietLunarCore
 
 struct SettingsView: View {
     @EnvironmentObject private var appState: AppState
     @State private var selectedPane: SettingsPane = .general
+    @State private var isImportingHolidays = false
 
     var body: some View {
         VStack(spacing: 0) {
@@ -41,7 +43,7 @@ struct SettingsView: View {
                 AboutSettingsView()
             }
         }
-        .frame(width: 540, height: 440)
+        .frame(width: 540, height: 560)
     }
 
     private func paneButton(
@@ -183,6 +185,8 @@ struct SettingsView: View {
                     .foregroundStyle(.secondary)
             }
 
+                holidaySection
+
                 Section(
                     AppLocalization.text(
                         "settings.section.system",
@@ -227,12 +231,207 @@ struct SettingsView: View {
             }
             .formStyle(.grouped)
         }
+        .fileImporter(
+            isPresented: $isImportingHolidays,
+            allowedContentTypes: Self.holidayContentTypes,
+            allowsMultipleSelection: true
+        ) { result in
+            importHolidayFiles(result)
+        }
         .onAppear {
             appState.settingsAppeared()
         }
         .onDisappear {
             appState.settingsDisappeared()
         }
+    }
+
+    private var holidaySection: some View {
+        Section(
+            AppLocalization.text(
+                "settings.section.holidays",
+                fallback: "Ngày lễ"
+            )
+        ) {
+            Picker(
+                AppLocalization.text(
+                    "settings.field.holiday_source",
+                    fallback: "Nguồn"
+                ),
+                selection: holidaySourceBinding
+            ) {
+                Text(
+                    AppLocalization.text(
+                        "holidays.source.none",
+                        fallback: "Không hiện"
+                    )
+                )
+                .tag(String?.none)
+                ForEach(appState.holidaySources) { source in
+                    Text(holidaySourceName(source)).tag(Optional(source.id))
+                }
+            }
+            .accessibilityIdentifier("holiday-source-picker")
+
+            ForEach(holidayCoverageLines, id: \.self) { line in
+                Text(line)
+                    .font(.caption)
+                    .foregroundStyle(.secondary)
+                    .fixedSize(horizontal: false, vertical: true)
+            }
+
+            Toggle(
+                AppLocalization.text(
+                    "settings.toggle.holiday_observances",
+                    fallback: "Hiện cả ngày kỷ niệm"
+                ),
+                isOn: holidayObservancesBinding
+            )
+            .disabled(appState.activeHolidaySourceID == nil)
+            .accessibilityIdentifier("show-holiday-observances-toggle")
+
+            HStack {
+                Button(
+                    AppLocalization.text(
+                        "holidays.import.button",
+                        fallback: "Nhập tệp .ics…"
+                    )
+                ) {
+                    isImportingHolidays = true
+                }
+                .accessibilityIdentifier("import-holidays-button")
+
+                if let removableSource = removableHolidaySource {
+                    Button(
+                        AppLocalization.text(
+                            "holidays.remove",
+                            fallback: "Xoá nguồn này"
+                        )
+                    ) {
+                        appState.removeHolidaySource(removableSource.id)
+                    }
+                    .accessibilityIdentifier("remove-holiday-source-button")
+                }
+            }
+
+            if let message = appState.holidayImportErrorMessage {
+                ErrorMessageLabel(message, identifier: "holiday-import-error")
+            }
+        }
+    }
+
+    private static var holidayContentTypes: [UTType] {
+        [UTType.calendarEvent, UTType(filenameExtension: "ics")].compactMap { $0 }
+    }
+
+    private func importHolidayFiles(_ result: Result<[URL], Error>) {
+        appState.clearHolidayImportError()
+        let urls: [URL]
+        switch result {
+        case let .success(selected):
+            urls = selected
+        case let .failure(error):
+            if (error as? CocoaError)?.code != .userCancelled {
+                appState.reportHolidayImportFailure(.unreadable, fileName: "")
+            }
+            return
+        }
+
+        for url in urls {
+            let fileName = url.lastPathComponent
+            let hasAccess = url.startAccessingSecurityScopedResource()
+            defer {
+                if hasAccess {
+                    url.stopAccessingSecurityScopedResource()
+                }
+            }
+
+            do {
+                let size = try url.resourceValues(forKeys: [.fileSizeKey]).fileSize ?? 0
+                guard size <= ICSHolidayParser.maximumByteCount else {
+                    appState.reportHolidayImportFailure(.tooLarge, fileName: fileName)
+                    continue
+                }
+                let data = try Data(contentsOf: url)
+                appState.importHolidayCalendar(data: data, suggestedName: fileName)
+            } catch {
+                appState.reportHolidayImportFailure(.unreadable, fileName: fileName)
+            }
+        }
+    }
+
+    private var activeHolidaySource: HolidaySource? {
+        appState.holidaySources.first { $0.id == appState.activeHolidaySourceID }
+    }
+
+    private var removableHolidaySource: HolidaySource? {
+        guard let source = activeHolidaySource, !source.isBuiltIn else {
+            return nil
+        }
+        return source
+    }
+
+    private func holidaySourceName(_ source: HolidaySource) -> String {
+        if source.isBuiltIn && source.name.isEmpty {
+            return AppLocalization.text(
+                "holidays.source.built_in",
+                fallback: "Việt Nam"
+            )
+        }
+        return source.name
+    }
+
+    /// Which years the visible file covers, and a hint when it does not cover
+    /// the current year, since a file that has run out shows nothing.
+    private var holidayCoverageLines: [String] {
+        guard let range = activeHolidaySource?.calendar.yearRange else {
+            return []
+        }
+
+        var lines: [String] = []
+        if range.lowerBound == range.upperBound {
+            lines.append(
+                AppLocalization.format(
+                    "holidays.coverage.year",
+                    fallback: "Có dữ liệu cho năm %ld",
+                    range.lowerBound
+                )
+            )
+        } else {
+            lines.append(
+                AppLocalization.format(
+                    "holidays.coverage.years",
+                    fallback: "Có dữ liệu cho năm %1$ld–%2$ld",
+                    range.lowerBound,
+                    range.upperBound
+                )
+            )
+        }
+        if let currentYear = appState.currentSnapshot?.solarDate.year,
+           !range.contains(currentYear) {
+            lines.append(
+                AppLocalization.format(
+                    "holidays.coverage.missing_current",
+                    fallback: "Chưa có dữ liệu cho năm %ld. Hãy nhập tệp mới.",
+                    currentYear
+                )
+            )
+        }
+        return lines
+    }
+
+    private var holidaySourceBinding: Binding<String?> {
+        Binding(
+            get: { appState.activeHolidaySourceID },
+            set: { appState.selectHolidaySource($0) }
+        )
+    }
+
+    private var holidayObservancesBinding: Binding<Bool> {
+        Binding(
+            get: { appState.showsHolidayObservances },
+            set: { appState.setShowsHolidayObservances($0) }
+        )
     }
 
     private var titleFormatBinding: Binding<MenuBarTitleFormat> {
