@@ -19,113 +19,55 @@ struct MonthGridView: View {
     }
 
     var body: some View {
-        VStack(spacing: 7) {
-            HStack {
-                Button {
-                    appState.navigateMonth(by: -1)
-                } label: {
-                    AssetIconView(.previous, size: 16)
-                }
-                .buttonStyle(.plain)
-                .keyboardShortcut(.leftArrow, modifiers: .command)
-                .disabled(!appState.canNavigateToPreviousMonth)
-                .accessibilityLabel(
-                    AppLocalization.text(
-                        "navigation.previous_month",
-                        fallback: "Tháng trước"
+        LazyVGrid(columns: columns, spacing: 3) {
+            ForEach(weekdayHeaders) { header in
+                Text(header.label)
+                    .font(.caption2.weight(.semibold))
+                    .foregroundStyle(header.color)
+                    .frame(maxWidth: .infinity)
+                    .accessibilityLabel(header.label)
+                    .accessibilityValue(header.label)
+                    .accessibilityIdentifier(
+                        "weekday-header-\(header.id)"
                     )
-                )
-                .accessibilityIdentifier("previous-month-button")
-                .help(
-                    AppLocalization.text(
-                        "navigation.previous_month.help",
-                        fallback: "Xem tháng trước (⌘←)"
-                    )
-                )
-
-                Spacer()
-
-                if let visibleMonth = appState.visibleMonth {
-                    Text(VietnameseCalendarFormatter.monthTitle(visibleMonth))
-                        .font(.headline)
-                        .accessibilityIdentifier("visible-month-title")
-                }
-
-                Spacer()
-
-                Button {
-                    appState.navigateMonth(by: 1)
-                } label: {
-                    AssetIconView(.next, size: 16)
-                }
-                .buttonStyle(.plain)
-                .keyboardShortcut(.rightArrow, modifiers: .command)
-                .disabled(!appState.canNavigateToNextMonth)
-                .accessibilityLabel(
-                    AppLocalization.text(
-                        "navigation.next_month",
-                        fallback: "Tháng sau"
-                    )
-                )
-                .accessibilityIdentifier("next-month-button")
-                .help(
-                    AppLocalization.text(
-                        "navigation.next_month.help",
-                        fallback: "Xem tháng sau (⌘→)"
-                    )
-                )
             }
 
-            LazyVGrid(columns: columns, spacing: 3) {
-                ForEach(weekdayHeaders) { header in
-                    Text(header.label)
-                        .font(.caption2.weight(.semibold))
-                        .foregroundStyle(header.color)
-                        .frame(maxWidth: .infinity)
-                        .accessibilityLabel(header.label)
-                        .accessibilityValue(header.label)
-                        .accessibilityIdentifier(
-                            "weekday-header-\(header.id)"
-                        )
-                }
+            ForEach(0..<appState.leadingGridPlaceholderCount, id: \.self) { _ in
+                Color.clear
+                    .frame(height: 39)
+                    .accessibilityHidden(true)
+                    .allowsHitTesting(false)
+            }
 
-                ForEach(0..<appState.leadingGridPlaceholderCount, id: \.self) { _ in
-                    Color.clear
-                        .frame(height: 39)
-                        .accessibilityHidden(true)
-                        .allowsHitTesting(false)
-                }
-
-                ForEach(appState.monthCells) { cell in
-                    MonthGridCellView(
-                        cell: cell,
-                        isSelected: cell.solarDate == appState.selectedSolarDate
-                    ) {
-                        appState.select(cell.solarDate)
-                        isGridFocused = true
-                    }
+            ForEach(appState.monthCells) { cell in
+                MonthGridCellView(
+                    cell: cell,
+                    isSelected: cell.solarDate == appState.selectedSolarDate
+                ) {
+                    appState.select(cell.solarDate)
+                    isGridFocused = true
                 }
             }
-            .focusable()
-            .focused($isGridFocused)
-            .hidesFocusEffectWhenSupported()
-            .onMoveCommand { direction in
-                switch direction {
-                case .left:
-                    appState.moveSelection(byDays: -1)
-                case .right:
-                    appState.moveSelection(byDays: 1)
-                case .up:
-                    appState.moveSelection(byDays: -7)
-                case .down:
-                    appState.moveSelection(byDays: 7)
-                default:
-                    break
-                }
+        }
+        .focusable()
+        .focused($isGridFocused)
+        .hidesFocusEffectWhenSupported()
+        .onMoveCommand { direction in
+            switch direction {
+            case .left:
+                appState.moveSelection(byDays: -1)
+            case .right:
+                appState.moveSelection(byDays: 1)
+            case .up:
+                appState.moveSelection(byDays: -7)
+            case .down:
+                appState.moveSelection(byDays: 7)
+            default:
+                break
             }
-            .onAppear {
-                isGridFocused = true
-            }
+        }
+        .onAppear {
+            isGridFocused = true
         }
     }
 

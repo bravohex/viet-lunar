@@ -1,59 +1,80 @@
 import SwiftUI
 import VietLunarCore
 
+/// Month title with previous/next controls.
+///
+/// The selected-day panel below the grid is the only place that describes a
+/// day, so the popover has no separate "today" block repeating it.
 struct CalendarHeaderView: View {
-    let snapshot: CalendarSnapshot
+    @EnvironmentObject private var appState: AppState
 
     var body: some View {
-        VStack(alignment: .leading, spacing: 3) {
-            Text(VietnameseCalendarFormatter.fullGregorianDate(snapshot.solarDate))
-                .font(.headline)
-                .accessibilityIdentifier("today-header")
-
-            Text(
-                VietnameseCalendarFormatter.fullLunarDate(
-                    snapshot.lunarDate,
-                    yearCanChi: snapshot.yearCanChi
-                )
-            )
-            .foregroundStyle(.secondary)
-
-            TraditionalDayStatusLabel(
-                lunarDate: snapshot.lunarDate,
-                solarDate: snapshot.solarDate,
-                accessibilityIdentifier: "today-day-classification"
+        HStack(spacing: 0) {
+            monthButton(
+                icon: .previous,
+                offset: -1,
+                key: .leftArrow,
+                isEnabled: appState.canNavigateToPreviousMonth,
+                label: AppLocalization.text(
+                    "navigation.previous_month",
+                    fallback: "Tháng trước"
+                ),
+                help: AppLocalization.text(
+                    "navigation.previous_month.help",
+                    fallback: "Xem tháng trước (⌘←)"
+                ),
+                identifier: "previous-month-button"
             )
 
-            Text(
-                AppLocalization.format(
-                    "header.can_chi.day_month",
-                    fallback: "Ngày %1$@ · Tháng %2$@",
-                    snapshot.dayCanChi.description,
-                    snapshot.monthCanChi.description
-                )
-            )
-                .font(.caption)
-                .foregroundStyle(.secondary)
+            Spacer()
 
-            Text(
-                AppLocalization.format(
-                    "header.can_chi.hour",
-                    fallback: "Giờ %@",
-                    snapshot.hourCanChi.description
-                )
-            )
-                .font(.caption)
-                .foregroundStyle(.secondary)
+            if let visibleMonth = appState.visibleMonth {
+                Text(VietnameseCalendarFormatter.monthTitle(visibleMonth))
+                    .font(.headline)
+                    .accessibilityIdentifier("visible-month-title")
+            }
 
-            Text(
-                AppLocalization.text(
-                    "header.canonical_time_zone",
-                    fallback: "Lịch Việt Nam: UTC+7"
-                )
+            Spacer()
+
+            monthButton(
+                icon: .next,
+                offset: 1,
+                key: .rightArrow,
+                isEnabled: appState.canNavigateToNextMonth,
+                label: AppLocalization.text(
+                    "navigation.next_month",
+                    fallback: "Tháng sau"
+                ),
+                help: AppLocalization.text(
+                    "navigation.next_month.help",
+                    fallback: "Xem tháng sau (⌘→)"
+                ),
+                identifier: "next-month-button"
             )
-                .font(.caption2)
-                .foregroundStyle(.tertiary)
-                .accessibilityIdentifier("canonical-time-zone-note")
         }
+    }
+
+    private func monthButton(
+        icon: IconAsset,
+        offset: Int,
+        key: KeyEquivalent,
+        isEnabled: Bool,
+        label: String,
+        help: String,
+        identifier: String
+    ) -> some View {
+        Button {
+            appState.navigateMonth(by: offset)
+        } label: {
+            AssetIconView(icon, size: 16)
+                .frame(width: 28, height: 28)
+                .contentShape(Rectangle())
+        }
+        .buttonStyle(.plain)
+        .keyboardShortcut(key, modifiers: .command)
+        .disabled(!isEnabled)
+        .accessibilityLabel(label)
+        .accessibilityIdentifier(identifier)
+        .help(help)
     }
 }

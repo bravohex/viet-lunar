@@ -17,7 +17,7 @@ final class VietLunarUITests: XCTestCase {
 
         try openPopover(for: application)
 
-        XCTAssertTrue(application.staticTexts["today-header"].waitForExistence(timeout: 3))
+        XCTAssertTrue(application.staticTexts["selected-gregorian-date"].waitForExistence(timeout: 3))
         let saturdayHeader = application.staticTexts["weekday-header-7"]
         let sundayHeader = application.staticTexts["weekday-header-1"]
         XCTAssertTrue(saturdayHeader.exists)
@@ -51,9 +51,6 @@ final class VietLunarUITests: XCTestCase {
         XCTAssertTrue(auspiciousHoursValue.contains("("))
         XCTAssertTrue(auspiciousHoursValue.contains("–"))
         XCTAssertTrue(application.staticTexts["selected-hour-can-chi"].exists)
-        XCTAssertTrue(
-            application.staticTexts["canonical-time-zone-note"].exists
-        )
         XCTAssertTrue(application.buttons["quit-button"].exists)
 
         let todayCell = application.buttons[todayCellIdentifier()]
@@ -184,7 +181,7 @@ final class VietLunarUITests: XCTestCase {
             XCTAssertTrue(statusItem.waitForExistence(timeout: 3))
 
             statusItem.click()
-            let todayHeader = application.staticTexts["today-header"]
+            let todayHeader = application.staticTexts["selected-gregorian-date"]
             XCTAssertTrue(todayHeader.waitForExistence(timeout: 3))
 
             statusItem.click()
@@ -265,23 +262,14 @@ final class VietLunarUITests: XCTestCase {
         let expectedStatus = ["Ngày hoàng đạo", "Ngày hắc đạo"].first {
             dayCellValue.contains($0)
         }
-        let headerStatus = application.staticTexts["today-day-classification"]
         let selectedStatus = application.staticTexts["selected-day-classification"]
 
         guard let expectedStatus else {
-            XCTAssertFalse(headerStatus.exists, file: file, line: line)
             XCTAssertFalse(selectedStatus.exists, file: file, line: line)
             return
         }
 
-        XCTAssertTrue(headerStatus.exists, file: file, line: line)
         XCTAssertTrue(selectedStatus.exists, file: file, line: line)
-        XCTAssertEqual(
-            headerStatus.value as? String,
-            expectedStatus,
-            file: file,
-            line: line
-        )
         XCTAssertEqual(
             selectedStatus.value as? String,
             expectedStatus,

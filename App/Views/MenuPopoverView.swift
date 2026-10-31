@@ -5,9 +5,7 @@ struct MenuPopoverView: View {
 
     var body: some View {
         VStack(alignment: .leading, spacing: 10) {
-            if let snapshot = appState.currentSnapshot {
-                CalendarHeaderView(snapshot: snapshot)
-            }
+            CalendarHeaderView()
 
             if let errorMessage = appState.errorMessage {
                 Text(errorMessage)
@@ -15,8 +13,6 @@ struct MenuPopoverView: View {
                     .foregroundStyle(.red)
                     .accessibilityIdentifier("error-banner")
             }
-
-            Divider()
 
             MonthGridView()
 

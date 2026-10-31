@@ -10,7 +10,7 @@ struct SelectedDayDetailView: View {
     var body: some View {
         VStack(alignment: .leading, spacing: 3) {
             Text(VietnameseCalendarFormatter.fullGregorianDate(cell.solarDate))
-                .font(.subheadline.weight(.semibold))
+                .font(.headline)
                 .accessibilityIdentifier("selected-gregorian-date")
             Text(
                 VietnameseCalendarFormatter.fullLunarDate(
@@ -18,7 +18,7 @@ struct SelectedDayDetailView: View {
                     yearCanChi: yearCanChi
                 )
             )
-            .font(.caption)
+            .font(.subheadline)
             .accessibilityIdentifier("selected-lunar-date")
 
             Text(
