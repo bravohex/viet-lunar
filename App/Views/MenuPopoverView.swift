@@ -18,6 +18,7 @@ struct MenuPopoverView: View {
                 Divider()
                 SelectedDayDetailView(
                     cell: selectedCell,
+                    holidays: appState.holidays(on: selectedCell.solarDate),
                     currentSnapshot: snapshot
                 )
             }

@@ -42,7 +42,8 @@ struct MonthGridView: View {
             ForEach(appState.monthCells) { cell in
                 MonthGridCellView(
                     cell: cell,
-                    isSelected: cell.solarDate == appState.selectedSolarDate
+                    isSelected: cell.solarDate == appState.selectedSolarDate,
+                    holidays: appState.holidays(on: cell.solarDate)
                 ) {
                     appState.select(cell.solarDate)
                     isGridFocused = true
@@ -159,6 +160,7 @@ private extension View {
 private struct MonthGridCellView: View {
     let cell: MonthGridCell
     let isSelected: Bool
+    let holidays: [HolidayOccurrence]
     let action: () -> Void
 
     var body: some View {
@@ -166,7 +168,7 @@ private struct MonthGridCellView: View {
             VStack(spacing: 0) {
                 Text(String(cell.solarDate.day))
                     .font(.body.weight(isSelected ? .semibold : .regular))
-                    .foregroundStyle(isSunday ? Color.red : Color.primary)
+                    .foregroundStyle(isSunday || isOfficialHoliday ? Color.red : Color.primary)
                 Text(VietnameseCalendarFormatter.monthGridLunarLabel(cell.lunarDate))
                     .font(.caption2)
                     .foregroundStyle(.secondary)
@@ -191,7 +193,24 @@ private struct MonthGridCellView: View {
         .accessibilityValue(accessibilityValue)
         .accessibilityAddTraits(isSelected ? .isSelected : [])
         .accessibilityIdentifier("day-\(cell.solarDate.year)-\(cell.solarDate.month)-\(cell.solarDate.day)")
-        .help("\(accessibilityLabel), \(dayClassificationText)")
+        .help(
+            ([accessibilityLabel, dayClassificationText] + holidayTexts)
+                .joined(separator: ", ")
+        )
+    }
+
+    private var isOfficialHoliday: Bool {
+        holidays.contains { $0.kind == .official }
+    }
+
+    private var holidayTexts: [String] {
+        holidays.isEmpty ? [] : [
+            AppLocalization.format(
+                "holidays.accessibility",
+                fallback: "Ngày lễ: %@",
+                holidays.map(\.displayName).joined(separator: "; ")
+            )
+        ]
     }
 
     /// Julian day numbers advance Monday = 0 ... Sunday = 6 modulo 7, the same
@@ -221,7 +240,7 @@ private struct MonthGridCellView: View {
         case (false, false): ""
         }
 
-        return [selectionStatus, dayClassificationText]
+        return ([selectionStatus, dayClassificationText] + holidayTexts)
             .filter { !$0.isEmpty }
             .joined(separator: ", ")
     }

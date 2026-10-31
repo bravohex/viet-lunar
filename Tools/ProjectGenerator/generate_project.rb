@@ -186,6 +186,7 @@ add_sources(
     "Views/MonthGridView.swift",
     "Views/SelectedDayDetailView.swift",
     "Views/TraditionalDayStatusLabel.swift",
+    "Views/HolidayStatusLabel.swift",
     "Views/PopoverFooterView.swift",
     "Views/SettingsView.swift"
   ]

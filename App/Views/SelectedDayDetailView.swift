@@ -3,6 +3,7 @@ import VietLunarCore
 
 struct SelectedDayDetailView: View {
     let cell: MonthGridCell
+    let holidays: [HolidayOccurrence]
     let currentSnapshot: CalendarSnapshot
 
     private let calculator = CanChiCalculator()
@@ -20,6 +21,10 @@ struct SelectedDayDetailView: View {
             )
             .font(.subheadline)
             .accessibilityIdentifier("selected-lunar-date")
+
+            if !holidays.isEmpty {
+                HolidayStatusLabel(holidays: holidays)
+            }
 
             Text(
                 AppLocalization.format(
