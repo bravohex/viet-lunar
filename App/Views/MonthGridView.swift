@@ -173,7 +173,7 @@ private struct MonthGridCellView: View {
                     .font(.caption2)
                     .foregroundStyle(.secondary)
 
-                dayClassificationIndicator
+                dayIndicators
             }
             .frame(maxWidth: .infinity, minHeight: 39)
             .background {
@@ -272,19 +272,32 @@ private struct MonthGridCellView: View {
         }
     }
 
-    @ViewBuilder
-    private var dayClassificationIndicator: some View {
-        Group {
+    /// Small dots under the lunar label: traditional day class first, then the
+    /// holiday kind (filled red = official, orange ring = observance). The row
+    /// keeps its height when empty so cells do not jump between days.
+    private var dayIndicators: some View {
+        HStack(spacing: 3) {
             switch dayClassification {
             case .auspicious:
-                Circle().fill(Color.green)
+                Circle().fill(Color.green).frame(width: 5, height: 5)
             case .inauspicious:
-                Circle().fill(Color.gray)
+                Circle().fill(Color.gray).frame(width: 5, height: 5)
             case .ordinary:
-                Color.clear
+                EmptyView()
+            }
+
+            switch holidays.first?.kind {
+            case .official:
+                Circle().fill(Color.red).frame(width: 5, height: 5)
+            case .observance:
+                Circle()
+                    .strokeBorder(Color.orange, lineWidth: 1.2)
+                    .frame(width: 5, height: 5)
+            case nil:
+                EmptyView()
             }
         }
-        .frame(width: 5, height: 5)
+        .frame(height: 5)
         .accessibilityHidden(true)
     }
 }
