@@ -211,6 +211,15 @@ final class AppState: ObservableObject {
         return monthCells.first { $0.solarDate == selectedSolarDate }
     }
 
+    /// True while today's date is the selected date, which also means today's
+    /// month is displayed. The footer uses it to disable "Hôm nay".
+    var isShowingToday: Bool {
+        guard let currentSnapshot else {
+            return false
+        }
+        return selectedSolarDate == currentSnapshot.solarDate
+    }
+
     var leadingGridPlaceholderCount: Int {
         guard let first = monthCells.first else { return 0 }
         let mondayIndex = GregorianJDN.jdn(for: first.solarDate) % 7

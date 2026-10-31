@@ -20,6 +20,7 @@ struct PopoverFooterView: View {
                     AssetIconView(.today, size: 16)
                 }
             }
+            .disabled(appState.isShowingToday)
             .accessibilityIdentifier("today-button")
             .help(
                 AppLocalization.text(
@@ -59,7 +60,7 @@ struct PopoverFooterView: View {
                     Text(
                         AppLocalization.text(
                             "footer.quit",
-                            fallback: "Thoát VietLunar"
+                            fallback: "Thoát"
                         )
                     )
                 } icon: {

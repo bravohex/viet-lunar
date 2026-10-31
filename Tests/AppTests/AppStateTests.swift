@@ -59,6 +59,37 @@ final class AppStateTests: XCTestCase {
     }
 
     @MainActor
+    func testShowingTodayFollowsSelectionAndVisibleMonth() {
+        let state = makeState(clock: TestClock("2026-10-26T05:00:00Z"))
+        state.popoverOpened()
+        XCTAssertTrue(state.isShowingToday)
+
+        state.navigateMonth(by: 1)
+        XCTAssertFalse(state.isShowingToday)
+
+        state.returnToToday()
+        XCTAssertTrue(state.isShowingToday)
+
+        state.moveSelection(byDays: 1)
+        XCTAssertFalse(state.isShowingToday)
+    }
+
+    @MainActor
+    func testShowingTodayIsFalseAfterDayBoundaryLeavesSelectionBehind() {
+        let clock = TestClock("2026-10-26T05:00:00Z")
+        let state = makeState(clock: clock)
+        state.popoverOpened()
+        XCTAssertTrue(state.isShowingToday)
+
+        clock.instant = clock.instant.addingTimeInterval(86_400)
+        state.refresh()
+        XCTAssertFalse(state.isShowingToday)
+
+        state.returnToToday()
+        XCTAssertTrue(state.isShowingToday)
+    }
+
+    @MainActor
     func testGridFailureDoesNotStopLiveSnapshotMenuOrScheduler() throws {
         let clock = TestClock("2026-10-26T05:00:00Z")
         let scheduler = TestScheduler()

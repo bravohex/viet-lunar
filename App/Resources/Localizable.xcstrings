@@ -25,7 +25,7 @@
     "error.month_out_of_range" : { "extractionState" : "manual", "localizations" : { "vi" : { "stringUnit" : { "state" : "translated", "value" : "Tháng này nằm ngoài dải lịch được hỗ trợ." } } } },
     "error.preferences_save" : { "extractionState" : "manual", "localizations" : { "vi" : { "stringUnit" : { "state" : "translated", "value" : "Không thể lưu cài đặt. Vui lòng thử lại." } } } },
     "error.refresh_schedule" : { "extractionState" : "manual", "localizations" : { "vi" : { "stringUnit" : { "state" : "translated", "value" : "Không thể lên lịch cập nhật ngày tiếp theo." } } } },
-    "footer.quit" : { "extractionState" : "manual", "localizations" : { "vi" : { "stringUnit" : { "state" : "translated", "value" : "Thoát VietLunar" } } } },
+    "footer.quit" : { "extractionState" : "manual", "localizations" : { "vi" : { "stringUnit" : { "state" : "translated", "value" : "Thoát" } } } },
     "footer.quit.help" : { "extractionState" : "manual", "localizations" : { "vi" : { "stringUnit" : { "state" : "translated", "value" : "Thoát hoàn toàn khỏi VietLunar (⌘Q)" } } } },
     "footer.settings" : { "extractionState" : "manual", "localizations" : { "vi" : { "stringUnit" : { "state" : "translated", "value" : "Cài đặt" } } } },
     "footer.settings.help" : { "extractionState" : "manual", "localizations" : { "vi" : { "stringUnit" : { "state" : "translated", "value" : "Mở cài đặt VietLunar" } } } },
