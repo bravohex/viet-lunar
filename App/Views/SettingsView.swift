@@ -50,7 +50,7 @@ struct SettingsView: View {
         pane: SettingsPane,
         identifier: String
     ) -> some View {
-        Button {
+        let button = Button {
             selectedPane = pane
         } label: {
             Label {
@@ -59,24 +59,22 @@ struct SettingsView: View {
                 AssetIconView(icon, size: 16)
             }
         }
-        .buttonStyle(.bordered)
         .accessibilityIdentifier(identifier)
         .accessibilityAddTraits(selectedPane == pane ? .isSelected : [])
+        return paneStyle(button, isSelected: selectedPane == pane)
+    }
+
+    @ViewBuilder
+    private func paneStyle(_ button: some View, isSelected: Bool) -> some View {
+        if isSelected {
+            button.buttonStyle(.borderedProminent)
+        } else {
+            button.buttonStyle(.bordered)
+        }
     }
 
     private var generalSettings: some View {
         VStack(alignment: .leading, spacing: 0) {
-            Text(
-                AppLocalization.text(
-                    "settings.title",
-                    fallback: "Cài đặt VietLunar"
-                )
-            )
-                .font(.title2.bold())
-                .accessibilityIdentifier("settings-title")
-                .padding(.horizontal, 20)
-                .padding(.top, 16)
-
             Form {
                 Section(
                     AppLocalization.text(
@@ -200,9 +198,11 @@ struct SettingsView: View {
                 )
                     .disabled(!appState.canChangeLoginItem)
                     .accessibilityIdentifier("launch-at-login-toggle")
-                Text(loginItemStatusMessage)
-                    .font(.caption)
-                    .foregroundStyle(.secondary)
+                if let loginItemStatusMessage {
+                    Text(loginItemStatusMessage)
+                        .font(.caption)
+                        .foregroundStyle(.secondary)
+                }
 
                 if let message = appState.loginItemErrorMessage {
                     Text(message)
@@ -336,36 +336,31 @@ struct SettingsView: View {
         }
     }
 
-    private var loginItemStatusMessage: String {
+    /// Only states that need the user to act or understand something get a
+    /// message. "enabled" and "disabled" are already shown by the toggle, and
+    /// an enabled registration is not proof that macOS will relaunch the app.
+    private var loginItemStatusMessage: String? {
         if appState.loginItemRequiresInstallation {
             return AppLocalization.text(
                 "settings.login_item.requires_installation",
-                fallback: "Hãy chuyển VietLunar vào Applications, mở bản đã cài rồi bật lại tùy chọn này. Bản chạy từ thư mục tạm không thể tự mở ổn định khi đăng nhập."
+                fallback: "Hãy chuyển VietLunar vào Applications, mở bản đã cài rồi bật lại tùy chọn này."
             )
         }
-        return switch appState.loginItemStatus {
-        case .disabled:
-            AppLocalization.text(
-                "settings.login_item.disabled",
-                fallback: "VietLunar sẽ không tự mở sau khi bạn đăng nhập."
-            )
-        case .enabled:
-            AppLocalization.text(
-                "settings.login_item.enabled",
-                fallback: "VietLunar sẽ tự mở sau khi bạn đăng nhập."
-            )
+        switch appState.loginItemStatus {
+        case .disabled, .enabled:
+            return nil
         case .requiresUserApproval:
-            AppLocalization.text(
+            return AppLocalization.text(
                 "settings.login_item.requires_approval",
                 fallback: "macOS cần bạn cho phép VietLunar trong Cài đặt hệ thống > Mục đăng nhập."
             )
         case .unavailable:
-            AppLocalization.text(
+            return AppLocalization.text(
                 "settings.login_item.unavailable",
-                fallback: "Chưa tìm thấy đăng ký mở khi đăng nhập. Hãy mở bản VietLunar đã cài trong Applications và bật lại để thử đăng ký."
+                fallback: "Chưa tìm thấy đăng ký mở khi đăng nhập. Hãy mở bản đã cài trong Applications và bật lại."
             )
         case let .error(message):
-            message
+            return message
         }
     }
 }

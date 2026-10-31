@@ -73,7 +73,7 @@ final class VietLunarUITests: XCTestCase {
 
         application.buttons["settings-button"].click()
         XCTAssertTrue(
-            application.staticTexts["settings-title"].waitForExistence(timeout: 3)
+            application.descendants(matching: .any)["general-tab"].waitForExistence(timeout: 3)
         )
 
         XCTAssertTrue(
@@ -225,7 +225,7 @@ final class VietLunarUITests: XCTestCase {
         XCTAssertTrue(settingsButton.waitForExistence(timeout: 3))
         settingsButton.click()
         XCTAssertTrue(
-            application.staticTexts["settings-title"].waitForExistence(timeout: 3)
+            application.descendants(matching: .any)["general-tab"].waitForExistence(timeout: 3)
         )
     }
 
