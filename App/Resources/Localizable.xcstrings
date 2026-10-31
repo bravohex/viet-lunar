@@ -1,93 +1,769 @@
 {
   "sourceLanguage" : "vi",
   "strings" : {
-    "about.author" : { "extractionState" : "manual", "localizations" : { "vi" : { "stringUnit" : { "state" : "translated", "value" : "Tác giả: %@" } } } },
-    "about.copyright" : { "extractionState" : "manual", "localizations" : { "vi" : { "stringUnit" : { "state" : "translated", "value" : "Copyright © %1$@ %2$@" } } } },
-    "about.historical_caveat" : { "extractionState" : "manual", "localizations" : { "vi" : { "stringUnit" : { "state" : "translated", "value" : "Kết quả từ 1800 đến 1975 là lịch Việt Nam hiện đại suy rộng, không phải bản phục dựng lịch chính thức của mọi vùng và thời kỳ lịch sử." } } } },
-    "about.license" : { "extractionState" : "manual", "localizations" : { "vi" : { "stringUnit" : { "state" : "translated", "value" : "Giấy phép MIT" } } } },
-    "about.privacy_summary" : { "extractionState" : "manual", "localizations" : { "vi" : { "stringUnit" : { "state" : "translated", "value" : "Ứng dụng chạy offline, không yêu cầu tài khoản và không gửi dữ liệu cá nhân ra ngoài máy Mac." } } } },
-    "about.runtime_summary" : { "extractionState" : "manual", "localizations" : { "vi" : { "stringUnit" : { "state" : "translated", "value" : "Chỉ sử dụng Apple platform frameworks ở runtime." } } } },
-    "about.section.privacy" : { "extractionState" : "manual", "localizations" : { "vi" : { "stringUnit" : { "state" : "translated", "value" : "Quyền riêng tư" } } } },
-    "about.section.scope" : { "extractionState" : "manual", "localizations" : { "vi" : { "stringUnit" : { "state" : "translated", "value" : "Phạm vi và quy ước" } } } },
-    "about.section.sources" : { "extractionState" : "manual", "localizations" : { "vi" : { "stringUnit" : { "state" : "translated", "value" : "Nguồn đối chiếu" } } } },
-    "about.sources_summary" : { "extractionState" : "manual", "localizations" : { "vi" : { "stringUnit" : { "state" : "translated", "value" : "Quy tắc và kết quả được đối chiếu với tài liệu của Hồ Ngọc Đức, Calendrical Calculations (Edward M. Reingold và Nachum Dershowitz), cùng Hermetic Systems. Không nhúng mã nguồn của các tài liệu này." } } } },
-    "about.supported_range" : { "extractionState" : "manual", "localizations" : { "vi" : { "stringUnit" : { "state" : "translated", "value" : "Hỗ trợ ngày dương từ 01/01/1800 đến 31/12/2199. Lịch âm Việt Nam và Can–Chi dùng quy ước UTC+7." } } } },
-    "about.version_build" : { "extractionState" : "manual", "localizations" : { "vi" : { "stringUnit" : { "state" : "translated", "value" : "Phiên bản %1$@ (%2$@)" } } } },
-    "common.lunar_abbreviation" : { "extractionState" : "manual", "localizations" : { "vi" : { "stringUnit" : { "state" : "translated", "value" : "ÂL" } } } },
-    "day_classification.auspicious" : { "extractionState" : "manual", "localizations" : { "vi" : { "stringUnit" : { "state" : "translated", "value" : "Ngày hoàng đạo" } } } },
-    "day_classification.inauspicious" : { "extractionState" : "manual", "localizations" : { "vi" : { "stringUnit" : { "state" : "translated", "value" : "Ngày hắc đạo" } } } },
-    "day_classification.ordinary" : { "extractionState" : "manual", "localizations" : { "vi" : { "stringUnit" : { "state" : "translated", "value" : "Ngày thường" } } } },
-    "error.calendar_refresh" : { "extractionState" : "manual", "localizations" : { "vi" : { "stringUnit" : { "state" : "translated", "value" : "Không thể cập nhật lịch âm trong dải ngày được hỗ trợ." } } } },
-    "error.current_month" : { "extractionState" : "manual", "localizations" : { "vi" : { "stringUnit" : { "state" : "translated", "value" : "Không thể mở tháng hiện tại." } } } },
-    "error.date_out_of_range" : { "extractionState" : "manual", "localizations" : { "vi" : { "stringUnit" : { "state" : "translated", "value" : "Ngày này nằm ngoài dải lịch được hỗ trợ." } } } },
-    "error.login_item" : { "extractionState" : "manual", "localizations" : { "vi" : { "stringUnit" : { "state" : "translated", "value" : "Không thể thay đổi mục mở khi đăng nhập: %@" } } } },
-    "error.lunar_load.accessibility" : { "extractionState" : "manual", "localizations" : { "vi" : { "stringUnit" : { "state" : "translated", "value" : "VietLunar — không thể tải ngày âm lịch" } } } },
-    "error.month_out_of_range" : { "extractionState" : "manual", "localizations" : { "vi" : { "stringUnit" : { "state" : "translated", "value" : "Tháng này nằm ngoài dải lịch được hỗ trợ." } } } },
-    "error.preferences_save" : { "extractionState" : "manual", "localizations" : { "vi" : { "stringUnit" : { "state" : "translated", "value" : "Không thể lưu cài đặt. Vui lòng thử lại." } } } },
-    "error.refresh_schedule" : { "extractionState" : "manual", "localizations" : { "vi" : { "stringUnit" : { "state" : "translated", "value" : "Không thể lên lịch cập nhật ngày tiếp theo." } } } },
-    "footer.quit" : { "extractionState" : "manual", "localizations" : { "vi" : { "stringUnit" : { "state" : "translated", "value" : "Thoát" } } } },
-    "footer.quit.help" : { "extractionState" : "manual", "localizations" : { "vi" : { "stringUnit" : { "state" : "translated", "value" : "Thoát hoàn toàn khỏi VietLunar (⌘Q)" } } } },
-    "footer.settings" : { "extractionState" : "manual", "localizations" : { "vi" : { "stringUnit" : { "state" : "translated", "value" : "Cài đặt" } } } },
-    "footer.settings.help" : { "extractionState" : "manual", "localizations" : { "vi" : { "stringUnit" : { "state" : "translated", "value" : "Mở cài đặt VietLunar" } } } },
-    "footer.today" : { "extractionState" : "manual", "localizations" : { "vi" : { "stringUnit" : { "state" : "translated", "value" : "Hôm nay" } } } },
-    "footer.today.help" : { "extractionState" : "manual", "localizations" : { "vi" : { "stringUnit" : { "state" : "translated", "value" : "Trở về ngày hôm nay" } } } },
-    "holidays.accessibility" : { "extractionState" : "manual", "localizations" : { "vi" : { "stringUnit" : { "state" : "translated", "value" : "Ngày lễ: %@" } } } },
-    "holidays.coverage.missing_current" : { "extractionState" : "manual", "localizations" : { "vi" : { "stringUnit" : { "state" : "translated", "value" : "Chưa có dữ liệu cho năm %ld. Hãy nhập tệp mới." } } } },
-    "holidays.coverage.year" : { "extractionState" : "manual", "localizations" : { "vi" : { "stringUnit" : { "state" : "translated", "value" : "Có dữ liệu cho năm %ld" } } } },
-    "holidays.coverage.years" : { "extractionState" : "manual", "localizations" : { "vi" : { "stringUnit" : { "state" : "translated", "value" : "Có dữ liệu cho năm %1$ld–%2$ld" } } } },
-    "holidays.error.empty" : { "extractionState" : "manual", "localizations" : { "vi" : { "stringUnit" : { "state" : "translated", "value" : "Tệp không có ngày lễ trong dải 1800–2199." } } } },
-    "holidays.error.file" : { "extractionState" : "manual", "localizations" : { "vi" : { "stringUnit" : { "state" : "translated", "value" : "%1$@: %2$@" } } } },
-    "holidays.error.storage" : { "extractionState" : "manual", "localizations" : { "vi" : { "stringUnit" : { "state" : "translated", "value" : "Không thể lưu tệp ngày lễ. Vui lòng thử lại." } } } },
-    "holidays.error.too_large" : { "extractionState" : "manual", "localizations" : { "vi" : { "stringUnit" : { "state" : "translated", "value" : "Tệp quá lớn (tối đa 1 MB)." } } } },
-    "holidays.error.too_many" : { "extractionState" : "manual", "localizations" : { "vi" : { "stringUnit" : { "state" : "translated", "value" : "Tệp có quá nhiều ngày lễ." } } } },
-    "holidays.error.unreadable" : { "extractionState" : "manual", "localizations" : { "vi" : { "stringUnit" : { "state" : "translated", "value" : "Không đọc được tệp. Hãy chọn tệp .ics hợp lệ." } } } },
-    "holidays.import.button" : { "extractionState" : "manual", "localizations" : { "vi" : { "stringUnit" : { "state" : "translated", "value" : "Nhập tệp .ics…" } } } },
-    "holidays.multi_day" : { "extractionState" : "manual", "localizations" : { "vi" : { "stringUnit" : { "state" : "translated", "value" : "%1$@ (ngày %2$ld/%3$ld)" } } } },
-    "holidays.remove" : { "extractionState" : "manual", "localizations" : { "vi" : { "stringUnit" : { "state" : "translated", "value" : "Xoá nguồn này" } } } },
-    "holidays.source.built_in" : { "extractionState" : "manual", "localizations" : { "vi" : { "stringUnit" : { "state" : "translated", "value" : "Việt Nam" } } } },
-    "holidays.source.none" : { "extractionState" : "manual", "localizations" : { "vi" : { "stringUnit" : { "state" : "translated", "value" : "Không hiện" } } } },
-    "navigation.next_month" : { "extractionState" : "manual", "localizations" : { "vi" : { "stringUnit" : { "state" : "translated", "value" : "Tháng sau" } } } },
-    "navigation.next_month.help" : { "extractionState" : "manual", "localizations" : { "vi" : { "stringUnit" : { "state" : "translated", "value" : "Xem tháng sau (⌘→)" } } } },
-    "navigation.previous_month" : { "extractionState" : "manual", "localizations" : { "vi" : { "stringUnit" : { "state" : "translated", "value" : "Tháng trước" } } } },
-    "navigation.previous_month.help" : { "extractionState" : "manual", "localizations" : { "vi" : { "stringUnit" : { "state" : "translated", "value" : "Xem tháng trước (⌘←)" } } } },
-    "selected.can_chi" : { "extractionState" : "manual", "localizations" : { "vi" : { "stringUnit" : { "state" : "translated", "value" : "Năm %1$@ · Tháng %2$@ · Ngày %3$@" } } } },
-    "selected.can_chi.hour" : { "extractionState" : "manual", "localizations" : { "vi" : { "stringUnit" : { "state" : "translated", "value" : "Giờ %@" } } } },
-    "selected.auspicious_hours" : { "extractionState" : "manual", "localizations" : { "vi" : { "stringUnit" : { "state" : "translated", "value" : "Giờ hoàng đạo: %@" } } } },
-    "selected.auspicious_hours.title" : { "extractionState" : "manual", "localizations" : { "vi" : { "stringUnit" : { "state" : "translated", "value" : "Giờ hoàng đạo" } } } },
-    "selection.selected" : { "extractionState" : "manual", "localizations" : { "vi" : { "stringUnit" : { "state" : "translated", "value" : "Đã chọn" } } } },
-    "selection.selected_today" : { "extractionState" : "manual", "localizations" : { "vi" : { "stringUnit" : { "state" : "translated", "value" : "Đã chọn, hôm nay" } } } },
-    "selection.today" : { "extractionState" : "manual", "localizations" : { "vi" : { "stringUnit" : { "state" : "translated", "value" : "Hôm nay" } } } },
-    "settings.boundary.civil_midnight" : { "extractionState" : "manual", "localizations" : { "vi" : { "stringUnit" : { "state" : "translated", "value" : "Đổi ngày lúc 00:00" } } } },
-    "settings.boundary.zi_hour" : { "extractionState" : "manual", "localizations" : { "vi" : { "stringUnit" : { "state" : "translated", "value" : "Đổi ngày lúc 23:00" } } } },
-    "settings.calendar_utc7_note" : { "extractionState" : "manual", "localizations" : { "vi" : { "stringUnit" : { "state" : "translated", "value" : "Ngày âm và Can–Chi được tính theo lịch Việt Nam UTC+7." } } } },
-    "settings.field.can_chi_policy" : { "extractionState" : "manual", "localizations" : { "vi" : { "stringUnit" : { "state" : "translated", "value" : "Quy ước Can–Chi" } } } },
-    "settings.field.content" : { "extractionState" : "manual", "localizations" : { "vi" : { "stringUnit" : { "state" : "translated", "value" : "Nội dung" } } } },
-    "settings.field.holiday_source" : { "extractionState" : "manual", "localizations" : { "vi" : { "stringUnit" : { "state" : "translated", "value" : "Nguồn" } } } },
-    "settings.field.week_start" : { "extractionState" : "manual", "localizations" : { "vi" : { "stringUnit" : { "state" : "translated", "value" : "Tuần bắt đầu vào" } } } },
-    "settings.login_item.requires_approval" : { "extractionState" : "manual", "localizations" : { "vi" : { "stringUnit" : { "state" : "translated", "value" : "macOS cần bạn cho phép VietLunar trong Cài đặt hệ thống > Mục đăng nhập." } } } },
-    "settings.login_item.requires_installation" : { "extractionState" : "manual", "localizations" : { "vi" : { "stringUnit" : { "state" : "translated", "value" : "Hãy chuyển VietLunar vào Applications, mở bản đã cài rồi bật lại tùy chọn này." } } } },
-    "settings.login_item.unavailable" : { "extractionState" : "manual", "localizations" : { "vi" : { "stringUnit" : { "state" : "translated", "value" : "Chưa tìm thấy đăng ký mở khi đăng nhập. Hãy mở bản đã cài trong Applications và bật lại." } } } },
-    "settings.open_system_settings" : { "extractionState" : "manual", "localizations" : { "vi" : { "stringUnit" : { "state" : "translated", "value" : "Mở Cài đặt hệ thống" } } } },
-    "settings.preview" : { "extractionState" : "manual", "localizations" : { "vi" : { "stringUnit" : { "state" : "translated", "value" : "Xem trước" } } } },
-    "settings.section.calendar" : { "extractionState" : "manual", "localizations" : { "vi" : { "stringUnit" : { "state" : "translated", "value" : "Lịch" } } } },
-    "settings.section.holidays" : { "extractionState" : "manual", "localizations" : { "vi" : { "stringUnit" : { "state" : "translated", "value" : "Ngày lễ" } } } },
-    "settings.section.menu_bar" : { "extractionState" : "manual", "localizations" : { "vi" : { "stringUnit" : { "state" : "translated", "value" : "Thanh menu" } } } },
-    "settings.section.system" : { "extractionState" : "manual", "localizations" : { "vi" : { "stringUnit" : { "state" : "translated", "value" : "Hệ thống" } } } },
-    "settings.tab.about" : { "extractionState" : "manual", "localizations" : { "vi" : { "stringUnit" : { "state" : "translated", "value" : "Giới thiệu" } } } },
-    "settings.tab.general" : { "extractionState" : "manual", "localizations" : { "vi" : { "stringUnit" : { "state" : "translated", "value" : "Chung" } } } },
-    "settings.toggle.24_hour" : { "extractionState" : "manual", "localizations" : { "vi" : { "stringUnit" : { "state" : "translated", "value" : "Dùng định dạng 24 giờ" } } } },
-    "settings.toggle.clock" : { "extractionState" : "manual", "localizations" : { "vi" : { "stringUnit" : { "state" : "translated", "value" : "Hiện đồng hồ" } } } },
-    "settings.toggle.day_can_chi" : { "extractionState" : "manual", "localizations" : { "vi" : { "stringUnit" : { "state" : "translated", "value" : "Hiện Can–Chi ngày" } } } },
-    "settings.toggle.holiday_observances" : { "extractionState" : "manual", "localizations" : { "vi" : { "stringUnit" : { "state" : "translated", "value" : "Hiện cả ngày kỷ niệm" } } } },
-    "settings.toggle.launch_at_login" : { "extractionState" : "manual", "localizations" : { "vi" : { "stringUnit" : { "state" : "translated", "value" : "Mở VietLunar khi đăng nhập" } } } },
-    "settings.toggle.solar_date" : { "extractionState" : "manual", "localizations" : { "vi" : { "stringUnit" : { "state" : "translated", "value" : "Hiện ngày dương" } } } },
-    "weekday.short.friday" : { "extractionState" : "manual", "localizations" : { "vi" : { "stringUnit" : { "state" : "translated", "value" : "T6" } } } },
-    "weekday.short.monday" : { "extractionState" : "manual", "localizations" : { "vi" : { "stringUnit" : { "state" : "translated", "value" : "T2" } } } },
-    "weekday.short.saturday" : { "extractionState" : "manual", "localizations" : { "vi" : { "stringUnit" : { "state" : "translated", "value" : "T7" } } } },
-    "weekday.short.sunday" : { "extractionState" : "manual", "localizations" : { "vi" : { "stringUnit" : { "state" : "translated", "value" : "CN" } } } },
-    "weekday.short.thursday" : { "extractionState" : "manual", "localizations" : { "vi" : { "stringUnit" : { "state" : "translated", "value" : "T5" } } } },
-    "weekday.short.tuesday" : { "extractionState" : "manual", "localizations" : { "vi" : { "stringUnit" : { "state" : "translated", "value" : "T3" } } } },
-    "weekday.short.wednesday" : { "extractionState" : "manual", "localizations" : { "vi" : { "stringUnit" : { "state" : "translated", "value" : "T4" } } } }
+    "about.author" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "vi" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Tác giả: %@"
+          }
+        }
+      }
+    },
+    "about.copyright" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "vi" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Copyright © %1$@ %2$@"
+          }
+        }
+      }
+    },
+    "about.historical_caveat" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "vi" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Kết quả từ 1800 đến 1975 là lịch Việt Nam hiện đại suy rộng, không phải bản phục dựng lịch chính thức của mọi vùng và thời kỳ lịch sử."
+          }
+        }
+      }
+    },
+    "about.license" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "vi" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Giấy phép MIT"
+          }
+        }
+      }
+    },
+    "about.privacy_summary" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "vi" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Ứng dụng chạy offline, không yêu cầu tài khoản và không gửi dữ liệu cá nhân ra ngoài máy Mac."
+          }
+        }
+      }
+    },
+    "about.runtime_summary" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "vi" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Chỉ sử dụng Apple platform frameworks ở runtime."
+          }
+        }
+      }
+    },
+    "about.section.privacy" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "vi" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Quyền riêng tư"
+          }
+        }
+      }
+    },
+    "about.section.scope" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "vi" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Phạm vi và quy ước"
+          }
+        }
+      }
+    },
+    "about.section.sources" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "vi" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Nguồn đối chiếu"
+          }
+        }
+      }
+    },
+    "about.sources_summary" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "vi" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Quy tắc và kết quả được đối chiếu với tài liệu của Hồ Ngọc Đức, Calendrical Calculations (Edward M. Reingold và Nachum Dershowitz), cùng Hermetic Systems. Không nhúng mã nguồn của các tài liệu này."
+          }
+        }
+      }
+    },
+    "about.supported_range" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "vi" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Hỗ trợ ngày dương từ 01/01/1800 đến 31/12/2199. Lịch âm Việt Nam và Can–Chi dùng quy ước UTC+7."
+          }
+        }
+      }
+    },
+    "about.version_build" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "vi" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Phiên bản %1$@ (%2$@)"
+          }
+        }
+      }
+    },
+    "common.lunar_abbreviation" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "vi" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "ÂL"
+          }
+        }
+      }
+    },
+    "day_classification.auspicious" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "vi" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Ngày hoàng đạo"
+          }
+        }
+      }
+    },
+    "day_classification.inauspicious" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "vi" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Ngày hắc đạo"
+          }
+        }
+      }
+    },
+    "day_classification.ordinary" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "vi" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Ngày thường"
+          }
+        }
+      }
+    },
+    "error.calendar_refresh" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "vi" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Không thể cập nhật lịch âm trong dải ngày được hỗ trợ."
+          }
+        }
+      }
+    },
+    "error.current_month" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "vi" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Không thể mở tháng hiện tại."
+          }
+        }
+      }
+    },
+    "error.date_out_of_range" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "vi" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Ngày này nằm ngoài dải lịch được hỗ trợ."
+          }
+        }
+      }
+    },
+    "error.login_item" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "vi" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Không thể thay đổi mục mở khi đăng nhập: %@"
+          }
+        }
+      }
+    },
+    "error.lunar_load.accessibility" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "vi" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "VietLunar — không thể tải ngày âm lịch"
+          }
+        }
+      }
+    },
+    "error.month_out_of_range" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "vi" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Tháng này nằm ngoài dải lịch được hỗ trợ."
+          }
+        }
+      }
+    },
+    "error.preferences_save" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "vi" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Không thể lưu cài đặt. Vui lòng thử lại."
+          }
+        }
+      }
+    },
+    "error.refresh_schedule" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "vi" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Không thể lên lịch cập nhật ngày tiếp theo."
+          }
+        }
+      }
+    },
+    "footer.quit" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "vi" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Thoát"
+          }
+        }
+      }
+    },
+    "footer.quit.help" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "vi" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Thoát hoàn toàn khỏi VietLunar (⌘Q)"
+          }
+        }
+      }
+    },
+    "footer.settings" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "vi" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Cài đặt"
+          }
+        }
+      }
+    },
+    "footer.settings.help" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "vi" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Mở cài đặt VietLunar"
+          }
+        }
+      }
+    },
+    "footer.today" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "vi" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Hôm nay"
+          }
+        }
+      }
+    },
+    "footer.today.help" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "vi" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Trở về ngày hôm nay"
+          }
+        }
+      }
+    },
+    "navigation.next_month" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "vi" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Tháng sau"
+          }
+        }
+      }
+    },
+    "navigation.next_month.help" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "vi" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Xem tháng sau (⌘→)"
+          }
+        }
+      }
+    },
+    "navigation.previous_month" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "vi" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Tháng trước"
+          }
+        }
+      }
+    },
+    "navigation.previous_month.help" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "vi" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Xem tháng trước (⌘←)"
+          }
+        }
+      }
+    },
+    "selected.auspicious_hours" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "vi" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Giờ hoàng đạo: %@"
+          }
+        }
+      }
+    },
+    "selected.auspicious_hours.title" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "vi" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Giờ hoàng đạo"
+          }
+        }
+      }
+    },
+    "selected.can_chi" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "vi" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Năm %1$@ · Tháng %2$@ · Ngày %3$@"
+          }
+        }
+      }
+    },
+    "selected.can_chi.hour" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "vi" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Giờ %@"
+          }
+        }
+      }
+    },
+    "selection.selected" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "vi" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Đã chọn"
+          }
+        }
+      }
+    },
+    "selection.selected_today" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "vi" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Đã chọn, hôm nay"
+          }
+        }
+      }
+    },
+    "selection.today" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "vi" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Hôm nay"
+          }
+        }
+      }
+    },
+    "settings.boundary.civil_midnight" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "vi" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Đổi ngày lúc 00:00"
+          }
+        }
+      }
+    },
+    "settings.boundary.zi_hour" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "vi" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Đổi ngày lúc 23:00"
+          }
+        }
+      }
+    },
+    "settings.calendar_utc7_note" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "vi" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Ngày âm và Can–Chi được tính theo lịch Việt Nam UTC+7."
+          }
+        }
+      }
+    },
+    "settings.field.can_chi_policy" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "vi" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Quy ước Can–Chi"
+          }
+        }
+      }
+    },
+    "settings.field.content" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "vi" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Nội dung"
+          }
+        }
+      }
+    },
+    "settings.field.week_start" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "vi" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Tuần bắt đầu vào"
+          }
+        }
+      }
+    },
+    "settings.login_item.requires_approval" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "vi" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "macOS cần bạn cho phép VietLunar trong Cài đặt hệ thống > Mục đăng nhập."
+          }
+        }
+      }
+    },
+    "settings.login_item.requires_installation" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "vi" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Hãy chuyển VietLunar vào Applications, mở bản đã cài rồi bật lại tùy chọn này."
+          }
+        }
+      }
+    },
+    "settings.login_item.unavailable" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "vi" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Chưa tìm thấy đăng ký mở khi đăng nhập. Hãy mở bản đã cài trong Applications và bật lại."
+          }
+        }
+      }
+    },
+    "settings.open_system_settings" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "vi" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Mở Cài đặt hệ thống"
+          }
+        }
+      }
+    },
+    "settings.preview" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "vi" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Xem trước"
+          }
+        }
+      }
+    },
+    "settings.section.calendar" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "vi" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Lịch"
+          }
+        }
+      }
+    },
+    "settings.section.menu_bar" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "vi" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Thanh menu"
+          }
+        }
+      }
+    },
+    "settings.section.system" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "vi" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Hệ thống"
+          }
+        }
+      }
+    },
+    "settings.tab.about" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "vi" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Giới thiệu"
+          }
+        }
+      }
+    },
+    "settings.tab.general" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "vi" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Chung"
+          }
+        }
+      }
+    },
+    "settings.toggle.24_hour" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "vi" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Dùng định dạng 24 giờ"
+          }
+        }
+      }
+    },
+    "settings.toggle.clock" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "vi" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Hiện đồng hồ"
+          }
+        }
+      }
+    },
+    "settings.toggle.day_can_chi" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "vi" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Hiện Can–Chi ngày"
+          }
+        }
+      }
+    },
+    "settings.toggle.launch_at_login" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "vi" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Mở VietLunar khi đăng nhập"
+          }
+        }
+      }
+    },
+    "settings.toggle.solar_date" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "vi" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Hiện ngày dương"
+          }
+        }
+      }
+    },
+    "VietLunar" : {
+      "comment" : "The name of the app.",
+      "isCommentAutoGenerated" : true
+    },
+    "weekday.short.friday" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "vi" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "T6"
+          }
+        }
+      }
+    },
+    "weekday.short.monday" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "vi" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "T2"
+          }
+        }
+      }
+    },
+    "weekday.short.saturday" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "vi" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "T7"
+          }
+        }
+      }
+    },
+    "weekday.short.sunday" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "vi" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "CN"
+          }
+        }
+      }
+    },
+    "weekday.short.thursday" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "vi" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "T5"
+          }
+        }
+      }
+    },
+    "weekday.short.tuesday" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "vi" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "T3"
+          }
+        }
+      }
+    },
+    "weekday.short.wednesday" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "vi" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "T4"
+          }
+        }
+      }
+    }
   },
-  "version" : "1.0"
+  "version" : "1.1"
 }
