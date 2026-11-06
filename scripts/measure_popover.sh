@@ -13,6 +13,7 @@ xcodebuild \
   -configuration Release \
   -destination "$DESTINATION" \
   -derivedDataPath "$DERIVED_DATA_PATH" \
+  SWIFT_ACTIVE_COMPILATION_CONDITIONS=PERFORMANCE_TESTING \
   ENABLE_TESTABILITY=YES \
   CODE_SIGN_STYLE=Manual \
   CODE_SIGN_IDENTITY="-" \

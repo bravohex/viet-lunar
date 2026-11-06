@@ -182,6 +182,11 @@ final class VietLunarUITests: XCTestCase {
 
     @MainActor
     func testPopoverPerformanceSignposts() {
+        let launchWorkMetric = XCTOSSignpostMetric(
+            subsystem: "com.bravohex.vietlunar",
+            category: "PointsOfInterest",
+            name: "Application App Work"
+        )
         let firstOpenMetric = XCTOSSignpostMetric(
             subsystem: "com.bravohex.vietlunar",
             category: "PointsOfInterest",
@@ -196,7 +201,7 @@ final class VietLunarUITests: XCTestCase {
         options.iterationCount = 3
 
         measure(
-            metrics: [firstOpenMetric, subsequentOpenMetric],
+            metrics: [launchWorkMetric, firstOpenMetric, subsequentOpenMetric],
             options: options
         ) {
             let application = makeApplication()

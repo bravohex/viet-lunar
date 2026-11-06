@@ -28,4 +28,4 @@ xcrun swiftc \
   "${CORE_SOURCES[@]}" \
   "$PROJECT_ROOT/Tools/Benchmark/main.swift"
 
-"$BENCHMARK_BINARY"
+"$BENCHMARK_BINARY" "$PROJECT_ROOT/App/Resources/Holidays/vietnam.ics"

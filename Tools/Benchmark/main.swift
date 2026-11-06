@@ -90,7 +90,48 @@ enum BenchmarkMain {
         print("month_grid_count=\(gridSamples.count)")
         print("month_grid_p95_ms=\(milliseconds(percentile95(gridSamples)))")
         print("menu_format_10000_total_ms=\(milliseconds(formattingDuration))")
+        try benchmarkHolidays(checksum: &checksum)
         print("checksum=\(checksum)")
+    }
+
+    private static func benchmarkHolidays(checksum: inout Int) throws {
+        guard CommandLine.arguments.count == 2 else {
+            throw CocoaError(.fileNoSuchFile)
+        }
+        let url = URL(fileURLWithPath: CommandLine.arguments[1])
+        let data = try Data(contentsOf: url)
+        var parseSamples: [UInt64] = []
+        for _ in 0..<100 {
+            let start = DispatchTime.now().uptimeNanoseconds
+            let calendar = try ICSHolidayParser.parse(data)
+            parseSamples.append(DispatchTime.now().uptimeNanoseconds - start)
+            checksum &+= calendar.events.count
+        }
+        let calendar = try ICSHolidayParser.parse(data)
+        var indexSamples: [UInt64] = []
+        let probe = try SolarDate(validatingYear: 2027, month: 2, day: 6)
+        for _ in 0..<1_000 {
+            let start = DispatchTime.now().uptimeNanoseconds
+            let index = HolidayIndex(calendar: calendar)
+            indexSamples.append(DispatchTime.now().uptimeNanoseconds - start)
+            checksum &+= index.occurrences(on: probe).count
+        }
+        let index = HolidayIndex(calendar: calendar)
+        let firstJDN = GregorianJDN.jdn(for: probe)
+        let dates = try (0..<42).map { try GregorianJDN.solarDate(forJDN: firstJDN + $0) }
+        var lookupSamples: [UInt64] = []
+        for _ in 0..<1_000 {
+            let start = DispatchTime.now().uptimeNanoseconds
+            for date in dates { checksum &+= index.occurrences(on: date).count }
+            lookupSamples.append(DispatchTime.now().uptimeNanoseconds - start)
+        }
+        print("holiday_bytes=\(data.count)")
+        print("holiday_events=\(calendar.events.count)")
+        print("holiday_parse_count=\(parseSamples.count)")
+        print("holiday_parse_p95_ms=\(milliseconds(percentile95(parseSamples)))")
+        print("holiday_index_count=\(indexSamples.count)")
+        print("holiday_index_p95_ms=\(milliseconds(percentile95(indexSamples)))")
+        print("holiday_lookup_42_days_p95_ms=\(milliseconds(percentile95(lookupSamples)))")
     }
 
     private static func percentile95(_ samples: [UInt64]) -> UInt64 {

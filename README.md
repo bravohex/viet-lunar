@@ -91,3 +91,5 @@ ruby Tools/ProjectGenerator/generate_project.rb
 ## Giấy phép
 
 Copyright © 2026 bravohex. Phát hành theo [MIT License](LICENSE).
+
+Số đo hiệu năng local gần nhất và giới hạn của phép đo: [báo cáo ngày 06/11/2026](docs/performance-2026-11-06.md).
