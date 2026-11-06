@@ -25,7 +25,15 @@ jobs:
         with:
           node-version: '24'
           cache: npm
-          cache-dependency-path: Tools/Holidays/package-lock.json
+          cache-dependency-path: |
+            Tools/Holidays/package-lock.json
+            Tools/Icons/package-lock.json
+
+      - name: Verify Lucide assets
+        working-directory: Tools/Icons
+        run: |
+          npm ci
+          npm run check
 
       - name: Verify bundled holiday data
         working-directory: Tools/Holidays

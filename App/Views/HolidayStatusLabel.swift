@@ -1,8 +1,7 @@
 import SwiftUI
 import VietLunarCore
 
-/// Holidays of the selected day. Official holidays carry a filled red flag,
-/// observances an outlined grey one, so the kind is not conveyed by color alone.
+/// Holidays use a flag, observances a bookmark, so kind is not color-only.
 struct HolidayStatusLabel: View {
     let holidays: [HolidayOccurrence]
 
@@ -10,7 +9,7 @@ struct HolidayStatusLabel: View {
         VStack(alignment: .leading, spacing: 2) {
             ForEach(Array(holidays.enumerated()), id: \.offset) { index, holiday in
                 HStack(alignment: .firstTextBaseline, spacing: 5) {
-                    Image(systemName: holiday.kind == .official ? "flag.fill" : "flag")
+                    AssetIconView(holiday.kind == .official ? .holiday : .observance, size: 14)
                         .foregroundStyle(holiday.kind == .official ? Color.red : Color.secondary)
                         .accessibilityHidden(true)
                     Text(holiday.displayName)

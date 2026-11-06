@@ -45,3 +45,6 @@ __pycache__/
 *.tmp
 *.swp
 *~
+
+# Keep the Lucide generator; the macOS Icon? pattern also matches this directory.
+!Tools/Icons/

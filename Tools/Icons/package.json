@@ -1,0 +1,14 @@
+{
+  "name": "vietlunar-lucide-assets",
+  "version": "1.0.0",
+  "private": true,
+  "scripts": {
+    "generate": "node generate.cjs",
+    "check": "node generate.cjs --check"
+  },
+  "engines": { "node": ">=22" },
+  "dependencies": {
+    "lucide-static": "1.69.0",
+    "@resvg/resvg-js": "2.6.2"
+  }
+}

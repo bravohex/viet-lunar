@@ -71,6 +71,7 @@ xcodebuild \
 
 test -f "$DERIVED_DATA_PATH/Build/Products/Debug/VietLunar.app/Contents/Resources/vi.lproj/Localizable.strings"
 test -f "$DERIVED_DATA_PATH/Build/Products/Debug/VietLunar.app/Contents/Resources/Assets.car"
+test -f "$DERIVED_DATA_PATH/Build/Products/Debug/VietLunar.app/Contents/Resources/Lucide-LICENSE.txt"
 test "$(plutil -extract CFBundleIdentifier raw "$DERIVED_DATA_PATH/Build/Products/Debug/VietLunar.app/Contents/Info.plist")" = "com.bravohex.vietlunar"
 test "$(plutil -extract CFBundleIconName raw "$DERIVED_DATA_PATH/Build/Products/Debug/VietLunar.app/Contents/Info.plist")" = "AppIcon"
 test "$(plutil -extract NSHumanReadableCopyright raw "$DERIVED_DATA_PATH/Build/Products/Debug/VietLunar.app/Contents/Info.plist")" = "Copyright © 2026 bravohex"
@@ -78,11 +79,15 @@ xcrun assetutil --info \
   "$DERIVED_DATA_PATH/Build/Products/Debug/VietLunar.app/Contents/Resources/Assets.car" | \
   ruby -rjson -e '
     expected = %w[
-      AppIcon VLInfo VLMenuBarLunar VLNext VLPrevious VLQuit VLSettings VLToday
+      AppIcon LucideCalendarDays LucideChevronLeft LucideChevronRight
+      LucideCalendarCheck LucideSettings LucideInfo LucidePower
+      LucideFlag LucideBookmark LucideTriangleAlert
     ]
     names = JSON.parse(STDIN.read).filter_map { |entry| entry["Name"] }
     missing = expected - names
     abort "Missing compiled icon assets: #{missing.join(", ")}" unless missing.empty?
+    legacy = names.select { |name| name.start_with?("VL") }
+    abort "Legacy custom icons remain: #{legacy.join(", ")}" unless legacy.empty?
   '
 test -f "$DERIVED_DATA_PATH/Build/Products/Debug/VietLunar.app/Contents/Frameworks/VietLunarCore.framework/Versions/A/Resources/vi.lproj/Localizable.strings"
 test ! -e "$DERIVED_DATA_PATH/Build/Products/Debug/VietLunar.app/Contents/Frameworks/VietLunarInfrastructure.framework"

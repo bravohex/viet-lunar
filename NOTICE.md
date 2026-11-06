@@ -18,9 +18,13 @@ The pinned MIT-licensed `luc-nham/lunar-calendar` revision was executed only as 
 
 Independent exhaustive validation and the 2033 evidence gate remain open. The generated candidate table must not be described as independently verified or release-approved until those gates are closed.
 
-## VietLunar artwork
+## Lucide icons
 
-The app icon and custom interface icons are original artwork from VietLunar Icon Kit 1.0.0, created specifically for this project. The project may use, modify, copy and distribute this artwork with the application or its documentation. No third-party logo, font or artwork is included in the selected assets.
+The app icon, menu-bar icon and interface icons use Lucide 1.69.0, distributed under the ISC license, with the included Feather-derived notices where applicable. The macOS app icon places the unchanged Lucide `calendar-days` glyph on a red rounded tile. The prior custom VietLunar Icon Kit assets are no longer shipped.
+
+Copyright (c) 2026 Lucide Icons and Contributors. Source: https://lucide.dev and https://github.com/lucide-icons/lucide.
+
+The complete upstream notice is included at `App/Resources/Lucide-LICENSE.txt` and bundled in the application. Reproduction instructions and the pinned dependencies are in `Tools/Icons/README.md`.
 
 ## License
 

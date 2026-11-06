@@ -203,7 +203,7 @@ add_resources(
   app,
   "AppResources",
   "App/Resources",
-  ["Localizable.xcstrings", "Assets.xcassets", "Holidays/vietnam.ics"]
+  ["Localizable.xcstrings", "Assets.xcassets", "Holidays/vietnam.ics", "Lucide-LICENSE.txt"]
 )
 add_sources(
   project,

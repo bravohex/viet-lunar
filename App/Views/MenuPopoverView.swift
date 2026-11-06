@@ -18,7 +18,7 @@ struct MenuPopoverView: View {
                     Text(warning)
                         .accessibilityIdentifier("holiday-coverage-warning")
                 } icon: {
-                    Image(systemName: "exclamationmark.triangle")
+                    AssetIconView(.warning, size: 14)
                         .accessibilityHidden(true)
                 }
                 .font(.caption)
@@ -60,7 +60,7 @@ struct ErrorMessageLabel: View {
 
     var body: some View {
         HStack(alignment: .firstTextBaseline, spacing: 5) {
-            Image(systemName: "exclamationmark.triangle.fill")
+            AssetIconView(.warning, size: 14)
                 .accessibilityHidden(true)
             Text(message)
                 .fixedSize(horizontal: false, vertical: true)

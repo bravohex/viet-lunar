@@ -196,10 +196,6 @@ final class VietLunarApplicationDelegate: NSObject, NSApplicationDelegate, NSWin
         let image: NSImage?
         if appState.preferences.titleFormat.isIconOnly {
             image = IconAsset.menuBarLunar.nsImage
-                ?? NSImage(
-                    systemSymbolName: "moon.circle.fill",
-                    accessibilityDescription: presentation.accessibilityLabel
-                )
             image?.isTemplate = true
         } else {
             image = nil

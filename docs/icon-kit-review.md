@@ -1,4 +1,6 @@
-# VietLunar Icon Kit review
+# VietLunar Icon Kit review (historical)
+
+> Superseded: the custom kit is no longer bundled. Current assets use Lucide; see [Tools/Icons/README.md](../Tools/Icons/README.md).
 
 **Ngày rà soát:** 2026-07-20
 
