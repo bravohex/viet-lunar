@@ -41,6 +41,7 @@ Nếu macOS yêu cầu xác nhận ở lần mở đầu tiên, hãy làm theo h
 - Dữ liệu mặc định là tệp [`App/Resources/Holidays/vietnam.ics`](App/Resources/Holidays/vietnam.ics). Khi cần cập nhật (năm mới, ngày nghỉ bù, ngày lễ mới), chỉ cần thay tệp này bằng bản mới, giữ nguyên tên, rồi build lại; mã nguồn không phụ thuộc vào nội dung hay năm của tệp.
 - Người dùng có thể vào **Cài đặt > Ngày lễ > Nhập tệp .ics…** để thêm một hoặc nhiều tệp. Có thể nhập nhiều nguồn nhưng mỗi lúc chỉ hiển thị một nguồn (hoặc không hiển thị).
 - Định dạng được hỗ trợ: sự kiện cả ngày (`DTSTART` dạng ngày, `DTEND` không tính ngày cuối), lặp hằng năm đơn giản (`RRULE:FREQ=YEARLY` với `INTERVAL`, `COUNT`, `UNTIL`). Sự kiện có giờ và quy tắc lặp phức tạp bị bỏ qua.
+- Ngày loại trừ `EXDATE` dạng ngày được áp dụng sau khi tính lịch lặp; sự kiện có `STATUS:CANCELLED` không được hiển thị. Sự kiện chứa ngày loại trừ không hợp lệ bị bỏ qua.
 - Sự kiện có `DESCRIPTION` chứa “observance” được xem là ngày kỷ niệm và mặc định bị ẩn; các sự kiện còn lại là ngày lễ chính thức.
 - Giới hạn: tối đa 1 MB mỗi tệp và năm từ 1800 đến 2199.
 

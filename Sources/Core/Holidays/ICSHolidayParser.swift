@@ -111,6 +111,8 @@ public enum ICSHolidayParser {
         var start: String?
         var end: String?
         var rule: String?
+        var status: String?
+        var exclusions: [String] = []
 
         mutating func apply(_ property: Property) {
             switch property.name {
@@ -119,6 +121,8 @@ public enum ICSHolidayParser {
             case "DTSTART": start = property.value
             case "DTEND": end = property.value
             case "RRULE": rule = property.value
+            case "STATUS": status = property.value
+            case "EXDATE": exclusions.append(property.value)
             default: break
             }
         }
@@ -179,12 +183,22 @@ public enum ICSHolidayParser {
     // MARK: - Events
 
     private static func expand(_ event: RawEvent) -> [HolidayEvent] {
-        guard let name = displayName(event.summary, limit: maximumNameLength),
+        guard event.status?.uppercased() != "CANCELLED",
+              let name = displayName(event.summary, limit: maximumNameLength),
               let startValue = event.start,
               let first = parseDate(startValue),
               supportedYears.contains(first.year)
         else {
             return []
+        }
+
+        var excludedDates: Set<SolarDate> = []
+        for values in event.exclusions {
+            for value in values.split(separator: ",", omittingEmptySubsequences: false) {
+                // An invalid exclusion must not silently restore a cancelled date.
+                guard let date = parseDate(String(value)) else { return [] }
+                excludedDates.insert(date)
+            }
         }
 
         let kind: HolidayKind = isObservance(event.description)
@@ -197,7 +211,9 @@ public enum ICSHolidayParser {
             span = min(max(days, 1), maximumSpanDays)
         }
 
-        return occurrenceStarts(first: first, rule: event.rule).map {
+        // COUNT applies before exclusions; excluded occurrences are not replaced.
+        return occurrenceStarts(first: first, rule: event.rule)
+            .filter { !excludedDates.contains($0) }.map {
             HolidayEvent(name: name, kind: kind, firstDate: $0, dayCount: span)
         }
     }

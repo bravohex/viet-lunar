@@ -239,6 +239,56 @@ final class ICSHolidayParserTests: XCTestCase {
 
     // MARK: - Index
 
+    func testExdatesExcludeFirstAndLaterOccurrencesWithoutExtendingCount() throws {
+        let calendar = try parse(vevent(
+            "SUMMARY:Lễ", "DTSTART;VALUE=DATE:20260101",
+            "RRULE:FREQ=YEARLY;COUNT=5",
+            "EXDATE;VALUE=DATE:20260101,20280101",
+            "EXDATE;VALUE=DATE:20290101"
+        ))
+
+        XCTAssertEqual(calendar.events.map(\.firstDate.year), [2027, 2030])
+    }
+
+    func testExdateRemovesTheWholeMultiDayOccurrence() throws {
+        let calendar = try parse(vevent(
+            "SUMMARY:Nghỉ lễ", "DTSTART;VALUE=DATE:20260101",
+            "DTEND;VALUE=DATE:20260104", "RRULE:FREQ=YEARLY;COUNT=2",
+            "EXDATE;VALUE=DATE:20270101"
+        ))
+        let index = HolidayIndex(calendar: calendar)
+
+        XCTAssertEqual(calendar.events.count, 1)
+        XCTAssertEqual(index.occurrences(on: try solarDate(2026, 1, 3)).count, 1)
+        for day in 1...3 {
+            XCTAssertTrue(index.occurrences(on: try solarDate(2027, 1, day)).isEmpty)
+        }
+    }
+
+    func testCancelledEventsAndSeriesAreSkipped() throws {
+        let calendar = try parse(
+            vevent("SUMMARY:Đã hủy", "DTSTART;VALUE=DATE:20260101", "STATUS:CANCELLED"),
+            vevent("SUMMARY:Chuỗi đã hủy", "DTSTART;VALUE=DATE:20260201",
+                   "RRULE:FREQ=YEARLY;COUNT=3", "STATUS:cancelled"),
+            vevent("SUMMARY:Còn hiệu lực", "DTSTART;VALUE=DATE:20260301", "STATUS:CONFIRMED")
+        )
+
+        XCTAssertEqual(calendar.events.map(\.name), ["Còn hiệu lực"])
+    }
+
+    func testCancelledOnlyOrInvalidExclusionCalendarIsNotImported() {
+        for properties in [
+            ["STATUS:CANCELLED"],
+            ["RRULE:FREQ=YEARLY;COUNT=3", "EXDATE;VALUE=DATE:20270231"]
+        ] {
+            let event = (["BEGIN:VEVENT", "SUMMARY:Lễ", "DTSTART;VALUE=DATE:20260101"]
+                         + properties + ["END:VEVENT"]).joined(separator: "\r\n")
+            XCTAssertThrowsError(try parse(event)) {
+                XCTAssertEqual($0 as? ICSHolidayParserError, .noEvents)
+            }
+        }
+    }
+
     func testIndexListsOfficialHolidaysBeforeObservancesThenByName() throws {
         let calendar = try parse(
             vevent("SUMMARY:B kỷ niệm", "DTSTART;VALUE=DATE:20260501", "DESCRIPTION:observance"),
