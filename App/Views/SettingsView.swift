@@ -568,7 +568,7 @@ private struct AboutSettingsView: View {
     var body: some View {
         ScrollView {
             VStack(alignment: .leading, spacing: 14) {
-                Text("VietLunar")
+                Text(verbatim: "VietLunar")
                     .font(.title.bold())
                 Text(
                     AppLocalization.format(

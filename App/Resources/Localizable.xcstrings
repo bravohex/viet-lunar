@@ -1,6 +1,204 @@
 {
   "sourceLanguage" : "vi",
   "strings" : {
+    "holidays.accessibility": {
+      "extractionState": "manual",
+      "localizations": {
+        "vi": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Ngày lễ: %@"
+          }
+        }
+      }
+    },
+    "holidays.coverage.missing_current": {
+      "extractionState": "manual",
+      "localizations": {
+        "vi": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Chưa có dữ liệu cho năm %ld. Hãy nhập tệp mới."
+          }
+        }
+      }
+    },
+    "holidays.coverage.year": {
+      "extractionState": "manual",
+      "localizations": {
+        "vi": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Có dữ liệu cho năm %ld"
+          }
+        }
+      }
+    },
+    "holidays.coverage.years": {
+      "extractionState": "manual",
+      "localizations": {
+        "vi": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Có dữ liệu cho năm %1$ld–%2$ld"
+          }
+        }
+      }
+    },
+    "holidays.error.empty": {
+      "extractionState": "manual",
+      "localizations": {
+        "vi": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Tệp không có ngày lễ trong dải 1800–2199."
+          }
+        }
+      }
+    },
+    "holidays.error.file": {
+      "extractionState": "manual",
+      "localizations": {
+        "vi": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "%1$@: %2$@"
+          }
+        }
+      }
+    },
+    "holidays.error.storage": {
+      "extractionState": "manual",
+      "localizations": {
+        "vi": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Không thể lưu tệp ngày lễ. Vui lòng thử lại."
+          }
+        }
+      }
+    },
+    "holidays.error.too_large": {
+      "extractionState": "manual",
+      "localizations": {
+        "vi": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Tệp quá lớn (tối đa 1 MB)."
+          }
+        }
+      }
+    },
+    "holidays.error.too_many": {
+      "extractionState": "manual",
+      "localizations": {
+        "vi": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Tệp có quá nhiều ngày lễ."
+          }
+        }
+      }
+    },
+    "holidays.error.unreadable": {
+      "extractionState": "manual",
+      "localizations": {
+        "vi": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Không đọc được tệp. Hãy chọn tệp .ics hợp lệ."
+          }
+        }
+      }
+    },
+    "holidays.import.button": {
+      "extractionState": "manual",
+      "localizations": {
+        "vi": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Nhập tệp .ics…"
+          }
+        }
+      }
+    },
+    "holidays.multi_day": {
+      "extractionState": "manual",
+      "localizations": {
+        "vi": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "%1$@ (ngày %2$ld/%3$ld)"
+          }
+        }
+      }
+    },
+    "holidays.remove": {
+      "extractionState": "manual",
+      "localizations": {
+        "vi": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Xoá nguồn này"
+          }
+        }
+      }
+    },
+    "holidays.source.built_in": {
+      "extractionState": "manual",
+      "localizations": {
+        "vi": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Việt Nam"
+          }
+        }
+      }
+    },
+    "holidays.source.none": {
+      "extractionState": "manual",
+      "localizations": {
+        "vi": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Không hiện"
+          }
+        }
+      }
+    },
+    "settings.field.holiday_source": {
+      "extractionState": "manual",
+      "localizations": {
+        "vi": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Nguồn"
+          }
+        }
+      }
+    },
+    "settings.section.holidays": {
+      "extractionState": "manual",
+      "localizations": {
+        "vi": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Ngày lễ"
+          }
+        }
+      }
+    },
+    "settings.toggle.holiday_observances": {
+      "extractionState": "manual",
+      "localizations": {
+        "vi": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Hiện cả ngày kỷ niệm"
+          }
+        }
+      }
+    },
     "about.author" : {
       "extractionState" : "manual",
       "localizations" : {
@@ -682,10 +880,6 @@
           }
         }
       }
-    },
-    "VietLunar" : {
-      "comment" : "The name of the app.",
-      "isCommentAutoGenerated" : true
     },
     "weekday.short.friday" : {
       "extractionState" : "manual",
