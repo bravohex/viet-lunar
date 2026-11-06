@@ -75,6 +75,31 @@ final class AppStateTests: XCTestCase {
     }
 
     @MainActor
+    func testTodayInAdjacentMonthPaddingDoesNotDisableReturnToToday() throws {
+        for (instant, offset) in [
+            ("2026-11-01T05:00:00Z", -1),
+            ("2026-10-31T05:00:00Z", 1)
+        ] {
+            let state = makeState(clock: TestClock(instant))
+            state.popoverOpened()
+            let today = try XCTUnwrap(state.currentSnapshot?.solarDate)
+            let currentMonth = state.visibleMonth
+            state.navigateMonth(by: offset)
+            let paddingCell = try XCTUnwrap(state.monthCells.first { $0.solarDate == today })
+            XCTAssertFalse(paddingCell.isInDisplayedMonth)
+
+            state.select(today)
+            XCTAssertFalse(state.isShowingToday)
+            XCTAssertNotEqual(state.visibleMonth, currentMonth)
+
+            state.returnToToday()
+            XCTAssertEqual(state.visibleMonth, currentMonth)
+            XCTAssertEqual(state.selectedSolarDate, today)
+            XCTAssertTrue(state.isShowingToday)
+        }
+    }
+
+    @MainActor
     func testShowingTodayIsFalseAfterDayBoundaryLeavesSelectionBehind() {
         let clock = TestClock("2026-10-26T05:00:00Z")
         let state = makeState(clock: clock)

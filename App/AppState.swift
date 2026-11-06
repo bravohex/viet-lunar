@@ -224,13 +224,15 @@ final class AppState: ObservableObject {
         return monthCells.first { $0.solarDate == selectedSolarDate }
     }
 
-    /// True while today's date is the selected date, which also means today's
-    /// month is displayed. The footer uses it to disable "Hôm nay".
+    /// Disable "Hôm nay" only when today's date and month are both selected.
+    /// Today can also be selected in the padding cells of an adjacent month.
     var isShowingToday: Bool {
-        guard let currentSnapshot else {
+        guard let currentSnapshot, let visibleMonth else {
             return false
         }
         return selectedSolarDate == currentSnapshot.solarDate
+            && visibleMonth.year == currentSnapshot.solarDate.year
+            && visibleMonth.month == currentSnapshot.solarDate.month
     }
 
     var leadingGridPlaceholderCount: Int {
