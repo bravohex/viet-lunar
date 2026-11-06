@@ -9,9 +9,6 @@
   "attributionURL": "https://en.wikipedia.org/wiki/Public_holidays_in_Vietnam",
   "startYear": 2000,
   "endYear": 2050,
-  "excludedRules": {
-    "1 day before vietnamese 1-0-1 P5D": "Annual leave arrangements vary by year and employer; do not project a five-day break."
-  },
   "sha256": {
     "VN.yaml": "58d9411d73601feef8350a312cba66938d9b6c61ac345aa6eb9c4d415f90adaf",
     "names.json": "eea1f9cc09095ba5e3ebddd7a4ab836733fe35ef7407b1fef0fb7041fda46eaf",

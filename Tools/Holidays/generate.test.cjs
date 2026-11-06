@@ -3,15 +3,18 @@ const { test } = require('node:test')
 const { execFileSync } = require('node:child_process')
 const { getEvents, serializeCalendar, generateCalendar } = require('./generate.cjs')
 
-test('each year has public holidays and observances without a projected leave period', () => {
+test('each year has public holidays and observances including the source five-day Tet break', () => {
   const events = getEvents()
-  assert.equal(events.length, 2116)
+  assert.equal(events.length, 2167)
   for (let year = 2000; year <= 2050; year++) {
     const annual = events.filter(e => e.date.startsWith(String(year)))
-    assert.equal(annual.length, year < 2026 ? 41 : 42)
-    assert.equal(annual.filter(e => e.type === 'public').length, year < 2026 ? 6 : 7)
-    assert.ok(annual.every(e => e.dayCount === 1))
-    assert.ok(annual.every(e => !e.name.includes('Kỳ nghỉ')))
+    assert.equal(annual.length, year < 2026 ? 42 : 43)
+    assert.equal(annual.filter(e => e.type === 'public').length, year < 2026 ? 7 : 8)
+    const breaks = annual.filter(e => e.name === 'Kỳ nghỉ tết Nguyên đán')
+    assert.equal(breaks.length, 1)
+    assert.equal(breaks[0].dayCount, 5)
+    assert.equal(breaks[0].type, 'public')
+    assert.ok(annual.filter(e => e !== breaks[0]).every(e => e.dayCount === 1))
   }
 })
 
@@ -48,9 +51,9 @@ test('ICS is deterministic, bounded, unique and uses date-only events', () => {
   assert.ok(!text.replaceAll('\r\n', '').includes('\n'))
   const unfolded = text.replace(/\r\n /g, '')
   const uids = unfolded.split('\r\n').filter(line => line.startsWith('UID:'))
-  assert.equal(new Set(uids).size, 2116)
-  assert.equal(uids.length, 2116)
-  assert.equal((unfolded.match(/DTSTART;VALUE=DATE:\d{8}\r\n/g) || []).length, 2116)
+  assert.equal(new Set(uids).size, 2167)
+  assert.equal(uids.length, 2167)
+  assert.equal((unfolded.match(/DTSTART;VALUE=DATE:\d{8}\r\n/g) || []).length, 2167)
 })
 
 test('serialization escapes text and folds UTF-8 without corrupting characters', () => {
@@ -68,4 +71,15 @@ test('generation is independent of machine timezone', () => {
     cwd: __dirname, env: { ...process.env, TZ: tz }, maxBuffer: 2 * 1024 * 1024
   })
   assert.deepEqual(run('Pacific/Honolulu'), run('Asia/Tokyo'))
+})
+
+
+test('Tet 2027 retains the source break from February 5 through 9', () => {
+  const event = getEvents().find(e => e.date === '20270205' && e.rule === '1 day before vietnamese 1-0-1 P5D')
+  assert.ok(event)
+  assert.equal(event.dayCount, 5)
+  const text = serializeCalendar([event]).replace(/\r\n /g, '')
+  assert.ok(text.includes('DTSTART;VALUE=DATE:20270205\r\nDURATION:P5D'))
+  assert.ok(text.includes('DESCRIPTION:public'))
+  assert.throws(() => serializeCalendar([{ ...event, dayCount: 6 }]), /multi-day/)
 })

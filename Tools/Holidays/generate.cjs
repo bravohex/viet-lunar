@@ -11,7 +11,7 @@ const outputPath = path.resolve(__dirname, '../../App/Resources/Holidays/vietnam
 const hash = value => createHash('sha256').update(value).digest('hex')
 
 function directLunarDate (rule, year) {
-  const match = /^(?:(\d+) day before )?vietnamese (\d+)-0-(\d+)$/.exec(rule)
+  const match = /^(?:(\d+) day before )?vietnamese (\d+)-0-(\d+)(?: P\d+D)?$/.exec(rule)
   if (!match) return null // Solar dates and solar terms remain with the parser.
   const [, before = '0', month, day] = match
   const candidates = []
@@ -43,7 +43,6 @@ function getEvents () {
   const events = []
   for (let year = source.startYear; year <= source.endYear; year++) {
     for (const holiday of holidays.getHolidays(year)) {
-      if (Object.hasOwn(source.excludedRules, holiday.rule)) continue
       // Use the library's civil date, never the UTC date of its Date objects.
       const date = directLunarDate(holiday.rule, year) ?? holiday.date.slice(0, 10).replaceAll('-', '')
       const dayCount = (holiday.end - holiday.start) / 86400000
@@ -88,13 +87,14 @@ function serializeCalendar (events) {
     'BEGIN:VCALENDAR', 'VERSION:2.0', 'PRODID:-//VietLunar//Vietnam Holidays//VI',
     'CALSCALE:GREGORIAN', 'X-WR-CALNAME:Lễ và ngày kỷ niệm Việt Nam (2000–2050)',
     'X-WR-TIMEZONE:Asia/Ho_Chi_Minh',
-    `X-WR-CALDESC:${escapeText(`${source.attribution}; ${source.attributionURL}; ${source.repository}/tree/${source.commit}; Data: CC BY-SA 3.0 https://creativecommons.org/licenses/by-sa/3.0/; Adapted: projected leave periods excluded; direct lunar conversion avoids parser round-trip truncation. Dates follow source rules, not a historical or employer leave record.`)}`,
+    `X-WR-CALDESC:${escapeText(`${source.attribution}; ${source.attributionURL}; ${source.repository}/tree/${source.commit}; Data: CC BY-SA 3.0 https://creativecommons.org/licenses/by-sa/3.0/; Source five-day Tet period retained from New Year's Eve through lunar day 4; actual leave may vary by year and employer. Adapted: direct lunar conversion avoids parser round-trip truncation. Dates follow source rules, not a historical or employer leave record.`)}`,
     `X-VIETLUNAR-SOURCE-COMMIT:${source.commit}`
   ]
   const ids = new Set()
   for (const event of events) {
     if (!['public', 'observance'].includes(event.type)) throw new Error(`Unsupported type: ${event.type}`)
-    if (event.dayCount !== 1) throw new Error(`Review multi-day rule before publishing: ${event.rule}`)
+    const expectedDays = event.rule === '1 day before vietnamese 1-0-1 P5D' ? 5 : 1
+    if (event.dayCount !== expectedDays) throw new Error(`Review multi-day rule before publishing: ${event.rule}`)
     if (!/^\d{8}$/.test(event.date) || !event.name) throw new Error('Invalid event')
     const uid = `${hash(`${event.rule}:${event.date}`).slice(0, 32)}@vietlunar`
     if (ids.has(uid)) throw new Error(`Duplicate event: ${event.rule} ${event.date}`)
@@ -103,7 +103,7 @@ function serializeCalendar (events) {
       'BEGIN:VEVENT', `UID:${uid}`,
       `DTSTAMP:${source.snapshotDate.replaceAll('-', '')}T000000Z`,
       `SUMMARY:${escapeText(event.name)}`, `DTSTART;VALUE=DATE:${event.date}`,
-      'DURATION:P1D', `DESCRIPTION:${event.type}`, 'END:VEVENT'
+      `DURATION:P${event.dayCount}D`, `DESCRIPTION:${event.type}`, 'END:VEVENT'
     )
   }
   lines.push('END:VCALENDAR')

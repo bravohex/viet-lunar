@@ -39,7 +39,7 @@ Nếu macOS yêu cầu xác nhận ở lần mở đầu tiên, hãy làm theo h
 ## Ngày lễ
 
 - Dữ liệu mặc định trong [`App/Resources/Holidays/vietnam.ics`](App/Resources/Holidays/vietnam.ics) bao phủ **2000–2050**, sinh từ bộ quy tắc Việt Nam của `date-holidays`; các ngày âm lịch được tính riêng từng năm. [Bộ sinh dữ liệu và nguồn cố định](Tools/Holidays/README.md) cho phép tái tạo và kiểm tra file trước mỗi bản phát hành.
-- Đây là lịch lễ và ngày kỷ niệm, **không phải lịch nghỉ làm áp dụng cho mọi người**. Không tự suy diễn kỳ nghỉ Tết 5 ngày, ngày nghỉ bù, ngày nghỉ Quốc khánh liền kề hay ngày hoán đổi. Các lịch nghỉ cụ thể cần tệp riêng theo thông báo từng năm và đối tượng áp dụng.
+- Đây là lịch lễ và ngày kỷ niệm, **không phải lịch nghỉ làm áp dụng cho mọi người**. Giữ kỳ nghỉ Tết 5 ngày theo quy tắc nguồn: từ giao thừa đến hết mùng 4, với tên riêng “Kỳ nghỉ tết Nguyên đán”; lịch nghỉ thực tế có thể khác theo từng năm và đơn vị. Không tự thêm ngày nghỉ bù, ngày nghỉ Quốc khánh liền kề hay ngày hoán đổi. Các lịch nghỉ cụ thể cần tệp riêng theo thông báo từng năm và đối tượng áp dụng.
 - Mốc hiệu lực có trong nguồn được giữ nguyên (ví dụ Ngày Văn hóa Việt Nam từ 2026). Những quy tắc không có mốc bắt đầu được suy rộng vào quá khứ; dữ liệu không phục dựng đầy đủ lịch sử ngày lễ. Các năm tương lai theo bộ quy tắc tại thời điểm cập nhật và có thể thay đổi.
 - Người dùng có thể vào **Cài đặt > Ngày lễ > Nhập tệp .ics…** để thêm một hoặc nhiều tệp. Có thể nhập nhiều nguồn nhưng mỗi lúc chỉ hiển thị một nguồn (hoặc không hiển thị).
 - Cập nhật app chỉ cập nhật lịch mặc định; tệp đã nhập và nguồn đang chọn được giữ nguyên. Chọn lại lịch mặc định trong Cài đặt nếu đang dùng một tệp cũ chỉ có một năm.

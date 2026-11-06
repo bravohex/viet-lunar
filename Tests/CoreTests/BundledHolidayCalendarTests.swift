@@ -7,13 +7,14 @@ final class BundledHolidayCalendarTests: XCTestCase {
     func testBundledCalendarCoversEveryYearFrom2000Through2050() throws {
         let calendar = try loadCalendar()
         XCTAssertEqual(calendar.yearRange, 2000...2050)
-        XCTAssertEqual(calendar.events.count, 2116)
+        XCTAssertEqual(calendar.events.count, 2167)
         for year in 2000...2050 {
             let events = calendar.events.filter { $0.firstDate.year == year }
-            XCTAssertEqual(events.count, year < 2026 ? 41 : 42, "Year \(year)")
-            XCTAssertEqual(events.filter { $0.kind == .official }.count, year < 2026 ? 6 : 7)
+            XCTAssertEqual(events.count, year < 2026 ? 42 : 43, "Year \(year)")
+            XCTAssertEqual(events.filter { $0.kind == .official }.count, year < 2026 ? 7 : 8)
             XCTAssertEqual(events.filter { $0.kind == .observance }.count, 35)
-            XCTAssertTrue(events.allSatisfy { $0.dayCount == 1 })
+            XCTAssertEqual(events.filter { $0.dayCount == 5 }.count, 1)
+            XCTAssertEqual(events.filter { $0.dayCount == 1 }.count, events.count - 1)
             XCTAssertEqual(Set(events).count, events.count)
         }
     }
@@ -41,7 +42,7 @@ final class BundledHolidayCalendarTests: XCTestCase {
         }
     }
 
-    func testEveIsOneObservanceAndNoGenericFiveDayBreakIsProjected() throws {
+    func testEveIsSeparateFromFiveDayTetBreakInEveryYear() throws {
         let calendar = try loadCalendar()
         let index = HolidayIndex(calendar: calendar)
         for year in 2000...2050 {
@@ -50,8 +51,24 @@ final class BundledHolidayCalendarTests: XCTestCase {
             let events = index.occurrences(on: eve)
             XCTAssertTrue(events.contains { $0.name == "Giao thừa tết Nguyên đán" && $0.kind == .observance && $0.dayCount == 1 })
             XCTAssertFalse(index.occurrences(on: tet.firstDate).contains { $0.name.contains("Giao thừa") })
+            for offset in -1...5 {
+                let date = try GregorianJDN.solarDate(forJDN: GregorianJDN.jdn(for: eve) + offset)
+                let breaks = index.occurrences(on: date).filter { $0.name == "Kỳ nghỉ tết Nguyên đán" }
+                if (0...4).contains(offset) {
+                    let period = try XCTUnwrap(breaks.first, "Year \(year), offset \(offset)")
+                    XCTAssertEqual(breaks.count, 1)
+                    XCTAssertEqual(period.kind, .official)
+                    XCTAssertEqual(period.dayNumber, offset + 1)
+                    XCTAssertEqual(period.dayCount, 5)
+                } else {
+                    XCTAssertTrue(breaks.isEmpty)
+                }
+            }
         }
-        XCTAssertFalse(calendar.events.contains { $0.name.contains("Kỳ nghỉ") || $0.name.contains("Nghỉ Tết") })
+        for day in 5...9 {
+            let date = try SolarDate(validatingYear: 2027, month: 2, day: day)
+            XCTAssertTrue(index.isOfficialHoliday(on: date))
+        }
     }
 
     func testKnownDatesClassificationsAndEffectiveDates() throws {
