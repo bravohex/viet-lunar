@@ -361,7 +361,7 @@ struct SettingsView: View {
     }
 
     private var activeHolidaySource: HolidaySource? {
-        appState.holidaySources.first { $0.id == appState.activeHolidaySourceID }
+        appState.activeHolidaySource
     }
 
     private var removableHolidaySource: HolidaySource? {
@@ -381,8 +381,7 @@ struct SettingsView: View {
         return source.name
     }
 
-    /// Which years the visible file covers, and a hint when it does not cover
-    /// the current year, since a file that has run out shows nothing.
+    /// Source year bounds and a warning for the year being viewed in the grid.
     private var holidayCoverageLines: [String] {
         guard let range = activeHolidaySource?.calendar.yearRange else {
             return []
@@ -393,29 +392,22 @@ struct SettingsView: View {
             lines.append(
                 AppLocalization.format(
                     "holidays.coverage.year",
-                    fallback: "Có dữ liệu cho năm %ld",
-                    range.lowerBound
+                    fallback: "Có dữ liệu cho năm %@",
+                    String(range.lowerBound)
                 )
             )
         } else {
             lines.append(
                 AppLocalization.format(
                     "holidays.coverage.years",
-                    fallback: "Có dữ liệu cho năm %1$ld–%2$ld",
-                    range.lowerBound,
-                    range.upperBound
+                    fallback: "Có dữ liệu cho năm %1$@–%2$@",
+                    String(range.lowerBound),
+                    String(range.upperBound)
                 )
             )
         }
-        if let currentYear = appState.currentSnapshot?.solarDate.year,
-           !range.contains(currentYear) {
-            lines.append(
-                AppLocalization.format(
-                    "holidays.coverage.missing_current",
-                    fallback: "Chưa có dữ liệu cho năm %ld. Hãy nhập tệp mới.",
-                    currentYear
-                )
-            )
+        if let warning = appState.holidayCoverageWarning {
+            lines.append(warning)
         }
         return lines
     }

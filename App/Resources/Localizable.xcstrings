@@ -1,6 +1,28 @@
 {
   "sourceLanguage" : "vi",
   "strings" : {
+    "holidays.source.summary.year": {
+      "extractionState": "manual",
+      "localizations": {
+        "vi": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Ngày lễ: %1$@ · %2$@"
+          }
+        }
+      }
+    },
+    "holidays.source.summary.years": {
+      "extractionState": "manual",
+      "localizations": {
+        "vi": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Ngày lễ: %1$@ · %2$@–%3$@"
+          }
+        }
+      }
+    },
     "holidays.accessibility": {
       "extractionState": "manual",
       "localizations": {
@@ -12,13 +34,13 @@
         }
       }
     },
-    "holidays.coverage.missing_current": {
+    "holidays.coverage.missing_viewed": {
       "extractionState": "manual",
       "localizations": {
         "vi": {
           "stringUnit": {
             "state": "translated",
-            "value": "Chưa có dữ liệu cho năm %ld. Hãy nhập tệp mới."
+            "value": "Nguồn này chưa có ngày lễ cho năm %@ đang xem. Chọn nguồn khác trong Cài đặt."
           }
         }
       }
@@ -29,7 +51,7 @@
         "vi": {
           "stringUnit": {
             "state": "translated",
-            "value": "Có dữ liệu cho năm %ld"
+            "value": "Có dữ liệu cho năm %@"
           }
         }
       }
@@ -40,7 +62,7 @@
         "vi": {
           "stringUnit": {
             "state": "translated",
-            "value": "Có dữ liệu cho năm %1$ld–%2$ld"
+            "value": "Có dữ liệu cho năm %1$@–%2$@"
           }
         }
       }

@@ -150,6 +150,81 @@ final class AppStateTests: XCTestCase {
     // MARK: - Holidays
 
     @MainActor
+    func testHolidayCoverageFollowsViewedYearAndReturnToToday() {
+        let state = makeState(clock: TestClock("2026-10-26T05:00:00Z"))
+        state.popoverOpened()
+        XCTAssertNil(state.holidayCoverageWarning)
+        XCTAssertTrue(state.holidaySourceSummary?.contains("Việt Nam") == true)
+
+        state.navigateMonth(by: 3)
+        XCTAssertEqual(state.visibleMonth?.year, 2027)
+        XCTAssertTrue(state.holidayCoverageWarning?.contains("2027") == true)
+        state.returnToToday()
+        XCTAssertNil(state.holidayCoverageWarning)
+    }
+
+    @MainActor
+    func testCoverageUsesSelectedImportedSourceAndDetectsMissingInteriorYears() throws {
+        let store = TestHolidayStore()
+        store.sources.append(HolidaySource(
+            id: "old-import", name: "Lịch đã nhập", isBuiltIn: false,
+            calendar: HolidayCalendar(name: nil, events: [
+                HolidayEvent(name: "A", kind: .official, firstDate: try day(2025, 1, 1)),
+                HolidayEvent(name: "B", kind: .official, firstDate: try day(2027, 1, 1))
+            ])
+        ))
+        store.active = "old-import"
+        let state = makeState(clock: TestClock("2026-10-26T05:00:00Z"), holidays: store)
+        state.popoverOpened()
+        XCTAssertEqual(state.activeHolidaySourceID, "old-import")
+        XCTAssertEqual(store.active, "old-import")
+        XCTAssertTrue(state.holidaySourceSummary?.contains("Lịch đã nhập") == true)
+        XCTAssertTrue(state.holidayCoverageWarning?.contains("2026") == true)
+        state.selectHolidaySource(FileHolidaySourceStore.builtInSourceID)
+        XCTAssertNil(state.holidayCoverageWarning)
+    }
+
+    @MainActor
+    func testCoverageCountsHiddenObservancesAndEventsCrossingNewYear() throws {
+        let store = TestHolidayStore()
+        store.sources = [HolidaySource(
+            id: FileHolidaySourceStore.builtInSourceID, name: "", isBuiltIn: true,
+            calendar: HolidayCalendar(name: nil, events: [
+                HolidayEvent(name: "A", kind: .observance, firstDate: try day(2025, 12, 31), dayCount: 2)
+            ])
+        )]
+        let state = makeState(clock: TestClock("2026-10-26T05:00:00Z"), holidays: store)
+        state.popoverOpened()
+        XCTAssertTrue(state.holidays(on: try day(2026, 1, 1)).isEmpty)
+        XCTAssertNil(state.holidayCoverageWarning)
+        state.selectHolidaySource(nil)
+        XCTAssertNil(state.holidayCoverageWarning)
+        XCTAssertNil(state.holidaySourceSummary)
+    }
+
+    @MainActor
+    func testCoverageAt2000And2050Boundaries() throws {
+        let store = TestHolidayStore()
+        store.sources = [HolidaySource(
+            id: FileHolidaySourceStore.builtInSourceID, name: "Việt Nam 2000–2050", isBuiltIn: true,
+            calendar: HolidayCalendar(name: nil, events: [
+                HolidayEvent(name: "A", kind: .official, firstDate: try day(2000, 1, 1)),
+                HolidayEvent(name: "B", kind: .official, firstDate: try day(2050, 1, 1))
+            ])
+        )]
+        let state = makeState(clock: TestClock("2000-01-15T05:00:00Z"), holidays: store)
+        state.popoverOpened()
+        XCTAssertNil(state.holidayCoverageWarning)
+        state.navigateMonth(by: -1)
+        XCTAssertTrue(state.holidayCoverageWarning?.contains("1999") == true)
+        state.navigateMonth(by: 601)
+        XCTAssertEqual(state.visibleMonth?.year, 2050)
+        XCTAssertNil(state.holidayCoverageWarning)
+        state.navigateMonth(by: 12)
+        XCTAssertTrue(state.holidayCoverageWarning?.contains("2051") == true)
+    }
+
+    @MainActor
     func testDefaultHolidaySourceShowsOfficialDaysAndHidesObservances() throws {
         let state = makeState(clock: TestClock("2026-10-26T05:00:00Z"))
         state.popoverOpened()

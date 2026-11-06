@@ -344,6 +344,44 @@ final class AppState: ObservableObject {
 
     // MARK: - Holidays
 
+    var activeHolidaySource: HolidaySource? {
+        holidaySources.first { $0.id == activeHolidaySourceID }
+    }
+
+    var holidaySourceSummary: String? {
+        guard let source = activeHolidaySource else { return nil }
+        let name = source.isBuiltIn || source.name.isEmpty
+            ? AppLocalization.text("holidays.source.built_in", fallback: "Việt Nam")
+            : source.name
+        guard let range = source.calendar.yearRange else { return name }
+        if range.lowerBound == range.upperBound {
+            return AppLocalization.format(
+                "holidays.source.summary.year", fallback: "Ngày lễ: %1$@ · %2$@",
+                name, String(range.lowerBound)
+            )
+        }
+        return AppLocalization.format(
+            "holidays.source.summary.years", fallback: "Ngày lễ: %1$@ · %2$@–%3$@",
+            name, String(range.lowerBound), String(range.upperBound)
+        )
+    }
+
+    /// Event presence, not merely min/max bounds: an imported file can have
+    /// gaps between years. Hidden observances still count as available data.
+    var holidayCoverageWarning: String? {
+        guard let source = activeHolidaySource,
+              let year = visibleMonth?.year ?? currentSnapshot?.solarDate.year,
+              !source.calendar.events.contains(where: {
+                  $0.firstDate.year <= year && $0.lastDate.year >= year
+              })
+        else { return nil }
+        return AppLocalization.format(
+            "holidays.coverage.missing_viewed",
+            fallback: "Nguồn này chưa có ngày lễ cho năm %@ đang xem. Chọn nguồn khác trong Cài đặt.",
+            String(year)
+        )
+    }
+
     /// Holidays shown for `date`: official ones always, observances only when
     /// the user turned them on.
     func holidays(on date: SolarDate) -> [HolidayOccurrence] {
