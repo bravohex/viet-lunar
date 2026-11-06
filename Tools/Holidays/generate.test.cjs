@@ -21,7 +21,8 @@ test('known Vietnamese lunar dates and a separate single-day New Year eve', () =
     ['20260217', 'Tết Nguyên đán'], ['20270206', 'Tết Nguyên đán'],
     ['20280126', 'Tết Nguyên đán'], ['20260426', 'Giỗ Tổ Hùng Vương'],
     ['20260925', 'Tết Trung thu'], ['20270915', 'Tết Trung thu'],
-    ['20281003', 'Tết Trung thu'], ['20260216', 'Giao thừa tết Nguyên đán']
+    ['20281003', 'Tết Trung thu'], ['20260216', 'Giao thừa tết Nguyên đán'],
+    ['20400205', 'Tết ông Công, ông Táo']
   ]) assert.ok(events.some(e => e.date === date && e.name === name), `${date}: ${name}`)
   assert.equal(events.find(e => e.name === 'Giao thừa tết Nguyên đán').type, 'observance')
   assert.ok(events.some(e => e.date === '20261120' && e.type === 'observance'))

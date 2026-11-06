@@ -20,6 +20,8 @@ The generator uses the Vietnamese calendar in `Asia/Ho_Chi_Minh`, emits explicit
 
 The source's generic five-day Tet break is deliberately excluded: the position of those days varies by annual announcement and employer. Tet day and the separate eve observance remain. No compensatory days, additional National Day leave, employer-specific leave or workday swaps are inferred. This is a holiday/commemoration calendar, **not an official leave schedule**. Rules without a historical start date are projected into earlier years; the data is not a reconstruction of historical law. Future dates reflect the pinned rules, which may change.
 
+For lunar day rules, the generator calls `CalendarVietnamese.toGregorian` directly instead of the parser's `toJDE → fromJDE → toGregorian` round-trip. The latter truncates a fractional day in date-chinese 2.1.4: 23/12/2039 becomes 04/02/2040 rather than 05/02/2040. Direct conversion preserves the rule without a date-specific override; Swift tests verify all 510 lunar holidays and 51 New Year eves.
+
 When refreshing the source, review VN rule changes and primary-source references first; update the snapshot, relevant shared names, source commit/date and SHA-256 hashes together. Review the exclusion policy and dependency versions, regenerate, and run both Node tests and the app's full functional tests. Swift tests compare all lunar holiday dates with VietLunar's own engine. Never resolve a mismatch by silently changing one date or weakening an assertion.
 
 ## Attribution and license

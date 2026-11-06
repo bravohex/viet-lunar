@@ -3,11 +3,31 @@ const fs = require('node:fs')
 const path = require('node:path')
 const { createHash } = require('node:crypto')
 const Holidays = require('date-holidays-parser').default
+const { CalendarVietnamese } = require('date-chinese')
 const yaml = require('js-yaml')
 const source = require('./source.json')
 
 const outputPath = path.resolve(__dirname, '../../App/Resources/Holidays/vietnam.ics')
 const hash = value => createHash('sha256').update(value).digest('hex')
+
+function directLunarDate (rule, year) {
+  const match = /^(?:(\d+) day before )?vietnamese (\d+)-0-(\d+)$/.exec(rule)
+  if (!match) return null // Solar dates and solar terms remain with the parser.
+  const [, before = '0', month, day] = match
+  const candidates = []
+  for (const lunarYear of [year - 1, year]) {
+    const calendar = new CalendarVietnamese()
+    calendar.set(undefined, undefined, Number(month), false, Number(day))
+    // The parser's toJDE -> fromJDE -> toGregorian round-trip truncates a
+    // fractional day in date-chinese 2.1.4 (e.g. 23/12/2039 becomes 22/12).
+    // Direct conversion retains the requested lunar day; never patch dates.
+    const civil = calendar.toGregorian(lunarYear)
+    const date = new Date(Date.UTC(civil.year, civil.month - 1, civil.day - Number(before)))
+    if (date.getUTCFullYear() === year) candidates.push(date.toISOString().slice(0, 10).replaceAll('-', ''))
+  }
+  if (candidates.length !== 1) throw new Error(`Ambiguous lunar rule: ${rule} in ${year}`)
+  return candidates[0]
+}
 
 function getEvents () {
   for (const [file, expected] of Object.entries(source.sha256)) {
@@ -25,7 +45,7 @@ function getEvents () {
     for (const holiday of holidays.getHolidays(year)) {
       if (Object.hasOwn(source.excludedRules, holiday.rule)) continue
       // Use the library's civil date, never the UTC date of its Date objects.
-      const date = holiday.date.slice(0, 10).replaceAll('-', '')
+      const date = directLunarDate(holiday.rule, year) ?? holiday.date.slice(0, 10).replaceAll('-', '')
       const dayCount = (holiday.end - holiday.start) / 86400000
       if (!holiday.date.endsWith(' 00:00:00') || Number(date.slice(0, 4)) !== year) {
         throw new Error(`Unsupported holiday date: ${holiday.date}`)
@@ -68,7 +88,7 @@ function serializeCalendar (events) {
     'BEGIN:VCALENDAR', 'VERSION:2.0', 'PRODID:-//VietLunar//Vietnam Holidays//VI',
     'CALSCALE:GREGORIAN', 'X-WR-CALNAME:Lễ và ngày kỷ niệm Việt Nam (2000–2050)',
     'X-WR-TIMEZONE:Asia/Ho_Chi_Minh',
-    `X-WR-CALDESC:${escapeText(`${source.attribution}; ${source.attributionURL}; ${source.repository}/tree/${source.commit}; Data: CC BY-SA 3.0 https://creativecommons.org/licenses/by-sa/3.0/; Adapted: projected leave periods excluded. Dates follow source rules, not a historical or employer leave record.`)}`,
+    `X-WR-CALDESC:${escapeText(`${source.attribution}; ${source.attributionURL}; ${source.repository}/tree/${source.commit}; Data: CC BY-SA 3.0 https://creativecommons.org/licenses/by-sa/3.0/; Adapted: projected leave periods excluded; direct lunar conversion avoids parser round-trip truncation. Dates follow source rules, not a historical or employer leave record.`)}`,
     `X-VIETLUNAR-SOURCE-COMMIT:${source.commit}`
   ]
   const ids = new Set()
