@@ -348,24 +348,6 @@ final class AppState: ObservableObject {
         holidaySources.first { $0.id == activeHolidaySourceID }
     }
 
-    var holidaySourceSummary: String? {
-        guard let source = activeHolidaySource else { return nil }
-        let name = source.isBuiltIn || source.name.isEmpty
-            ? AppLocalization.text("holidays.source.built_in", fallback: "Việt Nam")
-            : source.name
-        guard let range = source.calendar.yearRange else { return name }
-        if range.lowerBound == range.upperBound {
-            return AppLocalization.format(
-                "holidays.source.summary.year", fallback: "Ngày lễ: %1$@ · %2$@",
-                name, String(range.lowerBound)
-            )
-        }
-        return AppLocalization.format(
-            "holidays.source.summary.years", fallback: "Ngày lễ: %1$@ · %2$@–%3$@",
-            name, String(range.lowerBound), String(range.upperBound)
-        )
-    }
-
     /// Event presence, not merely min/max bounds: an imported file can have
     /// gaps between years. Hidden observances still count as available data.
     var holidayCoverageWarning: String? {

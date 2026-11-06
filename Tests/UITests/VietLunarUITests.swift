@@ -18,6 +18,7 @@ final class VietLunarUITests: XCTestCase {
         try openPopover(for: application)
 
         XCTAssertTrue(application.staticTexts["selected-gregorian-date"].waitForExistence(timeout: 3))
+        XCTAssertFalse(application.staticTexts["holiday-source-summary"].exists)
         let saturdayHeader = application.staticTexts["weekday-header-7"]
         let sundayHeader = application.staticTexts["weekday-header-1"]
         XCTAssertTrue(saturdayHeader.exists)

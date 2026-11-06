@@ -13,19 +13,13 @@ struct MenuPopoverView: View {
 
             MonthGridView()
 
-            if let sourceSummary = appState.holidaySourceSummary {
-                VStack(alignment: .leading, spacing: 3) {
-                    Text(sourceSummary)
-                        .accessibilityIdentifier("holiday-source-summary")
-                    if let warning = appState.holidayCoverageWarning {
-                        Label {
-                            Text(warning)
-                                .accessibilityIdentifier("holiday-coverage-warning")
-                        } icon: {
-                            Image(systemName: "exclamationmark.triangle")
-                                .accessibilityHidden(true)
-                        }
-                    }
+            if let warning = appState.holidayCoverageWarning {
+                Label {
+                    Text(warning)
+                        .accessibilityIdentifier("holiday-coverage-warning")
+                } icon: {
+                    Image(systemName: "exclamationmark.triangle")
+                        .accessibilityHidden(true)
                 }
                 .font(.caption)
                 .foregroundStyle(.secondary)

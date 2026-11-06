@@ -154,7 +154,6 @@ final class AppStateTests: XCTestCase {
         let state = makeState(clock: TestClock("2026-10-26T05:00:00Z"))
         state.popoverOpened()
         XCTAssertNil(state.holidayCoverageWarning)
-        XCTAssertTrue(state.holidaySourceSummary?.contains("Việt Nam") == true)
 
         state.navigateMonth(by: 3)
         XCTAssertEqual(state.visibleMonth?.year, 2027)
@@ -178,7 +177,7 @@ final class AppStateTests: XCTestCase {
         state.popoverOpened()
         XCTAssertEqual(state.activeHolidaySourceID, "old-import")
         XCTAssertEqual(store.active, "old-import")
-        XCTAssertTrue(state.holidaySourceSummary?.contains("Lịch đã nhập") == true)
+        XCTAssertEqual(state.activeHolidaySource?.name, "Lịch đã nhập")
         XCTAssertTrue(state.holidayCoverageWarning?.contains("2026") == true)
         state.selectHolidaySource(FileHolidaySourceStore.builtInSourceID)
         XCTAssertNil(state.holidayCoverageWarning)
@@ -199,7 +198,7 @@ final class AppStateTests: XCTestCase {
         XCTAssertNil(state.holidayCoverageWarning)
         state.selectHolidaySource(nil)
         XCTAssertNil(state.holidayCoverageWarning)
-        XCTAssertNil(state.holidaySourceSummary)
+        XCTAssertNil(state.activeHolidaySource)
     }
 
     @MainActor

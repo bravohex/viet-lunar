@@ -1,28 +1,6 @@
 {
   "sourceLanguage" : "vi",
   "strings" : {
-    "holidays.source.summary.year": {
-      "extractionState": "manual",
-      "localizations": {
-        "vi": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "Ngày lễ: %1$@ · %2$@"
-          }
-        }
-      }
-    },
-    "holidays.source.summary.years": {
-      "extractionState": "manual",
-      "localizations": {
-        "vi": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "Ngày lễ: %1$@ · %2$@–%3$@"
-          }
-        }
-      }
-    },
     "holidays.accessibility": {
       "extractionState": "manual",
       "localizations": {

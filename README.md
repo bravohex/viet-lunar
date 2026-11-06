@@ -43,7 +43,7 @@ Nếu macOS yêu cầu xác nhận ở lần mở đầu tiên, hãy làm theo h
 - Mốc hiệu lực có trong nguồn được giữ nguyên (ví dụ Ngày Văn hóa Việt Nam từ 2026). Những quy tắc không có mốc bắt đầu được suy rộng vào quá khứ; dữ liệu không phục dựng đầy đủ lịch sử ngày lễ. Các năm tương lai theo bộ quy tắc tại thời điểm cập nhật và có thể thay đổi.
 - Người dùng có thể vào **Cài đặt > Ngày lễ > Nhập tệp .ics…** để thêm một hoặc nhiều tệp. Có thể nhập nhiều nguồn nhưng mỗi lúc chỉ hiển thị một nguồn (hoặc không hiển thị).
 - Cập nhật app chỉ cập nhật lịch mặc định; tệp đã nhập và nguồn đang chọn được giữ nguyên. Chọn lại lịch mặc định trong Cài đặt nếu đang dùng một tệp cũ chỉ có một năm.
-- Popover hiển thị nguồn ngày lễ và khoảng năm của tệp. Nếu năm đang xem không có sự kiện, popover và Cài đặt cùng cảnh báo để bạn chọn nguồn khác; cảnh báo cũng áp dụng khi tệp bị thiếu một năm ở giữa khoảng dữ liệu.
+- Nguồn ngày lễ và khoảng năm của tệp nằm trong Cài đặt. Nếu năm đang xem không có sự kiện, popover và Cài đặt cùng cảnh báo để bạn chọn nguồn khác; cảnh báo cũng áp dụng khi tệp bị thiếu một năm ở giữa khoảng dữ liệu.
 - Định dạng được hỗ trợ: sự kiện cả ngày (`DTSTART` dạng ngày, `DTEND` không tính ngày cuối), lặp hằng năm đơn giản (`RRULE:FREQ=YEARLY` với `INTERVAL`, `COUNT`, `UNTIL`). Sự kiện có giờ và quy tắc lặp phức tạp bị bỏ qua.
 - Ngày loại trừ `EXDATE` dạng ngày được áp dụng sau khi tính lịch lặp; sự kiện có `STATUS:CANCELLED` không được hiển thị. Sự kiện chứa ngày loại trừ không hợp lệ bị bỏ qua.
 - Có thể dùng `DURATION:P3D` (3 ngày) hoặc `DURATION:P2W` (2 tuần) thay cho `DTEND`, tối đa 31 ngày. Khoảng thời gian không hợp lệ, vượt giới hạn hoặc khai báo đồng thời với `DTEND` bị bỏ qua.
