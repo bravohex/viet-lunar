@@ -10,7 +10,7 @@ public enum ICSHolidayParserError: Error, Equatable, Sendable {
 /// Minimal iCalendar reader for holiday files.
 ///
 /// It understands only what a holiday list needs: all-day `VEVENT`s with a
-/// `SUMMARY`, an optional exclusive `DTEND`, and simple yearly `RRULE`s.
+/// `SUMMARY`, an optional exclusive `DTEND` or day/week `DURATION`, and simple yearly `RRULE`s.
 /// Timed events and anything else are skipped rather than guessed at, so a
 /// file is never interpreted in a way its author did not write.
 public enum ICSHolidayParser {
@@ -110,6 +110,7 @@ public enum ICSHolidayParser {
         var description: String?
         var start: String?
         var end: String?
+        var duration: String?
         var rule: String?
         var status: String?
         var exclusions: [String] = []
@@ -120,6 +121,7 @@ public enum ICSHolidayParser {
             case "DESCRIPTION": description = property.value
             case "DTSTART": start = property.value
             case "DTEND": end = property.value
+            case "DURATION": duration = property.value
             case "RRULE": rule = property.value
             case "STATUS": status = property.value
             case "EXDATE": exclusions.append(property.value)
@@ -206,7 +208,11 @@ public enum ICSHolidayParser {
             : .official
 
         var span = 1
-        if let endValue = event.end, let end = parseDate(endValue) {
+        if let duration = event.duration {
+            // RFC 5545 allows either DTEND or DURATION, never both.
+            guard event.end == nil, let days = parseDuration(duration) else { return [] }
+            span = days
+        } else if let endValue = event.end, let end = parseDate(endValue) {
             let days = GregorianJDN.jdn(for: end) - GregorianJDN.jdn(for: first)
             span = min(max(days, 1), maximumSpanDays)
         }
@@ -216,6 +222,23 @@ public enum ICSHolidayParser {
             .filter { !excludedDates.contains($0) }.map {
             HolidayEvent(name: name, kind: kind, firstDate: $0, dayCount: span)
         }
+    }
+
+    /// All-day durations must be positive whole days or weeks. Reject unsupported
+    /// or oversized durations instead of importing a shorter holiday silently.
+    private static func parseDuration(_ raw: String) -> Int? {
+        let value = raw.hasPrefix("+") ? String(raw.dropFirst()) : raw
+        let bytes = Array(value.uppercased().utf8)
+        guard bytes.count >= 3, bytes.first == 80, // P
+              let unit = bytes.last, unit == 68 || unit == 87 // D or W
+        else { return nil }
+        let digits = bytes.dropFirst().dropLast()
+        guard digits.allSatisfy({ (48...57).contains($0) }),
+              let count = Int(String(decoding: digits, as: UTF8.self)), count > 0
+        else { return nil }
+        let multiplier = unit == 87 ? 7 : 1
+        guard count <= maximumSpanDays / multiplier else { return nil }
+        return count * multiplier
     }
 
     private static func isObservance(_ description: String?) -> Bool {

@@ -52,6 +52,52 @@ final class ICSHolidayParserTests: XCTestCase {
         XCTAssertEqual(calendar.events.first?.dayCount, ICSHolidayParser.maximumSpanDays)
     }
 
+    func testAllDayDurationCoversEveryDayAndExcludesTheEnd() throws {
+        let calendar = try parse(vevent(
+            "SUMMARY:Nghỉ lễ", "DTSTART;VALUE=DATE:20261231", "DURATION:P3D"
+        ))
+        let index = HolidayIndex(calendar: calendar)
+
+        XCTAssertEqual(calendar.events.first?.dayCount, 3)
+        XCTAssertEqual(calendar.events.first?.lastDate, try solarDate(2027, 1, 2))
+        XCTAssertEqual(index.occurrences(on: try solarDate(2027, 1, 1)).first?.dayNumber, 2)
+        XCTAssertTrue(index.occurrences(on: try solarDate(2027, 1, 3)).isEmpty)
+    }
+
+    func testWeeklyDurationIsPreservedForYearlyOccurrences() throws {
+        let calendar = try parse(vevent(
+            "SUMMARY:Nghỉ lễ", "DTSTART;VALUE=DATE:20260220",
+            "DURATION:P2W", "RRULE:FREQ=YEARLY;COUNT=2"
+        ))
+
+        XCTAssertEqual(calendar.events.map(\.dayCount), [14, 14])
+        XCTAssertEqual(calendar.events.last?.lastDate, try solarDate(2027, 3, 5))
+    }
+
+    func testExplicitPositiveDurationIsAccepted() throws {
+        let calendar = try parse(vevent(
+            "SUMMARY:Lễ", "DTSTART;VALUE=DATE:20260101", "DURATION:+P3D"
+        ))
+        XCTAssertEqual(calendar.events.first?.dayCount, 3)
+    }
+
+    func testInvalidOrConflictingDurationIsNotSilentlyChangedToOneDay() {
+        for duration in ["P0D", "-P3D", "PT24H", "P1DT1H", "P32D", "P5W",
+                         "P999999999999999999999D", "P", "P1.5D"] {
+            XCTAssertThrowsError(try parse(vevent(
+                "SUMMARY:Lễ", "DTSTART;VALUE=DATE:20260101", "DURATION:\(duration)"
+            )), duration) {
+                XCTAssertEqual($0 as? ICSHolidayParserError, .noEvents)
+            }
+        }
+        XCTAssertThrowsError(try parse(vevent(
+            "SUMMARY:Lễ", "DTSTART;VALUE=DATE:20260101",
+            "DTEND;VALUE=DATE:20260102", "DURATION:P3D"
+        ))) {
+            XCTAssertEqual($0 as? ICSHolidayParserError, .noEvents)
+        }
+    }
+
     func testEndBeforeStartFallsBackToOneDay() throws {
         let calendar = try parse(
             vevent("SUMMARY:Lỗi", "DTSTART;VALUE=DATE:20260110", "DTEND;VALUE=DATE:20260105")

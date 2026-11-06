@@ -42,6 +42,7 @@ Nếu macOS yêu cầu xác nhận ở lần mở đầu tiên, hãy làm theo h
 - Người dùng có thể vào **Cài đặt > Ngày lễ > Nhập tệp .ics…** để thêm một hoặc nhiều tệp. Có thể nhập nhiều nguồn nhưng mỗi lúc chỉ hiển thị một nguồn (hoặc không hiển thị).
 - Định dạng được hỗ trợ: sự kiện cả ngày (`DTSTART` dạng ngày, `DTEND` không tính ngày cuối), lặp hằng năm đơn giản (`RRULE:FREQ=YEARLY` với `INTERVAL`, `COUNT`, `UNTIL`). Sự kiện có giờ và quy tắc lặp phức tạp bị bỏ qua.
 - Ngày loại trừ `EXDATE` dạng ngày được áp dụng sau khi tính lịch lặp; sự kiện có `STATUS:CANCELLED` không được hiển thị. Sự kiện chứa ngày loại trừ không hợp lệ bị bỏ qua.
+- Có thể dùng `DURATION:P3D` (3 ngày) hoặc `DURATION:P2W` (2 tuần) thay cho `DTEND`, tối đa 31 ngày. Khoảng thời gian không hợp lệ, vượt giới hạn hoặc khai báo đồng thời với `DTEND` bị bỏ qua.
 - Sự kiện có `DESCRIPTION` chứa “observance” được xem là ngày kỷ niệm và mặc định bị ẩn; các sự kiện còn lại là ngày lễ chính thức.
 - Giới hạn: tối đa 1 MB mỗi tệp và năm từ 1800 đến 2199.
 
