@@ -1,0 +1,22 @@
+{
+  "names": {
+    "01-01": {
+      "name": {
+        "vi": "Tết Dương lịch",
+        "en": "New Year's Day"
+      }
+    },
+    "03-08": {
+      "name": {
+        "vi": "Quốc tế Phụ nữ",
+        "en": "International Women's Day"
+      }
+    },
+    "05-01": {
+      "name": {
+        "vi": "Quốc tế Lao động",
+        "en": "Labour Day"
+      }
+    }
+  }
+}

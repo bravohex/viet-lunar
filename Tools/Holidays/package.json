@@ -1,0 +1,16 @@
+{
+  "name": "vietlunar-holiday-data",
+  "private": true,
+  "version": "1.0.0",
+  "scripts": {
+    "generate": "node generate.cjs",
+    "check": "node generate.cjs --check",
+    "test": "node --test generate.test.cjs"
+  },
+  "engines": { "node": ">=22" },
+  "dependencies": {
+    "date-holidays-parser": "3.4.7",
+    "js-yaml": "5.5.0"
+  },
+  "overrides": { "date-chinese": "2.1.4" }
+}
