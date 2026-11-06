@@ -38,7 +38,7 @@ final class VietLunarApplicationDelegate: NSObject, NSApplicationDelegate, NSWin
             )
         }
 
-        let state = AppState(preferencesStore: makePreferencesStore())
+        let state = AppState(preferencesStore: makePreferencesStore(), holidayStore: makeHolidayStore())
         state.menuBarPresentationDidChange = { [weak self] in
             self?.updateStatusItem()
         }
@@ -203,8 +203,27 @@ final class VietLunarApplicationDelegate: NSObject, NSApplicationDelegate, NSWin
         StatusItemRenderer.apply(presentation, icon: image, to: button)
     }
 
+    private func makeHolidayStore() -> FileHolidaySourceStore? {
+#if DEBUG || PERFORMANCE_TESTING
+        if let suiteName = ProcessInfo.processInfo.environment["VIETLUNAR_TEST_PREFERENCES_SUITE"],
+           let defaults = UserDefaults(suiteName: suiteName) {
+            let store = FileHolidaySourceStore(
+                builtInURL: Bundle.main.url(forResource: "vietnam", withExtension: "ics"),
+                directory: FileManager.default.temporaryDirectory
+                    .appendingPathComponent(suiteName, isDirectory: true),
+                userDefaults: defaults
+            )
+            if let fixture = ProcessInfo.processInfo.environment["VIETLUNAR_TEST_HOLIDAY_ICS"] {
+                _ = try? store.importSource(data: Data(fixture.utf8), suggestedName: "UI Test Calendar")
+            }
+            return store
+        }
+#endif
+        return nil
+    }
+
     private func makePreferencesStore() -> UserDefaultsPreferencesStore {
-#if DEBUG
+#if DEBUG || PERFORMANCE_TESTING
         if let suiteName = ProcessInfo.processInfo.environment[
             "VIETLUNAR_TEST_PREFERENCES_SUITE"
         ], let defaults = UserDefaults(suiteName: suiteName) {

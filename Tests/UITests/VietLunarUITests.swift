@@ -154,6 +154,33 @@ final class VietLunarUITests: XCTestCase {
     }
 
     @MainActor
+    func testImportedCalendarCanBeManagedCancelledAndDeleted() throws {
+        let application = makeApplication()
+        application.launchEnvironment["VIETLUNAR_TEST_HOLIDAY_ICS"] =
+            "BEGIN:VCALENDAR\r\nVERSION:2.0\r\nX-WR-CALNAME:UI Test Calendar\r\nBEGIN:VEVENT\r\nSUMMARY:Test Holiday\r\nDTSTART;VALUE=DATE:20260101\r\nEND:VEVENT\r\nEND:VCALENDAR\r\n"
+        application.launch()
+        application.launchEnvironment.removeValue(forKey: "VIETLUNAR_TEST_HOLIDAY_ICS")
+        defer { application.terminate() }
+        try openSettings(for: application)
+        application.buttons["manage-holidays-button"].click()
+        let remove = application.buttons.matching(NSPredicate(format: "identifier BEGINSWITH %@", "remove-holiday-source-")).firstMatch
+        XCTAssertTrue(remove.waitForExistence(timeout: 3))
+        remove.click()
+        XCTAssertTrue(application.sheets["alert"].waitForExistence(timeout: 3))
+        application.sheets["alert"].buttons["Hủy"].click()
+        XCTAssertTrue(remove.exists)
+        remove.click()
+        application.sheets["alert"].buttons["Xóa"].click()
+        XCTAssertTrue(application.staticTexts["imported-holidays-empty"].waitForExistence(timeout: 3))
+        application.buttons["close-holiday-manager-button"].click()
+        application.terminate()
+        application.launch()
+        try openSettings(for: application)
+        application.buttons["manage-holidays-button"].click()
+        XCTAssertTrue(application.staticTexts["imported-holidays-empty"].waitForExistence(timeout: 3))
+    }
+
+    @MainActor
     func testPopoverPerformanceSignposts() {
         let firstOpenMetric = XCTOSSignpostMetric(
             subsystem: "com.bravohex.vietlunar",
@@ -206,7 +233,16 @@ final class VietLunarUITests: XCTestCase {
         let appStatusItem = application.descendants(matching: .statusItem).firstMatch
 
         if appStatusItem.waitForExistence(timeout: 3) {
-            appStatusItem.click()
+            application.activate()
+            let header = application.staticTexts["selected-gregorian-date"]
+            if !header.exists { appStatusItem.click() }
+            // A transient popover can close when another desktop app takes focus.
+            // Retry once only after verifying that it is actually closed.
+            if !header.waitForExistence(timeout: 3) {
+                application.activate()
+                appStatusItem.click()
+            }
+            XCTAssertTrue(header.waitForExistence(timeout: 3))
             return
         }
 

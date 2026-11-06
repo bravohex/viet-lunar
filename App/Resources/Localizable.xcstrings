@@ -1,6 +1,116 @@
 {
   "sourceLanguage" : "vi",
   "strings" : {
+    "holidays.remove.confirm": {
+      "extractionState": "manual",
+      "localizations": {
+        "vi": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Xóa “%@” khỏi VietLunar? Nếu đang dùng lịch này, ứng dụng sẽ chuyển về lịch Việt Nam mặc định."
+          }
+        }
+      }
+    },
+    "holidays.remove.cancel": {
+      "extractionState": "manual",
+      "localizations": {
+        "vi": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Hủy"
+          }
+        }
+      }
+    },
+    "holidays.remove.title": {
+      "extractionState": "manual",
+      "localizations": {
+        "vi": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Xóa lịch ICS?"
+          }
+        }
+      }
+    },
+    "holidays.manage.done": {
+      "extractionState": "manual",
+      "localizations": {
+        "vi": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Xong"
+          }
+        }
+      }
+    },
+    "holidays.remove.named": {
+      "extractionState": "manual",
+      "localizations": {
+        "vi": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Xóa %@"
+          }
+        }
+      }
+    },
+    "holidays.manage.active": {
+      "extractionState": "manual",
+      "localizations": {
+        "vi": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Đang dùng"
+          }
+        }
+      }
+    },
+    "holidays.manage.empty": {
+      "extractionState": "manual",
+      "localizations": {
+        "vi": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Chưa có tệp ICS nào."
+          }
+        }
+      }
+    },
+    "holidays.manage.note": {
+      "extractionState": "manual",
+      "localizations": {
+        "vi": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Chỉ xóa bản sao trong VietLunar. Tệp gốc của bạn được giữ nguyên."
+          }
+        }
+      }
+    },
+    "holidays.manage.title": {
+      "extractionState": "manual",
+      "localizations": {
+        "vi": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Tệp ICS đã thêm"
+          }
+        }
+      }
+    },
+    "holidays.manage": {
+      "extractionState": "manual",
+      "localizations": {
+        "vi": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Quản lý tệp ICS…"
+          }
+        }
+      }
+    },
     "holidays.accessibility": {
       "extractionState": "manual",
       "localizations": {
@@ -139,7 +249,7 @@
         "vi": {
           "stringUnit": {
             "state": "translated",
-            "value": "Xoá nguồn này"
+            "value": "Xóa"
           }
         }
       }

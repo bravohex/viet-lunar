@@ -357,6 +357,36 @@ final class AppStateTests: XCTestCase {
     }
 
     @MainActor
+    func testRemovingInactiveImportPreservesBuiltInOrNoneAndItsIndex() throws {
+        for selection: String? in [FileHolidaySourceStore.builtInSourceID, nil] {
+            let state = makeState(clock: TestClock("2026-10-26T05:00:00Z"))
+            state.importHolidayCalendar(data: Data(), suggestedName: "japan.ics")
+            state.selectHolidaySource(selection)
+
+            state.removeHolidaySource(TestHolidayStore.importedID)
+
+            XCTAssertEqual(state.activeHolidaySourceID, selection)
+            XCTAssertEqual(state.holidaySources.count, 1)
+            XCTAssertEqual(state.holidays(on: try day(2026, 9, 2)).count, selection == nil ? 0 : 1)
+        }
+    }
+
+    @MainActor
+    func testRemovalFailureKeepsSourceSelectionAndEvents() throws {
+        let store = TestHolidayStore()
+        let state = makeState(clock: TestClock("2026-10-26T05:00:00Z"), holidays: store)
+        state.importHolidayCalendar(data: Data(), suggestedName: "japan.ics")
+        store.removeError = .storageFailure
+
+        state.removeHolidaySource(TestHolidayStore.importedID)
+
+        XCTAssertEqual(state.holidaySources.count, 2)
+        XCTAssertEqual(state.activeHolidaySourceID, TestHolidayStore.importedID)
+        XCTAssertEqual(state.holidays(on: try day(2026, 5, 3)).count, 1)
+        XCTAssertNotNil(state.holidayImportErrorMessage)
+    }
+
+    @MainActor
     func testBuiltInSourceCannotBeRemoved() {
         let state = makeState(clock: TestClock("2026-10-26T05:00:00Z"))
         state.popoverOpened()
@@ -397,6 +427,7 @@ final class TestHolidayStore: HolidaySourceStoring, @unchecked Sendable {
     var active: String? = FileHolidaySourceStore.builtInSourceID
     var observances = false
     var importError: HolidaySourceStoreError?
+    var removeError: HolidaySourceStoreError?
     private(set) var loadCount = 0
 
     init() {
@@ -441,6 +472,7 @@ final class TestHolidayStore: HolidaySourceStoring, @unchecked Sendable {
     }
 
     func removeSource(id: String) throws {
+        if let removeError { throw removeError }
         sources.removeAll { $0.id == id && !$0.isBuiltIn }
         if active == id {
             active = FileHolidaySourceStore.builtInSourceID

@@ -133,6 +133,23 @@ final class FileHolidaySourceStoreTests: XCTestCase {
         XCTAssertEqual(context.store.activeSourceID(), first.id)
     }
 
+    func testRemovingCopyKeepsOriginalAndPersistsWithNoSourceSelected() throws {
+        let context = try makeContext()
+        let original = context.builtInURL.deletingLastPathComponent().appendingPathComponent("original.ics")
+        let bytes = Data(sampleCalendar(name: "Lịch riêng").utf8)
+        try bytes.write(to: original)
+        let imported = try context.store.importSource(data: Data(contentsOf: original), suggestedName: "original.ics")
+        context.store.setActiveSourceID(nil)
+
+        try context.store.removeSource(id: imported.id)
+
+        XCTAssertEqual(try Data(contentsOf: original), bytes)
+        let reloaded = context.makeStore()
+        XCTAssertNil(reloaded.activeSourceID())
+        XCTAssertEqual(reloaded.loadSources().map(\.id), [FileHolidaySourceStore.builtInSourceID])
+        XCTAssertNil(context.defaults.dictionary(forKey: FileHolidaySourceStore.importedNamesKey)?[imported.id])
+    }
+
     func testRemoveRejectsBuiltInAndNonUUIDIdentifiers() throws {
         let context = try makeContext()
 

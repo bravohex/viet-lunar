@@ -7,6 +7,8 @@ struct SettingsView: View {
     @EnvironmentObject private var appState: AppState
     @State private var selectedPane: SettingsPane = .general
     @State private var isImportingHolidays = false
+    @State private var isManagingHolidays = false
+    @State private var pendingRemoval: HolidaySource?
 
     var body: some View {
         VStack(spacing: 0) {
@@ -238,6 +240,7 @@ struct SettingsView: View {
         ) { result in
             importHolidayFiles(result)
         }
+        .sheet(isPresented: $isManagingHolidays) { holidayManager }
         .onAppear {
             appState.settingsAppeared()
         }
@@ -301,17 +304,10 @@ struct SettingsView: View {
                 }
                 .accessibilityIdentifier("import-holidays-button")
 
-                if let removableSource = removableHolidaySource {
-                    Button(
-                        AppLocalization.text(
-                            "holidays.remove",
-                            fallback: "Xoá nguồn này"
-                        )
-                    ) {
-                        appState.removeHolidaySource(removableSource.id)
-                    }
-                    .accessibilityIdentifier("remove-holiday-source-button")
+                Button(AppLocalization.text("holidays.manage", fallback: "Quản lý tệp ICS…")) {
+                    isManagingHolidays = true
                 }
+                .accessibilityIdentifier("manage-holidays-button")
             }
 
             if let message = appState.holidayImportErrorMessage {
@@ -364,11 +360,85 @@ struct SettingsView: View {
         appState.activeHolidaySource
     }
 
-    private var removableHolidaySource: HolidaySource? {
-        guard let source = activeHolidaySource, !source.isBuiltIn else {
-            return nil
+    private var importedHolidaySources: [HolidaySource] {
+        appState.holidaySources.filter { !$0.isBuiltIn }
+    }
+
+    private var holidayManager: some View {
+        VStack(alignment: .leading, spacing: 16) {
+            Text(AppLocalization.text("holidays.manage.title", fallback: "Tệp ICS đã thêm"))
+                .font(.headline)
+            Text(AppLocalization.text(
+                "holidays.manage.note",
+                fallback: "Chỉ xóa bản sao trong VietLunar. Tệp gốc của bạn được giữ nguyên."
+            ))
+            .font(.caption)
+            .foregroundStyle(.secondary)
+
+            if importedHolidaySources.isEmpty {
+                Text(AppLocalization.text("holidays.manage.empty", fallback: "Chưa có tệp ICS nào."))
+                    .accessibilityIdentifier("imported-holidays-empty")
+                    .frame(maxWidth: .infinity, minHeight: 80)
+            } else {
+                ScrollView {
+                    VStack(spacing: 12) {
+                        ForEach(importedHolidaySources) { source in
+                            HStack {
+                                VStack(alignment: .leading, spacing: 4) {
+                                    Text(source.name).lineLimit(2).help(source.name)
+                                    if source.id == appState.activeHolidaySourceID {
+                                        Text(AppLocalization.text("holidays.manage.active", fallback: "Đang dùng"))
+                                            .font(.caption).foregroundStyle(.secondary)
+                                    }
+                                }
+                                Spacer()
+                                Button(AppLocalization.text("holidays.remove", fallback: "Xóa")) {
+                                    pendingRemoval = source
+                                }
+                                .accessibilityLabel(AppLocalization.format(
+                                    "holidays.remove.named", fallback: "Xóa %@", source.name
+                                ))
+                                .accessibilityIdentifier("remove-holiday-source-\(source.id)")
+                            }
+                        }
+                    }.padding(4)
+                }
+                .frame(maxHeight: 240)
+            }
+
+            if let message = appState.holidayImportErrorMessage {
+                ErrorMessageLabel(message, identifier: "holiday-manager-error")
+            }
+            HStack {
+                Spacer()
+                Button(AppLocalization.text("holidays.manage.done", fallback: "Xong")) {
+                    isManagingHolidays = false
+                }
+                .keyboardShortcut(.defaultAction)
+                .accessibilityIdentifier("close-holiday-manager-button")
+            }
         }
-        return source
+        .padding(24)
+        .frame(width: 440)
+        .alert(
+            AppLocalization.text("holidays.remove.title", fallback: "Xóa lịch ICS?"),
+            isPresented: Binding(
+                get: { pendingRemoval != nil },
+                set: { if !$0 { pendingRemoval = nil } }
+            ),
+            presenting: pendingRemoval
+        ) { source in
+            Button(AppLocalization.text("holidays.remove", fallback: "Xóa"), role: .destructive) {
+                appState.removeHolidaySource(source.id)
+            }
+            Button(AppLocalization.text("holidays.remove.cancel", fallback: "Hủy"), role: .cancel) {}
+        } message: { source in
+            Text(AppLocalization.format(
+                "holidays.remove.confirm",
+                fallback: "Xóa “%@” khỏi VietLunar? Nếu đang dùng lịch này, ứng dụng sẽ chuyển về lịch Việt Nam mặc định.",
+                source.name
+            ))
+        }
     }
 
     private func holidaySourceName(_ source: HolidaySource) -> String {
