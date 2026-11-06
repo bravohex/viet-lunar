@@ -21,6 +21,19 @@ jobs:
     steps:
       - uses: actions/checkout@v7
 
+      - uses: actions/setup-node@v6
+        with:
+          node-version: '24'
+          cache: npm
+          cache-dependency-path: Tools/Holidays/package-lock.json
+
+      - name: Verify bundled holiday data
+        working-directory: Tools/Holidays
+        run: |
+          npm ci
+          npm test
+          npm run check
+
       - name: Confirm Xcode and Swift versions
         run: |
           xcodebuild -version

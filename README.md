@@ -11,7 +11,7 @@ Lịch âm Việt Nam gọn nhẹ, riêng tư và luôn sẵn trên thanh menu c
 
 VietLunar là ứng dụng macOS native chạy hoàn toàn trên máy. Ứng dụng không cần tài khoản, không cần kết nối mạng và không có thư viện runtime bên thứ ba.
 
-[Tải bản phát hành mới nhất](https://github.com/bravohex/viet-lunar/releases) · [Giấy phép MIT](LICENSE)
+[Tải bản phát hành mới nhất](https://github.com/bravohex/viet-lunar/releases) · [Mã nguồn: MIT](LICENSE) · [Dữ liệu ngày lễ: CC BY-SA 3.0](Tools/Holidays/README.md#attribution-and-license)
 
 ## Tính năng
 
@@ -38,8 +38,11 @@ Nếu macOS yêu cầu xác nhận ở lần mở đầu tiên, hãy làm theo h
 
 ## Ngày lễ
 
-- Dữ liệu mặc định là tệp [`App/Resources/Holidays/vietnam.ics`](App/Resources/Holidays/vietnam.ics). Khi cần cập nhật (năm mới, ngày nghỉ bù, ngày lễ mới), chỉ cần thay tệp này bằng bản mới, giữ nguyên tên, rồi build lại; mã nguồn không phụ thuộc vào nội dung hay năm của tệp.
+- Dữ liệu mặc định trong [`App/Resources/Holidays/vietnam.ics`](App/Resources/Holidays/vietnam.ics) bao phủ **2000–2050**, sinh từ bộ quy tắc Việt Nam của `date-holidays`; các ngày âm lịch được tính riêng từng năm. [Bộ sinh dữ liệu và nguồn cố định](Tools/Holidays/README.md) cho phép tái tạo và kiểm tra file trước mỗi bản phát hành.
+- Đây là lịch lễ và ngày kỷ niệm, **không phải lịch nghỉ làm áp dụng cho mọi người**. Không tự suy diễn kỳ nghỉ Tết 5 ngày, ngày nghỉ bù, ngày nghỉ Quốc khánh liền kề hay ngày hoán đổi. Các lịch nghỉ cụ thể cần tệp riêng theo thông báo từng năm và đối tượng áp dụng.
+- Mốc hiệu lực có trong nguồn được giữ nguyên (ví dụ Ngày Văn hóa Việt Nam từ 2026). Những quy tắc không có mốc bắt đầu được suy rộng vào quá khứ; dữ liệu không phục dựng đầy đủ lịch sử ngày lễ. Các năm tương lai theo bộ quy tắc tại thời điểm cập nhật và có thể thay đổi.
 - Người dùng có thể vào **Cài đặt > Ngày lễ > Nhập tệp .ics…** để thêm một hoặc nhiều tệp. Có thể nhập nhiều nguồn nhưng mỗi lúc chỉ hiển thị một nguồn (hoặc không hiển thị).
+- Cập nhật app chỉ cập nhật lịch mặc định; tệp đã nhập và nguồn đang chọn được giữ nguyên. Chọn lại lịch mặc định trong Cài đặt nếu đang dùng một tệp cũ chỉ có một năm.
 - Định dạng được hỗ trợ: sự kiện cả ngày (`DTSTART` dạng ngày, `DTEND` không tính ngày cuối), lặp hằng năm đơn giản (`RRULE:FREQ=YEARLY` với `INTERVAL`, `COUNT`, `UNTIL`). Sự kiện có giờ và quy tắc lặp phức tạp bị bỏ qua.
 - Ngày loại trừ `EXDATE` dạng ngày được áp dụng sau khi tính lịch lặp; sự kiện có `STATUS:CANCELLED` không được hiển thị. Sự kiện chứa ngày loại trừ không hợp lệ bị bỏ qua.
 - Có thể dùng `DURATION:P3D` (3 ngày) hoặc `DURATION:P2W` (2 tuần) thay cho `DTEND`, tối đa 31 ngày. Khoảng thời gian không hợp lệ, vượt giới hạn hoặc khai báo đồng thời với `DTEND` bị bỏ qua.

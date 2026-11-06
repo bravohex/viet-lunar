@@ -1,0 +1,2 @@
+# Preserve RFC 5545 CRLF and significant spaces at fold boundaries.
+App/Resources/Holidays/*.ics -text whitespace=-blank-at-eol
